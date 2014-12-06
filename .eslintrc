@@ -1,8 +1,6 @@
 {
     "env": {
-        "browser": true,
-        "node": true,
-        "amd": true
+        "node": true
     },
 
     "rules": {
@@ -28,7 +26,7 @@
         "no-implied-eval": 2,
         "no-with": 2,
         "no-fallthrough": 2,
-        "no-global-strict": 2,
+        "no-global-strict": 0,
         "no-unreachable": 2,
         "no-undef": 2,
         "no-undef-init": 2,
