@@ -443,16 +443,13 @@ if (typeof window !== 'undefined') {
         'use strict';
 
         var espree = require('../espree'),
-            vm = require('vm'),
-            fs = require('fs'),
             diff = require('json-diff').diffString,
             total = 0,
             failures = [],
             tick = new Date(),
             expected,
-            header;
-
-        vm.runInThisContext(fs.readFileSync(__dirname + '/test.js', 'utf-8'));
+            header,
+            testFixture = require("./test");
 
         Object.keys(testFixture).forEach(function (category) {
             Object.keys(testFixture[category]).forEach(function (source) {
