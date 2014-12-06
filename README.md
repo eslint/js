@@ -3,7 +3,7 @@
 Espree is an actively-maintained fork Esprima, a high performance,
 standard-compliant [ECMAScript](http://www.ecma-international.org/publications/standards/Ecma-262.htm)
 parser written in ECMAScript (also popularly known as
-[JavaScript](http://en.wikipedia.org/wiki/JavaScript>JavaScript)).
+[JavaScript](http://en.wikipedia.org/wiki/JavaScript)).
 
 ### Features
 
