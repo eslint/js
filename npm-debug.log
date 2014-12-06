@@ -1,0 +1,30 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run-script',
+1 verbose cli   'lint' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose node symlink c:\Program Files\nodejs\\node.exe
+5 verbose run-script [ 'prelint', 'lint', 'postlint' ]
+6 info prelint espree@1.2.2
+7 info lint espree@1.2.2
+8 verbose unsafe-perm in lifecycle true
+9 info espree@1.2.2 Failed to exec lint script
+10 error espree@1.2.2 lint: `npm run-script check-version && npm run-script eslint && npm run-script jscs && npm run-script jslint`
+10 error Exit status 1
+11 error Failed at the espree@1.2.2 lint script.
+11 error This is most likely a problem with the espree package,
+11 error not with npm itself.
+11 error Tell the author that this fails on your system:
+11 error     npm run-script check-version && npm run-script eslint && npm run-script jscs && npm run-script jslint
+11 error You can get their info via:
+11 error     npm owner ls espree
+11 error There is likely additional logging output above.
+12 error System Windows_NT 6.1.7601
+13 error command "c:\\Program Files\\nodejs\\\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run-script" "lint"
+14 error cwd c:\Users\Nicholas\projects\personal\espree
+15 error node -v v0.10.32
+16 error npm -v 1.4.28
+17 error code ELIFECYCLE
+18 verbose exit [ 1, true ]
