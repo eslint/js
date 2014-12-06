@@ -6977,7 +6977,7 @@ module.exports = {
                     },
                     init: {
                         type: 'Literal',
-                        value: new RegExp('[\\]/]').toString(),
+                        value: "/[\\]\/]/",
                         raw: '/[\\]/]/',
                         range: [8, 15],
                         loc: {
@@ -21910,7 +21910,7 @@ module.exports = {
 
         'parse(undefined)': {
             call: 'parse',
-            args: [void 0],
+            args: [undefined],
             result: {
                 type: 'Program',
                 body: [{
@@ -21925,7 +21925,7 @@ module.exports = {
 
         'parse(new String("test"))': {
             call: 'parse',
-            args: [new String('test')],
+            args: ['test'],
             result: {
                 type: 'Program',
                 body: [{
@@ -21940,7 +21940,7 @@ module.exports = {
 
         'parse(new Number(42))': {
             call: 'parse',
-            args: [new Number(42)],
+            args: [42],
             result: {
                 type: 'Program',
                 body: [{
@@ -21956,7 +21956,7 @@ module.exports = {
 
         'parse(new Boolean(true))': {
             call: 'parse',
-            args: [new Boolean(true)],
+            args: [true],
             result: {
                 type: 'Program',
                 body: [{
@@ -22054,7 +22054,7 @@ module.exports = {
 
         'tokenize(undefined)': {
           call: 'tokenize',
-          args: [void 0],
+          args: [undefined],
           result: [{
             type: 'Identifier',
             value: 'undefined'
@@ -22063,7 +22063,7 @@ module.exports = {
 
         'tokenize(new String("test"))': {
           call: 'tokenize',
-          args: [new String('test')],
+          args: ['test'],
           result: [{
             type: 'Identifier',
             value: 'test'
@@ -22072,7 +22072,7 @@ module.exports = {
 
         'tokenize(new Number(42))': {
           call: 'tokenize',
-          args: [new Number(42)],
+          args: [42],
           result: [{
             type: 'Numeric',
             value: '42'
@@ -22081,7 +22081,7 @@ module.exports = {
 
         'tokenize(new Boolean(true))': {
           call: 'tokenize',
-          args: [new Boolean(true)],
+          args: [true],
           result: [{
             type: 'Boolean',
             value: 'true'
