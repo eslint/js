@@ -45,7 +45,11 @@ parseStatement: true, parseSourceElement: true */
 
 'use strict';
 
-var syntax = require('./lib/syntax');
+var syntax = require('./lib/syntax'),
+    locations = require('./lib/locations');
+
+var Position = locations.Position,
+    SourceLocation = locations.SourceLocation;
 
 var Token,
     TokenName,
@@ -1238,16 +1242,6 @@ function peek() {
     index = pos;
     lineNumber = line;
     lineStart = start;
-}
-
-function Position(line, column) {
-    this.line = line;
-    this.column = column;
-}
-
-function SourceLocation(startLine, startColumn, line, column) {
-    this.start = new Position(startLine, startColumn);
-    this.end = new Position(line, column);
 }
 
 SyntaxTreeDelegate = {
