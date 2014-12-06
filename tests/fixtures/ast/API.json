@@ -1,0 +1,288 @@
+{
+    "parse()": {
+        "call": "parse",
+        "args": [],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Identifier",
+                        "name": "undefined"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(null)": {
+        "call": "parse",
+        "args": [
+            null
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Literal",
+                        "value": null,
+                        "raw": "null"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(42)": {
+        "call": "parse",
+        "args": [
+            42
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Literal",
+                        "value": 42,
+                        "raw": "42"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(true)": {
+        "call": "parse",
+        "args": [
+            true
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Literal",
+                        "value": true,
+                        "raw": "true"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(undefined)": {
+        "call": "parse",
+        "args": [
+            "espree@undefined"
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Identifier",
+                        "name": "undefined"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(new String(\"test\"))": {
+        "call": "parse",
+        "args": [
+            "test"
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Identifier",
+                        "name": "test"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(new Number(42))": {
+        "call": "parse",
+        "args": [
+            42
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Literal",
+                        "value": 42,
+                        "raw": "42"
+                    }
+                }
+            ]
+        }
+    },
+    "parse(new Boolean(true))": {
+        "call": "parse",
+        "args": [
+            true
+        ],
+        "result": {
+            "type": "Program",
+            "body": [
+                {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                        "type": "Literal",
+                        "value": true,
+                        "raw": "true"
+                    }
+                }
+            ]
+        }
+    },
+    "Syntax": {
+        "property": "Syntax",
+        "result": {
+            "AssignmentExpression": "AssignmentExpression",
+            "ArrayExpression": "ArrayExpression",
+            "BlockStatement": "BlockStatement",
+            "BinaryExpression": "BinaryExpression",
+            "BreakStatement": "BreakStatement",
+            "CallExpression": "CallExpression",
+            "CatchClause": "CatchClause",
+            "ConditionalExpression": "ConditionalExpression",
+            "ContinueStatement": "ContinueStatement",
+            "DoWhileStatement": "DoWhileStatement",
+            "DebuggerStatement": "DebuggerStatement",
+            "EmptyStatement": "EmptyStatement",
+            "ExpressionStatement": "ExpressionStatement",
+            "ForStatement": "ForStatement",
+            "ForInStatement": "ForInStatement",
+            "FunctionDeclaration": "FunctionDeclaration",
+            "FunctionExpression": "FunctionExpression",
+            "Identifier": "Identifier",
+            "IfStatement": "IfStatement",
+            "Literal": "Literal",
+            "LabeledStatement": "LabeledStatement",
+            "LogicalExpression": "LogicalExpression",
+            "MemberExpression": "MemberExpression",
+            "NewExpression": "NewExpression",
+            "ObjectExpression": "ObjectExpression",
+            "Program": "Program",
+            "Property": "Property",
+            "ReturnStatement": "ReturnStatement",
+            "SequenceExpression": "SequenceExpression",
+            "SwitchStatement": "SwitchStatement",
+            "SwitchCase": "SwitchCase",
+            "ThisExpression": "ThisExpression",
+            "ThrowStatement": "ThrowStatement",
+            "TryStatement": "TryStatement",
+            "UnaryExpression": "UnaryExpression",
+            "UpdateExpression": "UpdateExpression",
+            "VariableDeclaration": "VariableDeclaration",
+            "VariableDeclarator": "VariableDeclarator",
+            "WhileStatement": "WhileStatement",
+            "WithStatement": "WithStatement"
+        }
+    },
+    "tokenize()": {
+        "call": "tokenize",
+        "args": [],
+        "result": [
+            {
+                "type": "Identifier",
+                "value": "undefined"
+            }
+        ]
+    },
+    "tokenize(null)": {
+        "call": "tokenize",
+        "args": [
+            null
+        ],
+        "result": [
+            {
+                "type": "Null",
+                "value": "null"
+            }
+        ]
+    },
+    "tokenize(42)": {
+        "call": "tokenize",
+        "args": [
+            42
+        ],
+        "result": [
+            {
+                "type": "Numeric",
+                "value": "42"
+            }
+        ]
+    },
+    "tokenize(true)": {
+        "call": "tokenize",
+        "args": [
+            true
+        ],
+        "result": [
+            {
+                "type": "Boolean",
+                "value": "true"
+            }
+        ]
+    },
+    "tokenize(undefined)": {
+        "call": "tokenize",
+        "args": [
+            "espree@undefined"
+        ],
+        "result": [
+            {
+                "type": "Identifier",
+                "value": "undefined"
+            }
+        ]
+    },
+    "tokenize(new String(\"test\"))": {
+        "call": "tokenize",
+        "args": [
+            "test"
+        ],
+        "result": [
+            {
+                "type": "Identifier",
+                "value": "test"
+            }
+        ]
+    },
+    "tokenize(new Number(42))": {
+        "call": "tokenize",
+        "args": [
+            42
+        ],
+        "result": [
+            {
+                "type": "Numeric",
+                "value": "42"
+            }
+        ]
+    },
+    "tokenize(new Boolean(true))": {
+        "call": "tokenize",
+        "args": [
+            true
+        ],
+        "result": [
+            {
+                "type": "Boolean",
+                "value": "true"
+            }
+        ]
+    }
+}
