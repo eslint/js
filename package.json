@@ -36,7 +36,7 @@
   ],
   "devDependencies": {
     "complexity-report": "~0.6.1",
-    "eslint": "~0.4.3",
+    "eslint": "^0.9.1",
     "istanbul": "~0.2.6",
     "jscs": "~1.2.4",
     "jslint": "~0.1.9",
@@ -56,9 +56,7 @@
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
     "test": "npm run-script lint && node test/run.js && npm run-script coverage && npm run-script complexity",
-    "lint": "npm run-script check-version && npm run-script eslint",
-    "check-version": "node tools/check-version.js",
-    "eslint": "node node_modules/eslint/bin/eslint.js espree.js",
+    "lint": "node node_modules/eslint/bin/eslint.js espree.js lib/",
     "coverage": "npm run-script analyze-coverage && npm run-script check-coverage",
     "analyze-coverage": "node node_modules/istanbul/lib/cli.js cover test/runner.js",
     "check-coverage": "node node_modules/istanbul/lib/cli.js check-coverage --statement 100 --branch 100 --function 100",
