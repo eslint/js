@@ -23,7 +23,7 @@ The immediate plans are:
 1. Move towards CommonJS for all files and use browserify to create browser bundles.
 1. Support ECMAScript version filtering, allowing users to specify which version the parser should work in (similar to Acorn's `ecmaVersion` property).
 1. Add tests to track comment attachment.
-1. Add features well-thought-out features that are useful for tools developers.
+1. Add well-thought-out features that are useful for tools developers.
 1. Add full support for ECMAScript 6.
 1. Add optional parsing of JSX.
 
