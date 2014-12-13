@@ -65,13 +65,21 @@ describe("espree", function() {
         describe("ECMAScript 6 mode", function() {
 
             it("should produce an AST when using let", function() {
-                var ast = espree.parse("let foo = bar;", { ecmascript: 6 });
-                assert.deepEqual(ast, require("../fixtures/espree/let.json"));
+                var ast = espree.parse("let foo = bar;", {
+                    ecmascript: 6,
+                    loc: true,
+                    range: true
+                });
+                assert.deepEqual(ast, require("../fixtures/espree/let-result.js"));
             });
 
             it("should produce an AST when using const", function() {
-                var ast = espree.parse("const foo = bar;", { ecmascript: 6 });
-                assert.deepEqual(ast, require("../fixtures/espree/const.json"));
+                var ast = espree.parse("const foo = bar;", {
+                    ecmascript: 6,
+                    loc: true,
+                    range: true
+                });
+                assert.deepEqual(ast, require("../fixtures/espree/const-result.js"));
             });
 
         });
@@ -79,13 +87,19 @@ describe("espree", function() {
         describe("Edge mode", function() {
 
             it("should produce an AST when using let", function() {
-                var ast = espree.parse("let foo = bar;");
-                assert.deepEqual(ast, require("../fixtures/espree/let.json"));
+                var ast = espree.parse("let foo = bar;", {
+                    loc: true,
+                    range: true
+                });
+                assert.deepEqual(ast, require("../fixtures/espree/let-result.js"));
             });
 
             it("should produce an AST when using const", function() {
-                var ast = espree.parse("const foo = bar;");
-                assert.deepEqual(ast, require("../fixtures/espree/const.json"));
+                var ast = espree.parse("const foo = bar;", {
+                    loc: true,
+                    range: true
+                });
+                assert.deepEqual(ast, require("../fixtures/espree/const-result.js"));
             });
 
         });
