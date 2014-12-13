@@ -1155,6 +1155,10 @@ function peek() {
     lineStart = start;
 }
 
+//------------------------------------------------------------------------------
+// Syntax Tree Delegate
+//------------------------------------------------------------------------------
+
 SyntaxTreeDelegate = {
 
     name: "SyntaxTree",
@@ -3245,13 +3249,13 @@ function parseFunctionExpression() {
 function parseSourceElement() {
     if (lookahead.type === Token.Keyword) {
         switch (lookahead.value) {
-        case "const":
-        case "let":
-            return parseConstLetDeclaration(lookahead.value);
-        case "function":
-            return parseFunctionDeclaration();
-        default:
-            return parseStatement();
+            case "const":
+            case "let":
+                return parseConstLetDeclaration(lookahead.value);
+            case "function":
+                return parseFunctionDeclaration();
+            default:
+                return parseStatement();
         }
     }
 
@@ -3331,6 +3335,10 @@ function filterTokenLocation() {
 
     extra.tokens = tokens;
 }
+
+//------------------------------------------------------------------------------
+// Tokenizer
+//------------------------------------------------------------------------------
 
 function tokenize(code, options) {
     // possible ESLint bug
@@ -3422,6 +3430,10 @@ function tokenize(code, options) {
     }
     return tokens;
 }
+
+//------------------------------------------------------------------------------
+// Parser
+//------------------------------------------------------------------------------
 
 function parse(code, options) {
     var program, toString;
