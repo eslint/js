@@ -87,3 +87,9 @@ Espree will not do giant releases. Releases will happen periodically as changes 
 Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing.html), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/espree/issues).
 
 Espree is licensed under a permissive BSD 3-clause license.
+
+## Build Commands
+
+* `npm test` - run all linting and tests
+* `npm run lint` - run all linting
+* `npm run browserify` - creates a version of Espree that is usable in a browser
