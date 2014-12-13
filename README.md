@@ -54,7 +54,10 @@ var ast = espree.parse(code, {
 
     // try to continue parsing if an error is encountered, store errors in a
     // top-level errors array
-    tolerant: true
+    tolerant: true,
+
+    // specify parsing mode (default is highest available)
+    ecmascript: 6
 });
 ```
 
