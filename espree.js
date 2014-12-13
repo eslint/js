@@ -36,12 +36,12 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var syntax = require("./lib/syntax"),
     tokenInfo = require("./lib/token-info"),
+    astNodeTypes = require("./lib/ast-node-types"),
     SourceLocation = require("./lib/locations").SourceLocation;
 
 var Token = tokenInfo.Token,
     TokenName = tokenInfo.TokenName,
     FnExprTokens = tokenInfo.FnExprTokens,
-    Syntax,
     PropertyKind,
     Messages,
     SyntaxTreeDelegate,
@@ -55,49 +55,6 @@ var Token = tokenInfo.Token,
     lookahead,
     state,
     extra;
-
-Syntax = {
-    AssignmentExpression: "AssignmentExpression",
-    ArrayExpression: "ArrayExpression",
-    BlockStatement: "BlockStatement",
-    BinaryExpression: "BinaryExpression",
-    BreakStatement: "BreakStatement",
-    CallExpression: "CallExpression",
-    CatchClause: "CatchClause",
-    ConditionalExpression: "ConditionalExpression",
-    ContinueStatement: "ContinueStatement",
-    DoWhileStatement: "DoWhileStatement",
-    DebuggerStatement: "DebuggerStatement",
-    EmptyStatement: "EmptyStatement",
-    ExpressionStatement: "ExpressionStatement",
-    ForStatement: "ForStatement",
-    ForInStatement: "ForInStatement",
-    FunctionDeclaration: "FunctionDeclaration",
-    FunctionExpression: "FunctionExpression",
-    Identifier: "Identifier",
-    IfStatement: "IfStatement",
-    Literal: "Literal",
-    LabeledStatement: "LabeledStatement",
-    LogicalExpression: "LogicalExpression",
-    MemberExpression: "MemberExpression",
-    NewExpression: "NewExpression",
-    ObjectExpression: "ObjectExpression",
-    Program: "Program",
-    Property: "Property",
-    ReturnStatement: "ReturnStatement",
-    SequenceExpression: "SequenceExpression",
-    SwitchStatement: "SwitchStatement",
-    SwitchCase: "SwitchCase",
-    ThisExpression: "ThisExpression",
-    ThrowStatement: "ThrowStatement",
-    TryStatement: "TryStatement",
-    UnaryExpression: "UnaryExpression",
-    UpdateExpression: "UpdateExpression",
-    VariableDeclaration: "VariableDeclaration",
-    VariableDeclarator: "VariableDeclarator",
-    WhileStatement: "WhileStatement",
-    WithStatement: "WithStatement"
-};
 
 PropertyKind = {
     Data: 1,
@@ -1205,7 +1162,7 @@ SyntaxTreeDelegate = {
     processComment: function (node) {
         var lastChild, trailingComments;
 
-        if (node.type === Syntax.Program) {
+        if (node.type === astNodeTypes.Program) {
             if (node.body.length > 0) {
                 return;
             }
@@ -1279,14 +1236,14 @@ SyntaxTreeDelegate = {
 
     createArrayExpression: function (elements) {
         return {
-            type: Syntax.ArrayExpression,
+            type: astNodeTypes.ArrayExpression,
             elements: elements
         };
     },
 
     createAssignmentExpression: function (operator, left, right) {
         return {
-            type: Syntax.AssignmentExpression,
+            type: astNodeTypes.AssignmentExpression,
             operator: operator,
             left: left,
             right: right
@@ -1294,8 +1251,8 @@ SyntaxTreeDelegate = {
     },
 
     createBinaryExpression: function (operator, left, right) {
-        var type = (operator === "||" || operator === "&&") ? Syntax.LogicalExpression :
-                    Syntax.BinaryExpression;
+        var type = (operator === "||" || operator === "&&") ? astNodeTypes.LogicalExpression :
+                    astNodeTypes.BinaryExpression;
         return {
             type: type,
             operator: operator,
@@ -1306,21 +1263,21 @@ SyntaxTreeDelegate = {
 
     createBlockStatement: function (body) {
         return {
-            type: Syntax.BlockStatement,
+            type: astNodeTypes.BlockStatement,
             body: body
         };
     },
 
     createBreakStatement: function (label) {
         return {
-            type: Syntax.BreakStatement,
+            type: astNodeTypes.BreakStatement,
             label: label
         };
     },
 
     createCallExpression: function (callee, args) {
         return {
-            type: Syntax.CallExpression,
+            type: astNodeTypes.CallExpression,
             callee: callee,
             "arguments": args
         };
@@ -1328,7 +1285,7 @@ SyntaxTreeDelegate = {
 
     createCatchClause: function (param, body) {
         return {
-            type: Syntax.CatchClause,
+            type: astNodeTypes.CatchClause,
             param: param,
             body: body
         };
@@ -1336,7 +1293,7 @@ SyntaxTreeDelegate = {
 
     createConditionalExpression: function (test, consequent, alternate) {
         return {
-            type: Syntax.ConditionalExpression,
+            type: astNodeTypes.ConditionalExpression,
             test: test,
             consequent: consequent,
             alternate: alternate
@@ -1345,20 +1302,20 @@ SyntaxTreeDelegate = {
 
     createContinueStatement: function (label) {
         return {
-            type: Syntax.ContinueStatement,
+            type: astNodeTypes.ContinueStatement,
             label: label
         };
     },
 
     createDebuggerStatement: function () {
         return {
-            type: Syntax.DebuggerStatement
+            type: astNodeTypes.DebuggerStatement
         };
     },
 
     createDoWhileStatement: function (body, test) {
         return {
-            type: Syntax.DoWhileStatement,
+            type: astNodeTypes.DoWhileStatement,
             body: body,
             test: test
         };
@@ -1366,20 +1323,20 @@ SyntaxTreeDelegate = {
 
     createEmptyStatement: function () {
         return {
-            type: Syntax.EmptyStatement
+            type: astNodeTypes.EmptyStatement
         };
     },
 
     createExpressionStatement: function (expression) {
         return {
-            type: Syntax.ExpressionStatement,
+            type: astNodeTypes.ExpressionStatement,
             expression: expression
         };
     },
 
     createForStatement: function (init, test, update, body) {
         return {
-            type: Syntax.ForStatement,
+            type: astNodeTypes.ForStatement,
             init: init,
             test: test,
             update: update,
@@ -1389,7 +1346,7 @@ SyntaxTreeDelegate = {
 
     createForInStatement: function (left, right, body) {
         return {
-            type: Syntax.ForInStatement,
+            type: astNodeTypes.ForInStatement,
             left: left,
             right: right,
             body: body,
@@ -1399,7 +1356,7 @@ SyntaxTreeDelegate = {
 
     createFunctionDeclaration: function (id, params, defaults, body) {
         return {
-            type: Syntax.FunctionDeclaration,
+            type: astNodeTypes.FunctionDeclaration,
             id: id,
             params: params,
             defaults: defaults,
@@ -1412,7 +1369,7 @@ SyntaxTreeDelegate = {
 
     createFunctionExpression: function (id, params, defaults, body) {
         return {
-            type: Syntax.FunctionExpression,
+            type: astNodeTypes.FunctionExpression,
             id: id,
             params: params,
             defaults: defaults,
@@ -1425,14 +1382,14 @@ SyntaxTreeDelegate = {
 
     createIdentifier: function (name) {
         return {
-            type: Syntax.Identifier,
+            type: astNodeTypes.Identifier,
             name: name
         };
     },
 
     createIfStatement: function (test, consequent, alternate) {
         return {
-            type: Syntax.IfStatement,
+            type: astNodeTypes.IfStatement,
             test: test,
             consequent: consequent,
             alternate: alternate
@@ -1441,7 +1398,7 @@ SyntaxTreeDelegate = {
 
     createLabeledStatement: function (label, body) {
         return {
-            type: Syntax.LabeledStatement,
+            type: astNodeTypes.LabeledStatement,
             label: label,
             body: body
         };
@@ -1449,7 +1406,7 @@ SyntaxTreeDelegate = {
 
     createLiteral: function (token) {
         return {
-            type: Syntax.Literal,
+            type: astNodeTypes.Literal,
             value: token.value,
             raw: source.slice(token.start, token.end)
         };
@@ -1457,7 +1414,7 @@ SyntaxTreeDelegate = {
 
     createMemberExpression: function (accessor, object, property) {
         return {
-            type: Syntax.MemberExpression,
+            type: astNodeTypes.MemberExpression,
             computed: accessor === "[",
             object: object,
             property: property
@@ -1466,7 +1423,7 @@ SyntaxTreeDelegate = {
 
     createNewExpression: function (callee, args) {
         return {
-            type: Syntax.NewExpression,
+            type: astNodeTypes.NewExpression,
             callee: callee,
             "arguments": args
         };
@@ -1474,14 +1431,14 @@ SyntaxTreeDelegate = {
 
     createObjectExpression: function (properties) {
         return {
-            type: Syntax.ObjectExpression,
+            type: astNodeTypes.ObjectExpression,
             properties: properties
         };
     },
 
     createPostfixExpression: function (operator, argument) {
         return {
-            type: Syntax.UpdateExpression,
+            type: astNodeTypes.UpdateExpression,
             operator: operator,
             argument: argument,
             prefix: false
@@ -1490,14 +1447,14 @@ SyntaxTreeDelegate = {
 
     createProgram: function (body) {
         return {
-            type: Syntax.Program,
+            type: astNodeTypes.Program,
             body: body
         };
     },
 
     createProperty: function (kind, key, value) {
         return {
-            type: Syntax.Property,
+            type: astNodeTypes.Property,
             key: key,
             value: value,
             kind: kind
@@ -1506,21 +1463,21 @@ SyntaxTreeDelegate = {
 
     createReturnStatement: function (argument) {
         return {
-            type: Syntax.ReturnStatement,
+            type: astNodeTypes.ReturnStatement,
             argument: argument
         };
     },
 
     createSequenceExpression: function (expressions) {
         return {
-            type: Syntax.SequenceExpression,
+            type: astNodeTypes.SequenceExpression,
             expressions: expressions
         };
     },
 
     createSwitchCase: function (test, consequent) {
         return {
-            type: Syntax.SwitchCase,
+            type: astNodeTypes.SwitchCase,
             test: test,
             consequent: consequent
         };
@@ -1528,7 +1485,7 @@ SyntaxTreeDelegate = {
 
     createSwitchStatement: function (discriminant, cases) {
         return {
-            type: Syntax.SwitchStatement,
+            type: astNodeTypes.SwitchStatement,
             discriminant: discriminant,
             cases: cases
         };
@@ -1536,20 +1493,20 @@ SyntaxTreeDelegate = {
 
     createThisExpression: function () {
         return {
-            type: Syntax.ThisExpression
+            type: astNodeTypes.ThisExpression
         };
     },
 
     createThrowStatement: function (argument) {
         return {
-            type: Syntax.ThrowStatement,
+            type: astNodeTypes.ThrowStatement,
             argument: argument
         };
     },
 
     createTryStatement: function (block, guardedHandlers, handlers, finalizer) {
         return {
-            type: Syntax.TryStatement,
+            type: astNodeTypes.TryStatement,
             block: block,
             guardedHandlers: guardedHandlers,
             handlers: handlers,
@@ -1560,14 +1517,14 @@ SyntaxTreeDelegate = {
     createUnaryExpression: function (operator, argument) {
         if (operator === "++" || operator === "--") {
             return {
-                type: Syntax.UpdateExpression,
+                type: astNodeTypes.UpdateExpression,
                 operator: operator,
                 argument: argument,
                 prefix: true
             };
         }
         return {
-            type: Syntax.UnaryExpression,
+            type: astNodeTypes.UnaryExpression,
             operator: operator,
             argument: argument,
             prefix: true
@@ -1576,7 +1533,7 @@ SyntaxTreeDelegate = {
 
     createVariableDeclaration: function (declarations, kind) {
         return {
-            type: Syntax.VariableDeclaration,
+            type: astNodeTypes.VariableDeclaration,
             declarations: declarations,
             kind: kind
         };
@@ -1584,7 +1541,7 @@ SyntaxTreeDelegate = {
 
     createVariableDeclarator: function (id, init) {
         return {
-            type: Syntax.VariableDeclarator,
+            type: astNodeTypes.VariableDeclarator,
             id: id,
             init: init
         };
@@ -1592,7 +1549,7 @@ SyntaxTreeDelegate = {
 
     createWhileStatement: function (test, body) {
         return {
-            type: Syntax.WhileStatement,
+            type: astNodeTypes.WhileStatement,
             test: test,
             body: body
         };
@@ -1600,7 +1557,7 @@ SyntaxTreeDelegate = {
 
     createWithStatement: function (object, body) {
         return {
-            type: Syntax.WithStatement,
+            type: astNodeTypes.WithStatement,
             object: object,
             body: body
         };
@@ -1777,7 +1734,7 @@ function consumeSemicolon() {
 // Return true if provided expression is LeftHandSideExpression
 
 function isLeftHandSide(expr) {
-    return expr.type === Syntax.Identifier || expr.type === Syntax.MemberExpression;
+    return expr.type === astNodeTypes.Identifier || expr.type === astNodeTypes.MemberExpression;
 }
 
 // 11.1.4 Array Initialiser
@@ -1898,7 +1855,7 @@ function parseObjectInitialiser() {
     while (!match("}")) {
         property = parseObjectProperty();
 
-        if (property.key.type === Syntax.Identifier) {
+        if (property.key.type === astNodeTypes.Identifier) {
             name = property.key.name;
         } else {
             name = toString(property.key.value);
@@ -2140,7 +2097,7 @@ function parsePostfixExpression() {
     if (lookahead.type === Token.Punctuator) {
         if ((match("++") || match("--")) && !peekLineTerminator()) {
             // 11.3.1, 11.3.2
-            if (strict && expr.type === Syntax.Identifier && syntax.isRestrictedWord(expr.name)) {
+            if (strict && expr.type === astNodeTypes.Identifier && syntax.isRestrictedWord(expr.name)) {
                 throwErrorTolerant({}, Messages.StrictLHSPostfix);
             }
 
@@ -2168,7 +2125,7 @@ function parseUnaryExpression() {
         token = lex();
         expr = parseUnaryExpression();
         // 11.4.4, 11.4.5
-        if (strict && expr.type === Syntax.Identifier && syntax.isRestrictedWord(expr.name)) {
+        if (strict && expr.type === astNodeTypes.Identifier && syntax.isRestrictedWord(expr.name)) {
             throwErrorTolerant({}, Messages.StrictLHSPrefix);
         }
 
@@ -2190,7 +2147,7 @@ function parseUnaryExpression() {
         expr = parseUnaryExpression();
         expr = delegate.createUnaryExpression(token.value, expr);
         expr = delegate.markEnd(expr, startToken);
-        if (strict && expr.operator === "delete" && expr.argument.type === Syntax.Identifier) {
+        if (strict && expr.operator === "delete" && expr.argument.type === astNodeTypes.Identifier) {
             throwErrorTolerant({}, Messages.StrictDelete);
         }
     } else {
@@ -2378,7 +2335,7 @@ function parseAssignmentExpression() {
         }
 
         // 11.13.1
-        if (strict && left.type === Syntax.Identifier && syntax.isRestrictedWord(left.name)) {
+        if (strict && left.type === astNodeTypes.Identifier && syntax.isRestrictedWord(left.name)) {
             throwErrorTolerant(token, Messages.StrictLHSAssignment);
         }
 
@@ -3061,7 +3018,7 @@ function parseStatement() {
     expr = parseExpression();
 
     // 12.12 Labelled Statements
-    if ((expr.type === Syntax.Identifier) && match(":")) {
+    if ((expr.type === astNodeTypes.Identifier) && match(":")) {
         lex();
 
         key = "$" + expr.name;
@@ -3097,7 +3054,7 @@ function parseFunctionSourceElements() {
 
         sourceElement = parseSourceElement();
         sourceElements.push(sourceElement);
-        if (sourceElement.expression.type !== Syntax.Literal) {
+        if (sourceElement.expression.type !== astNodeTypes.Literal) {
             // this is not directive
             break;
         }
@@ -3314,7 +3271,7 @@ function parseSourceElements() {
 
         sourceElement = parseSourceElement();
         sourceElements.push(sourceElement);
-        if (sourceElement.expression.type !== Syntax.Literal) {
+        if (sourceElement.expression.type !== astNodeTypes.Literal) {
             // this is not directive
             break;
         }
@@ -3555,9 +3512,9 @@ exports.Syntax = (function () {
         types = Object.create(null);
     }
 
-    for (name in Syntax) {
-        if (Syntax.hasOwnProperty(name)) {
-            types[name] = Syntax[name];
+    for (name in astNodeTypes) {
+        if (astNodeTypes.hasOwnProperty(name)) {
+            types[name] = astNodeTypes[name];
         }
     }
 
