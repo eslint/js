@@ -35,11 +35,12 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 "use strict";
 
 var syntax = require("./lib/syntax"),
+    tokenInfo = require("./lib/token-info"),
     SourceLocation = require("./lib/locations").SourceLocation;
 
-var Token,
-    TokenName,
-    FnExprTokens,
+var Token = tokenInfo.Token,
+    TokenName = tokenInfo.TokenName,
+    FnExprTokens = tokenInfo.FnExprTokens,
     Syntax,
     PropertyKind,
     Messages,
@@ -54,40 +55,6 @@ var Token,
     lookahead,
     state,
     extra;
-
-Token = {
-    BooleanLiteral: 1,
-    EOF: 2,
-    Identifier: 3,
-    Keyword: 4,
-    NullLiteral: 5,
-    NumericLiteral: 6,
-    Punctuator: 7,
-    StringLiteral: 8,
-    RegularExpression: 9
-};
-
-TokenName = {};
-TokenName[Token.BooleanLiteral] = "Boolean";
-TokenName[Token.EOF] = "<end>";
-TokenName[Token.Identifier] = "Identifier";
-TokenName[Token.Keyword] = "Keyword";
-TokenName[Token.NullLiteral] = "Null";
-TokenName[Token.NumericLiteral] = "Numeric";
-TokenName[Token.Punctuator] = "Punctuator";
-TokenName[Token.StringLiteral] = "String";
-TokenName[Token.RegularExpression] = "RegularExpression";
-
-// A function following one of those tokens is an expression.
-FnExprTokens = ["(", "{", "[", "in", "typeof", "instanceof", "new",
-                "return", "case", "delete", "throw", "void",
-                // assignment operators
-                "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=",
-                "&=", "|=", "^=", ",",
-                // binary/unary operators
-                "+", "-", "*", "/", "%", "++", "--", "<<", ">>", ">>>", "&",
-                "|", "^", "!", "~", "&&", "||", "?", ":", "===", "==", ">=",
-                "<=", "<", ">", "!=", "!=="];
 
 Syntax = {
     AssignmentExpression: "AssignmentExpression",
