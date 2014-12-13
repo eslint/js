@@ -3249,11 +3249,14 @@ function parseFunctionExpression() {
 function parseSourceElement() {
     if (lookahead.type === Token.Keyword) {
         switch (lookahead.value) {
-            case "const":
-            case "let":
-                return parseConstLetDeclaration(lookahead.value);
             case "function":
                 return parseFunctionDeclaration();
+            case "const":
+            case "let":
+                if (extra.ecmascript >= 6) {
+                    return parseConstLetDeclaration(lookahead.value);
+                }
+                /* falls through */
             default:
                 return parseStatement();
         }
@@ -3459,11 +3462,19 @@ function parse(code, options) {
         lastCommentStart: -1
     };
 
-    extra = {};
+    extra = {
+        ecmascript: Infinity    // allow everything by default
+    };
+
     if (typeof options !== "undefined") {
         extra.range = (typeof options.range === "boolean") && options.range;
         extra.loc = (typeof options.loc === "boolean") && options.loc;
         extra.attachComment = (typeof options.attachComment === "boolean") && options.attachComment;
+
+        // if there's a valid ECMAScript version to pin to, apply it
+        if (typeof options.ecmascript === "number" && options.ecmascript >= 5) {
+            extra.ecmascript = options.ecmascript;
+        }
 
         if (extra.loc && options.source !== null && options.source !== undefined) {
             extra.source = toString(options.source);

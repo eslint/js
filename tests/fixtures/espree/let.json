@@ -1,0 +1,22 @@
+{
+    "type": "Program",
+    "body": [
+        {
+            "type": "VariableDeclaration",
+            "declarations": [
+                {
+                    "type": "VariableDeclarator",
+                    "id": {
+                        "type": "Identifier",
+                        "name": "foo"
+                    },
+                    "init": {
+                        "type": "Identifier",
+                        "name": "bar"
+                    }
+                }
+            ],
+            "kind": "let"
+        }
+    ]
+}
