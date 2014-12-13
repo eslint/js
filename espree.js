@@ -3496,8 +3496,11 @@ function parse(code, options) {
     return program;
 }
 
-// Sync with *.json manifests.
-exports.version = "1.2.2";
+//------------------------------------------------------------------------------
+// Public
+//------------------------------------------------------------------------------
+
+exports.version = require("./package.json").version;
 
 exports.tokenize = tokenize;
 
