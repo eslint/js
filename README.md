@@ -23,7 +23,7 @@ npm i espree --save
 
 And in your Node.js code:
 
-```
+```javascript
 var espree = require("espree");
 
 var ast = espree.parse(code);
@@ -31,7 +31,7 @@ var ast = espree.parse(code);
 
 There is a second argument to `parse()` that allows you to specify various options:
 
-```
+```javascript
 var espree = require("espree");
 
 var ast = espree.parse(code, {
