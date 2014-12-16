@@ -6065,6 +6065,10 @@
                             "type": "Literal",
                             "value": "/[P QR]/g",
                             "raw": "/[P QR]/\\g",
+                            "regex": {
+                                "pattern": "[P QR]",
+                                "flags": "g"
+                            },
                             "range": [
                                 8,
                                 18
@@ -6166,6 +6170,10 @@
                             "type": "Literal",
                             "value": "/[P QR]/g",
                             "raw": "/[P QR]/\\\\u0067",
+                            "regex": {
+                                "pattern": "[P QR]",
+                                "flags": "g"
+                            },
                             "range": [
                                 8,
                                 23

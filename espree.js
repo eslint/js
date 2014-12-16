@@ -72,6 +72,7 @@ Messages = {
     UnexpectedEOS: "Unexpected end of input",
     NewlineAfterThrow: "Illegal newline after throw",
     InvalidRegExp: "Invalid regular expression",
+    InvalidRegExpFlag: "Invalid regular expression flag",
     UnterminatedRegExp: "Invalid regular expression: missing /",
     InvalidLHSInAssignment: "Invalid left-hand side in assignment",
     InvalidLHSInForIn: "Invalid left-hand side in for-in",
@@ -800,13 +801,52 @@ function scanStringLiteral() {
 }
 
 function testRegExp(pattern, flags) {
-    var value;
+    var tmp = pattern,
+        validFlags = /^[gmsi]*$/;
+
+    if (extra.ecmascript >= 6) {
+        validFlags = /^[gmsiyu]*$/;
+    }
+
+    if (!validFlags.test(flags)) {
+        throwError({}, Messages.InvalidRegExpFlag);
+    }
+
+
+    if (flags.indexOf("u") >= 0) {
+        // Replace each astral symbol and every Unicode code point
+        // escape sequence with a single ASCII symbol to avoid throwing on
+        // regular expressions that are only valid in combination with the
+        // `/u` flag.
+        // Note: replacing with the ASCII symbol `x` might cause false
+        // negatives in unlikely scenarios. For example, `[\u{61}-b]` is a
+        // perfectly valid pattern that is equivalent to `[a-b]`, but it
+        // would be replaced by `[x-b]` which throws an error.
+        tmp = tmp
+            .replace(/\\u\{([0-9a-fA-F]+)\}/g, function ($0, $1) {
+                if (parseInt($1, 16) <= 0x10FFFF) {
+                    return "x";
+                }
+                throwError({}, Messages.InvalidRegExp);
+            })
+            .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, "x");
+    }
+
+    // First, detect invalid regular expressions.
     try {
-        value = new RegExp(pattern, flags);
+        RegExp(tmp);
     } catch (e) {
         throwError({}, Messages.InvalidRegExp);
     }
-    return value;
+
+    // Return a regular expression object for this pattern-flag pair, or
+    // `null` in case the current environment doesn't support the flags it
+    // uses.
+    try {
+        return new RegExp(pattern, flags);
+    } catch (exception) {
+        return null;
+    }
 }
 
 function scanRegExpBody() {
@@ -916,6 +956,10 @@ function scanRegExp() {
         return {
             type: Token.RegularExpression,
             value: value,
+            regex: {
+                pattern: body.value,
+                flags: flags.value
+            },
             lineNumber: lineNumber,
             lineStart: lineStart,
             start: start,
@@ -926,6 +970,10 @@ function scanRegExp() {
     return {
         literal: body.literal + flags.literal,
         value: value,
+        regex: {
+            pattern: body.value,
+            flags: flags.value
+        },
         start: start,
         end: index
     };
@@ -965,6 +1013,7 @@ function collectRegex() {
         extra.tokens.push({
             type: "RegularExpression",
             value: regex.literal,
+            regex: regex.regex,
             range: [pos, index],
             loc: loc
         });
@@ -1097,7 +1146,7 @@ function advance() {
 }
 
 function collectToken() {
-    var loc, token, value;
+    var loc, token, value, entry;
 
     skipComment();
     loc = {
@@ -1115,12 +1164,19 @@ function collectToken() {
 
     if (token.type !== Token.EOF) {
         value = source.slice(token.start, token.end);
-        extra.tokens.push({
+        entry = {
             type: TokenName[token.type],
             value: value,
             range: [token.start, token.end],
             loc: loc
-        });
+        };
+        if (token.regex) {
+            entry.regex = {
+                pattern: token.regex.pattern,
+                flags: token.regex.flags
+            };
+        }
+        extra.tokens.push(entry);
     }
 
     return token;
@@ -1409,11 +1465,18 @@ SyntaxTreeDelegate = {
     },
 
     createLiteral: function (token) {
-        return {
+        var node = {
             type: astNodeTypes.Literal,
             value: token.value,
             raw: source.slice(token.start, token.end)
         };
+
+        // regular expressions have regex properties
+        if (token.regex) {
+            node.regex = token.regex;
+        }
+
+        return node;
     },
 
     createMemberExpression: function (accessor, object, property) {
@@ -3327,6 +3390,12 @@ function filterTokenLocation() {
             type: entry.type,
             value: entry.value
         };
+        if (entry.regex) {
+            token.regex = {
+                pattern: entry.regex.pattern,
+                flags: entry.regex.flags
+            };
+        }
         if (extra.range) {
             token.range = entry.range;
         }
@@ -3344,12 +3413,8 @@ function filterTokenLocation() {
 //------------------------------------------------------------------------------
 
 function tokenize(code, options) {
-    // possible ESLint bug
-    /*eslint-disable no-unused-vars*/
     var toString,
-        token,
         tokens;
-    /*eslint-enable no-unused-vars*/
 
     toString = String;
     if (typeof code !== "string" && !(code instanceof String)) {
@@ -3372,7 +3437,9 @@ function tokenize(code, options) {
         lastCommentStart: -1
     };
 
-    extra = {};
+    extra = {
+        ecmascript: Infinity    // allow everything by default
+    };
 
     // Options matching.
     options = options || {};
@@ -3395,18 +3462,22 @@ function tokenize(code, options) {
         extra.errors = [];
     }
 
+    // if there's a valid ECMAScript version to pin to, apply it
+    if (typeof options.ecmascript === "number" && options.ecmascript >= 5) {
+        extra.ecmascript = options.ecmascript;
+    }
+
     try {
         peek();
         if (lookahead.type === Token.EOF) {
             return extra.tokens;
         }
 
-        token = lex();
+        lex();
         while (lookahead.type !== Token.EOF) {
             try {
-                token = lex();
+                lex();
             } catch (lexError) {
-                token = lookahead;
                 if (extra.errors) {
                     extra.errors.push(lexError);
                     // We have to break on the first error
@@ -3420,6 +3491,7 @@ function tokenize(code, options) {
 
         filterTokenLocation();
         tokens = extra.tokens;
+
         if (typeof extra.comments !== "undefined") {
             tokens.comments = extra.comments;
         }

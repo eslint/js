@@ -94,11 +94,15 @@ function getContext(espree, reportCase, reportFailure) {
             if (key === 'value' && value instanceof RegExp) {
                 value = value.toString();
             } else if (key === 'raw' && typeof value === "string") {
-                // Ignore espree-specific 'raw' property.
+                // Ignore Espree-specific 'raw' property.
+                return undefined;
+            } else if (key === 'regex' && typeof value === "object") {
+                // Ignore Espree-specific 'regex' property.
                 return undefined;
             }
             return value;
         }
+
 
         if (obj.type && (obj.type === 'Program')) {
             pattern.assert = function (tree) {

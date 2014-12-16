@@ -29,6 +29,10 @@
                             "type": "Literal",
                             "value": "/[a-z]/i",
                             "raw": "/[a-z]/i",
+                            "regex": {
+                                "pattern": "[a-z]",
+                                "flags": "i"
+                            },
                             "range": [
                                 8,
                                 16
@@ -149,6 +153,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/[a-z]/i",
+                "regex": {
+                    "pattern": "[a-z]",
+                    "flags": "i"
+                },
                 "range": [
                     8,
                     16
@@ -186,6 +194,10 @@
                             "type": "Literal",
                             "value": "/[x-z]/i",
                             "raw": "/[x-z]/i",
+                            "regex": {
+                                "pattern": "[x-z]",
+                                "flags": "i"
+                            },
                             "range": [
                                 8,
                                 16
@@ -236,6 +248,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/[x-z]/i",
+                "regex": {
+                    "pattern": "[x-z]",
+                    "flags": "i"
+                },
                 "range": [
                     8,
                     16
@@ -269,6 +285,10 @@
                             "type": "Literal",
                             "value": "/[a-c]/i",
                             "raw": "/[a-c]/i",
+                            "regex": {
+                                "pattern": "[a-c]",
+                                "flags": "i"
+                            },
                             "loc": {
                                 "start": {
                                     "line": 1,
@@ -361,6 +381,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/[a-c]/i",
+                "regex": {
+                    "pattern": "[a-c]",
+                    "flags": "i"
+                },
                 "loc": {
                     "start": {
                         "line": 1,
@@ -404,6 +428,10 @@
                             "type": "Literal",
                             "value": "/[P QR]/i",
                             "raw": "/[P QR]/i",
+                            "regex": {
+                                "pattern": "[P QR]",
+                                "flags": "i"
+                            },
                             "range": [
                                 8,
                                 17
@@ -524,6 +552,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/[P QR]/i",
+                "regex": {
+                    "pattern": "[P QR]",
+                    "flags": "i"
+                },
                 "range": [
                     8,
                     17
@@ -571,6 +603,10 @@
                             "type": "Literal",
                             "value": "/[\\]/]/",
                             "raw": "/[\\]/]/",
+                            "regex": {
+                                "pattern": "[\\]/]",
+                                "flags": ""
+                            },
                             "range": [
                                 8,
                                 15
@@ -691,6 +727,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/[\\]/]/",
+                "regex": {
+                    "pattern": "[\\]/]",
+                    "flags": ""
+                },
                 "range": [
                     8,
                     15
@@ -738,6 +778,10 @@
                             "type": "Literal",
                             "value": "/foo\\/bar/",
                             "raw": "/foo\\/bar/",
+                            "regex": {
+                                "pattern": "foo\\/bar",
+                                "flags": ""
+                            },
                             "range": [
                                 8,
                                 18
@@ -858,6 +902,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/foo\\/bar/",
+                "regex": {
+                    "pattern": "foo\\/bar",
+                    "flags": ""
+                },
                 "range": [
                     8,
                     18
@@ -905,6 +953,10 @@
                             "type": "Literal",
                             "value": "/=([^=\\s])+/g",
                             "raw": "/=([^=\\s])+/g",
+                            "regex": {
+                                "pattern": "=([^=\\s])+",
+                                "flags": "g"
+                            },
                             "range": [
                                 8,
                                 21
@@ -1025,6 +1077,10 @@
             {
                 "type": "RegularExpression",
                 "value": "/=([^=\\s])+/g",
+                "regex": {
+                    "pattern": "=([^=\\s])+",
+                    "flags": "g"
+                },
                 "range": [
                     8,
                     21
@@ -1072,6 +1128,10 @@
                         "type": "Literal",
                         "value": "/42/g",
                         "raw": "/42/g",
+                        "regex": {
+                            "pattern": "42",
+                            "flags": "g"
+                        },
                         "range": [
                             8,
                             13
