@@ -628,13 +628,29 @@ function scanBinaryLiteral(start) {
     };
 }
 
-function scanOctalLiteral(start) {
-    var number = "0" + source[index++];
+function scanOctalLiteral(prefix, start) {
+    var number, octal;
+
+    if (syntax.isOctalDigit(prefix)) {
+        octal = true;
+        number = "0" + source[index++];
+    } else {
+        octal = false;
+        ++index;
+        number = "";
+    }
+
+
     while (index < length) {
         if (!syntax.isOctalDigit(source[index])) {
             break;
         }
         number += source[index++];
+    }
+
+    if (!octal && number.length === 0) {
+        // only 0o or 0O
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
     }
 
     if (syntax.isIdentifierStart(source.charCodeAt(index)) || syntax.isDecimalDigit(source.charCodeAt(index))) {
@@ -673,6 +689,7 @@ function scanNumericLiteral() {
                 return scanHexLiteral(start);
             }
 
+            // Binary number in ES6 starts with '0b'
             if (extra.ecmaFeatures.binaryLiterals) {
                 if (ch === "b" || ch === "B") {
                     ++index;
@@ -680,8 +697,8 @@ function scanNumericLiteral() {
                 }
             }
 
-            if (syntax.isOctalDigit(ch)) {
-                return scanOctalLiteral(start);
+            if ((extra.ecmaFeatures.octalLiterals && (ch === "o" || ch === "O")) || syntax.isOctalDigit(ch)) {
+                return scanOctalLiteral(ch, start);
             }
 
             // decimal number starts with "0" such as "09" is illegal.

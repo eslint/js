@@ -69,7 +69,10 @@ var ast = espree.parse(code, {
         regexUFlag: true,
 
         // enable parsing of binary literals
-        binaryLiterals: true
+        binaryLiterals: true,
+
+        // enable parsing of ES6 octal literals
+        octalLiterals: true
     }
 });
 ```

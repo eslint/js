@@ -28,12 +28,12 @@ var OPEN_SOURCE_LICENSES = [
 // Data
 //------------------------------------------------------------------------------
 
-var // NODE_MODULES = "./node_modules/",
+var NODE_MODULES = "./node_modules/",
     TEMP_DIR = "./tmp/",
     BUILD_DIR = "./build/",
 
     // Utilities - intentional extra space at the end of each string
-    // MOCHA = NODE_MODULES + "mocha/bin/_mocha ",
+    MOCHA = NODE_MODULES + "mocha/bin/_mocha ",
 
     // Files
     MAKEFILE = "./Makefile.js",
@@ -114,8 +114,8 @@ target.test = function() {
     var errors = 0,
         lastReturn;
 
-    // lastReturn = nodeCLI.exec("istanbul", "cover", MOCHA, "-- -c", TEST_FILES);
-    lastReturn = nodeCLI.exec("mocha", TEST_FILES);
+    lastReturn = nodeCLI.exec("istanbul", "cover", MOCHA, "-- -c", TEST_FILES);
+    // lastReturn = nodeCLI.exec("mocha", TEST_FILES);
     if (lastReturn.code !== 0) {
         errors++;
     }
