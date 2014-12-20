@@ -591,6 +591,43 @@ function scanHexLiteral(start) {
     };
 }
 
+function scanBinaryLiteral(start) {
+    var ch, number = "";
+
+    while (index < length) {
+        ch = source[index];
+        if (ch !== "0" && ch !== "1") {
+            break;
+        }
+        number += source[index++];
+    }
+
+    if (number.length === 0) {
+        // only 0b or 0B
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+
+    if (index < length) {
+        ch = source.charCodeAt(index);
+        /* istanbul ignore else */
+        if (syntax.isIdentifierStart(ch) || syntax.isDecimalDigit(ch)) {
+            throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+        }
+    }
+
+    return {
+        type: Token.NumericLiteral,
+        value: parseInt(number, 2),
+        lineNumber: lineNumber,
+        lineStart: lineStart,
+
+        // TODO: investigate why esprima/harmony switches these out for a range property
+        start: start,
+        end: index
+    };
+}
+
 function scanOctalLiteral(start) {
     var number = "0" + source[index++];
     while (index < length) {
@@ -635,6 +672,14 @@ function scanNumericLiteral() {
                 ++index;
                 return scanHexLiteral(start);
             }
+
+            if (extra.ecmaFeatures.binaryLiterals) {
+                if (ch === "b" || ch === "B") {
+                    ++index;
+                    return scanBinaryLiteral(start);
+                }
+            }
+
             if (syntax.isOctalDigit(ch)) {
                 return scanOctalLiteral(start);
             }

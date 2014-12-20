@@ -66,7 +66,10 @@ var ast = espree.parse(code, {
         regexYFlag: true,
 
         // enable parsing of regular expression u flag
-        regexUFlag: true
+        regexUFlag: true,
+
+        // enable parsing of binary literals
+        binaryLiterals: true
     }
 });
 ```

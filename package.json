@@ -61,7 +61,7 @@
   ],
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
-    "test": "npm run-script lint && node Makefile.js test && node test/run.js && npm run-script coverage && npm run-script complexity",
+    "test": "npm run-script lint && node Makefile.js test && node test/run.js",
     "lint": "node Makefile.js lint",
     "browserify": "node Makefile.js browserify",
     "coverage": "npm run-script analyze-coverage && npm run-script check-coverage",
