@@ -2737,7 +2737,8 @@ function parseForVariableDeclaration() {
 
 function parseForStatement(opts) {
     var init, test, update, left, right, body, operator, oldInIteration;
-    var allowForOf = extra.ecmaFeatures.forOf;
+    var allowForOf = extra.ecmaFeatures.forOf,
+        allowBlockBindings = extra.ecmaFeatures.blockBindings;
 
     init = test = update = null;
 
@@ -2751,7 +2752,9 @@ function parseForStatement(opts) {
 
         // TODO: make sure let is invalid when blockBindings: false
         // TODO: also allow const when blockBindings: true
-        if (matchKeyword("var") || matchKeyword("let")) {
+        if (matchKeyword("var") ||
+            (allowBlockBindings && (matchKeyword("let") || matchKeyword("const")))
+        ) {
             state.allowIn = false;
             init = parseForVariableDeclaration();
             state.allowIn = true;
