@@ -66,7 +66,7 @@ describe("ecmaFeaures", function() {
 
         it("should parse correctly when " + feature + " is true", function() {
             config.ecmaFeatures[feature] = true;
-            var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".ast.js");
+            var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
             var result;
 
             try {
