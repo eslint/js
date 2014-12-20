@@ -56,8 +56,18 @@ var ast = espree.parse(code, {
     // top-level errors array
     tolerant: true,
 
-    // specify parsing mode (default is highest available)
-    ecmascript: 6
+    // specify parsing features (default only has blockBindings: true)
+    ecmaFeatures: {
+
+        // enable parsing of let/const
+        blockBindings: true,
+
+        // enable parsing of regular expression y flag
+        regexYFlag: true,
+
+        // enable parsing of regular expression u flag
+        regexUFlag: true
+    }
 });
 ```
 

@@ -72,5 +72,6 @@
     "check-complexity": "node node_modules/complexity-report/src/cli.js --maxcc 14 --silent -l -w espree.js",
     "benchmark": "node test/benchmarks.js",
     "benchmark-quick": "node test/benchmarks.js quick"
-  }
+  },
+  "dependencies": {}
 }

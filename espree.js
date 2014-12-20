@@ -37,7 +37,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var syntax = require("./lib/syntax"),
     tokenInfo = require("./lib/token-info"),
     astNodeTypes = require("./lib/ast-node-types"),
-    SourceLocation = require("./lib/locations").SourceLocation;
+    SourceLocation = require("./lib/locations").SourceLocation,
+    defaultFeatures = require("./lib/features");
 
 var Token = tokenInfo.Token,
     TokenName = tokenInfo.TokenName,
@@ -802,13 +803,17 @@ function scanStringLiteral() {
 
 function testRegExp(pattern, flags) {
     var tmp = pattern,
-        validFlags = /^[gmsi]*$/;
+        validFlags = "gmsi";
 
-    if (extra.ecmascript >= 6) {
-        validFlags = /^[gmsiyu]*$/;
+    if (extra.ecmaFeatures.regexYFlag) {
+        validFlags += "y";
     }
 
-    if (!validFlags.test(flags)) {
+    if (extra.ecmaFeatures.regexUFlag) {
+        validFlags += "u";
+    }
+
+    if (!RegExp("^[" + validFlags + "]*$").test(flags)) {
         throwError({}, Messages.InvalidRegExpFlag);
     }
 
@@ -3316,7 +3321,7 @@ function parseSourceElement() {
                 return parseFunctionDeclaration();
             case "const":
             case "let":
-                if (extra.ecmascript >= 6) {
+                if (extra.ecmaFeatures.blockBindings) {
                     return parseConstLetDeclaration(lookahead.value);
                 }
                 /* falls through */
@@ -3438,7 +3443,7 @@ function tokenize(code, options) {
     };
 
     extra = {
-        ecmascript: Infinity    // allow everything by default
+        ecmaFeatures: defaultFeatures
     };
 
     // Options matching.
@@ -3462,9 +3467,9 @@ function tokenize(code, options) {
         extra.errors = [];
     }
 
-    // if there's a valid ECMAScript version to pin to, apply it
-    if (typeof options.ecmascript === "number" && options.ecmascript >= 5) {
-        extra.ecmascript = options.ecmascript;
+    // apply parsing flags
+    if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
+        extra.ecmaFeatures = options.ecmaFeatures;
     }
 
     try {
@@ -3535,7 +3540,7 @@ function parse(code, options) {
     };
 
     extra = {
-        ecmascript: Infinity    // allow everything by default
+        ecmaFeatures: defaultFeatures
     };
 
     if (typeof options !== "undefined") {
@@ -3543,9 +3548,9 @@ function parse(code, options) {
         extra.loc = (typeof options.loc === "boolean") && options.loc;
         extra.attachComment = (typeof options.attachComment === "boolean") && options.attachComment;
 
-        // if there's a valid ECMAScript version to pin to, apply it
-        if (typeof options.ecmascript === "number" && options.ecmascript >= 5) {
-            extra.ecmascript = options.ecmascript;
+        // apply parsing flags
+        if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
+            extra.ecmaFeatures = options.ecmaFeatures;
         }
 
         if (extra.loc && options.source !== null && options.source !== undefined) {

@@ -45,7 +45,7 @@ describe("tokenize()", function() {
         it("should throw when using regular expression u flag", function() {
 
             assert.throws(function() {
-                espree.tokenize("var foo = /foo/u;", { ecmascript: 5 });
+                espree.tokenize("var foo = /foo/u;");
             }, /Invalid regular expression flag/);
 
         });
@@ -53,56 +53,49 @@ describe("tokenize()", function() {
         it("should throw when using regular expression y flag", function() {
 
             assert.throws(function() {
-                espree.tokenize("var foo = /foo/y;", { ecmascript: 5 });
+                espree.tokenize("var foo = /foo/y;");
             }, /Invalid regular expression flag/);
 
         });
 
     });
 
-    // run same tests for ES6 and edge modes
-    leche.withData({
-        "ECMAScript 6 mode": 6,
-        "Edge mode": undefined
-    }, function(title, ecmascript) {
-
-        it("should produce tokens when using let", function() {
-            var tokens = espree.tokenize("let foo = bar;", {
-                ecmascript: ecmascript,
-                loc: true,
-                range: true
-            });
-            assert.deepEqual(tokens, require("../fixtures/tokenize/let-result.tokens.js"));
+    it("should produce tokens when using let", function() {
+        var tokens = espree.tokenize("let foo = bar;", {
+            ecmaFeatures: { blockBindings: true },
+            loc: true,
+            range: true
         });
-
-        it("should produce tokens when using const", function() {
-            var tokens = espree.tokenize("const foo = bar;", {
-                ecmascript: ecmascript,
-                loc: true,
-                range: true
-            });
-            assert.deepEqual(tokens, require("../fixtures/tokenize/const-result.tokens.js"));
-        });
-
-        it("should produce tokens when using regular expression u flag", function() {
-            var tokens = espree.tokenize("var foo = /foo/u;", {
-                ecmascript: ecmascript,
-                loc: true,
-                range: true
-            });
-            assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-u-result.tokens.js"));
-        });
-
-        it("should produce tokens when using regular expression y flag", function() {
-            var tokens = espree.tokenize("var foo = /foo/y;", {
-                ecmascript: ecmascript,
-                loc: true,
-                range: true
-            });
-            assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-y-result.tokens.js"));
-        });
-
+        assert.deepEqual(tokens, require("../fixtures/tokenize/let-result.tokens.js"));
     });
+
+    it("should produce tokens when using const", function() {
+        var tokens = espree.tokenize("const foo = bar;", {
+            ecmaFeatures: { blockBindings: true },
+            loc: true,
+            range: true
+        });
+        assert.deepEqual(tokens, require("../fixtures/tokenize/const-result.tokens.js"));
+    });
+
+    it("should produce tokens when using regular expression u flag", function() {
+        var tokens = espree.tokenize("var foo = /foo/u;", {
+            ecmaFeatures: { regexUFlag: true },
+            loc: true,
+            range: true
+        });
+        assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-u-result.tokens.js"));
+    });
+
+    it("should produce tokens when using regular expression y flag", function() {
+        var tokens = espree.tokenize("var foo = /foo/y;", {
+            ecmaFeatures: { regexYFlag: true },
+            loc: true,
+            range: true
+        });
+        assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-y-result.tokens.js"));
+    });
+
 
 });
 
