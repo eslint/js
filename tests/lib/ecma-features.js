@@ -40,7 +40,8 @@ var assert = require("chai").assert,
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-features";
+var FIXTURES_DIR = "./tests/fixtures/ecma-features",
+    FIXTURES_MIX_DIR = "./tests/fixtures/ecma-features-mix";
 
 var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
@@ -48,11 +49,17 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
 });
 
+var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
+    return filename.indexOf(".src.js") > -1;
+}).map(function(filename) {
+    return filename.substring(FIXTURES_MIX_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
+});
+
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-describe("ecmaFeaures", function() {
+describe("ecmaFeatures", function() {
 
     leche.withData(testFiles, function(filename) {
 
@@ -95,6 +102,42 @@ describe("ecmaFeaures", function() {
             });
 
         });
+    });
+
+    leche.withData(mixFiles, function(filename) {
+
+        var features = path.dirname(filename),
+            code = shelljs.cat(path.resolve(FIXTURES_MIX_DIR, filename) + ".src.js"),
+            config = {
+                loc: true,
+                range: true,
+                ecmaFeatures: {}
+            };
+
+        it("should parse correctly when " + features + " are true", function() {
+            config.ecmaFeatures = require(path.resolve(__dirname, "../../", FIXTURES_MIX_DIR, filename) + ".config.js");
+
+            var expected = require(path.resolve(__dirname, "../../", FIXTURES_MIX_DIR, filename) + ".result.js");
+            var result;
+
+            try {
+                result = espree.parse(code, config);
+            } catch (ex) {
+
+                // if the result is an error, create an error object so deepEqual works
+                if (expected.message) {
+                    var expectedError = new Error(expected.message);
+                    Object.keys(expected).forEach(function(key) {
+                        expectedError[key] = expected[key];
+                    });
+                }
+                expected = expectedError;
+                result = ex;    // if an error is thrown, match the error
+            }
+
+            assert.deepEqual(result, expected);
+        });
+
     });
 
 });

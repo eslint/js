@@ -1481,6 +1481,15 @@ SyntaxTreeDelegate = {
         };
     },
 
+    createForOfStatement: function (left, right, body) {
+        return {
+            type: astNodeTypes.ForOfStatement,
+            left: left,
+            right: right,
+            body: body
+        };
+    },
+
     createFunctionDeclaration: function (id, params, defaults, body) {
         return {
             type: astNodeTypes.FunctionDeclaration,
@@ -1820,6 +1829,13 @@ function match(value) {
 
 function matchKeyword(keyword) {
     return lookahead.type === Token.Keyword && lookahead.value === keyword;
+}
+
+// Return true if the next token matches the specified contextual keyword
+// (where an identifier is sometimes a keyword depending on the context)
+
+function matchContextualKeyword(keyword) {
+    return lookahead.type === Token.Identifier && lookahead.value === keyword;
 }
 
 // Return true if the next token is an assignment operator
@@ -2719,8 +2735,9 @@ function parseForVariableDeclaration() {
     return delegate.markEnd(delegate.createVariableDeclaration(declarations, token.value), startToken);
 }
 
-function parseForStatement() {
-    var init, test, update, left, right, body, oldInIteration;
+function parseForStatement(opts) {
+    var init, test, update, left, right, body, operator, oldInIteration;
+    var allowForOf = extra.ecmaFeatures.forOf;
 
     init = test = update = null;
 
@@ -2731,23 +2748,39 @@ function parseForStatement() {
     if (match(";")) {
         lex();
     } else {
+
+        // TODO: make sure let is invalid when blockBindings: false
+        // TODO: also allow const when blockBindings: true
         if (matchKeyword("var") || matchKeyword("let")) {
             state.allowIn = false;
             init = parseForVariableDeclaration();
             state.allowIn = true;
 
-            if (init.declarations.length === 1 && matchKeyword("in")) {
-                lex();
-                left = init;
-                right = parseExpression();
-                init = null;
+            if (init.declarations.length === 1) {
+                if (matchKeyword("in") || (allowForOf && matchContextualKeyword("of"))) {
+                    operator = lookahead;
+
+                    // TODO: is "var" check here really needed? wasn"t in 1.2.2
+                    if (!((operator.value === "in" || init.kind !== "var") && init.declarations[0].init)) {
+                        lex();
+                        left = init;
+                        right = parseExpression();
+                        init = null;
+                    }
+                }
             }
+
         } else {
             state.allowIn = false;
             init = parseExpression();
             state.allowIn = true;
 
-            if (matchKeyword("in")) {
+            if (allowForOf && matchContextualKeyword("of")) {
+                operator = lex();
+                left = init;
+                right = parseExpression();
+                init = null;
+            } else if (matchKeyword("in")) {
                 // LeftHandSideExpression
                 if (!isLeftHandSide(init)) {
                     throwErrorTolerant({}, Messages.InvalidLHSInForIn);
@@ -2782,13 +2815,21 @@ function parseForStatement() {
     oldInIteration = state.inIteration;
     state.inIteration = true;
 
-    body = parseStatement();
+    if (!(opts !== undefined && opts.ignoreBody)) {
+        body = parseStatement();
+    }
 
     state.inIteration = oldInIteration;
 
-    return (typeof left === "undefined") ?
-            delegate.createForStatement(init, test, update, body) :
-            delegate.createForInStatement(left, right, body);
+    if (typeof left === "undefined") {
+        return delegate.createForStatement(init, test, update, body);
+    }
+
+    if (extra.ecmaFeatures.forOf && operator.value === "of") {
+        return delegate.createForOfStatement(left, right, body);
+    }
+
+    return delegate.createForInStatement(left, right, body);
 }
 
 // 12.7 The continue statement

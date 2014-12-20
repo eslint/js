@@ -72,7 +72,10 @@ var ast = espree.parse(code, {
         binaryLiterals: true,
 
         // enable parsing of ES6 octal literals
-        octalLiterals: true
+        octalLiterals: true,
+
+        // enable parsing of for-of statement
+        forOf: true
     }
 });
 ```
