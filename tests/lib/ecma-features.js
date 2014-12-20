@@ -67,7 +67,23 @@ describe("ecmaFeaures", function() {
         it("should parse correctly when " + feature + " is true", function() {
             config.ecmaFeatures[feature] = true;
             var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".ast.js");
-            var result = espree.parse(code, config);
+            var result;
+
+            try {
+                result = espree.parse(code, config);
+            } catch (ex) {
+
+                // if the result is an error, create an error object so deepEqual works
+                if (expected.message) {
+                    var expectedError = new Error(expected.message);
+                    Object.keys(expected).forEach(function(key) {
+                        expectedError[key] = expected[key];
+                    });
+                }
+                expected = expectedError;
+                result = ex;    // if an error is thrown, match the error
+            }
+
             assert.deepEqual(result, expected);
         });
 
