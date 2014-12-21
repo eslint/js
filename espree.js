@@ -2774,8 +2774,6 @@ function parseForStatement(opts) {
         lex();
     } else {
 
-        // TODO: make sure let is invalid when blockBindings: false
-        // TODO: also allow const when blockBindings: true
         if (matchKeyword("var") ||
             (allowBlockBindings && (matchKeyword("let") || matchKeyword("const")))
         ) {
