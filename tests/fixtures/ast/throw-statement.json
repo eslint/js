@@ -163,7 +163,10 @@
                             "line": 1,
                             "column": 24
                         }
-                    }
+                    },
+                    "method": false,
+                    "shorthand": false,
+                    "computed": false
                 }
             ],
             "range": [

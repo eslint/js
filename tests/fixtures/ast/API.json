@@ -164,6 +164,7 @@
             "ExpressionStatement": "ExpressionStatement",
             "ForStatement": "ForStatement",
             "ForInStatement": "ForInStatement",
+            "ForOfStatement": "ForOfStatement",
             "FunctionDeclaration": "FunctionDeclaration",
             "FunctionExpression": "FunctionExpression",
             "Identifier": "Identifier",

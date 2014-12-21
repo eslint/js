@@ -1933,7 +1933,10 @@
                                         "line": 1,
                                         "column": 19
                                     }
-                                }
+                                },
+                                "method": false,
+                                "shorthand": false,
+                                "computed": false
                             },
                             {
                                 "type": "Property",
@@ -1988,7 +1991,10 @@
                                         "line": 1,
                                         "column": 23
                                     }
-                                }
+                                },
+                                "method": false,
+                                "shorthand": false,
+                                "computed": false
                             }
                         ],
                         "range": [
@@ -4025,7 +4031,10 @@
                                         "line": 1,
                                         "column": 34
                                     }
-                                }
+                                },
+                                "method": false,
+                                "shorthand": false,
+                                "computed": false
                             }
                         ],
                         "range": [
@@ -4473,7 +4482,10 @@
                                             "line": 1,
                                             "column": 30
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 }
                             ],
                             "range": [
@@ -4687,7 +4699,10 @@
                                             "line": 1,
                                             "column": 34
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 },
                                 {
                                     "type": "Property",
@@ -4764,7 +4779,10 @@
                                             "line": 1,
                                             "column": 46
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 }
                             ],
                             "range": [
@@ -4956,7 +4974,10 @@
                                             "line": 1,
                                             "column": 29
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 },
                                 {
                                     "type": "Property",
@@ -5033,7 +5054,10 @@
                                             "line": 1,
                                             "column": 41
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 }
                             ],
                             "range": [
@@ -5266,7 +5290,10 @@
                                             "line": 1,
                                             "column": 35
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 },
                                 {
                                     "type": "Property",
@@ -5321,7 +5348,10 @@
                                             "line": 1,
                                             "column": 42
                                         }
-                                    }
+                                    },
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
                                 }
                             ],
                             "range": [
@@ -5478,7 +5508,10 @@
                                     "line": 1,
                                     "column": 14
                                 }
-                            }
+                            },
+                            "method": false,
+                            "shorthand": false,
+                            "computed": false
                         }
                     ],
                     "range": [

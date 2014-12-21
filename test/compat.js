@@ -90,6 +90,16 @@ function getContext(espree, reportCase, reportFailure) {
             };
         }
 
+        // Remove special properties on Property node
+        if (obj.type && obj.type === 'Property') {
+            pattern = {
+                type: pattern.type,
+                key: pattern.key,
+                value: pattern.value,
+                kind: pattern.kind
+            };
+        }
+
         function adjustRegexLiteralAndRaw(key, value) {
             if (key === 'value' && value instanceof RegExp) {
                 value = value.toString();

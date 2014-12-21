@@ -130,8 +130,8 @@ describe("ecmaFeatures", function() {
                     Object.keys(expected).forEach(function(key) {
                         expectedError[key] = expected[key];
                     });
+                    expected = expectedError;
                 }
-                expected = expectedError;
                 result = ex;    // if an error is thrown, match the error
             }
 
@@ -139,5 +139,6 @@ describe("ecmaFeatures", function() {
         });
 
     });
+
 
 });

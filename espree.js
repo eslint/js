@@ -1595,12 +1595,15 @@ SyntaxTreeDelegate = {
         };
     },
 
-    createProperty: function (kind, key, value) {
+    createProperty: function (kind, key, value, method, shorthand, computed) {
         return {
             type: astNodeTypes.Property,
             key: key,
             value: value,
-            kind: kind
+            kind: kind,
+            method: method,
+            shorthand: shorthand,
+            computed: computed
         };
     },
 
@@ -1929,7 +1932,7 @@ function parsePropertyFunction(param, first) {
 }
 
 function parseObjectPropertyKey() {
-    var token, startToken;
+    var token, startToken, propertyKey, result;
 
     startToken = lookahead;
     token = lex();
@@ -1944,27 +1947,38 @@ function parseObjectPropertyKey() {
         return delegate.markEnd(delegate.createLiteral(token), startToken);
     }
 
+    if (extra.ecmaFeatures.objectLiteralComputedProperties &&
+        token.type === Token.Punctuator && token.value === "["
+    ) {
+        startToken = lookahead;
+        propertyKey = parseAssignmentExpression();
+        result = delegate.markEnd(propertyKey, startToken);
+        expect("]");
+        return result;
+    }
+
     return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
 }
 
 function parseObjectProperty() {
-    var token, key, id, value, param, startToken;
+    var token, key, id, value, param, startToken, computed;
+    var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties;
 
     token = lookahead;
     startToken = lookahead;
+    computed = (token.value === "[" && token.type === Token.Punctuator);
 
-    if (token.type === Token.Identifier) {
+    if (token.type === Token.Identifier || (allowComputed && computed)) {
 
         id = parseObjectPropertyKey();
 
         // Property Assignment: Getter and Setter.
-
         if (token.value === "get" && !match(":")) {
             key = parseObjectPropertyKey();
             expect("(");
             expect(")");
             value = parsePropertyFunction([]);
-            return delegate.markEnd(delegate.createProperty("get", key, value), startToken);
+            return delegate.markEnd(delegate.createProperty("get", key, value, false, false, false), startToken);
         }
         if (token.value === "set" && !match(":")) {
             key = parseObjectPropertyKey();
@@ -1979,19 +1993,29 @@ function parseObjectProperty() {
                 expect(")");
                 value = parsePropertyFunction(param, token);
             }
-            return delegate.markEnd(delegate.createProperty("set", key, value), startToken);
+            return delegate.markEnd(delegate.createProperty("set", key, value, false, false, false), startToken);
         }
-        expect(":");
-        value = parseAssignmentExpression();
-        return delegate.markEnd(delegate.createProperty("init", id, value), startToken);
+
+        if (match(":")) {
+            lex();
+            return delegate.markEnd(delegate.createProperty("init", id, parseAssignmentExpression(), false, false, computed), startToken);
+        }
+
+        if (computed) {
+            // Computed properties can only be used with full notation.
+            throwUnexpected(lookahead);
+        }
+
+        return delegate.markEnd(delegate.createProperty("init", id, id, false, false, false), startToken);
     }
     if (token.type === Token.EOF || token.type === Token.Punctuator) {
         throwUnexpected(token);
     } else {
+        computed = (lookahead.type === Token.Punctuator && lookahead.value === "[");
         key = parseObjectPropertyKey();
         expect(":");
         value = parseAssignmentExpression();
-        return delegate.markEnd(delegate.createProperty("init", key, value), startToken);
+        return delegate.markEnd(delegate.createProperty("init", key, value, false, false, computed), startToken);
     }
 }
 

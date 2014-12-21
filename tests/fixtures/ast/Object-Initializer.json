@@ -220,7 +220,10 @@
                                 "line": 1,
                                 "column": 16
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -347,7 +350,10 @@
                                 "line": 1,
                                 "column": 12
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -474,7 +480,10 @@
                                 "line": 1,
                                 "column": 14
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -601,7 +610,10 @@
                                 "line": 1,
                                 "column": 15
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -728,7 +740,10 @@
                                 "line": 1,
                                 "column": 14
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -856,7 +871,10 @@
                                 "line": 1,
                                 "column": 18
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -983,7 +1001,10 @@
                                 "line": 1,
                                 "column": 10
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     },
                     {
                         "type": "Property",
@@ -1038,7 +1059,10 @@
                                 "line": 1,
                                 "column": 16
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -1223,7 +1247,10 @@
                                 "line": 1,
                                 "column": 36
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -1372,7 +1399,10 @@
                                 "line": 1,
                                 "column": 20
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -1521,7 +1551,10 @@
                                 "line": 1,
                                 "column": 17
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -1670,7 +1703,10 @@
                                 "line": 1,
                                 "column": 19
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -1819,7 +1855,10 @@
                                 "line": 1,
                                 "column": 20
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -1968,7 +2007,10 @@
                                 "line": 1,
                                 "column": 19
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -2118,7 +2160,10 @@
                                 "line": 1,
                                 "column": 22
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -2268,7 +2313,10 @@
                                 "line": 1,
                                 "column": 17
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -2508,7 +2556,10 @@
                                 "line": 1,
                                 "column": 34
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -2748,7 +2799,10 @@
                                 "line": 1,
                                 "column": 28
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -2988,7 +3042,10 @@
                                 "line": 1,
                                 "column": 32
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -3228,7 +3285,10 @@
                                 "line": 1,
                                 "column": 34
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -3468,7 +3528,10 @@
                                 "line": 1,
                                 "column": 32
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -3709,7 +3772,10 @@
                                 "line": 1,
                                 "column": 34
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -3950,7 +4016,10 @@
                                 "line": 1,
                                 "column": 30
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -4077,7 +4146,10 @@
                                 "line": 1,
                                 "column": 13
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -4204,7 +4276,10 @@
                                 "line": 1,
                                 "column": 13
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -4331,7 +4406,10 @@
                                 "line": 1,
                                 "column": 18
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -4459,7 +4537,10 @@
                                 "line": 1,
                                 "column": 19
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
@@ -4644,7 +4725,10 @@
                                 "line": 1,
                                 "column": 36
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     },
                     {
                         "type": "Property",
@@ -4812,7 +4896,10 @@
                                 "line": 1,
                                 "column": 75
                             }
-                        }
+                        },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
                     }
                 ],
                 "range": [
