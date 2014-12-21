@@ -55,8 +55,8 @@ describe("attachComment: true", function() {
     leche.withData(testFiles, function(filename) {
 
         it("should produce correct AST when parsed with attachComments", function() {
-            var input = shelljs.cat(filename + ".src.js"),
-                output = require(path.resolve(__dirname, "../../", filename + ".ast.js"));
+            var output = require(path.resolve(__dirname, "../../", filename + ".ast.js"));
+            var input = shelljs.cat(filename + ".src.js");
 
             var result = espree.parse(input, {
                 loc: true,

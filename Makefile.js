@@ -14,7 +14,8 @@ require("shelljs/make");
 
 var checker = require("npm-license"),
     dateformat = require("dateformat"),
-    nodeCLI = require("shelljs-nodecli");
+    nodeCLI = require("shelljs-nodecli"),
+    semver = require("semver");
 
 //------------------------------------------------------------------------------
 // Settings
@@ -69,8 +70,26 @@ function release(type) {
     target.changelog();
     exec("git push origin master --tags");
     exec("npm publish");
-    target.gensite();
-    target.publishsite();
+}
+
+/**
+ * Splits a command result to separate lines.
+ * @param {string} result The command result string.
+ * @returns {array} The separated lines.
+ */
+function splitCommandResultToLines(result) {
+    return result.trim().split("\n");
+}
+
+function getVersionTags() {
+    var tags = splitCommandResultToLines(exec("git tag", { silent: true }).output);
+
+    return tags.reduce(function(list, tag) {
+        if (semver.valid(tag)) {
+            list.push(tag);
+        }
+        return list;
+    }, []).sort(semver.compare);
 }
 
 //------------------------------------------------------------------------------
@@ -97,11 +116,11 @@ target.lint = function() {
         errors++;
     }
 
-    // echo("Validating JavaScript test files");
-    // lastReturn = nodeCLI.exec("eslint", TEST_FILES);
-    // if (lastReturn.code !== 0) {
-    //     errors++;
-    // }
+    echo("Validating JavaScript test files");
+    lastReturn = nodeCLI.exec("eslint", TEST_FILES);
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
 
     if (errors) {
         exit(1);
@@ -164,7 +183,7 @@ target.browserify = function() {
 target.changelog = function() {
 
     // get most recent two tags
-    var tags = exec("git tag", { silent: true }).output.trim().split(/\s/g),
+    var tags = getVersionTags(),
         rangeTags = tags.slice(tags.length - 2),
         now = new Date(),
         timestamp = dateformat(now, "mmmm d, yyyy");
@@ -188,13 +207,7 @@ target.changelog = function() {
     rm("CHANGELOG.tmp");
     rm("CHANGELOG.md");
     mv("CHANGELOG.md.tmp", "CHANGELOG.md");
-
-    // add into commit
-    exec("git add CHANGELOG.md");
-    exec("git commit --amend --no-edit");
-
 };
-
 
 target.checkLicenses = function() {
 
