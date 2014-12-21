@@ -75,7 +75,10 @@ var ast = espree.parse(code, {
         octalLiterals: true,
 
         // enable parsing of for-of statement
-        forOf: true
+        forOf: false,
+
+        // enable parsing computed object literal properties
+        objectLiteralComputedProperties: false
     }
 });
 ```

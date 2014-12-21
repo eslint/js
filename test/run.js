@@ -36,7 +36,8 @@
 
     suites = [
         'runner',
-        'compat',
+        // TODO: Figure out what to do about this test...remove?
+        // 'compat',
         'parselibs'
     ];
 
