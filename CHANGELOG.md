@@ -1,3 +1,11 @@
+v1.3.1 - December 22, 2014
+
+* 1.3.1 (Nicholas C. Zakas)
+* Fix: Add all files to npm package (fixes #17) (Nicholas C. Zakas)
+* Update: Move Messages to separate file (Nicholas C. Zakas)
+* Docs: Removed unnecessary comment (Nicholas C. Zakas)
+* 1.3.0 (Nicholas C. Zakas)
+
 v1.3.0 - December 21, 2014
 
 * 1.3.0 (Nicholas C. Zakas)
