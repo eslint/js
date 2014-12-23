@@ -68,6 +68,12 @@ function release(type) {
     target.test();
     exec("npm version " + type);
     target.changelog();
+
+    // add changelog to commit
+    exec("git add CHANGELOG.md");
+    exec("git commit --amend --no-edit");
+
+    // publish all the things
     exec("git push origin master --tags");
     exec("npm publish");
 }
