@@ -1881,17 +1881,41 @@ function parseArrayInitialiser() {
 
 // 11.1.5 Object Initialiser
 
-function parsePropertyFunction(param, first) {
-    var previousStrict, body, startToken;
+function parsePropertyFunction(params, first) {
+    var previousStrict = strict,
+        startToken = lookahead,
+        body;
 
-    previousStrict = strict;
-    startToken = lookahead;
-    body = parseFunctionSourceElements();
-    if (first && strict && syntax.isRestrictedWord(param[0].name)) {
+    params = params || [];
+    body = parseConciseBody();
+
+    if (first && strict && syntax.isRestrictedWord(params[0].name)) {
         throwErrorTolerant(first, Messages.StrictParamName);
     }
+
     strict = previousStrict;
-    return delegate.markEnd(delegate.createFunctionExpression(null, param, [], body), startToken);
+
+    return delegate.markEnd(delegate.createFunctionExpression(null, params, [], body), startToken);
+}
+
+
+function parsePropertyMethodFunction() {
+    var previousStrict, tmp, method;
+
+    previousStrict = strict;
+    strict = true;
+
+    tmp = parseParams();
+
+    if (tmp.stricted) {
+        throwErrorTolerant(tmp.stricted, tmp.message);
+    }
+
+    method = parsePropertyFunction(tmp.params);
+
+    strict = previousStrict;
+
+    return method;
 }
 
 function parseObjectPropertyKey() {
@@ -1925,7 +1949,8 @@ function parseObjectPropertyKey() {
 
 function parseObjectProperty() {
     var token, key, id, value, param, startToken, computed;
-    var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties;
+    var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties,
+        allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods;
 
     token = lookahead;
     startToken = lookahead;
@@ -1964,6 +1989,10 @@ function parseObjectProperty() {
             return delegate.markEnd(delegate.createProperty("init", id, parseAssignmentExpression(), false, false, computed), startToken);
         }
 
+        if (allowMethod && match("(")) {
+            return delegate.markEnd(delegate.createProperty("init", id, parsePropertyMethodFunction({ generator: false }), true, false, computed), startToken);
+        }
+
         if (computed) {
             // Computed properties can only be used with full notation.
             throwUnexpected(lookahead);
@@ -1992,34 +2021,36 @@ function parseObjectInitialiser() {
     while (!match("}")) {
         property = parseObjectProperty();
 
-        if (property.key.type === astNodeTypes.Identifier) {
-            name = property.key.name;
-        } else {
-            name = toString(property.key.value);
-        }
-
-        /*eslint-disable no-nested-ternary*/
-        kind = (property.kind === "init") ? PropertyKind.Data : (property.kind === "get") ? PropertyKind.Get : PropertyKind.Set;
-        /*eslint-enable no-nested-ternary*/
-
-        key = "$" + name;
-        if (Object.prototype.hasOwnProperty.call(map, key)) {
-            if (map[key] === PropertyKind.Data) {
-                if (strict && kind === PropertyKind.Data) {
-                    throwErrorTolerant({}, Messages.StrictDuplicateProperty);
-                } else if (kind !== PropertyKind.Data) {
-                    throwErrorTolerant({}, Messages.AccessorDataProperty);
-                }
+        if (!property.computed) {
+            if (property.key.type === astNodeTypes.Identifier) {
+                name = property.key.name;
             } else {
-                if (kind === PropertyKind.Data) {
-                    throwErrorTolerant({}, Messages.AccessorDataProperty);
-                } else if (map[key] & kind) {
-                    throwErrorTolerant({}, Messages.AccessorGetSet);
-                }
+                name = toString(property.key.value);
             }
-            map[key] |= kind;
-        } else {
-            map[key] = kind;
+
+            /*eslint-disable no-nested-ternary*/
+            kind = (property.kind === "init") ? PropertyKind.Data : (property.kind === "get") ? PropertyKind.Get : PropertyKind.Set;
+            /*eslint-enable no-nested-ternary*/
+
+            key = "$" + name;
+            if (Object.prototype.hasOwnProperty.call(map, key)) {
+                if (map[key] === PropertyKind.Data) {
+                    if (strict && kind === PropertyKind.Data) {
+                        throwErrorTolerant({}, Messages.StrictDuplicateProperty);
+                    } else if (kind !== PropertyKind.Data) {
+                        throwErrorTolerant({}, Messages.AccessorDataProperty);
+                    }
+                } else {
+                    if (kind === PropertyKind.Data) {
+                        throwErrorTolerant({}, Messages.AccessorDataProperty);
+                    } else if (map[key] & kind) {
+                        throwErrorTolerant({}, Messages.AccessorGetSet);
+                    }
+                }
+                map[key] |= kind;
+            } else {
+                map[key] = kind;
+            }
         }
 
         properties.push(property);
@@ -3201,6 +3232,13 @@ function parseStatement() {
 }
 
 // 13 Function Definition
+
+function parseConciseBody() {
+    if (match("{")) {
+        return parseFunctionSourceElements();
+    }
+    return parseAssignmentExpression();
+}
 
 function parseFunctionSourceElements() {
     var sourceElement, sourceElements = [], token, directive, firstRestricted,
