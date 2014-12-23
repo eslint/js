@@ -53,7 +53,6 @@ var testFiles = shelljs.find("./tests/fixtures/attach-comments").filter(function
 describe("attachComment: true", function() {
 
     leche.withData(testFiles, function(filename) {
-
         it("should produce correct AST when parsed with attachComments", function() {
             var output = require(path.resolve(__dirname, "../../", filename + ".ast.js"));
             var input = shelljs.cat(filename + ".src.js");

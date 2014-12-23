@@ -1250,7 +1250,9 @@ SyntaxTreeDelegate = {
     name: "SyntaxTree",
 
     processComment: function (node) {
-        var lastChild, trailingComments;
+        var lastChild,
+            trailingComments,
+            i;
 
         if (node.type === astNodeTypes.Program) {
             if (node.body.length > 0) {
@@ -1259,10 +1261,26 @@ SyntaxTreeDelegate = {
         }
 
         if (extra.trailingComments.length > 0) {
+
+            /*
+             * If the first comment in trailingComments comes after the
+             * current node, then we're good - all comments in the array will
+             * come after the node and so it's safe to add then as official
+             * trailingComments.
+             */
             if (extra.trailingComments[0].range[0] >= node.range[1]) {
                 trailingComments = extra.trailingComments;
                 extra.trailingComments = [];
             } else {
+
+                /*
+                 * Otherwise, if the first comment doesn't come after the
+                 * current node, that means we have a mix of leading and trailing
+                 * comments in the array and that leadingComments contains the
+                 * same items as trailingComments. Reset trailingComments to
+                 * zero items and we'll handle this by evaluating leadingComments
+                 * later.
+                 */
                 extra.trailingComments.length = 0;
             }
         } else {
@@ -1284,11 +1302,53 @@ SyntaxTreeDelegate = {
                 node.leadingComments = lastChild.leadingComments;
                 delete lastChild.leadingComments;
             }
-        } else if (extra.leadingComments.length > 0 && extra.leadingComments[extra.leadingComments.length - 1].range[1] <= node.range[0]) {
-            node.leadingComments = extra.leadingComments;
-            extra.leadingComments = [];
-        }
+        } else if (extra.leadingComments.length > 0) {
 
+            if (extra.leadingComments[extra.leadingComments.length - 1].range[1] <= node.range[0]) {
+                node.leadingComments = extra.leadingComments;
+                extra.leadingComments = [];
+            } else {
+
+                // https://github.com/eslint/espree/issues/2
+
+                /*
+                 * In special cases, such as return (without a value) and
+                 * debugger, all comments will end up as leadingComments and
+                 * will otherwise be eliminated. This extra step runs when the
+                 * bottomRightStack is empty and there are comments left
+                 * in leadingComments.
+                 *
+                 * This loop figures out the stopping point between the actual
+                 * leading and trailing comments by finding the location of the
+                 * first comment that comes after the given node.
+                 */
+                for (i = 0; i < extra.leadingComments.length; i++) {
+                    if (extra.leadingComments[i].range[1] > node.range[0]) {
+                        break;
+                    }
+                }
+
+                /*
+                 * Split the array based on the location of the first comment
+                 * that comes after the node. Keep in mind that this could
+                 * result in an empty array, and if so, the array must be
+                 * deleted.
+                 */
+                node.leadingComments = extra.leadingComments.slice(0, i);
+                if (node.leadingComments.length === 0) {
+                    delete node.leadingComments;
+                }
+
+                /*
+                 * Similarly, trailing comments are attached later. The variable
+                 * must be reset to null if there are no trailing comments.
+                 */
+                trailingComments = extra.leadingComments.slice(i);
+                if (trailingComments.length === 0) {
+                    trailingComments = null;
+                }
+            }
+        }
 
         if (trailingComments) {
             node.trailingComments = trailingComments;
@@ -3134,47 +3194,47 @@ function parseStatement() {
 
     if (type === Token.Punctuator) {
         switch (lookahead.value) {
-        case ";":
-            return delegate.markEnd(parseEmptyStatement(), startToken);
-        case "(":
-            return delegate.markEnd(parseExpressionStatement(), startToken);
-        default:
-            break;
+            case ";":
+                return delegate.markEnd(parseEmptyStatement(), startToken);
+            case "(":
+                return delegate.markEnd(parseExpressionStatement(), startToken);
+            default:
+                break;
         }
     }
 
     if (type === Token.Keyword) {
         switch (lookahead.value) {
-        case "break":
-            return delegate.markEnd(parseBreakStatement(), startToken);
-        case "continue":
-            return delegate.markEnd(parseContinueStatement(), startToken);
-        case "debugger":
-            return delegate.markEnd(parseDebuggerStatement(), startToken);
-        case "do":
-            return delegate.markEnd(parseDoWhileStatement(), startToken);
-        case "for":
-            return delegate.markEnd(parseForStatement(), startToken);
-        case "function":
-            return delegate.markEnd(parseFunctionDeclaration(), startToken);
-        case "if":
-            return delegate.markEnd(parseIfStatement(), startToken);
-        case "return":
-            return delegate.markEnd(parseReturnStatement(), startToken);
-        case "switch":
-            return delegate.markEnd(parseSwitchStatement(), startToken);
-        case "throw":
-            return delegate.markEnd(parseThrowStatement(), startToken);
-        case "try":
-            return delegate.markEnd(parseTryStatement(), startToken);
-        case "var":
-            return delegate.markEnd(parseVariableStatement(), startToken);
-        case "while":
-            return delegate.markEnd(parseWhileStatement(), startToken);
-        case "with":
-            return delegate.markEnd(parseWithStatement(), startToken);
-        default:
-            break;
+            case "break":
+                return delegate.markEnd(parseBreakStatement(), startToken);
+            case "continue":
+                return delegate.markEnd(parseContinueStatement(), startToken);
+            case "debugger":
+                return delegate.markEnd(parseDebuggerStatement(), startToken);
+            case "do":
+                return delegate.markEnd(parseDoWhileStatement(), startToken);
+            case "for":
+                return delegate.markEnd(parseForStatement(), startToken);
+            case "function":
+                return delegate.markEnd(parseFunctionDeclaration(), startToken);
+            case "if":
+                return delegate.markEnd(parseIfStatement(), startToken);
+            case "return":
+                return delegate.markEnd(parseReturnStatement(), startToken);
+            case "switch":
+                return delegate.markEnd(parseSwitchStatement(), startToken);
+            case "throw":
+                return delegate.markEnd(parseThrowStatement(), startToken);
+            case "try":
+                return delegate.markEnd(parseTryStatement(), startToken);
+            case "var":
+                return delegate.markEnd(parseVariableStatement(), startToken);
+            case "while":
+                return delegate.markEnd(parseWhileStatement(), startToken);
+            case "with":
+                return delegate.markEnd(parseWithStatement(), startToken);
+            default:
+                break;
         }
     }
 
