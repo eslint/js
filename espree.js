@@ -2010,7 +2010,8 @@ function parseObjectPropertyKey() {
 function parseObjectProperty() {
     var token, key, id, value, param, startToken, computed;
     var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties,
-        allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods;
+        allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods,
+        allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties;
 
     token = lookahead;
     startToken = lookahead;
@@ -2044,30 +2045,38 @@ function parseObjectProperty() {
             return delegate.markEnd(delegate.createProperty("set", key, value, false, false, false), startToken);
         }
 
+        // normal property (key:value)
         if (match(":")) {
             lex();
             return delegate.markEnd(delegate.createProperty("init", id, parseAssignmentExpression(), false, false, computed), startToken);
         }
 
+        // method shorthand (key(){...})
         if (allowMethod && match("(")) {
             return delegate.markEnd(delegate.createProperty("init", id, parsePropertyMethodFunction({ generator: false }), true, false, computed), startToken);
         }
 
-        if (computed) {
-            // Computed properties can only be used with full notation.
+        /*
+         * Only other possibility is that this is a shorthand property. Computed
+         * properties cannot use shorthand notation, so that's a syntax error.
+         * If shorthand properties aren't allow, then this is an automatic
+         * syntax error.
+         */
+        if (computed || !allowShorthand) {
             throwUnexpected(lookahead);
         }
 
-        return delegate.markEnd(delegate.createProperty("init", id, id, false, false, false), startToken);
+        // shorthand property
+        return delegate.markEnd(delegate.createProperty("init", id, id, false, true, false), startToken);
     }
+
     if (token.type === Token.EOF || token.type === Token.Punctuator) {
         throwUnexpected(token);
     } else {
-        computed = (lookahead.type === Token.Punctuator && lookahead.value === "[");
         key = parseObjectPropertyKey();
         expect(":");
         value = parseAssignmentExpression();
-        return delegate.markEnd(delegate.createProperty("init", key, value, false, false, computed), startToken);
+        return delegate.markEnd(delegate.createProperty("init", key, value, false, false, false), startToken);
     }
 }
 

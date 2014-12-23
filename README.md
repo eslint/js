@@ -81,7 +81,10 @@ var ast = espree.parse(code, {
         objectLiteralComputedProperties: false,
 
         // enable parsing of shorthand object literal methods
-        objectLiteralShorthandMethods: false
+        objectLiteralShorthandMethods: false,
+
+        // enable parsing of shorthand object literal properties
+        objectLiteralShorthandProperties: false
     }
 });
 ```
@@ -143,3 +146,7 @@ Yes. Since the start of ESLint, we've regularly filed bugs and feature requests 
 Acorn is a great JavaScript parser that produces an AST that is compatible with Esprima. Unfortunately, ESLint relies on more than just the AST to do its job. It relies on Esprima's tokens and comment attachment features to get a complete picture of the source code. We investigated switching to Acorn, but the inconsistencies between Esprima and Acorn created too much work for a project like ESLint.
 
 We expect there are other tools like ESLint that rely on more than just the AST produced by Esprima, and so a drop-in replacement will help those projects as well as ESLint.
+
+### What ECMAScript 6 features do you support?
+
+Please see the [tracking issue](https://github.com/eslint/espree/issues/10) for the most up-to-date information.
