@@ -1,3 +1,13 @@
+v1.4.0 - December 23, 2014
+
+* 1.4.0 (Nicholas C. Zakas)
+* Fix: Parsing issues with property methods (fixes #21) (Nicholas C. Zakas)
+* New: Add support for shorthand properties (refs #10) (Nicholas C. Zakas)
+* New: Add support for object literal method shorthand (refs #10) (Nicholas C. Zakas)
+* Fix: Ensure comments are attached for return (fixes #2) (Nicholas C. Zakas)
+* Build: Ensure CHANGELOG.md is committed on release (Nicholas C. Zakas)
+* 1.3.1 (Nicholas C. Zakas)
+
 v1.3.1 - December 22, 2014
 
 * 1.3.1 (Nicholas C. Zakas)
