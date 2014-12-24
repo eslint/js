@@ -1947,7 +1947,7 @@ function parsePropertyFunction(params, first) {
         body;
 
     params = params || [];
-    body = parseConciseBody();
+    body = parseFunctionSourceElements();
 
     if (first && strict && syntax.isRestrictedWord(params[0].name)) {
         throwErrorTolerant(first, Messages.StrictParamName);
@@ -2021,15 +2021,20 @@ function parseObjectProperty() {
 
         id = parseObjectPropertyKey();
 
-        // Property Assignment: Getter and Setter.
-        if (token.value === "get" && !match(":")) {
+        /*
+         * Check for getters and setters. Be careful! "get" and "set" are legal
+         * method names. It's only a getter or setter if followed by a space.
+         */
+        if (token.value === "get" && !match(":") && !match("(")) {
+            computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
             expect("(");
             expect(")");
             value = parsePropertyFunction([]);
-            return delegate.markEnd(delegate.createProperty("get", key, value, false, false, false), startToken);
+            return delegate.markEnd(delegate.createProperty("get", key, value, false, false, computed), startToken);
         }
-        if (token.value === "set" && !match(":")) {
+        if (token.value === "set" && !match(":") && !match("(")) {
+            computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
             expect("(");
             token = lookahead;
@@ -2042,7 +2047,7 @@ function parseObjectProperty() {
                 expect(")");
                 value = parsePropertyFunction(param, token);
             }
-            return delegate.markEnd(delegate.createProperty("set", key, value, false, false, false), startToken);
+            return delegate.markEnd(delegate.createProperty("set", key, value, false, false, computed), startToken);
         }
 
         // normal property (key:value)
@@ -2073,10 +2078,27 @@ function parseObjectProperty() {
     if (token.type === Token.EOF || token.type === Token.Punctuator) {
         throwUnexpected(token);
     } else {
+
+        /*
+         * If we've made it here, then that means the property name is represented
+         * by a string (i.e, { "foo": 2}). The only options here are normal
+         * property with a colon or a method.
+         */
         key = parseObjectPropertyKey();
-        expect(":");
-        value = parseAssignmentExpression();
-        return delegate.markEnd(delegate.createProperty("init", key, value, false, false, false), startToken);
+
+        // check for property value
+        if (match(":")) {
+            lex();
+            return delegate.markEnd(delegate.createProperty("init", key, parseAssignmentExpression(), false, false, false), startToken);
+        }
+
+        // check for method
+        if (allowMethod && match("(")) {
+            return delegate.markEnd(delegate.createProperty("init", key, parsePropertyMethodFunction(), true, false, false), startToken);
+        }
+
+        // no other options, this is bad
+        throwUnexpected(lex());
     }
 }
 
@@ -3302,12 +3324,12 @@ function parseStatement() {
 
 // 13 Function Definition
 
-function parseConciseBody() {
-    if (match("{")) {
-        return parseFunctionSourceElements();
-    }
-    return parseAssignmentExpression();
-}
+// function parseConciseBody() {
+//     if (match("{")) {
+//         return parseFunctionSourceElements();
+//     }
+//     return parseAssignmentExpression();
+// }
 
 function parseFunctionSourceElements() {
     var sourceElement, sourceElements = [], token, directive, firstRestricted,
