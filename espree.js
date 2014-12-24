@@ -38,11 +38,13 @@ var syntax = require("./lib/syntax"),
     tokenInfo = require("./lib/token-info"),
     astNodeTypes = require("./lib/ast-node-types"),
     defaultFeatures = require("./lib/features"),
-    Messages = require("./lib/messages");
+    Messages = require("./lib/messages"),
+    XHTMLEntities = require("./lib/xhtml-entities");
 
 var Token = tokenInfo.Token,
     TokenName = tokenInfo.TokenName,
     FnExprTokens = tokenInfo.FnExprTokens,
+    Regex = syntax.Regex,
     PropertyKind,
     SyntaxTreeDelegate,
     source,
@@ -363,8 +365,7 @@ function scanIdentifier() {
         value: id,
         lineNumber: lineNumber,
         lineStart: lineStart,
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -381,133 +382,177 @@ function scanPunctuator() {
         ch4;
 
     switch (code) {
-
-    // Check for most common single-character punctuators.
-    case 0x2E:  // . dot
-    case 0x28:  // ( open bracket
-    case 0x29:  // ) close bracket
-    case 0x3B:  // ; semicolon
-    case 0x2C:  // , comma
-    case 0x7B:  // { open curly brace
-    case 0x7D:  // } close curly brace
-    case 0x5B:  // [
-    case 0x5D:  // ]
-    case 0x3A:  // :
-    case 0x3F:  // ?
-    case 0x7E:  // ~
-        ++index;
-        if (extra.tokenize) {
-            if (code === 0x28) {
-                extra.openParenToken = extra.tokens.length;
-            } else if (code === 0x7B) {
-                extra.openCurlyToken = extra.tokens.length;
+        // Check for most common single-character punctuators.
+        case 40:   // ( open bracket
+        case 41:   // ) close bracket
+        case 59:   // ; semicolon
+        case 44:   // , comma
+        case 123:  // { open curly brace
+        case 125:  // } close curly brace
+        case 91:   // [
+        case 93:   // ]
+        case 58:   // :
+        case 63:   // ?
+        case 126:  // ~
+            ++index;
+            if (extra.tokenize) {
+                if (code === 40) {
+                    extra.openParenToken = extra.tokens.length;
+                } else if (code === 123) {
+                    extra.openCurlyToken = extra.tokens.length;
+                }
             }
-        }
-        return {
-            type: Token.Punctuator,
-            value: String.fromCharCode(code),
-            lineNumber: lineNumber,
-            lineStart: lineStart,
-            start: start,
-            end: index
-        };
+            return {
+                type: Token.Punctuator,
+                value: String.fromCharCode(code),
+                lineNumber: lineNumber,
+                lineStart: lineStart,
+                range: [start, index]
+            };
 
-    default:
-        code2 = source.charCodeAt(index + 1);
+        default:
+            code2 = source.charCodeAt(index + 1);
 
-        // "=" (U+003D) marks an assignment or comparison operator.
-        if (code2 === 0x3D) {
-            switch (code) {
-                case 0x2B:  // +
-                case 0x2D:  // -
-                case 0x2F:  // /
-                case 0x3C:  // <
-                case 0x3E:  // >
-                case 0x5E:  // ^
-                case 0x7C:  // |
-                case 0x25:  // %
-                case 0x26:  // &
-                case 0x2A:  // *
-                    index += 2;
-                    return {
-                        type: Token.Punctuator,
-                        value: String.fromCharCode(code) + String.fromCharCode(code2),
-                        lineNumber: lineNumber,
-                        lineStart: lineStart,
-                        start: start,
-                        end: index
-                    };
+            // "=" (char #61) marks an assignment or comparison operator.
+            if (code2 === 61) {
+                switch (code) {
+                    case 37:  // %
+                    case 38:  // &
+                    case 42:  // *:
+                    case 43:  // +
+                    case 45:  // -
+                    case 47:  // /
+                    case 60:  // <
+                    case 62:  // >
+                    case 94:  // ^
+                    case 124: // |
+                        index += 2;
+                        return {
+                            type: Token.Punctuator,
+                            value: String.fromCharCode(code) + String.fromCharCode(code2),
+                            lineNumber: lineNumber,
+                            lineStart: lineStart,
+                            range: [start, index]
+                        };
 
-                case 0x21: // !
-                case 0x3D: // =
-                    index += 2;
+                    case 33: // !
+                    case 61: // =
+                        index += 2;
 
-                    // !== and ===
-                    if (source.charCodeAt(index) === 0x3D) {
-                        ++index;
-                    }
-                    return {
-                        type: Token.Punctuator,
-                        value: source.slice(start, index),
-                        lineNumber: lineNumber,
-                        lineStart: lineStart,
-                        start: start,
-                        end: index
-                    };
-
-                // no default
+                        // !== and ===
+                        if (source.charCodeAt(index) === 61) {
+                            ++index;
+                        }
+                        return {
+                            type: Token.Punctuator,
+                            value: source.slice(start, index),
+                            lineNumber: lineNumber,
+                            lineStart: lineStart,
+                            range: [start, index]
+                        };
+                    default:
+                        break;
+                }
             }
-        }
+            break;
     }
+
+    // Peek more characters.
+
+    ch2 = source[index + 1];
+    ch3 = source[index + 2];
+    ch4 = source[index + 3];
 
     // 4-character punctuator: >>>=
 
-    ch4 = source.substr(index, 4);
-
-    if (ch4 === ">>>=") {
-        index += 4;
-        return {
-            type: Token.Punctuator,
-            value: ch4,
-            lineNumber: lineNumber,
-            lineStart: lineStart,
-            start: start,
-            end: index
-        };
+    if (ch1 === ">" && ch2 === ">" && ch3 === ">") {
+        if (ch4 === "=") {
+            index += 4;
+            return {
+                type: Token.Punctuator,
+                value: ">>>=",
+                lineNumber: lineNumber,
+                lineStart: lineStart,
+                range: [start, index]
+            };
+        }
     }
 
     // 3-character punctuators: === !== >>> <<= >>=
 
-    ch3 = ch4.substr(0, 3);
-
-    if (ch3 === ">>>" || ch3 === "<<=" || ch3 === ">>=") {
+    if (ch1 === ">" && ch2 === ">" && ch3 === ">") {
         index += 3;
         return {
             type: Token.Punctuator,
-            value: ch3,
+            value: ">>>",
             lineNumber: lineNumber,
             lineStart: lineStart,
-            start: start,
-            end: index
+            range: [start, index]
         };
+    }
+
+    if (ch1 === "<" && ch2 === "<" && ch3 === "=") {
+        index += 3;
+        return {
+            type: Token.Punctuator,
+            value: "<<=",
+            lineNumber: lineNumber,
+            lineStart: lineStart,
+            range: [start, index]
+        };
+    }
+
+    if (ch1 === ">" && ch2 === ">" && ch3 === "=") {
+        index += 3;
+        return {
+            type: Token.Punctuator,
+            value: ">>=",
+            lineNumber: lineNumber,
+            lineStart: lineStart,
+            range: [start, index]
+        };
+    }
+
+    // The ... operator only valid in JSX mode for now
+    if (extra.ecmaFeatures.jsx && state.inJSXSpreadAttribute) {
+        if (ch1 === "." && ch2 === "." && ch3 === ".") {
+            index += 3;
+            return {
+                type: Token.Punctuator,
+                value: "...",
+                lineNumber: lineNumber,
+                lineStart: lineStart,
+                range: [start, index]
+            };
+        }
     }
 
     // Other 2-character punctuators: ++ -- << >> && ||
-    ch2 = ch3.substr(0, 2);
-
-    if ((ch1 === ch2[1] && ("+-<>&|".indexOf(ch1) >= 0)) || ch2 === "=>") {
+    if (ch1 === ch2 && ("+-<>&|".indexOf(ch1) >= 0)) {
         index += 2;
         return {
             type: Token.Punctuator,
-            value: ch2,
+            value: ch1 + ch2,
             lineNumber: lineNumber,
             lineStart: lineStart,
-            start: start,
-            end: index
+            range: [start, index]
         };
     }
 
-    // 1-character punctuators: < > = ! + - * % & | ^ /
+    // the => for arrow functions
+    if (extra.ecmaFeatures.arrowFunctions) {
+        if (ch1 === "=" && ch2 === ">") {
+            index += 2;
+            return {
+                type: Token.Punctuator,
+                value: "=>",
+                lineNumber: lineNumber,
+                lineStart: lineStart,
+                range: [start, index]
+            };
+        }
+    }
+
     if ("<>=!+-*%&|^/".indexOf(ch1) >= 0) {
         ++index;
         return {
@@ -515,8 +560,18 @@ function scanPunctuator() {
             value: ch1,
             lineNumber: lineNumber,
             lineStart: lineStart,
-            start: start,
-            end: index
+            range: [start, index]
+        };
+    }
+
+    if (ch1 === ".") {
+        ++index;
+        return {
+            type: Token.Punctuator,
+            value: ch1,
+            lineNumber: lineNumber,
+            lineStart: lineStart,
+            range: [start, index]
         };
     }
 
@@ -548,8 +603,7 @@ function scanHexLiteral(start) {
         value: parseInt("0x" + number, 16),
         lineNumber: lineNumber,
         lineStart: lineStart,
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -583,10 +637,7 @@ function scanBinaryLiteral(start) {
         value: parseInt(number, 2),
         lineNumber: lineNumber,
         lineStart: lineStart,
-
-        // TODO: investigate why esprima/harmony switches these out for a range property
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -625,8 +676,7 @@ function scanOctalLiteral(prefix, start) {
         octal: true,
         lineNumber: lineNumber,
         lineStart: lineStart,
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -708,8 +758,7 @@ function scanNumericLiteral() {
         value: parseFloat(number),
         lineNumber: lineNumber,
         lineStart: lineStart,
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -820,8 +869,7 @@ function scanStringLiteral() {
         startLineStart: startLineStart,
         lineNumber: lineNumber,
         lineStart: lineStart,
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -991,8 +1039,7 @@ function scanRegExp() {
             },
             lineNumber: lineNumber,
             lineStart: lineStart,
-            start: start,
-            end: index
+            range: [start, index]
         };
     }
 
@@ -1003,8 +1050,7 @@ function scanRegExp() {
             pattern: body.value,
             flags: flags.value
         },
-        start: start,
-        end: index
+        range: [start, index]
     };
 }
 
@@ -1122,25 +1168,32 @@ function advanceSlash() {
 }
 
 function advance() {
-    var ch;
+    var ch,
+        allowJSX = extra.ecmaFeatures.jsx;
 
-    skipComment();
+    /*
+     * If JSX isn't allowed or JSX is allowed and we're not inside an JSX child,
+     * then skip any comments.
+     */
+    if (!allowJSX || !state.inJSXChild) {
+        skipComment();
+    }
 
     if (index >= length) {
         return {
             type: Token.EOF,
             lineNumber: lineNumber,
             lineStart: lineStart,
-            start: index,
-            end: index
+            range: [index, index]
         };
     }
 
-    ch = source.charCodeAt(index);
-
-    if (syntax.isIdentifierStart(ch)) {
-        return scanIdentifier();
+    // if inside an JSX child, then abort regular tokenization
+    if (allowJSX && state.inJSXChild) {
+        return advanceJSXChild();
     }
+
+    ch = source.charCodeAt(index);
 
     // Very common: ( and ) and ;
     if (ch === 0x28 || ch === 0x29 || ch === 0x3B) {
@@ -1149,8 +1202,23 @@ function advance() {
 
     // String literal starts with single quote (U+0027) or double quote (U+0022).
     if (ch === 0x27 || ch === 0x22) {
+        if (allowJSX && state.inJSXTag) {
+            return scanJSXStringLiteral();
+        }
+
         return scanStringLiteral();
     }
+
+    if (allowJSX && state.inJSXTag && syntax.isJSXIdentifierStart(ch)) {
+        return scanJSXIdentifier();
+    }
+
+    // TODO: template string support here
+
+    if (syntax.isIdentifierStart(ch)) {
+        return scanIdentifier();
+    }
+
 
 
     // Dot (.) U+002E can also start a floating-point number, hence the need
@@ -1175,9 +1243,14 @@ function advance() {
 }
 
 function collectToken() {
-    var loc, token, value, entry;
+    var loc, token, range, value, entry,
+        allowJSX = extra.ecmaFeatures.jsx;
 
-    skipComment();
+    /* istanbul ignore else */
+    if (!allowJSX || !state.inJSXChild) {
+        skipComment();
+    }
+
     loc = {
         start: {
             line: lineNumber,
@@ -1192,11 +1265,12 @@ function collectToken() {
     };
 
     if (token.type !== Token.EOF) {
-        value = source.slice(token.start, token.end);
+        range = [token.range[0], token.range[1]];
+        value = source.slice(token.range[0], token.range[1]);
         entry = {
             type: TokenName[token.type],
             value: value,
-            range: [token.start, token.end],
+            range: range,
             loc: loc
         };
         if (token.regex) {
@@ -1215,13 +1289,13 @@ function lex() {
     var token;
 
     token = lookahead;
-    index = token.end;
+    index = token.range[1];
     lineNumber = token.lineNumber;
     lineStart = token.lineStart;
 
     lookahead = (typeof extra.tokens !== "undefined") ? collectToken() : advance();
 
-    index = token.end;
+    index = token.range[1];
     lineNumber = token.lineNumber;
     lineStart = token.lineStart;
 
@@ -1238,6 +1312,447 @@ function peek() {
     index = pos;
     lineNumber = line;
     lineStart = start;
+}
+
+function lookahead2() {
+    var adv, pos, line, start, result;
+
+    // If we are collecting the tokens, don't grab the next one yet.
+    /* istanbul ignore next */
+    adv = (typeof extra.advance === "function") ? extra.advance : advance;
+
+    pos = index;
+    line = lineNumber;
+    start = lineStart;
+
+    // Scan for the next immediate token.
+    /* istanbul ignore if */
+    if (lookahead === null) {
+        lookahead = adv();
+    }
+    index = lookahead.range[1];
+    lineNumber = lookahead.lineNumber;
+    lineStart = lookahead.lineStart;
+
+    // Grab the token right after.
+    result = adv();
+    index = pos;
+    lineNumber = line;
+    lineStart = start;
+
+    return result;
+}
+
+
+//------------------------------------------------------------------------------
+// JSX
+//------------------------------------------------------------------------------
+
+function getQualifiedJSXName(object) {
+    if (object.type === astNodeTypes.JSXIdentifier) {
+        return object.name;
+    }
+    if (object.type === astNodeTypes.JSXNamespacedName) {
+        return object.namespace.name + ":" + object.name.name;
+    }
+    /* istanbul ignore else */
+    if (object.type === astNodeTypes.JSXMemberExpression) {
+        return (
+            getQualifiedJSXName(object.object) + "." +
+            getQualifiedJSXName(object.property)
+        );
+    }
+    /* istanbul ignore next */
+    throwUnexpected(object);
+}
+
+function scanJSXIdentifier() {
+    var ch, start, value = "";
+
+    start = index;
+    while (index < length) {
+        ch = source.charCodeAt(index);
+        if (!syntax.isJSXIdentifierPart(ch)) {
+            break;
+        }
+        value += source[index++];
+    }
+
+    return {
+        type: Token.JSXIdentifier,
+        value: value,
+        lineNumber: lineNumber,
+        lineStart: lineStart,
+        range: [start, index]
+    };
+}
+
+function scanJSXEntity() {
+    var ch, str = "", start = index, count = 0, code;
+    ch = source[index];
+    assert(ch === "&", "Entity must start with an ampersand");
+    index++;
+    while (index < length && count++ < 10) {
+        ch = source[index++];
+        if (ch === ";") {
+            break;
+        }
+        str += ch;
+    }
+
+    // Well-formed entity (ending was found).
+    if (ch === ";") {
+        // Numeric entity.
+        if (str[0] === "#") {
+            if (str[1] === "x") {
+                code = +("0" + str.substr(1));
+            } else {
+                // Removing leading zeros in order to avoid treating as octal in old browsers.
+                code = +str.substr(1).replace(Regex.LeadingZeros, "");
+            }
+
+            if (!isNaN(code)) {
+                return String.fromCharCode(code);
+            }
+        /* istanbul ignore else */
+        } else if (XHTMLEntities[str]) {
+            return XHTMLEntities[str];
+        }
+    }
+
+    // Treat non-entity sequences as regular text.
+    index = start + 1;
+    return "&";
+}
+
+function scanJSXText(stopChars) {
+    var ch, str = "", start;
+    start = index;
+    while (index < length) {
+        ch = source[index];
+        if (stopChars.indexOf(ch) !== -1) {
+            break;
+        }
+        if (ch === "&") {
+            str += scanJSXEntity();
+        } else {
+            index++;
+            if (ch === "\r" && source[index] === "\n") {
+                str += ch;
+                ch = source[index];
+                index++;
+            }
+            if (syntax.isLineTerminator(ch.charCodeAt(0))) {
+                ++lineNumber;
+                lineStart = index;
+            }
+            str += ch;
+        }
+    }
+    return {
+        type: Token.JSXText,
+        value: str,
+        lineNumber: lineNumber,
+        lineStart: lineStart,
+        range: [start, index]
+    };
+}
+
+function scanJSXStringLiteral() {
+    var innerToken, quote, start;
+
+    quote = source[index];
+    assert((quote === "\"" || quote === "'"),
+        "String literal must starts with a quote");
+
+    start = index;
+    ++index;
+
+    innerToken = scanJSXText([quote]);
+
+    if (quote !== source[index]) {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    ++index;
+
+    innerToken.range = [start, index];
+
+    return innerToken;
+}
+
+/*
+ * Between JSX opening and closing tags (e.g. <foo>HERE</foo>), anything that
+ * is not another JSX tag and is not an expression wrapped by {} is text.
+ */
+function advanceJSXChild() {
+    var ch = source.charCodeAt(index);
+
+    // { (123) and < (60)
+    if (ch !== 123 && ch !== 60) {
+        return scanJSXText(["<", "{"]);
+    }
+
+    return scanPunctuator();
+}
+
+function parseJSXIdentifier() {
+    var token, marker = markerCreate();
+
+    if (lookahead.type !== Token.JSXIdentifier) {
+        throwUnexpected(lookahead);
+    }
+
+    token = lex();
+    return markerApply(marker, delegate.createJSXIdentifier(token.value));
+}
+
+function parseJSXNamespacedName() {
+    var namespace, name, marker = markerCreate();
+
+    namespace = parseJSXIdentifier();
+    expect(":");
+    name = parseJSXIdentifier();
+
+    return markerApply(marker, delegate.createJSXNamespacedName(namespace, name));
+}
+
+function parseJSXMemberExpression() {
+    var marker = markerCreate(),
+        expr = parseJSXIdentifier();
+
+    while (match(".")) {
+        lex();
+        expr = markerApply(marker, delegate.createJSXMemberExpression(expr, parseJSXIdentifier()));
+    }
+
+    return expr;
+}
+
+function parseJSXElementName() {
+    if (lookahead2().value === ":") {
+        return parseJSXNamespacedName();
+    }
+    if (lookahead2().value === ".") {
+        return parseJSXMemberExpression();
+    }
+
+    return parseJSXIdentifier();
+}
+
+function parseJSXAttributeName() {
+    if (lookahead2().value === ":") {
+        return parseJSXNamespacedName();
+    }
+
+    return parseJSXIdentifier();
+}
+
+function parseJSXAttributeValue() {
+    var value, marker;
+    if (match("{")) {
+        value = parseJSXExpressionContainer();
+        if (value.expression.type === astNodeTypes.JSXEmptyExpression) {
+            throwError(
+                value,
+                "JSX attributes must only be assigned a non-empty " +
+                    "expression"
+            );
+        }
+    } else if (match("<")) {
+        value = parseJSXElement();
+    } else if (lookahead.type === Token.JSXText) {
+        marker = markerCreate();
+        value = markerApply(marker, delegate.createLiteral(lex()));
+    } else {
+        throwError({}, Messages.InvalidJSXAttributeValue);
+    }
+    return value;
+}
+
+function parseJSXEmptyExpression() {
+    var marker = markerCreatePreserveWhitespace();
+    while (source.charAt(index) !== "}") {
+        index++;
+    }
+    return markerApply(marker, delegate.createJSXEmptyExpression());
+}
+
+function parseJSXExpressionContainer() {
+    var expression, origInJSXChild, origInJSXTag, marker = markerCreate();
+
+    origInJSXChild = state.inJSXChild;
+    origInJSXTag = state.inJSXTag;
+    state.inJSXChild = false;
+    state.inJSXTag = false;
+
+    expect("{");
+
+    if (match("}")) {
+        expression = parseJSXEmptyExpression();
+    } else {
+        expression = parseExpression();
+    }
+
+    state.inJSXChild = origInJSXChild;
+    state.inJSXTag = origInJSXTag;
+
+    expect("}");
+
+    return markerApply(marker, delegate.createJSXExpressionContainer(expression));
+}
+
+function parseJSXSpreadAttribute() {
+    var expression, origInJSXChild, origInJSXTag, marker = markerCreate();
+
+    origInJSXChild = state.inJSXChild;
+    origInJSXTag = state.inJSXTag;
+    state.inJSXChild = false;
+    state.inJSXTag = false;
+    state.inJSXSpreadAttribute = true;
+
+    expect("{");
+    expect("...");
+
+    state.inJSXSpreadAttribute = false;
+
+    expression = parseAssignmentExpression();
+
+    state.inJSXChild = origInJSXChild;
+    state.inJSXTag = origInJSXTag;
+
+    expect("}");
+
+    return markerApply(marker, delegate.createJSXSpreadAttribute(expression));
+}
+
+function parseJSXAttribute() {
+    var name, marker;
+
+    if (match("{")) {
+        return parseJSXSpreadAttribute();
+    }
+
+    marker = markerCreate();
+
+    name = parseJSXAttributeName();
+
+    // HTML empty attribute
+    if (match("=")) {
+        lex();
+        return markerApply(marker, delegate.createJSXAttribute(name, parseJSXAttributeValue()));
+    }
+
+    return markerApply(marker, delegate.createJSXAttribute(name));
+}
+
+function parseJSXChild() {
+    var token, marker;
+    if (match("{")) {
+        token = parseJSXExpressionContainer();
+    } else if (lookahead.type === Token.JSXText) {
+        marker = markerCreatePreserveWhitespace();
+        token = markerApply(marker, delegate.createLiteral(lex()));
+    } else {
+        token = parseJSXElement();
+    }
+    return token;
+}
+
+function parseJSXClosingElement() {
+    var name, origInJSXChild, origInJSXTag, marker = markerCreate();
+    origInJSXChild = state.inJSXChild;
+    origInJSXTag = state.inJSXTag;
+    state.inJSXChild = false;
+    state.inJSXTag = true;
+    expect("<");
+    expect("/");
+    name = parseJSXElementName();
+    // Because advance() (called by lex() called by expect()) expects there
+    // to be a valid token after >, it needs to know whether to look for a
+    // standard JS token or an JSX text node
+    state.inJSXChild = origInJSXChild;
+    state.inJSXTag = origInJSXTag;
+    expect(">");
+    return markerApply(marker, delegate.createJSXClosingElement(name));
+}
+
+function parseJSXOpeningElement() {
+    var name, attributes = [], selfClosing = false, origInJSXChild,
+        origInJSXTag, marker = markerCreate();
+
+    origInJSXChild = state.inJSXChild;
+    origInJSXTag = state.inJSXTag;
+    state.inJSXChild = false;
+    state.inJSXTag = true;
+
+    expect("<");
+
+    name = parseJSXElementName();
+
+    while (index < length &&
+            lookahead.value !== "/" &&
+            lookahead.value !== ">") {
+        attributes.push(parseJSXAttribute());
+    }
+
+    state.inJSXTag = origInJSXTag;
+
+    if (lookahead.value === "/") {
+        expect("/");
+        // Because advance() (called by lex() called by expect()) expects
+        // there to be a valid token after >, it needs to know whether to
+        // look for a standard JS token or an JSX text node
+        state.inJSXChild = origInJSXChild;
+        expect(">");
+        selfClosing = true;
+    } else {
+        state.inJSXChild = true;
+        expect(">");
+    }
+    return markerApply(marker, delegate.createJSXOpeningElement(name, attributes, selfClosing));
+}
+
+function parseJSXElement() {
+    var openingElement, closingElement = null, children = [], origInJSXChild, origInJSXTag, marker = markerCreate();
+
+    origInJSXChild = state.inJSXChild;
+    origInJSXTag = state.inJSXTag;
+    openingElement = parseJSXOpeningElement();
+
+    if (!openingElement.selfClosing) {
+        while (index < length) {
+            state.inJSXChild = false; // Call lookahead2() with inJSXChild = false because </ should not be considered in the child
+            if (lookahead.value === "<" && lookahead2().value === "/") {
+                break;
+            }
+            state.inJSXChild = true;
+            children.push(parseJSXChild());
+        }
+        state.inJSXChild = origInJSXChild;
+        state.inJSXTag = origInJSXTag;
+        closingElement = parseJSXClosingElement();
+        if (getQualifiedJSXName(closingElement.name) !== getQualifiedJSXName(openingElement.name)) {
+            throwError({}, Messages.ExpectedJSXClosingTag, getQualifiedJSXName(openingElement.name));
+        }
+    }
+
+    /*
+     * When (erroneously) writing two adjacent tags like
+     *
+     *     var x = <div>one</div><div>two</div>;
+     *
+     * the default error message is a bit incomprehensible. Since it"s
+     * rarely (never?) useful to write a less-than sign after an JSX
+     * element, we disallow it here in the parser in order to provide a
+     * better error message. (In the rare case that the less-than operator
+     * was intended, the left tag can be wrapped in parentheses.)
+     */
+    if (!origInJSXChild && match("<")) {
+        throwError(lookahead, Messages.AdjacentJSXElements);
+    }
+
+    return markerApply(marker, delegate.createJSXElement(openingElement, closingElement, children));
 }
 
 //------------------------------------------------------------------------------
@@ -1297,6 +1812,27 @@ function markerCreate() {
     }
 
     skipComment();
+
+    return {
+        offset: index,
+        line: lineNumber,
+        col: index - lineStart
+    };
+}
+
+/**
+ * Creates a location marker in the source code. Location markers are used for
+ * tracking where tokens and nodes appear in the source code. This method
+ * doesn't skip comments or extra whitespace which is important for JSX.
+ * @returns {Object} A marker object or undefined if the parser doesn't have
+ *      any location information.
+ * @private
+ */
+function markerCreatePreserveWhitespace() {
+
+    if (!extra.loc && !extra.range) {
+        return undefined;
+    }
 
     return {
         offset: index,
@@ -1612,7 +2148,7 @@ SyntaxTreeDelegate = {
         var node = {
             type: astNodeTypes.Literal,
             value: token.value,
-            raw: source.slice(token.start, token.end)
+            raw: source.slice(token.range[0], token.range[1])
         };
 
         // regular expressions have regex properties
@@ -1775,7 +2311,84 @@ SyntaxTreeDelegate = {
             object: object,
             body: body
         };
+    },
+
+    createJSXAttribute: function (name, value) {
+        return {
+            type: astNodeTypes.JSXAttribute,
+            name: name,
+            value: value || null
+        };
+    },
+
+    createJSXSpreadAttribute: function (argument) {
+        return {
+            type: astNodeTypes.JSXSpreadAttribute,
+            argument: argument
+        };
+    },
+
+    createJSXIdentifier: function (name) {
+        return {
+            type: astNodeTypes.JSXIdentifier,
+            name: name
+        };
+    },
+
+    createJSXNamespacedName: function (namespace, name) {
+        return {
+            type: astNodeTypes.JSXNamespacedName,
+            namespace: namespace,
+            name: name
+        };
+    },
+
+    createJSXMemberExpression: function (object, property) {
+        return {
+            type: astNodeTypes.JSXMemberExpression,
+            object: object,
+            property: property
+        };
+    },
+
+    createJSXElement: function (openingElement, closingElement, children) {
+        return {
+            type: astNodeTypes.JSXElement,
+            openingElement: openingElement,
+            closingElement: closingElement,
+            children: children
+        };
+    },
+
+    createJSXEmptyExpression: function () {
+        return {
+            type: astNodeTypes.JSXEmptyExpression
+        };
+    },
+
+    createJSXExpressionContainer: function (expression) {
+        return {
+            type: astNodeTypes.JSXExpressionContainer,
+            expression: expression
+        };
+    },
+
+    createJSXOpeningElement: function (name, attributes, selfClosing) {
+        return {
+            type: astNodeTypes.JSXOpeningElement,
+            name: name,
+            selfClosing: selfClosing,
+            attributes: attributes
+        };
+    },
+
+    createJSXClosingElement: function (name) {
+        return {
+            type: astNodeTypes.JSXClosingElement,
+            name: name
+        };
     }
+
 };
 
 // Return true if there is a line terminator before the next token.
@@ -1810,9 +2423,9 @@ function throwError(token, messageFormat) {
 
     if (typeof token.lineNumber === "number") {
         error = new Error("Line " + token.lineNumber + ": " + msg);
-        error.index = token.start;
+        error.index = token.range[0];
         error.lineNumber = token.lineNumber;
-        error.column = token.start - lineStart + 1;
+        error.column = token.range[0] - lineStart + 1;
     } else {
         error = new Error("Line " + lineNumber + ": " + msg);
         error.index = index;
@@ -1848,7 +2461,7 @@ function throwUnexpected(token) {
         throwError(token, Messages.UnexpectedNumber);
     }
 
-    if (token.type === Token.StringLiteral) {
+    if (token.type === Token.StringLiteral || token.type === Token.JSXText) {
         throwError(token, Messages.UnexpectedString);
     }
 
@@ -2227,7 +2840,8 @@ function parseGroupExpression() {
 
 function parsePrimaryExpression() {
     var type, token, expr,
-        marker;
+        marker,
+        allowJSX = extra.ecmaFeatures.jsx;
 
     if (match("(")) {
         return parseGroupExpression();
@@ -2239,6 +2853,10 @@ function parsePrimaryExpression() {
 
     if (match("{")) {
         return parseObjectInitialiser();
+    }
+
+    if (allowJSX && match("<")) {
+        return parseJSXElement();
     }
 
     type = lookahead.type;
@@ -3411,7 +4029,7 @@ function parseFunctionSourceElements() {
             // this is not directive
             break;
         }
-        directive = source.slice(token.start + 1, token.end - 1);
+        directive = source.slice(token.range[0] + 1, token.range[1] - 1);
         if (directive === "use strict") {
             strict = true;
             if (firstRestricted) {
@@ -3635,7 +4253,7 @@ function parseSourceElements() {
             // this is not directive
             break;
         }
-        directive = source.slice(token.start + 1, token.end - 1);
+        directive = source.slice(token.range[0] + 1, token.range[1] - 1);
         if (directive === "use strict") {
             strict = true;
             if (firstRestricted) {
@@ -3725,7 +4343,9 @@ function tokenize(code, options) {
         inFunctionBody: false,
         inIteration: false,
         inSwitch: false,
-        lastCommentStart: -1
+        lastCommentStart: -1,
+        inJSXChild: false,
+        inJSXTag: false
     };
 
     extra = {
@@ -3822,7 +4442,9 @@ function parse(code, options) {
         inFunctionBody: false,
         inIteration: false,
         inSwitch: false,
-        lastCommentStart: -1
+        lastCommentStart: -1,
+        inJSXChild: false,
+        inJSXTag: false
     };
 
     extra = {

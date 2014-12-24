@@ -1,35 +1,10 @@
-/*!espree-section: simple-method*/
-x = {
-    method() {
-    }
-};
-
-/*!espree-section: simple-method-with-argument*/
-x = {
-    method(test) {
-
-    }
-};
-
-/*!espree-section: simple-method-with-string-name*/
-x = {
-    "method"() {
-    }
-};
-
-/*!espree-section: simple-method-named-get*/
-x = {
-    get() {
-    }
-};
-
-/*!espree-section: simple-method-named-set*/
-x = {
-    set() {
-    }
-};
-
-/*!espree-section: invalid-method-no-braces*/
-x = {
-    method() 42
-};
+/*!espree-section: spread-operator-attributes*/
+<div {...props} />
+/*!espree-section: spread-operator-attribute-and-regular-attribute*/
+<div {...props} post="attribute" />
+/*!espree-section: trailing-spread-operator-attribute*/
+<div pre="leading" pre2="attribute" {...props}></div>
+/*!espree-section: invalid-placeholder-in-closing-tag*/
+<div>stuff</div {...props}>
+/*!espree-section: invalid-matching-placeholder-in-closing-tag*/
+<div {...props}>stuff</div {...props}>

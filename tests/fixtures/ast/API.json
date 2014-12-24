@@ -189,7 +189,18 @@
             "VariableDeclaration": "VariableDeclaration",
             "VariableDeclarator": "VariableDeclarator",
             "WhileStatement": "WhileStatement",
-            "WithStatement": "WithStatement"
+            "WithStatement": "WithStatement",
+            "JSXIdentifier": "JSXIdentifier",
+            "JSXNamespacedName": "JSXNamespacedName",
+            "JSXMemberExpression": "JSXMemberExpression",
+            "JSXEmptyExpression": "JSXEmptyExpression",
+            "JSXExpressionContainer": "JSXExpressionContainer",
+            "JSXElement": "JSXElement",
+            "JSXClosingElement": "JSXClosingElement",
+            "JSXOpeningElement": "JSXOpeningElement",
+            "JSXAttribute": "JSXAttribute",
+            "JSXSpreadAttribute": "JSXSpreadAttribute",
+            "JSXText": "JSXText"
         }
     },
     "tokenize()": {

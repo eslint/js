@@ -84,14 +84,17 @@ var ast = espree.parse(code, {
         objectLiteralShorthandMethods: false,
 
         // enable parsing of shorthand object literal properties
-        objectLiteralShorthandProperties: false
+        objectLiteralShorthandProperties: false,
+
+        // React JSX parsing
+        jsx: false
     }
 });
 ```
 
 ## Plans
 
-Espree starts as a fork of Esprima v1.2.2, the last stable published released of Esprima before work on ECMAScript 6 began. Espree's first version is therefore v1.2.2 and is 100% compatible with Esprima v1.2.2 as  drop-in replacement. The version number will be incremented based on [semantic versioning](http://semver.org/) as features and bug fixes are added.
+Espree starts as a fork of Esprima v1.2.2, the last stable published released of Esprima before work on ECMAScript 6 began. Espree's first version is therefore v1.2.2 and is 100% compatible with Esprima v1.2.2 as a drop-in replacement. The version number will be incremented based on [semantic versioning](http://semver.org/) as features and bug fixes are added.
 
 The immediate plans are:
 

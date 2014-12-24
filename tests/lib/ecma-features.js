@@ -36,6 +36,7 @@ var assert = require("chai").assert,
     espree = require("../../espree"),
     shelljs = require("shelljs");
 
+// var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------
@@ -62,7 +63,8 @@ var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
 describe("ecmaFeatures", function() {
 
     leche.withData(testFiles, function(filename) {
-
+        // Uncomment and fill in filename to focus on a single file
+        // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
         var feature = path.dirname(filename),
             code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js"),
             config = {
@@ -81,16 +83,16 @@ describe("ecmaFeatures", function() {
             } catch (ex) {
 
                 // if the result is an error, create an error object so deepEqual works
-                if (expected.message) {
-                    var expectedError = new Error(expected.message);
+                if (expected.message || expected.description) {
+                    var expectedError = new Error(expected.message || expected.description);
                     Object.keys(expected).forEach(function(key) {
                         expectedError[key] = expected[key];
                     });
+                    expected = expectedError;
                 }
-                expected = expectedError;
+
                 result = ex;    // if an error is thrown, match the error
             }
-
             assert.deepEqual(result, expected);
         });
 
