@@ -37,7 +37,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var syntax = require("./lib/syntax"),
     tokenInfo = require("./lib/token-info"),
     astNodeTypes = require("./lib/ast-node-types"),
-    SourceLocation = require("./lib/locations").SourceLocation,
     defaultFeatures = require("./lib/features"),
     Messages = require("./lib/messages");
 
@@ -1242,6 +1241,72 @@ function peek() {
 }
 
 //------------------------------------------------------------------------------
+// Location markers
+//------------------------------------------------------------------------------
+
+/**
+ * Applies location information to the given node by using the given marker.
+ * The marker indicates the point at which the node is said to have to begun
+ * in the source code.
+ * @param {Object} marker The market to use for the node.
+ * @param {ASTNode} node The AST node to apply location information to.
+ * @returns {ASTNode} The node that was passed in.
+ * @private
+ */
+function markerApply(marker, node) {
+
+    // add range information to the node if present
+    if (extra.range) {
+        node.range = [marker.offset, index];
+    }
+
+    // add location information the node if present
+    if (extra.loc) {
+        node.loc = {
+            start: {
+                line: marker.line,
+                column: marker.col
+            },
+            end: {
+                line: lineNumber,
+                column: index - lineStart
+            }
+        };
+        node = delegate.postProcess(node);
+    }
+
+    // attach leading and trailing comments if requested
+    if (extra.attachComment) {
+        delegate.processComment(node);
+    }
+
+    return node;
+}
+
+/**
+ * Creates a location marker in the source code. Location markers are used for
+ * tracking where tokens and nodes appear in the source code.
+ * @returns {Object} A marker object or undefined if the parser doesn't have
+ *      any location information.
+ * @private
+ */
+function markerCreate() {
+
+    if (!extra.loc && !extra.range) {
+        return undefined;
+    }
+
+    skipComment();
+
+    return {
+        offset: index,
+        line: lineNumber,
+        col: index - lineStart
+    };
+}
+
+
+//------------------------------------------------------------------------------
 // Syntax Tree Delegate
 //------------------------------------------------------------------------------
 
@@ -1355,26 +1420,6 @@ SyntaxTreeDelegate = {
         }
 
         extra.bottomRightStack.push(node);
-    },
-
-    markEnd: function (node, startToken) {
-        if (extra.range) {
-            node.range = [startToken.start, index];
-        }
-        if (extra.loc) {
-            node.loc = new SourceLocation(
-                startToken.startLineNumber === undefined ? startToken.lineNumber : startToken.startLineNumber,
-                startToken.start - (startToken.startLineStart === undefined ? startToken.lineStart : startToken.startLineStart),
-                lineNumber,
-                index - lineStart
-            );
-            this.postProcess(node);
-        }
-
-        if (extra.attachComment) {
-            this.processComment(node);
-        }
-        return node;
     },
 
     postProcess: function (node) {
@@ -1916,9 +1961,9 @@ function isLeftHandSide(expr) {
 // 11.1.4 Array Initialiser
 
 function parseArrayInitialiser() {
-    var elements = [], startToken;
+    var elements = [],
+        marker = markerCreate();
 
-    startToken = lookahead;
     expect("[");
 
     while (!match("]")) {
@@ -1936,14 +1981,14 @@ function parseArrayInitialiser() {
 
     lex();
 
-    return delegate.markEnd(delegate.createArrayExpression(elements), startToken);
+    return markerApply(marker, delegate.createArrayExpression(elements));
 }
 
 // 11.1.5 Object Initialiser
 
 function parsePropertyFunction(params, first) {
     var previousStrict = strict,
-        startToken = lookahead,
+        marker = markerCreate(),
         body;
 
     params = params || [];
@@ -1955,7 +2000,7 @@ function parsePropertyFunction(params, first) {
 
     strict = previousStrict;
 
-    return delegate.markEnd(delegate.createFunctionExpression(null, params, [], body), startToken);
+    return markerApply(marker, delegate.createFunctionExpression(null, params, [], body));
 }
 
 
@@ -1979,10 +2024,10 @@ function parsePropertyMethodFunction() {
 }
 
 function parseObjectPropertyKey() {
-    var token, startToken, propertyKey, result;
-
-    startToken = lookahead;
-    token = lex();
+    var marker = markerCreate(),
+        token = lex(),
+        propertyKey,
+        result;
 
     // Note: This function is called only from parseObjectProperty(), where
     // EOF and Punctuator tokens are already filtered out.
@@ -1991,30 +2036,32 @@ function parseObjectPropertyKey() {
         if (strict && token.octal) {
             throwErrorTolerant(token, Messages.StrictOctalLiteral);
         }
-        return delegate.markEnd(delegate.createLiteral(token), startToken);
+        return markerApply(marker, delegate.createLiteral(token));
     }
 
     if (extra.ecmaFeatures.objectLiteralComputedProperties &&
         token.type === Token.Punctuator && token.value === "["
     ) {
-        startToken = lookahead;
+        // For computed properties we should skip the [ and ], and
+        // capture in marker only the assignment expression itself.
+        marker = markerCreate();
         propertyKey = parseAssignmentExpression();
-        result = delegate.markEnd(propertyKey, startToken);
+        result = markerApply(marker, propertyKey);
         expect("]");
         return result;
     }
 
-    return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
+    return markerApply(marker, delegate.createIdentifier(token.value));
 }
 
 function parseObjectProperty() {
-    var token, key, id, value, param, startToken, computed;
+    var token, key, id, value, param, computed;
     var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties,
         allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods,
-        allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties;
+        allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties,
+        marker = markerCreate();
 
     token = lookahead;
-    startToken = lookahead;
     computed = (token.value === "[" && token.type === Token.Punctuator);
 
     if (token.type === Token.Identifier || (allowComputed && computed)) {
@@ -2031,7 +2078,7 @@ function parseObjectProperty() {
             expect("(");
             expect(")");
             value = parsePropertyFunction([]);
-            return delegate.markEnd(delegate.createProperty("get", key, value, false, false, computed), startToken);
+            return markerApply(marker, delegate.createProperty("get", key, value, false, false, computed));
         }
         if (token.value === "set" && !match(":") && !match("(")) {
             computed = (lookahead.value === "[");
@@ -2047,18 +2094,18 @@ function parseObjectProperty() {
                 expect(")");
                 value = parsePropertyFunction(param, token);
             }
-            return delegate.markEnd(delegate.createProperty("set", key, value, false, false, computed), startToken);
+            return markerApply(marker, delegate.createProperty("set", key, value, false, false, computed));
         }
 
         // normal property (key:value)
         if (match(":")) {
             lex();
-            return delegate.markEnd(delegate.createProperty("init", id, parseAssignmentExpression(), false, false, computed), startToken);
+            return markerApply(marker, delegate.createProperty("init", id, parseAssignmentExpression(), false, false, computed));
         }
 
         // method shorthand (key(){...})
         if (allowMethod && match("(")) {
-            return delegate.markEnd(delegate.createProperty("init", id, parsePropertyMethodFunction({ generator: false }), true, false, computed), startToken);
+            return markerApply(marker, delegate.createProperty("init", id, parsePropertyMethodFunction({ generator: false }), true, false, computed));
         }
 
         /*
@@ -2072,7 +2119,7 @@ function parseObjectProperty() {
         }
 
         // shorthand property
-        return delegate.markEnd(delegate.createProperty("init", id, id, false, true, false), startToken);
+        return markerApply(marker, delegate.createProperty("init", id, id, false, true, false));
     }
 
     if (token.type === Token.EOF || token.type === Token.Punctuator) {
@@ -2089,12 +2136,12 @@ function parseObjectProperty() {
         // check for property value
         if (match(":")) {
             lex();
-            return delegate.markEnd(delegate.createProperty("init", key, parseAssignmentExpression(), false, false, false), startToken);
+            return markerApply(marker, delegate.createProperty("init", key, parseAssignmentExpression(), false, false, false));
         }
 
         // check for method
         if (allowMethod && match("(")) {
-            return delegate.markEnd(delegate.createProperty("init", key, parsePropertyMethodFunction(), true, false, false), startToken);
+            return markerApply(marker, delegate.createProperty("init", key, parsePropertyMethodFunction(), true, false, false));
         }
 
         // no other options, this is bad
@@ -2103,9 +2150,14 @@ function parseObjectProperty() {
 }
 
 function parseObjectInitialiser() {
-    var properties = [], property, name, key, kind, map = {}, toString = String, startToken;
-
-    startToken = lookahead;
+    var marker = markerCreate(),
+        properties = [],
+        property,
+        name,
+        key,
+        kind,
+        map = {},
+        toString = String;
 
     expect("{");
 
@@ -2153,7 +2205,7 @@ function parseObjectInitialiser() {
 
     expect("}");
 
-    return delegate.markEnd(delegate.createObjectExpression(properties), startToken);
+    return markerApply(marker, delegate.createObjectExpression(properties));
 }
 
 // 11.1.6 The Grouping Operator
@@ -2174,7 +2226,8 @@ function parseGroupExpression() {
 // 11.1 Primary Expressions
 
 function parsePrimaryExpression() {
-    var type, token, expr, startToken;
+    var type, token, expr,
+        marker;
 
     if (match("(")) {
         return parseGroupExpression();
@@ -2189,7 +2242,7 @@ function parsePrimaryExpression() {
     }
 
     type = lookahead.type;
-    startToken = lookahead;
+    marker = markerCreate();
 
     if (type === Token.Identifier) {
         expr = delegate.createIdentifier(lex().value);
@@ -2227,7 +2280,7 @@ function parsePrimaryExpression() {
         throwUnexpected(lex());
     }
 
-    return delegate.markEnd(expr, startToken);
+    return markerApply(marker, expr);
 }
 
 // 11.2 Left-Hand-Side Expressions
@@ -2253,16 +2306,16 @@ function parseArguments() {
 }
 
 function parseNonComputedProperty() {
-    var token, startToken;
+    var token,
+        marker = markerCreate();
 
-    startToken = lookahead;
     token = lex();
 
     if (!isIdentifierName(token)) {
         throwUnexpected(token);
     }
 
-    return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
+    return markerApply(marker, delegate.createIdentifier(token.value));
 }
 
 function parseNonComputedMember() {
@@ -2284,20 +2337,19 @@ function parseComputedMember() {
 }
 
 function parseNewExpression() {
-    var callee, args, startToken;
+    var callee, args,
+        marker = markerCreate();
 
-    startToken = lookahead;
     expectKeyword("new");
     callee = parseLeftHandSideExpression();
     args = match("(") ? parseArguments() : [];
 
-    return delegate.markEnd(delegate.createNewExpression(callee, args), startToken);
+    return markerApply(marker, delegate.createNewExpression(callee, args));
 }
 
 function parseLeftHandSideExpressionAllowCall() {
-    var previousAllowIn, expr, args, property, startToken;
-
-    startToken = lookahead;
+    var previousAllowIn, expr, args, property,
+        marker = markerCreate();
 
     previousAllowIn = state.allowIn;
     state.allowIn = true;
@@ -2317,16 +2369,15 @@ function parseLeftHandSideExpressionAllowCall() {
         } else {
             break;
         }
-        delegate.markEnd(expr, startToken);
+        markerApply(marker, expr);
     }
 
     return expr;
 }
 
 function parseLeftHandSideExpression() {
-    var previousAllowIn, expr, property, startToken;
-
-    startToken = lookahead;
+    var previousAllowIn, expr, property,
+        marker = markerCreate();
 
     previousAllowIn = state.allowIn;
     expr = matchKeyword("new") ? parseNewExpression() : parsePrimaryExpression();
@@ -2340,7 +2391,7 @@ function parseLeftHandSideExpression() {
             property = parseNonComputedMember();
             expr = delegate.createMemberExpression(".", expr, property);
         }
-        delegate.markEnd(expr, startToken);
+        markerApply(marker, expr);
     }
 
     return expr;
@@ -2349,7 +2400,8 @@ function parseLeftHandSideExpression() {
 // 11.3 Postfix Expressions
 
 function parsePostfixExpression() {
-    var expr, token, startToken = lookahead;
+    var expr, token,
+        marker = markerCreate();
 
     expr = parseLeftHandSideExpressionAllowCall();
 
@@ -2365,7 +2417,7 @@ function parsePostfixExpression() {
             }
 
             token = lex();
-            expr = delegate.markEnd(delegate.createPostfixExpression(token.value, expr), startToken);
+            expr = markerApply(marker, delegate.createPostfixExpression(token.value, expr));
         }
     }
 
@@ -2375,12 +2427,13 @@ function parsePostfixExpression() {
 // 11.4 Unary Operators
 
 function parseUnaryExpression() {
-    var token, expr, startToken;
+    var token, expr,
+        marker;
 
     if (lookahead.type !== Token.Punctuator && lookahead.type !== Token.Keyword) {
         expr = parsePostfixExpression();
     } else if (match("++") || match("--")) {
-        startToken = lookahead;
+        marker = markerCreate();
         token = lex();
         expr = parseUnaryExpression();
         // 11.4.4, 11.4.5
@@ -2393,19 +2446,19 @@ function parseUnaryExpression() {
         }
 
         expr = delegate.createUnaryExpression(token.value, expr);
-        expr = delegate.markEnd(expr, startToken);
+        expr = markerApply(marker, expr);
     } else if (match("+") || match("-") || match("~") || match("!")) {
-        startToken = lookahead;
+        marker = markerCreate();
         token = lex();
         expr = parseUnaryExpression();
         expr = delegate.createUnaryExpression(token.value, expr);
-        expr = delegate.markEnd(expr, startToken);
+        expr = markerApply(marker, expr);
     } else if (matchKeyword("delete") || matchKeyword("void") || matchKeyword("typeof")) {
-        startToken = lookahead;
+        marker = markerCreate();
         token = lex();
         expr = parseUnaryExpression();
         expr = delegate.createUnaryExpression(token.value, expr);
-        expr = delegate.markEnd(expr, startToken);
+        expr = markerApply(marker, expr);
         if (strict && expr.operator === "delete" && expr.argument.type === astNodeTypes.Identifier) {
             throwErrorTolerant({}, Messages.StrictDelete);
         }
@@ -2494,27 +2547,30 @@ function binaryPrecedence(token, allowIn) {
 // 11.9 Equality Operators
 // 11.10 Binary Bitwise Operators
 // 11.11 Binary Logical Operators
-
 function parseBinaryExpression() {
-    var marker, markers, expr, token, prec, stack, right, operator, left, i;
+    var expr, token, prec, previousAllowIn, stack, right, operator, left, i,
+        marker, markers;
 
-    marker = lookahead;
+    previousAllowIn = state.allowIn;
+    state.allowIn = true;
+
+    marker = markerCreate();
     left = parseUnaryExpression();
 
     token = lookahead;
-    prec = binaryPrecedence(token, state.allowIn);
+    prec = binaryPrecedence(token, previousAllowIn);
     if (prec === 0) {
         return left;
     }
     token.prec = prec;
     lex();
 
-    markers = [marker, lookahead];
+    markers = [marker, markerCreate()];
     right = parseUnaryExpression();
 
     stack = [left, token, right];
 
-    while ((prec = binaryPrecedence(lookahead, state.allowIn)) > 0) {
+    while ((prec = binaryPrecedence(lookahead, previousAllowIn)) > 0) {
 
         // Reduce: make a binary expression from the three topmost entries.
         while ((stack.length > 2) && (prec <= stack[stack.length - 2].prec)) {
@@ -2523,19 +2579,22 @@ function parseBinaryExpression() {
             left = stack.pop();
             expr = delegate.createBinaryExpression(operator, left, right);
             markers.pop();
-            marker = markers[markers.length - 1];
-            delegate.markEnd(expr, marker);
+            marker = markers.pop();
+            markerApply(marker, expr);
             stack.push(expr);
+            markers.push(marker);
         }
 
         // Shift.
         token = lex();
         token.prec = prec;
         stack.push(token);
-        markers.push(lookahead);
+        markers.push(markerCreate());
         expr = parseUnaryExpression();
         stack.push(expr);
     }
+
+    state.allowIn = previousAllowIn;
 
     // Final reduce to clean-up the stack.
     i = stack.length - 1;
@@ -2545,19 +2604,17 @@ function parseBinaryExpression() {
         expr = delegate.createBinaryExpression(stack[i - 1].value, stack[i - 2], expr);
         i -= 2;
         marker = markers.pop();
-        delegate.markEnd(expr, marker);
+        markerApply(marker, expr);
     }
 
     return expr;
 }
 
-
 // 11.12 Conditional Operator
 
 function parseConditionalExpression() {
-    var expr, previousAllowIn, consequent, alternate, startToken;
-
-    startToken = lookahead;
+    var expr, previousAllowIn, consequent, alternate,
+        marker = markerCreate();
 
     expr = parseBinaryExpression();
 
@@ -2571,7 +2628,7 @@ function parseConditionalExpression() {
         alternate = parseAssignmentExpression();
 
         expr = delegate.createConditionalExpression(expr, consequent, alternate);
-        delegate.markEnd(expr, startToken);
+        markerApply(marker, expr);
     }
 
     return expr;
@@ -2580,10 +2637,10 @@ function parseConditionalExpression() {
 // 11.13 Assignment Operators
 
 function parseAssignmentExpression() {
-    var token, left, right, node, startToken;
+    var token, left, right, node,
+        marker = markerCreate();
 
     token = lookahead;
-    startToken = lookahead;
 
     node = left = parseConditionalExpression();
 
@@ -2600,7 +2657,7 @@ function parseAssignmentExpression() {
 
         token = lex();
         right = parseAssignmentExpression();
-        node = delegate.markEnd(delegate.createAssignmentExpression(token.value, left, right), startToken);
+        node = markerApply(marker, delegate.createAssignmentExpression(token.value, left, right));
     }
 
     return node;
@@ -2609,7 +2666,8 @@ function parseAssignmentExpression() {
 // 11.14 Comma Operator
 
 function parseExpression() {
-    var expr, startToken = lookahead;
+    var expr,
+        marker = markerCreate();
 
     expr = parseAssignmentExpression();
 
@@ -2624,7 +2682,7 @@ function parseExpression() {
             expr.expressions.push(parseAssignmentExpression());
         }
 
-        delegate.markEnd(expr, startToken);
+        markerApply(marker, expr);
     }
 
     return expr;
@@ -2651,37 +2709,37 @@ function parseStatementList() {
 }
 
 function parseBlock() {
-    var block, startToken;
+    var block,
+        marker = markerCreate();
 
-    startToken = lookahead;
     expect("{");
 
     block = parseStatementList();
 
     expect("}");
 
-    return delegate.markEnd(delegate.createBlockStatement(block), startToken);
+    return markerApply(marker, delegate.createBlockStatement(block));
 }
 
 // 12.2 Variable Statement
 
 function parseVariableIdentifier() {
-    var token, startToken;
+    var token,
+        marker = markerCreate();
 
-    startToken = lookahead;
     token = lex();
 
     if (token.type !== Token.Identifier) {
         throwUnexpected(token);
     }
 
-    return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
+    return markerApply(marker, delegate.createIdentifier(token.value));
 }
 
 function parseVariableDeclaration(kind) {
-    var init = null, id, startToken;
+    var init = null, id,
+        marker = markerCreate();
 
-    startToken = lookahead;
     id = parseVariableIdentifier();
 
     // 12.2.1
@@ -2689,6 +2747,7 @@ function parseVariableDeclaration(kind) {
         throwErrorTolerant({}, Messages.StrictVarName);
     }
 
+    // TODO: Verify against feature flags
     if (kind === "const") {
         expect("=");
         init = parseAssignmentExpression();
@@ -2697,7 +2756,7 @@ function parseVariableDeclaration(kind) {
         init = parseAssignmentExpression();
     }
 
-    return delegate.markEnd(delegate.createVariableDeclarator(id, init), startToken);
+    return markerApply(marker, delegate.createVariableDeclarator(id, init));
 }
 
 function parseVariableDeclarationList(kind) {
@@ -2731,9 +2790,8 @@ function parseVariableStatement() {
 // see http://wiki.ecmascript.org/doku.php?id=harmony:const
 // and http://wiki.ecmascript.org/doku.php?id=harmony:let
 function parseConstLetDeclaration(kind) {
-    var declarations, startToken;
-
-    startToken = lookahead;
+    var declarations,
+        marker = markerCreate();
 
     expectKeyword(kind);
 
@@ -2741,7 +2799,7 @@ function parseConstLetDeclaration(kind) {
 
     consumeSemicolon();
 
-    return delegate.markEnd(delegate.createVariableDeclaration(declarations, kind), startToken);
+    return markerApply(marker, delegate.createVariableDeclaration(declarations, kind));
 }
 
 // 12.3 Empty Statement
@@ -2835,13 +2893,13 @@ function parseWhileStatement() {
 }
 
 function parseForVariableDeclaration() {
-    var token, declarations, startToken;
+    var token, declarations,
+        marker = markerCreate();
 
-    startToken = lookahead;
     token = lex();
     declarations = parseVariableDeclarationList();
 
-    return delegate.markEnd(delegate.createVariableDeclaration(declarations, token.value), startToken);
+    return markerApply(marker, delegate.createVariableDeclaration(declarations, token.value));
 }
 
 function parseForStatement(opts) {
@@ -3092,9 +3150,9 @@ function parseWithStatement() {
 // 12.10 The swith statement
 
 function parseSwitchCase() {
-    var test, consequent = [], statement, startToken;
+    var test, consequent = [], statement,
+        marker = markerCreate();
 
-    startToken = lookahead;
     if (matchKeyword("default")) {
         lex();
         test = null;
@@ -3112,7 +3170,7 @@ function parseSwitchCase() {
         consequent.push(statement);
     }
 
-    return delegate.markEnd(delegate.createSwitchCase(test, consequent), startToken);
+    return markerApply(marker, delegate.createSwitchCase(test, consequent));
 }
 
 function parseSwitchStatement() {
@@ -3181,9 +3239,9 @@ function parseThrowStatement() {
 // 12.14 The try statement
 
 function parseCatchClause() {
-    var param, body, startToken;
+    var param, body,
+        marker = markerCreate();
 
-    startToken = lookahead;
     expectKeyword("catch");
 
     expect("(");
@@ -3199,7 +3257,7 @@ function parseCatchClause() {
 
     expect(")");
     body = parseBlock();
-    return delegate.markEnd(delegate.createCatchClause(param, body), startToken);
+    return markerApply(marker, delegate.createCatchClause(param, body));
 }
 
 function parseTryStatement() {
@@ -3242,7 +3300,7 @@ function parseStatement() {
         expr,
         labeledBody,
         key,
-        startToken;
+        marker;
 
     if (type === Token.EOF) {
         throwUnexpected(lookahead);
@@ -3252,54 +3310,57 @@ function parseStatement() {
         return parseBlock();
     }
 
-    startToken = lookahead;
+    marker = markerCreate();
 
     if (type === Token.Punctuator) {
         switch (lookahead.value) {
             case ";":
-                return delegate.markEnd(parseEmptyStatement(), startToken);
+                return markerApply(marker, parseEmptyStatement());
             case "(":
-                return delegate.markEnd(parseExpressionStatement(), startToken);
+                return markerApply(marker, parseExpressionStatement());
             default:
                 break;
         }
     }
+
+    marker = markerCreate();
 
     if (type === Token.Keyword) {
         switch (lookahead.value) {
             case "break":
-                return delegate.markEnd(parseBreakStatement(), startToken);
+                return markerApply(marker, parseBreakStatement());
             case "continue":
-                return delegate.markEnd(parseContinueStatement(), startToken);
+                return markerApply(marker, parseContinueStatement());
             case "debugger":
-                return delegate.markEnd(parseDebuggerStatement(), startToken);
+                return markerApply(marker, parseDebuggerStatement());
             case "do":
-                return delegate.markEnd(parseDoWhileStatement(), startToken);
+                return markerApply(marker, parseDoWhileStatement());
             case "for":
-                return delegate.markEnd(parseForStatement(), startToken);
+                return markerApply(marker, parseForStatement());
             case "function":
-                return delegate.markEnd(parseFunctionDeclaration(), startToken);
+                return markerApply(marker, parseFunctionDeclaration());
             case "if":
-                return delegate.markEnd(parseIfStatement(), startToken);
+                return markerApply(marker, parseIfStatement());
             case "return":
-                return delegate.markEnd(parseReturnStatement(), startToken);
+                return markerApply(marker, parseReturnStatement());
             case "switch":
-                return delegate.markEnd(parseSwitchStatement(), startToken);
+                return markerApply(marker, parseSwitchStatement());
             case "throw":
-                return delegate.markEnd(parseThrowStatement(), startToken);
+                return markerApply(marker, parseThrowStatement());
             case "try":
-                return delegate.markEnd(parseTryStatement(), startToken);
+                return markerApply(marker, parseTryStatement());
             case "var":
-                return delegate.markEnd(parseVariableStatement(), startToken);
+                return markerApply(marker, parseVariableStatement());
             case "while":
-                return delegate.markEnd(parseWhileStatement(), startToken);
+                return markerApply(marker, parseWhileStatement());
             case "with":
-                return delegate.markEnd(parseWithStatement(), startToken);
+                return markerApply(marker, parseWithStatement());
             default:
                 break;
         }
     }
 
+    marker = markerCreate();
     expr = parseExpression();
 
     // 12.12 Labelled Statements
@@ -3314,12 +3375,12 @@ function parseStatement() {
         state.labelSet[key] = true;
         labeledBody = parseStatement();
         delete state.labelSet[key];
-        return delegate.markEnd(delegate.createLabeledStatement(expr, labeledBody), startToken);
+        return markerApply(marker, delegate.createLabeledStatement(expr, labeledBody));
     }
 
     consumeSemicolon();
 
-    return delegate.markEnd(delegate.createExpressionStatement(expr), startToken);
+    return markerApply(marker, delegate.createExpressionStatement(expr));
 }
 
 // 13 Function Definition
@@ -3333,9 +3394,9 @@ function parseStatement() {
 
 function parseFunctionSourceElements() {
     var sourceElement, sourceElements = [], token, directive, firstRestricted,
-        oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody, startToken;
+        oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody,
+        marker = markerCreate();
 
-    startToken = lookahead;
     expect("{");
 
     while (index < length) {
@@ -3374,13 +3435,17 @@ function parseFunctionSourceElements() {
     state.inFunctionBody = true;
 
     while (index < length) {
+
         if (match("}")) {
             break;
         }
+
         sourceElement = parseSourceElement();
+
         if (typeof sourceElement === "undefined") {
             break;
         }
+
         sourceElements.push(sourceElement);
     }
 
@@ -3391,7 +3456,7 @@ function parseFunctionSourceElements() {
     state.inSwitch = oldInSwitch;
     state.inFunctionBody = oldInFunctionBody;
 
-    return delegate.markEnd(delegate.createBlockStatement(sourceElements), startToken);
+    return markerApply(marker, delegate.createBlockStatement(sourceElements));
 }
 
 function parseParams(firstRestricted) {
@@ -3445,9 +3510,8 @@ function parseParams(firstRestricted) {
 }
 
 function parseFunctionDeclaration() {
-    var id, params = [], body, token, stricted, tmp, firstRestricted, message, previousStrict, startToken;
-
-    startToken = lookahead;
+    var id, params = [], body, token, stricted, tmp, firstRestricted, message, previousStrict,
+        marker = markerCreate();
 
     expectKeyword("function");
     token = lookahead;
@@ -3484,13 +3548,14 @@ function parseFunctionDeclaration() {
     }
     strict = previousStrict;
 
-    return delegate.markEnd(delegate.createFunctionDeclaration(id, params, [], body), startToken);
+    return markerApply(marker, delegate.createFunctionDeclaration(id, params, [], body));
 }
 
 function parseFunctionExpression() {
-    var token, id = null, stricted, firstRestricted, message, tmp, params = [], body, previousStrict, startToken;
+    var token, id = null, stricted, firstRestricted, message, tmp, params = [],
+        body, previousStrict,
+        marker = markerCreate();
 
-    startToken = lookahead;
     expectKeyword("function");
 
     if (!match("(")) {
@@ -3529,7 +3594,7 @@ function parseFunctionExpression() {
     }
     strict = previousStrict;
 
-    return delegate.markEnd(delegate.createFunctionExpression(id, params, [], body), startToken);
+    return markerApply(marker, delegate.createFunctionExpression(id, params, [], body));
 }
 
 // 14 Program
@@ -3595,15 +3660,16 @@ function parseSourceElements() {
 }
 
 function parseProgram() {
-    var body, startToken;
+    var body,
+        marker;
 
     skipComment();
     peek();
-    startToken = lookahead;
+    marker = markerCreate();
     strict = false;
 
     body = parseSourceElements();
-    return delegate.markEnd(delegate.createProgram(body), startToken);
+    return markerApply(marker, delegate.createProgram(body));
 }
 
 function filterTokenLocation() {
