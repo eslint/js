@@ -95,5 +95,13 @@ describe("tokenize()", function() {
         assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-y-result.tokens.js"));
     });
 
+    // Make sure we don't introduce the same regex parsing error as Esprima
+    it("should produce tokens when using regular expression wrapped in parens", function() {
+        var tokens = espree.tokenize("(/foo/).test(bar);", {
+            loc: true,
+            range: true
+        });
+        assert.deepEqual(tokens, require("../fixtures/tokenize/regex-in-parens-result.tokens.js"));
+    });
 
 });
