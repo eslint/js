@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 7,
     "description": "Unexpected identifier"
-}
+};

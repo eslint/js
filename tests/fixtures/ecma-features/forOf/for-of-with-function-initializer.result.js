@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
     "type": "Program",
     "body": [
         {

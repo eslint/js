@@ -24,10 +24,10 @@ module.exports = {
             "params": [
                 {
                     "type": "Identifier",
-                    "name": "foo",
+                    "name": "a",
                     "range": [
                         13,
-                        16
+                        14
                     ],
                     "loc": {
                         "start": {
@@ -36,7 +36,7 @@ module.exports = {
                         },
                         "end": {
                             "line": 1,
-                            "column": 16
+                            "column": 14
                         }
                     }
                 }
@@ -49,19 +49,19 @@ module.exports = {
                         "type": "SwitchStatement",
                         "discriminant": {
                             "type": "Identifier",
-                            "name": "foo",
+                            "name": "a",
                             "range": [
-                                31,
-                                34
+                                30,
+                                31
                             ],
                             "loc": {
                                 "start": {
                                     "line": 2,
-                                    "column": 11
+                                    "column": 12
                                 },
                                 "end": {
                                     "line": 2,
-                                    "column": 14
+                                    "column": 13
                                 }
                             }
                         },
@@ -70,185 +70,129 @@ module.exports = {
                                 "type": "SwitchCase",
                                 "test": {
                                     "type": "Literal",
-                                    "value": 1,
-                                    "raw": "1",
-                                    "range": [
-                                        66,
-                                        67
-                                    ],
-                                    "loc": {
-                                        "start": {
-                                            "line": 4,
-                                            "column": 13
-                                        },
-                                        "end": {
-                                            "line": 4,
-                                            "column": 14
-                                        }
-                                    }
-                                },
-                                "consequent": [],
-                                "range": [
-                                    61,
-                                    68
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 4,
-                                        "column": 8
-                                    },
-                                    "end": {
-                                        "line": 4,
-                                        "column": 15
-                                    }
-                                },
-                                "leadingComments": [
-                                    {
-                                        "type": "Line",
-                                        "value": " foo",
-                                        "range": [
-                                            46,
-                                            52
-                                        ],
-                                        "loc": {
-                                            "start": {
-                                                "line": 3,
-                                                "column": 8
-                                            },
-                                            "end": {
-                                                "line": 3,
-                                                "column": 14
-                                            }
-                                        }
-                                    }
-                                ],
-                                "trailingComments": [
-                                    {
-                                        "type": "Line",
-                                        "value": " falls through",
-                                        "range": [
-                                            81,
-                                            97
-                                        ],
-                                        "loc": {
-                                            "start": {
-                                                "line": 5,
-                                                "column": 12
-                                            },
-                                            "end": {
-                                                "line": 5,
-                                                "column": 28
-                                            }
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "SwitchCase",
-                                "test": {
-                                    "type": "Literal",
                                     "value": 2,
                                     "raw": "2",
                                     "range": [
-                                        111,
-                                        112
+                                        48,
+                                        49
                                     ],
                                     "loc": {
                                         "start": {
-                                            "line": 6,
+                                            "line": 3,
                                             "column": 13
                                         },
                                         "end": {
-                                            "line": 6,
+                                            "line": 3,
                                             "column": 14
                                         }
                                     }
                                 },
                                 "consequent": [
                                     {
-                                        "type": "ExpressionStatement",
-                                        "expression": {
-                                            "type": "CallExpression",
-                                            "callee": {
-                                                "type": "Identifier",
-                                                "name": "doIt",
-                                                "range": [
-                                                    126,
-                                                    130
-                                                ],
-                                                "loc": {
-                                                    "start": {
-                                                        "line": 7,
-                                                        "column": 12
-                                                    },
-                                                    "end": {
-                                                        "line": 7,
-                                                        "column": 16
-                                                    }
-                                                }
-                                            },
-                                            "arguments": [],
-                                            "range": [
-                                                126,
-                                                132
-                                            ],
-                                            "loc": {
-                                                "start": {
-                                                    "line": 7,
-                                                    "column": 12
-                                                },
-                                                "end": {
-                                                    "line": 7,
-                                                    "column": 18
-                                                }
-                                            }
-                                        },
+                                        "type": "BreakStatement",
+                                        "label": null,
                                         "range": [
-                                            126,
-                                            133
+                                            63,
+                                            69
                                         ],
                                         "loc": {
                                             "start": {
-                                                "line": 7,
+                                                "line": 4,
                                                 "column": 12
                                             },
                                             "end": {
-                                                "line": 7,
-                                                "column": 19
+                                                "line": 4,
+                                                "column": 18
                                             }
                                         }
                                     }
                                 ],
                                 "range": [
-                                    106,
-                                    133
+                                    43,
+                                    69
                                 ],
                                 "loc": {
                                     "start": {
-                                        "line": 6,
+                                        "line": 3,
                                         "column": 8
                                     },
                                     "end": {
-                                        "line": 7,
-                                        "column": 19
+                                        "line": 4,
+                                        "column": 18
+                                    }
+                                }
+                            },
+                            {
+                                "type": "SwitchCase",
+                                "test": {
+                                    "type": "Literal",
+                                    "value": 1,
+                                    "raw": "1",
+                                    "range": [
+                                        83,
+                                        84
+                                    ],
+                                    "loc": {
+                                        "start": {
+                                            "line": 5,
+                                            "column": 13
+                                        },
+                                        "end": {
+                                            "line": 5,
+                                            "column": 14
+                                        }
                                     }
                                 },
-                                "leadingComments": [
+                                "consequent": [
                                     {
-                                        "type": "Line",
-                                        "value": " falls through",
+                                        "type": "BreakStatement",
+                                        "label": null,
                                         "range": [
-                                            81,
-                                            97
+                                            98,
+                                            104
                                         ],
                                         "loc": {
                                             "start": {
-                                                "line": 5,
+                                                "line": 6,
                                                 "column": 12
                                             },
                                             "end": {
-                                                "line": 5,
-                                                "column": 28
+                                                "line": 6,
+                                                "column": 18
+                                            }
+                                        }
+                                    }
+                                ],
+                                "range": [
+                                    78,
+                                    104
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 5,
+                                        "column": 8
+                                    },
+                                    "end": {
+                                        "line": 6,
+                                        "column": 18
+                                    }
+                                },
+                                "trailingComments": [
+                                    {
+                                        "type": "Line",
+                                        "value": "no default",
+                                        "range": [
+                                            113,
+                                            125
+                                        ],
+                                        "loc": {
+                                            "start": {
+                                                "line": 7,
+                                                "column": 8
+                                            },
+                                            "end": {
+                                                "line": 7,
+                                                "column": 20
                                             }
                                         }
                                     }
@@ -256,8 +200,8 @@ module.exports = {
                             }
                         ],
                         "range": [
-                            24,
-                            139
+                            22,
+                            131
                         ],
                         "loc": {
                             "start": {
@@ -272,13 +216,13 @@ module.exports = {
                     }
                 ],
                 "range": [
-                    18,
-                    141
+                    16,
+                    133
                 ],
                 "loc": {
                     "start": {
                         "line": 1,
-                        "column": 18
+                        "column": 16
                     },
                     "end": {
                         "line": 9,
@@ -291,7 +235,7 @@ module.exports = {
             "expression": false,
             "range": [
                 0,
-                141
+                133
             ],
             "loc": {
                 "start": {
@@ -307,7 +251,7 @@ module.exports = {
     ],
     "range": [
         0,
-        141
+        133
     ],
     "loc": {
         "start": {
@@ -322,37 +266,19 @@ module.exports = {
     "comments": [
         {
             "type": "Line",
-            "value": " foo",
+            "value": "no default",
             "range": [
-                46,
-                52
+                113,
+                125
             ],
             "loc": {
                 "start": {
-                    "line": 3,
+                    "line": 7,
                     "column": 8
                 },
                 "end": {
-                    "line": 3,
-                    "column": 14
-                }
-            }
-        },
-        {
-            "type": "Line",
-            "value": " falls through",
-            "range": [
-                81,
-                97
-            ],
-            "loc": {
-                "start": {
-                    "line": 5,
-                    "column": 12
-                },
-                "end": {
-                    "line": 5,
-                    "column": 28
+                    "line": 7,
+                    "column": 20
                 }
             }
         }

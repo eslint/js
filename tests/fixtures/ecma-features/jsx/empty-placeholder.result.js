@@ -158,4 +158,4 @@ module.exports = {
             "column": 10
         }
     }
-}
+};

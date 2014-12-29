@@ -27,11 +27,10 @@ module.exports = {
                 "type": "BlockStatement",
                 "body": [
                     {
-                        "type": "ReturnStatement",
-                        "argument": null,
+                        "type": "DebuggerStatement",
                         "range": [
                             36,
-                            43
+                            45
                         ],
                         "loc": {
                             "start": {
@@ -40,7 +39,7 @@ module.exports = {
                             },
                             "end": {
                                 "line": 3,
-                                "column": 11
+                                "column": 13
                             }
                         },
                         "leadingComments": [
@@ -68,8 +67,8 @@ module.exports = {
                                 "type": "Block",
                                 "value": " after ",
                                 "range": [
-                                    48,
-                                    59
+                                    50,
+                                    61
                                 ],
                                 "loc": {
                                     "start": {
@@ -87,7 +86,7 @@ module.exports = {
                 ],
                 "range": [
                     13,
-                    61
+                    63
                 ],
                 "loc": {
                     "start": {
@@ -105,7 +104,7 @@ module.exports = {
             "expression": false,
             "range": [
                 0,
-                61
+                63
             ],
             "loc": {
                 "start": {
@@ -121,7 +120,7 @@ module.exports = {
     ],
     "range": [
         0,
-        61
+        63
     ],
     "loc": {
         "start": {
@@ -156,8 +155,8 @@ module.exports = {
             "type": "Block",
             "value": " after ",
             "range": [
-                48,
-                59
+                50,
+                61
             ],
             "loc": {
                 "start": {
@@ -171,4 +170,4 @@ module.exports = {
             }
         }
     ]
-}
+};
