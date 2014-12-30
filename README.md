@@ -128,6 +128,23 @@ Espree is licensed under a permissive BSD 3-clause license.
 * `npm run lint` - run all linting
 * `npm run browserify` - creates a version of Espree that is usable in a browser
 
+## Known Incompatibilities
+
+In an effort to help those wanting to transition from other parsers to Espree, the following is a list of noteworthy incompatibilities with other parsers. These are known differences that we do not intend to change.
+
+### Esprima 1.2.2
+
+* None.
+
+### Esprima/Harmony Branch
+
+* Esprima/Harmony uses a different comment attachment algorithm that results in some comments being added in different places than Espree. The algorithm Espree uses is the same one used in Esprima 1.2.2.
+
+### Esprima-FB
+
+* All Esprima/Harmony incompatibilities.
+* Esprima-FB uses the term "XJS" to refer to its JSX support. This is seen primarily in the AST node types, such as `"XJSElement"`. Espree uses "JSX" to refer to JSX functionality, including AST node types. So, `"XJSElement"` in Esprima-FB is `"JSXElement"` in Espree (and the same is true for all JSX-related node types).
+
 ## Frequently Asked Questions
 
 ### Why are you forking Esprima?
