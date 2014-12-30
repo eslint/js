@@ -1,3 +1,15 @@
+v1.5.0 - December 29, 2014
+
+* 1.5.0 (Nicholas C. Zakas)
+* Docs: Update README with compat info (Nicholas C. Zakas)
+* Update: Add regex parsing test (Nicholas C. Zakas)
+* Update: s/XJS/JSX/g (Nicholas C. Zakas)
+* Build: Update release script (Nicholas C. Zakas)
+* Update: Move SyntaxTree to ast-node-factory.js (FredKSchott)
+* New: Add JSX parsing (fixes #26) (Nicholas C. Zakas)
+* Update: Switch location marker logic (fixes #15) (Nicholas C. Zakas)
+* 1.4.0 (Nicholas C. Zakas)
+
 v1.4.0 - December 23, 2014
 
 * 1.4.0 (Nicholas C. Zakas)
