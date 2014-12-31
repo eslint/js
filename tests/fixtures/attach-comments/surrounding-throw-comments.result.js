@@ -27,46 +27,29 @@ module.exports = {
                 "type": "BlockStatement",
                 "body": [
                     {
-                        "type": "ExpressionStatement",
-                        "expression": {
-                            "type": "CallExpression",
-                            "callee": {
-                                "type": "Identifier",
-                                "name": "foo",
-                                "range": [
-                                    36,
-                                    39
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 3,
-                                        "column": 4
-                                    },
-                                    "end": {
-                                        "line": 3,
-                                        "column": 7
-                                    }
-                                }
-                            },
-                            "arguments": [],
+                        "type": "ThrowStatement",
+                        "argument": {
+                            "type": "Literal",
+                            "value": 55,
+                            "raw": "55",
                             "range": [
-                                36,
-                                41
+                                42,
+                                44
                             ],
                             "loc": {
                                 "start": {
                                     "line": 3,
-                                    "column": 4
+                                    "column": 10
                                 },
                                 "end": {
                                     "line": 3,
-                                    "column": 9
+                                    "column": 12
                                 }
                             }
                         },
                         "range": [
                             36,
-                            42
+                            45
                         ],
                         "loc": {
                             "start": {
@@ -75,7 +58,7 @@ module.exports = {
                             },
                             "end": {
                                 "line": 3,
-                                "column": 10
+                                "column": 13
                             }
                         },
                         "leadingComments": [
@@ -103,8 +86,8 @@ module.exports = {
                                 "type": "Block",
                                 "value": " after ",
                                 "range": [
-                                    47,
-                                    58
+                                    50,
+                                    61
                                 ],
                                 "loc": {
                                     "start": {
@@ -122,7 +105,7 @@ module.exports = {
                 ],
                 "range": [
                     13,
-                    60
+                    63
                 ],
                 "loc": {
                     "start": {
@@ -140,7 +123,7 @@ module.exports = {
             "expression": false,
             "range": [
                 0,
-                60
+                63
             ],
             "loc": {
                 "start": {
@@ -156,7 +139,7 @@ module.exports = {
     ],
     "range": [
         0,
-        60
+        63
     ],
     "loc": {
         "start": {
@@ -191,8 +174,8 @@ module.exports = {
             "type": "Block",
             "value": " after ",
             "range": [
-                47,
-                58
+                50,
+                61
             ],
             "loc": {
                 "start": {
@@ -206,4 +189,4 @@ module.exports = {
             }
         }
     ]
-}
+};

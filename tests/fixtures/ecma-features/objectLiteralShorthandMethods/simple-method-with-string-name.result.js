@@ -186,4 +186,4 @@ module.exports = {
             "column": 3
         }
     }
-}
+};

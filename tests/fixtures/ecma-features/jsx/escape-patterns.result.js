@@ -485,4 +485,4 @@ module.exports = {
             "column": 84
         }
     }
-}
+};

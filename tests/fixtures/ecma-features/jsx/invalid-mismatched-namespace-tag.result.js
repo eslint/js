@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 10,
     "description": "Expected corresponding JSX closing tag for a:b"
-}
+};

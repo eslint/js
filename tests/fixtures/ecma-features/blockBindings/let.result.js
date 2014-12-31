@@ -1,4 +1,3 @@
-// let foo = bar;
 module.exports = {
     "type": "Program",
     "body": [

@@ -434,4 +434,4 @@ module.exports = {
             "column": 41
         }
     }
-}
+};

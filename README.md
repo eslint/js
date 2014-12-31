@@ -86,6 +86,9 @@ var ast = espree.parse(code, {
         // enable parsing of shorthand object literal properties
         objectLiteralShorthandProperties: false,
 
+        // enable parsing of generators/yield
+        generators: false,
+
         // React JSX parsing
         jsx: false
     }

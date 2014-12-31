@@ -27,29 +27,46 @@ module.exports = {
                 "type": "BlockStatement",
                 "body": [
                     {
-                        "type": "ThrowStatement",
-                        "argument": {
-                            "type": "Literal",
-                            "value": 55,
-                            "raw": "55",
+                        "type": "ExpressionStatement",
+                        "expression": {
+                            "type": "CallExpression",
+                            "callee": {
+                                "type": "Identifier",
+                                "name": "foo",
+                                "range": [
+                                    36,
+                                    39
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 3,
+                                        "column": 4
+                                    },
+                                    "end": {
+                                        "line": 3,
+                                        "column": 7
+                                    }
+                                }
+                            },
+                            "arguments": [],
                             "range": [
-                                42,
-                                44
+                                36,
+                                41
                             ],
                             "loc": {
                                 "start": {
                                     "line": 3,
-                                    "column": 10
+                                    "column": 4
                                 },
                                 "end": {
                                     "line": 3,
-                                    "column": 12
+                                    "column": 9
                                 }
                             }
                         },
                         "range": [
                             36,
-                            45
+                            42
                         ],
                         "loc": {
                             "start": {
@@ -58,7 +75,7 @@ module.exports = {
                             },
                             "end": {
                                 "line": 3,
-                                "column": 13
+                                "column": 10
                             }
                         },
                         "leadingComments": [
@@ -86,8 +103,8 @@ module.exports = {
                                 "type": "Block",
                                 "value": " after ",
                                 "range": [
-                                    50,
-                                    61
+                                    47,
+                                    58
                                 ],
                                 "loc": {
                                     "start": {
@@ -105,7 +122,7 @@ module.exports = {
                 ],
                 "range": [
                     13,
-                    63
+                    60
                 ],
                 "loc": {
                     "start": {
@@ -123,7 +140,7 @@ module.exports = {
             "expression": false,
             "range": [
                 0,
-                63
+                60
             ],
             "loc": {
                 "start": {
@@ -139,7 +156,7 @@ module.exports = {
     ],
     "range": [
         0,
-        63
+        60
     ],
     "loc": {
         "start": {
@@ -174,8 +191,8 @@ module.exports = {
             "type": "Block",
             "value": " after ",
             "range": [
-                50,
-                61
+                47,
+                58
             ],
             "loc": {
                 "start": {
