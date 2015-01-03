@@ -2445,12 +2445,13 @@ function parseObjectProperty() {
 
 function parseObjectInitialiser() {
     var marker = markerCreate(),
+        allowDuplicates = extra.ecmaFeatures.objectLiteralDuplicateProperties,
         properties = [],
         property,
         name,
         key,
         kind,
-        map = {},
+        kindMap = {},
         toString = String;
 
     expect("{");
@@ -2459,20 +2460,29 @@ function parseObjectInitialiser() {
         property = parseObjectProperty();
 
         if (!property.computed) {
+
             if (property.key.type === astNodeTypes.Identifier) {
                 name = property.key.name;
             } else {
                 name = toString(property.key.value);
             }
 
-            /*eslint-disable no-nested-ternary*/
-            kind = (property.kind === "init") ? PropertyKind.Data : (property.kind === "get") ? PropertyKind.Get : PropertyKind.Set;
-            /*eslint-enable no-nested-ternary*/
+            if (property.kind === "init") {
+                kind = PropertyKind.Data;
+            } else if (property.kind === "get") {
+                kind = PropertyKind.Get;
+            } else {
+                kind = PropertyKind.Set;
+            }
 
             key = "$" + name;
-            if (Object.prototype.hasOwnProperty.call(map, key)) {
-                if (map[key] === PropertyKind.Data) {
-                    if (strict && kind === PropertyKind.Data) {
+            if (Object.prototype.hasOwnProperty.call(kindMap, key)) {
+                if (kindMap[key] === PropertyKind.Data) {
+                    if (kind === PropertyKind.Data && name === "__proto__" && allowDuplicates) {
+                        // Duplicate '__proto__' literal properties are forbidden in ES 6
+                        throwErrorTolerant({}, Messages.DuplicatePrototypeProperty);
+                    } else if (kind === PropertyKind.Data && strict && !allowDuplicates) {
+                        // Duplicate literal properties are only forbidden in ES 5 strict mode
                         throwErrorTolerant({}, Messages.StrictDuplicateProperty);
                     } else if (kind !== PropertyKind.Data) {
                         throwErrorTolerant({}, Messages.AccessorDataProperty);
@@ -2480,13 +2490,13 @@ function parseObjectInitialiser() {
                 } else {
                     if (kind === PropertyKind.Data) {
                         throwErrorTolerant({}, Messages.AccessorDataProperty);
-                    } else if (map[key] & kind) {
+                    } else if (kindMap[key] & kind) {
                         throwErrorTolerant({}, Messages.AccessorGetSet);
                     }
                 }
-                map[key] |= kind;
+                kindMap[key] |= kind;
             } else {
-                map[key] = kind;
+                kindMap[key] = kind;
             }
         }
 
