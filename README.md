@@ -173,3 +173,16 @@ We expect there are other tools like ESLint that rely on more than just the AST 
 ### What ECMAScript 6 features do you support?
 
 Please see the [tracking issue](https://github.com/eslint/espree/issues/10) for the most up-to-date information.
+
+### Why use Espree instead of Esprima?
+
+* Faster turnaround time on bug fixes
+* More frequent releases
+* Better communication and responsiveness to issues
+* Ongoing development
+
+### Why use Espree instead of Esprima-FB?
+
+* Opt-in to just the ECMAScript 6 features you want
+* JSX support is off by default, so you're not forced to use it to use ECMAScript 6
+* Stricter ECMAScript 6 support
