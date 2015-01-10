@@ -1,3 +1,12 @@
+v1.6.0 - January 10, 2015
+
+* 1.6.0 (Nicholas C. Zakas)
+* Update: Make comment attachment tests look at whole AST (Nicholas C. Zakas)
+* Docs: Update README to reflect feature flags (Nicholas C. Zakas)
+* Docs: Add a couple more FAQs to README (Nicholas C. Zakas)
+* New: Add support for duplicate object literal properties (FredKSchott)
+* New: Implement generators (refs #10) (Nicholas C. Zakas)
+
 v1.5.0 - December 29, 2014
 
 * 1.5.0 (Nicholas C. Zakas)
