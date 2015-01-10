@@ -63,7 +63,7 @@ describe("attachComment: true", function() {
                 attachComment: true
             });
 
-            assert.deepEqual(result.body[0], output.body[0]);
+            assert.deepEqual(result, output);
         });
 
     });
