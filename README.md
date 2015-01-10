@@ -75,22 +75,25 @@ var ast = espree.parse(code, {
         octalLiterals: true,
 
         // enable parsing of for-of statement
-        forOf: false,
+        forOf: true,
 
         // enable parsing computed object literal properties
-        objectLiteralComputedProperties: false,
+        objectLiteralComputedProperties: true,
 
         // enable parsing of shorthand object literal methods
-        objectLiteralShorthandMethods: false,
+        objectLiteralShorthandMethods: true,
 
         // enable parsing of shorthand object literal properties
-        objectLiteralShorthandProperties: false,
+        objectLiteralShorthandProperties: true,
+
+        // Allow duplicate object literal properties (except '__proto__')
+        objectLiteralDuplicateProperties: true,
 
         // enable parsing of generators/yield
-        generators: false,
+        generators: true,
 
         // React JSX parsing
-        jsx: false
+        jsx: true
     }
 });
 ```
