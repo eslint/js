@@ -74,6 +74,9 @@ var ast = espree.parse(code, {
         // enable parsing of ES6 octal literals
         octalLiterals: true,
 
+        // enable parsing unicode code point escape sequences
+        unicodeCodePointEscapes: true,
+
         // enable parsing of for-of statement
         forOf: true,
 

@@ -271,6 +271,44 @@ function scanHexEscape(prefix) {
     return String.fromCharCode(code);
 }
 
+/**
+ * Scans an extended unicode code point escape sequence from source. Throws an
+ * error if the sequence is empty or if the code point value is too large.
+ * @returns {string} The string created by the Unicode escape sequence.
+ * @private
+ */
+function scanUnicodeCodePointEscape() {
+    var ch, code, cu1, cu2;
+
+    ch = source[index];
+    code = 0;
+
+    // At least one hex digit is required.
+    if (ch === "}") {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    while (index < length) {
+        ch = source[index++];
+        if (!syntax.isHexDigit(ch)) {
+            break;
+        }
+        code = code * 16 + "0123456789abcdef".indexOf(ch.toLowerCase());
+    }
+
+    if (code > 0x10FFFF || ch !== "}") {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    // UTF-16 Encoding
+    if (code <= 0xFFFF) {
+        return String.fromCharCode(code);
+    }
+    cu1 = ((code - 0x10000) >> 10) + 0xD800;
+    cu2 = ((code - 0x10000) & 1023) + 0xDC00;
+    return String.fromCharCode(cu1, cu2);
+}
+
 function getEscapedIdentifier() {
     var ch, id;
 
@@ -786,6 +824,17 @@ function scanStringLiteral() {
             if (!ch || !syntax.isLineTerminator(ch.charCodeAt(0))) {
                 switch (ch) {
                 case "u":
+                    // Handle ES6 extended unicode code point escape sequences.
+                    if (source[index] === "{") {
+                        if (extra.ecmaFeatures.unicodeCodePointEscapes) {
+                            ++index;
+                            str += scanUnicodeCodePointEscape();
+                        } else {
+                            throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+                        }
+                        break;
+                    }
+                    // Otherwise, falls through
                 case "x":
                     restore = index;
                     unescaped = scanHexEscape(ch);
