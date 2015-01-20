@@ -77,6 +77,9 @@ var ast = espree.parse(code, {
         // enable parsing unicode code point escape sequences
         unicodeCodePointEscapes: true,
 
+        // enable parsing of default parameters
+        defaultParams: false,
+
         // enable parsing of for-of statement
         forOf: true,
 
