@@ -3827,12 +3827,14 @@ function parseFunctionSourceElements() {
 }
 
 function parseParams(firstRestricted) {
-    var param, params = [], token, stricted, paramSet, key, message;
+    var param, params = [], defaults = [], defaultCount = 0, token, stricted, paramSet, key, message, def,
+        allowDefaultParams = extra.ecmaFeatures.defaultParams;
     expect("(");
 
     if (!match(")")) {
         paramSet = {};
         while (index < length) {
+            def = null;
             token = lookahead;
             param = parseVariableIdentifier();
             key = "$" + token.value;
@@ -3857,6 +3859,15 @@ function parseParams(firstRestricted) {
                     message = Messages.StrictParamDupe;
                 }
             }
+            if (match("=")) {
+                if (!allowDefaultParams) {
+                    throwUnexpected(lookahead);
+                }
+                lex();
+                def = parseAssignmentExpression();
+                ++defaultCount;
+            }
+            defaults.push(def);
             params.push(param);
             paramSet[key] = true;
             if (match(")")) {
@@ -3868,9 +3879,14 @@ function parseParams(firstRestricted) {
 
     expect(")");
 
+    if (defaultCount === 0) {
+        defaults = [];
+    }
+
     return {
         params: params,
         stricted: stricted,
+        defaults: defaults,
         firstRestricted: firstRestricted,
         message: message
     };
