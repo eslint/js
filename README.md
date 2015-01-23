@@ -68,6 +68,9 @@ var ast = espree.parse(code, {
         // enable parsing of regular expression u flag
         regexUFlag: true,
 
+        // enable parsing of template strings
+        templateStrings: false,
+
         // enable parsing of binary literals
         binaryLiterals: true,
 

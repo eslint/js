@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2015 Fred K. Schott <fkschott@gmail.com>
 Copyright (C) 2013 Ariya Hidayat <ariya.hidayat@gmail.com>
 Copyright (C) 2013 Thaddee Tyl <thaddee.tyl@gmail.com>
 Copyright (C) 2013 Mathias Bynens <mathias@qiwi.be>
@@ -799,107 +800,120 @@ function scanNumericLiteral() {
     };
 }
 
-// 7.8.4 String Literals
+/**
+ * Scan a string escape sequence and return its special character.
+ * @param {string} ch The starting character of the given sequence.
+ * @returns {Object} An object containing the character and a flag
+ * if the escape sequence was an octal.
+ * @private
+ */
+function scanEscapeSequence(ch) {
+    var code,
+        unescaped,
+        restore,
+        escapedCh,
+        octal = false;
+
+    // An escape sequence cannot be empty
+    if (!ch) {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    if (syntax.isLineTerminator(ch.charCodeAt(0))) {
+        ++lineNumber;
+        if (ch === "\r" && source[index] === "\n") {
+            ++index;
+        }
+        lineStart = index;
+        escapedCh = "";
+    } else if (ch === "u" && source[index] === "{") {
+        // Handle ES6 extended unicode code point escape sequences.
+        if (extra.ecmaFeatures.unicodeCodePointEscapes) {
+            ++index;
+            escapedCh = scanUnicodeCodePointEscape();
+        } else {
+            throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+        }
+    } else if (ch === "u" || ch === "x") {
+        // Handle other unicode and hex codes normally
+        restore = index;
+        unescaped = scanHexEscape(ch);
+        if (unescaped) {
+            escapedCh = unescaped;
+        } else {
+            index = restore;
+            escapedCh = ch;
+        }
+    } else if (ch === "n") {
+        escapedCh = "\n";
+    } else if (ch === "r") {
+        escapedCh = "\r";
+    } else if (ch === "t") {
+        escapedCh = "\t";
+    } else if (ch === "b") {
+        escapedCh = "\b";
+    } else if (ch === "f") {
+        escapedCh = "\f";
+    } else if (ch === "v") {
+        escapedCh = "\v";
+    } else if (syntax.isOctalDigit(ch)) {
+        code = "01234567".indexOf(ch);
+
+        // \0 is not octal escape sequence
+        if (code !== 0) {
+            octal = true;
+        }
+
+        if (index < length && syntax.isOctalDigit(source[index])) {
+            octal = true;
+            code = code * 8 + "01234567".indexOf(source[index++]);
+
+            // 3 digits are only allowed when string starts with 0, 1, 2, 3
+            if ("0123".indexOf(ch) >= 0 &&
+                    index < length &&
+                    syntax.isOctalDigit(source[index])) {
+                code = code * 8 + "01234567".indexOf(source[index++]);
+            }
+        }
+        escapedCh = String.fromCharCode(code);
+    } else {
+        escapedCh = ch;
+    }
+
+    return {
+        ch: escapedCh,
+        octal: octal
+    };
+}
 
 function scanStringLiteral() {
-    var str = "", quote, start, ch, code, unescaped, restore, octal = false, startLineNumber, startLineStart;
-    startLineNumber = lineNumber;
-    startLineStart = lineStart;
+    var str = "",
+        ch,
+        escapedSequence,
+        octal = false,
+        start = index,
+        startLineNumber = lineNumber,
+        startLineStart = lineStart,
+        quote = source[index];
 
-    quote = source[index];
     assert((quote === "'" || quote === "\""),
         "String literal must starts with a quote");
 
-    start = index;
     ++index;
 
     while (index < length) {
         ch = source[index++];
 
-        if (ch === quote) {
+        if (syntax.isLineTerminator(ch.charCodeAt(0))) {
+            break;
+        } else if (ch === quote) {
             quote = "";
             break;
         } else if (ch === "\\") {
             ch = source[index++];
-            if (!ch || !syntax.isLineTerminator(ch.charCodeAt(0))) {
-                switch (ch) {
-                case "u":
-                    // Handle ES6 extended unicode code point escape sequences.
-                    if (source[index] === "{") {
-                        if (extra.ecmaFeatures.unicodeCodePointEscapes) {
-                            ++index;
-                            str += scanUnicodeCodePointEscape();
-                        } else {
-                            throwError({}, Messages.UnexpectedToken, "ILLEGAL");
-                        }
-                        break;
-                    }
-                    // Otherwise, falls through
-                case "x":
-                    restore = index;
-                    unescaped = scanHexEscape(ch);
-                    if (unescaped) {
-                        str += unescaped;
-                    } else {
-                        index = restore;
-                        str += ch;
-                    }
-                    break;
-                case "n":
-                    str += "\n";
-                    break;
-                case "r":
-                    str += "\r";
-                    break;
-                case "t":
-                    str += "\t";
-                    break;
-                case "b":
-                    str += "\b";
-                    break;
-                case "f":
-                    str += "\f";
-                    break;
-                case "v":
-                    str += "\x0B";
-                    break;
-
-                default:
-                    if (syntax.isOctalDigit(ch)) {
-                        code = "01234567".indexOf(ch);
-
-                        // \0 is not octal escape sequence
-                        if (code !== 0) {
-                            octal = true;
-                        }
-
-                        if (index < length && syntax.isOctalDigit(source[index])) {
-                            octal = true;
-                            code = code * 8 + "01234567".indexOf(source[index++]);
-
-                            // 3 digits are only allowed when string starts
-                            // with 0, 1, 2, 3
-                            if ("0123".indexOf(ch) >= 0 &&
-                                    index < length &&
-                                    syntax.isOctalDigit(source[index])) {
-                                code = code * 8 + "01234567".indexOf(source[index++]);
-                            }
-                        }
-                        str += String.fromCharCode(code);
-                    } else {
-                        str += ch;
-                    }
-                    break;
-                }
-            } else {
-                ++lineNumber;
-                if (ch === "\r" && source[index] === "\n") {
-                    ++index;
-                }
-                lineStart = index;
-            }
-        } else if (syntax.isLineTerminator(ch.charCodeAt(0))) {
-            break;
+            escapedSequence = scanEscapeSequence(ch);
+            str += escapedSequence.ch;
+            octal = escapedSequence.octal || octal;
         } else {
             str += ch;
         }
@@ -919,6 +933,98 @@ function scanStringLiteral() {
         lineStart: lineStart,
         range: [start, index]
     };
+}
+
+/**
+ * Scan a template string and return an ASTNode representation
+ * @returns {ASTNode} The template string literal
+ * @private
+ */
+function scanTemplate() {
+    var cooked = "",
+        ch,
+        escapedSequence,
+        octal = false,
+        start = index,
+        terminated = false,
+        tail = false;
+
+    ++index;
+
+    while (index < length) {
+        ch = source[index++];
+
+        if (ch === "`") {
+            tail = true;
+            terminated = true;
+            break;
+        } else if (ch === "$") {
+            if (source[index] === "{") {
+                ++index;
+                terminated = true;
+                break;
+            }
+            cooked += ch;
+        } else if (ch === "\\") {
+            ch = source[index++];
+            escapedSequence = scanEscapeSequence(ch);
+            cooked += escapedSequence.ch;
+            octal = escapedSequence.octal || octal;
+        } else if (syntax.isLineTerminator(ch.charCodeAt(0))) {
+            ++lineNumber;
+            if (ch === "\r" && source[index] === "\n") {
+                ++index;
+            }
+            lineStart = index;
+            cooked += "\n";
+        } else {
+            cooked += ch;
+        }
+    }
+
+    if (!terminated) {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    return {
+        type: Token.Template,
+        value: {
+            cooked: cooked,
+            raw: source.slice(start + 1, index - ((tail) ? 1 : 2))
+        },
+        tail: tail,
+        octal: octal,
+        lineNumber: lineNumber,
+        lineStart: lineStart,
+        range: [start, index]
+    };
+}
+
+/**
+ * Scan a template string element and return a ASTNode representation
+ * @param {Object} options Scan options
+ * @param {Object} options.head True if this element is the first in the
+ *                               template string, false otherwise.
+ * @returns {ASTNode} The template element node
+ * @private
+ */
+function scanTemplateElement(options) {
+    var startsWith, template;
+
+    lookahead = null;
+    skipComment();
+
+    startsWith = (options.head) ? "`" : "}";
+
+    if (source[index] !== startsWith) {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    template = scanTemplate();
+
+    peek();
+
+    return template;
 }
 
 function testRegExp(pattern, flags) {
@@ -1217,7 +1323,8 @@ function advanceSlash() {
 
 function advance() {
     var ch,
-        allowJSX = extra.ecmaFeatures.jsx;
+        allowJSX = extra.ecmaFeatures.jsx,
+        allowTemplateStrings = extra.ecmaFeatures.templateStrings;
 
     /*
      * If JSX isn't allowed or JSX is allowed and we're not inside an JSX child,
@@ -1261,7 +1368,10 @@ function advance() {
         return scanJSXIdentifier();
     }
 
-    // TODO: template string support here
+    // Template strings start with backtick (U+0096).
+    if (allowTemplateStrings && ch === 96) {
+        return scanTemplate();
+    }
 
     if (syntax.isIdentifierStart(ch)) {
         return scanIdentifier();
@@ -2068,6 +2178,7 @@ function throwErrorTolerant() {
 // Throw an exception because of the token.
 
 function throwUnexpected(token) {
+
     if (token.type === Token.EOF) {
         throwError(token, Messages.UnexpectedEOS);
     }
@@ -2092,6 +2203,10 @@ function throwUnexpected(token) {
             return;
         }
         throwError(token, Messages.UnexpectedToken, token.value);
+    }
+
+    if (token.type === Token.Template) {
+        throwError(token, Messages.UnexpectedTemplate, token.value.raw);
     }
 
     // BooleanLiteral, NullLiteral, or Punctuator.
@@ -2561,6 +2676,44 @@ function parseObjectInitialiser() {
     return markerApply(marker, astNodeFactory.createObjectExpression(properties));
 }
 
+/**
+ * Parse a template string element and return its ASTNode representation
+ * @param {Object} options Parsing & scanning options
+ * @param {Object} options.head True if this element is the first in the
+ *                               template string, false otherwise.
+ * @returns {ASTNode} The template element node with marker info applied
+ * @private
+ */
+function parseTemplateElement(options) {
+    var marker = markerCreate(),
+        token = scanTemplateElement(options);
+    if (strict && token.octal) {
+        throwError(token, Messages.StrictOctalLiteral);
+    }
+    return markerApply(marker, astNodeFactory.createTemplateElement({ raw: token.value.raw, cooked: token.value.cooked }, token.tail));
+}
+
+/**
+ * Parse a template string literal and return its ASTNode representation
+ * @returns {ASTNode} The template literal node with marker info applied
+ * @private
+ */
+function parseTemplateLiteral() {
+    var quasi, quasis, expressions, marker = markerCreate();
+
+    quasi = parseTemplateElement({ head: true });
+    quasis = [ quasi ];
+    expressions = [];
+
+    while (!quasi.tail) {
+        expressions.push(parseExpression());
+        quasi = parseTemplateElement({ head: false });
+        quasis.push(quasi);
+    }
+
+    return markerApply(marker, astNodeFactory.createTemplateLiteral(quasis, expressions));
+}
+
 // 11.1.6 The Grouping Operator
 
 function parseGroupExpression() {
@@ -2634,6 +2787,8 @@ function parsePrimaryExpression() {
             expr = astNodeFactory.createLiteralFromSource(scanRegExp(), source);
         }
         peek();
+    } else if (type === Token.Template) {
+        return parseTemplateLiteral();
     } else {
         throwUnexpected(lex());
     }
@@ -2706,54 +2861,51 @@ function parseNewExpression() {
 }
 
 function parseLeftHandSideExpressionAllowCall() {
-    var previousAllowIn, expr, args, property,
+    var expr, args,
+        previousAllowIn = state.allowIn,
         marker = markerCreate();
 
-    previousAllowIn = state.allowIn;
     state.allowIn = true;
     expr = matchKeyword("new") ? parseNewExpression() : parsePrimaryExpression();
     state.allowIn = previousAllowIn;
 
-    for (;;) {
-        if (match(".")) {
-            property = parseNonComputedMember();
-            expr = astNodeFactory.createMemberExpression(".", expr, property);
-        } else if (match("(")) {
+    while (match(".") || match("[") || match("(") || lookahead.type === Token.Template) {
+        if (match("(")) {
             args = parseArguments();
-            expr = astNodeFactory.createCallExpression(expr, args);
+            expr = markerApply(marker, astNodeFactory.createCallExpression(expr, args));
         } else if (match("[")) {
-            property = parseComputedMember();
-            expr = astNodeFactory.createMemberExpression("[", expr, property);
+            expr = markerApply(marker, astNodeFactory.createMemberExpression("[", expr, parseComputedMember()));
+        } else if (match(".")) {
+            expr = markerApply(marker, astNodeFactory.createMemberExpression(".", expr, parseNonComputedMember()));
         } else {
-            break;
+            expr = markerApply(marker, astNodeFactory.createTaggedTemplateExpression(expr, parseTemplateLiteral()));
         }
-        markerApply(marker, expr);
     }
 
     return expr;
 }
 
 function parseLeftHandSideExpression() {
-    var previousAllowIn, expr, property,
+    var expr,
+        previousAllowIn = state.allowIn,
         marker = markerCreate();
 
-    previousAllowIn = state.allowIn;
     expr = matchKeyword("new") ? parseNewExpression() : parsePrimaryExpression();
     state.allowIn = previousAllowIn;
 
-    while (match(".") || match("[")) {
+    while (match(".") || match("[") || lookahead.type === Token.Template) {
         if (match("[")) {
-            property = parseComputedMember();
-            expr = astNodeFactory.createMemberExpression("[", expr, property);
+            expr = markerApply(marker, astNodeFactory.createMemberExpression("[", expr, parseComputedMember()));
+        } else if (match(".")) {
+            expr = markerApply(marker, astNodeFactory.createMemberExpression(".", expr, parseNonComputedMember()));
         } else {
-            property = parseNonComputedMember();
-            expr = astNodeFactory.createMemberExpression(".", expr, property);
+            expr = markerApply(marker, astNodeFactory.createTaggedTemplateExpression(expr, parseTemplateLiteral()));
         }
-        markerApply(marker, expr);
     }
 
     return expr;
 }
+
 
 // 11.3 Postfix Expressions
 
