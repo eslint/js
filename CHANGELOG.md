@@ -1,3 +1,10 @@
+v1.7.0 - January 23, 2015
+
+* 1.7.0 (Nicholas C. Zakas)
+* New: Add support for template strings (FredKSchott)
+* New: Add support for default parameters (refs #10) (Jamund Ferguson)
+* New: Add support for unicode code point escape sequences (FredKSchott)
+
 v1.6.0 - January 10, 2015
 
 * 1.6.0 (Nicholas C. Zakas)
