@@ -1,3 +1,8 @@
+v1.7.1 - January 23, 2015
+
+* 1.7.1 (Nicholas C. Zakas)
+* Fix: When ecmaFeatures.forOf is true, check for operater is "undefined" when match keyword is "in" (fixes #39) (Peter Chanthamynavong)
+
 v1.7.0 - January 23, 2015
 
 * 1.7.0 (Nicholas C. Zakas)
