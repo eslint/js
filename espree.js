@@ -3473,7 +3473,7 @@ function parseForStatement(opts) {
                     throwErrorTolerant({}, Messages.InvalidLHSInForIn);
                 }
 
-                lex();
+                operator = lex();
                 left = init;
                 right = parseExpression();
                 init = null;
