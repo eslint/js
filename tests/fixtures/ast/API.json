@@ -204,7 +204,15 @@
             "JSXOpeningElement": "JSXOpeningElement",
             "JSXAttribute": "JSXAttribute",
             "JSXSpreadAttribute": "JSXSpreadAttribute",
-            "JSXText": "JSXText"
+            "JSXText": "JSXText",
+            "ExportDeclaration": "ExportDeclaration",
+            "ExportBatchSpecifier": "ExportBatchSpecifier",
+            "ExportSpecifier": "ExportSpecifier",
+            "ImportDeclaration": "ImportDeclaration",
+            "ImportSpecifier": "ImportSpecifier",
+            "ImportDefaultSpecifier": "ImportDefaultSpecifier",
+            "ImportNamespaceSpecifier": "ImportNamespaceSpecifier",
+            "ModuleSpecifier": "ModuleSpecifier"
         }
     },
     "tokenize()": {
