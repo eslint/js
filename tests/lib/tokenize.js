@@ -95,6 +95,40 @@ describe("tokenize()", function() {
         assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-y-result.tokens.js"));
     });
 
+
+    describe("templateStrings", function() {
+        it("should produce tokens when tokenizing simple template string", function() {
+            var tokens = espree.tokenize("var foo = `hi`;", {
+                ecmaFeatures: { templateStrings: true },
+                loc: true,
+                range: true
+            });
+            assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-simple-result.tokens.js"));
+        });
+
+        it("should produce tokens when tokenizing template string with embedded variable", function() {
+            var tokens = espree.tokenize("var foo = `hi${bar}`;", {
+                ecmaFeatures: { templateStrings: true },
+                loc: true,
+                range: true
+            });
+            assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-embedded-result.tokens.js"));
+        });
+
+        it("should produce tokens when tokenizing template string with embedded expressions", function() {
+            var tokens = espree.tokenize("var foo = `Hello ${b}. a + 5 = ${a + 5}`;", {
+                ecmaFeatures: { templateStrings: true },
+                loc: true,
+                range: true
+            });
+            assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-expressions-result.tokens.js"));
+        });
+
+
+    });
+
+
+
     // Make sure we don't introduce the same regex parsing error as Esprima
     it("should produce tokens when using regular expression wrapped in parens", function() {
         var tokens = espree.tokenize("(/foo/).test(bar);", {

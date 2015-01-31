@@ -936,8 +936,10 @@ function scanStringLiteral() {
 }
 
 /**
- * Scan a template string and return an ASTNode representation
- * @returns {ASTNode} The template string literal
+ * Scan a template string and return a token. This scans both the first and
+ * subsequent pieces of a template string and assumes that the first backtick
+ * or the closing } have already been scanned.
+ * @returns {Token} The template string token.
  * @private
  */
 function scanTemplate() {
@@ -1368,16 +1370,20 @@ function advance() {
         return scanJSXIdentifier();
     }
 
-    // Template strings start with backtick (U+0096).
-    if (allowTemplateStrings && ch === 96) {
-        return scanTemplate();
+    // Template strings start with backtick (U+0096) or closing curly brace (125) and backtick.
+    if (allowTemplateStrings) {
+
+        // template strings start with backtick (96) or open curly (125) but only if the open
+        // curly closes a previously opened curly from a template.
+        if (ch === 96 || (ch === 125 && extra.curlies[extra.curlies.length - 1] === "template")) {
+            extra.curlies.pop();
+            return scanTemplate();
+        }
     }
 
     if (syntax.isIdentifierStart(ch)) {
         return scanIdentifier();
     }
-
-
 
     // Dot (.) U+002E can also start a floating-point number, hence the need
     // to check the next character.
@@ -1457,16 +1463,36 @@ function lex() {
     lineNumber = token.lineNumber;
     lineStart = token.lineStart;
 
+    if (token.type === Token.Template) {
+        if (token.tail) {
+            extra.curlies.pop();
+        } else {
+            extra.curlies.push("template");
+        }
+    }
+
+    if (token.value === "{") {
+        extra.curlies.push("{");
+    }
+
+    if (token.value === "}") {
+        extra.curlies.pop();
+    }
+
     return token;
 }
 
 function peek() {
-    var pos, line, start;
+    var pos,
+        line,
+        start;
 
     pos = index;
     line = lineNumber;
     start = lineStart;
+
     lookahead = (typeof extra.tokens !== "undefined") ? collectToken() : advance();
+
     index = pos;
     lineNumber = line;
     lineStart = start;
@@ -4344,9 +4370,13 @@ function tokenize(code, options) {
     options.tokens = true;
     extra.tokens = [];
     extra.tokenize = true;
+
     // The following two fields are necessary to compute the Regex tokens.
     extra.openParenToken = -1;
     extra.openCurlyToken = -1;
+
+    // Needed when using template string tokenization
+    extra.curlies = [];
 
     extra.range = (typeof options.range === "boolean") && options.range;
     extra.loc = (typeof options.loc === "boolean") && options.loc;
@@ -4436,6 +4466,9 @@ function parse(code, options) {
     extra = {
         ecmaFeatures: defaultFeatures
     };
+
+    // for template strings
+    extra.curlies = [];
 
     if (typeof options !== "undefined") {
         extra.range = (typeof options.range === "boolean") && options.range;
