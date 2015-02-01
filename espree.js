@@ -2760,7 +2760,8 @@ function parseGroupExpression() {
 function parsePrimaryExpression() {
     var type, token, expr,
         marker,
-        allowJSX = extra.ecmaFeatures.jsx;
+        allowJSX = extra.ecmaFeatures.jsx,
+        allowSuper = extra.ecmaFeatures.superInFunctions;
 
     if (match("(")) {
         return parseGroupExpression();
@@ -2792,6 +2793,13 @@ function parsePrimaryExpression() {
         if (matchKeyword("function")) {
             return parseFunctionExpression();
         }
+
+        if (allowSuper && matchKeyword("super") && state.inFunctionBody) {
+            marker = markerCreate();
+            lex();
+            return markerApply(marker, astNodeFactory.createIdentifier("super"));
+        }
+
         if (matchKeyword("this")) {
             lex();
             expr = astNodeFactory.createThisExpression();
