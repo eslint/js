@@ -3614,7 +3614,7 @@ function parseReturnStatement() {
 
     expectKeyword("return");
 
-    if (!state.inFunctionBody) {
+    if (!state.inFunctionBody && !extra.ecmaFeatures.globalReturn) {
         throwErrorTolerant({}, Messages.IllegalReturn);
     }
 

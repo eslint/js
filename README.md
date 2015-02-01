@@ -101,8 +101,11 @@ var ast = espree.parse(code, {
         // enable parsing of generators/yield
         generators: true,
 
-        // React JSX parsing
-        jsx: true
+        // enable React JSX parsing
+        jsx: true,
+
+        // enable return in global scope
+        globalReturn: true
     }
 });
 ```
