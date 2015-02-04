@@ -47,6 +47,7 @@ var Token = tokenInfo.Token,
     TokenName = tokenInfo.TokenName,
     FnExprTokens = tokenInfo.FnExprTokens,
     Regex = syntax.Regex,
+    PlaceHolders,
     PropertyKind,
     source,
     strict,
@@ -57,6 +58,12 @@ var Token = tokenInfo.Token,
     lookahead,
     state,
     extra;
+
+PlaceHolders = {
+    ArrowParameterPlaceHolder: {
+        type: "ArrowParameterPlaceHolder"
+    }
+};
 
 PropertyKind = {
     Data: 1,
@@ -2747,6 +2754,13 @@ function parseGroupExpression() {
 
     expect("(");
 
+    ++state.parenthesisCount;
+
+    if (match(")")) {
+        lex();
+        return PlaceHolders.ArrowParameterPlaceHolder;
+    }
+
     expr = parseExpression();
 
     expect(")");
@@ -2815,10 +2829,9 @@ function parsePrimaryExpression() {
         peek();
     } else if (type === Token.Template) {
         return parseTemplateLiteral();
-    } else {
+    } else if (!expr) {
         throwUnexpected(lex());
     }
-
     return markerApply(marker, expr);
 }
 
@@ -3170,11 +3183,89 @@ function parseConditionalExpression() {
     return expr;
 }
 
+// [ES6] 14.2 Arrow Function
+
+function parseConciseBody() {
+    if (match("{")) {
+        return parseFunctionSourceElements();
+    }
+    return parseAssignmentExpression();
+}
+
+function reinterpretAsCoverFormalsList(expressions) {
+    var i, len, param, params, defaults, defaultCount, options, rest;
+
+    params = [];
+    defaults = [];
+    defaultCount = 0;
+    rest = null;
+    options = {
+        paramSet: {}
+    };
+
+    for (i = 0, len = expressions.length; i < len; i += 1) {
+        param = expressions[i];
+        if (param.type === astNodeTypes.Identifier) {
+            params.push(param);
+            defaults.push(null);
+            validateParam(options, param, param.name);
+        } else if (param.type === astNodeTypes.AssignmentExpression) {
+            params.push(param.left);
+            defaults.push(param.right);
+            ++defaultCount;
+            validateParam(options, param.left, param.left.name);
+        } else {
+            return null;
+        }
+    }
+
+    if (options.message === Messages.StrictParamDupe) {
+        throwError(
+            strict ? options.stricted : options.firstRestricted,
+            options.message
+        );
+    }
+
+    // must be here so it's not an array of [null, null]
+    if (defaultCount === 0) {
+        defaults = [];
+    }
+
+    return {
+        params: params,
+        defaults: defaults,
+        rest: rest,
+        stricted: options.stricted,
+        firstRestricted: options.firstRestricted,
+        message: options.message
+    };
+}
+
+function parseArrowFunctionExpression(options, marker) {
+    var previousStrict, body;
+
+    expect("=>");
+    previousStrict = strict;
+
+    body = parseConciseBody();
+
+    if (strict && options.firstRestricted) {
+        throwError(options.firstRestricted, options.message);
+    }
+    if (strict && options.stricted) {
+        throwErrorTolerant(options.stricted, options.message);
+    }
+
+    strict = previousStrict;
+    return markerApply(marker, astNodeFactory.createArrowFunctionExpression(options.params, options.defaults, body, body.type !== astNodeTypes.BlockStatement));
+}
+
 // 11.13 Assignment Operators
 
 function parseAssignmentExpression() {
-    var token, left, right, node,
+    var token, left, right, list, node, params,
         marker,
+        oldParenthesisCount = state.parenthesisCount,
         allowGenerators = extra.ecmaFeatures.generators;
 
     // Note that 'yield' is treated as a keyword in strict mode, but a
@@ -3185,9 +3276,40 @@ function parseAssignmentExpression() {
     }
 
     marker = markerCreate();
-    token = lookahead;
 
+    if (match("(")) {
+        token = lookahead2();
+        if (token.value === ")" && token.type === Token.Punctuator) {
+            params = parseParams();
+            list = {
+                defaults: [],
+                params: params.params
+            };
+            return markerApply(marker, parseArrowFunctionExpression(list, marker));
+        }
+    }
+
+    // revert to the previous lookahead style object
+    token = lookahead;
     node = left = parseConditionalExpression();
+
+    if (node === PlaceHolders.ArrowParameterPlaceHolder || match("=>")) {
+        if (state.parenthesisCount === oldParenthesisCount ||
+            state.parenthesisCount === (oldParenthesisCount + 1)) {
+            if (node.type === astNodeTypes.Identifier) {
+                list = reinterpretAsCoverFormalsList([ node ]);
+            } else if (node.type === astNodeTypes.AssignmentExpression) {
+                list = reinterpretAsCoverFormalsList([ node ]);
+            } else if (node.type === astNodeTypes.SequenceExpression) {
+                list = reinterpretAsCoverFormalsList(node.expressions);
+            } else if (node === PlaceHolders.ArrowParameterPlaceHolder) {
+                list = reinterpretAsCoverFormalsList([]);
+            }
+            if (list) {
+                return parseArrowFunctionExpression(list, marker);
+            }
+        }
+    }
 
     if (matchAssign()) {
         // LeftHandSideExpression
@@ -3939,7 +4061,7 @@ function parseStatement() {
 
 function parseFunctionSourceElements() {
     var sourceElement, sourceElements = [], token, directive, firstRestricted,
-        oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody,
+        oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody, oldParenthesisCount,
         marker = markerCreate();
 
     expect("{");
@@ -3973,6 +4095,7 @@ function parseFunctionSourceElements() {
     oldInIteration = state.inIteration;
     oldInSwitch = state.inSwitch;
     oldInFunctionBody = state.inFunctionBody;
+    oldParenthesisCount = state.parenthesizedCount;
 
     state.labelSet = {};
     state.inIteration = false;
@@ -4000,8 +4123,35 @@ function parseFunctionSourceElements() {
     state.inIteration = oldInIteration;
     state.inSwitch = oldInSwitch;
     state.inFunctionBody = oldInFunctionBody;
+    state.parenthesizedCount = oldParenthesisCount;
 
     return markerApply(marker, astNodeFactory.createBlockStatement(sourceElements));
+}
+
+function validateParam(options, param, name) {
+    var key = "$" + name;
+    if (strict) {
+        if (syntax.isRestrictedWord(name)) {
+            options.stricted = param;
+            options.message = Messages.StrictParamName;
+        }
+        if (Object.prototype.hasOwnProperty.call(options.paramSet, key)) {
+            options.stricted = param;
+            options.message = Messages.StrictParamDupe;
+        }
+    } else if (!options.firstRestricted) {
+        if (syntax.isRestrictedWord(name)) {
+            options.firstRestricted = param;
+            options.message = Messages.StrictParamName;
+        } else if (syntax.isStrictModeReservedWord(name)) {
+            options.firstRestricted = param;
+            options.message = Messages.StrictReservedWord;
+        } else if (Object.prototype.hasOwnProperty.call(options.paramSet, key)) {
+            options.firstRestricted = param;
+            options.message = Messages.StrictParamDupe;
+        }
+    }
+    options.paramSet[key] = true;
 }
 
 function parseParams(firstRestricted) {
@@ -4349,6 +4499,7 @@ function tokenize(code, options) {
     state = {
         allowIn: true,
         labelSet: {},
+        parenthesisCount: 0,
         inFunctionBody: false,
         inIteration: false,
         inSwitch: false,
@@ -4453,6 +4604,7 @@ function parse(code, options) {
     state = {
         allowIn: true,
         labelSet: {},
+        parenthesisCount: 0,
         inFunctionBody: false,
         inIteration: false,
         inSwitch: false,

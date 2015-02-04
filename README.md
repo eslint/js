@@ -59,6 +59,9 @@ var ast = espree.parse(code, {
     // specify parsing features (default only has blockBindings: true)
     ecmaFeatures: {
 
+        // enable parsing of arrow functions
+        arrowFunctions: true,
+
         // enable parsing of let/const
         blockBindings: true,
 
