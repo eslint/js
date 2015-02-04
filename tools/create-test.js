@@ -69,7 +69,7 @@ var rawCode = shelljs.cat(codeFilename),
 // pop off first code, it will be an empty string
 code.shift();
 
-if (sections.length !== code.length) {
+if (!sections || sections.length !== code.length) {
     console.error("Missing a /*!espree-section: name*/ in the code file.");
     process.exit(1);
 }
