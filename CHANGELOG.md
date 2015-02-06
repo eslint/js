@@ -1,3 +1,12 @@
+v1.8.0 - February 6, 2015
+
+* 1.8.0 (Nicholas C. Zakas)
+* New: Support for Arrow Functions (refs #10) (Jamund Ferguson)
+* New: Allow super references in functions (refs #10) (Nicholas C. Zakas)
+* Update create-test.js (Jamund Ferguson)
+* Fix: Tokenization for template strings (fixes #44) (Nicholas C. Zakas)
+* New: Allow return in global scope (fixes #46) (Nicholas C. Zakas)
+
 v1.7.1 - January 23, 2015
 
 * 1.7.1 (Nicholas C. Zakas)
