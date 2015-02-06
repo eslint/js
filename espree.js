@@ -41,13 +41,13 @@ var syntax = require("./lib/syntax"),
     astNodeFactory = require("./lib/ast-node-factory"),
     defaultFeatures = require("./lib/features"),
     Messages = require("./lib/messages"),
-    XHTMLEntities = require("./lib/xhtml-entities");
+    XHTMLEntities = require("./lib/xhtml-entities"),
+    StringMap = require("./lib/string-map");
 
 var Token = tokenInfo.Token,
     TokenName = tokenInfo.TokenName,
     FnExprTokens = tokenInfo.FnExprTokens,
     Regex = syntax.Regex,
-    PlaceHolders,
     PropertyKind,
     source,
     strict,
@@ -58,12 +58,6 @@ var Token = tokenInfo.Token,
     lookahead,
     state,
     extra;
-
-PlaceHolders = {
-    ArrowParameterPlaceHolder: {
-        type: "ArrowParameterPlaceHolder"
-    }
-};
 
 PropertyKind = {
     Data: 1,
@@ -2458,6 +2452,7 @@ function parseObjectProperty() {
         allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods,
         allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties,
         allowGenerators = extra.ecmaFeatures.generators,
+        allowDestructuring = extra.ecmaFeatures.destructuring,
         marker = markerCreate();
 
     token = lookahead;
@@ -2471,7 +2466,7 @@ function parseObjectProperty() {
          * Check for getters and setters. Be careful! "get" and "set" are legal
          * method names. It's only a getter or setter if followed by a space.
          */
-        if (token.value === "get" && !match(":") && !match("(")) {
+        if (token.value === "get" && !(match(":") || match("("))) {
             computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
             expect("(");
@@ -2489,7 +2484,7 @@ function parseObjectProperty() {
             );
         }
 
-        if (token.value === "set" && !match(":") && !match("(")) {
+        if (token.value === "set" && !(match(":") || match("("))) {
             computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
             expect("(");
@@ -2548,9 +2543,9 @@ function parseObjectProperty() {
          * Only other possibility is that this is a shorthand property. Computed
          * properties cannot use shorthand notation, so that's a syntax error.
          * If shorthand properties aren't allow, then this is an automatic
-         * syntax error.
+         * syntax error. Destructuring is another case with a similar shorthand syntax.
          */
-        if (computed || !allowShorthand) {
+        if (computed || (!allowShorthand && !allowDestructuring)) {
             throwUnexpected(lookahead);
         }
 
@@ -2595,49 +2590,56 @@ function parseObjectProperty() {
             )
         );
 
-    } else {
-
-        /*
-         * If we've made it here, then that means the property name is represented
-         * by a string (i.e, { "foo": 2}). The only options here are normal
-         * property with a colon or a method.
-         */
-        key = parseObjectPropertyKey();
-
-        // check for property value
-        if (match(":")) {
-            lex();
-            return markerApply(
-                marker,
-                astNodeFactory.createProperty(
-                    "init",
-                    key,
-                    parseAssignmentExpression(),
-                    false,
-                    false,
-                    false
-                )
-            );
-        }
-
-        // check for method
-        if (allowMethod && match("(")) {
-            return markerApply(
-                marker,
-                astNodeFactory.createProperty(
-                    "init",
-                    key,
-                    parsePropertyMethodFunction(),
-                    true,
-                    false,
-                    false
-                )
-            );
-        }
-
-        // no other options, this is bad
-        throwUnexpected(lex());
     }
+
+    /*
+     * If we've made it here, then that means the property name is represented
+     * by a string (i.e, { "foo": 2}). The only options here are normal
+     * property with a colon or a method.
+     */
+    key = parseObjectPropertyKey();
+
+    // check for property value
+    if (match(":")) {
+        lex();
+        return markerApply(
+            marker,
+            astNodeFactory.createProperty(
+                "init",
+                key,
+                parseAssignmentExpression(),
+                false,
+                false,
+                false
+            )
+        );
+    }
+
+    // check for method
+    if (allowMethod && match("(")) {
+        return markerApply(
+            marker,
+            astNodeFactory.createProperty(
+                "init",
+                key,
+                parsePropertyMethodFunction(),
+                true,
+                false,
+                false
+            )
+        );
+    }
+
+    // no other options, this is bad
+    throwUnexpected(lex());
+}
+
+function getFieldName(key) {
+    var toString = String;
+    if (key.type === astNodeTypes.Identifier) {
+        return key.name;
+    }
+    return toString(key.value);
 }
 
 function parseObjectInitialiser() {
@@ -2646,39 +2648,30 @@ function parseObjectInitialiser() {
         properties = [],
         property,
         name,
-        key,
+        propertyFn,
         kind,
-        kindMap = {},
-        toString = String;
+        storedKind,
+        kindMap = new StringMap();
 
     expect("{");
 
     while (!match("}")) {
+
         property = parseObjectProperty();
 
         if (!property.computed) {
 
-            if (property.key.type === astNodeTypes.Identifier) {
-                name = property.key.name;
-            } else {
-                name = toString(property.key.value);
-            }
+            name = getFieldName(property.key);
+            propertyFn = (property.kind === "get") ? PropertyKind.Get : PropertyKind.Set;
+            kind = (property.kind === "init") ? PropertyKind.Data : propertyFn;
 
-            if (property.kind === "init") {
-                kind = PropertyKind.Data;
-            } else if (property.kind === "get") {
-                kind = PropertyKind.Get;
-            } else {
-                kind = PropertyKind.Set;
-            }
-
-            key = "$" + name;
-            if (Object.prototype.hasOwnProperty.call(kindMap, key)) {
-                if (kindMap[key] === PropertyKind.Data) {
+            if (kindMap.has(name)) {
+                storedKind = kindMap.get(name);
+                if (storedKind === PropertyKind.Data) {
                     if (kind === PropertyKind.Data && name === "__proto__" && allowDuplicates) {
                         // Duplicate '__proto__' literal properties are forbidden in ES 6
                         throwErrorTolerant({}, Messages.DuplicatePrototypeProperty);
-                    } else if (kind === PropertyKind.Data && strict && !allowDuplicates) {
+                    } else if (strict && kind === PropertyKind.Data && !allowDuplicates) {
                         // Duplicate literal properties are only forbidden in ES 5 strict mode
                         throwErrorTolerant({}, Messages.StrictDuplicateProperty);
                     } else if (kind !== PropertyKind.Data) {
@@ -2687,13 +2680,13 @@ function parseObjectInitialiser() {
                 } else {
                     if (kind === PropertyKind.Data) {
                         throwErrorTolerant({}, Messages.AccessorDataProperty);
-                    } else if (kindMap[key] & kind) {
+                    } else if (storedKind & kind) {
                         throwErrorTolerant({}, Messages.AccessorGetSet);
                     }
                 }
-                kindMap[key] |= kind;
+                kindMap.set(name, storedKind | kind);
             } else {
-                kindMap[key] = kind;
+                kindMap.set(name, kind);
             }
         }
 
@@ -2755,11 +2748,6 @@ function parseGroupExpression() {
     expect("(");
 
     ++state.parenthesisCount;
-
-    if (match(")")) {
-        lex();
-        return PlaceHolders.ArrowParameterPlaceHolder;
-    }
 
     expr = parseExpression();
 
@@ -2837,9 +2825,10 @@ function parsePrimaryExpression() {
         peek();
     } else if (type === Token.Template) {
         return parseTemplateLiteral();
-    } else if (!expr) {
-        throwUnexpected(lex());
+    } else {
+       throwUnexpected(lex());
     }
+
     return markerApply(marker, expr);
 }
 
@@ -3208,7 +3197,7 @@ function reinterpretAsCoverFormalsList(expressions) {
     defaultCount = 0;
     rest = null;
     options = {
-        paramSet: {}
+        paramSet: new StringMap()
     };
 
     for (i = 0, len = expressions.length; i < len; i += 1) {
@@ -3217,6 +3206,10 @@ function reinterpretAsCoverFormalsList(expressions) {
             params.push(param);
             defaults.push(null);
             validateParam(options, param, param.name);
+        }  else if (param.type === astNodeTypes.ObjectExpression || param.type === astNodeTypes.ArrayExpression) {
+            reinterpretAsDestructuredParameter(options, param);
+            params.push(param);
+            defaults.push(null);
         } else if (param.type === astNodeTypes.AssignmentExpression) {
             params.push(param.left);
             defaults.push(param.right);
@@ -3270,9 +3263,95 @@ function parseArrowFunctionExpression(options, marker) {
 
 // 11.13 Assignment Operators
 
+// 12.14.5 AssignmentPattern
+
+function reinterpretAsAssignmentBindingPattern(expr) {
+    var i, len, property, element,
+        allowDestructuring = extra.ecmaFeatures.destructuring;
+
+    if (!allowDestructuring) {
+        throwUnexpected(lex());
+    }
+
+    if (expr.type === astNodeTypes.ObjectExpression) {
+        expr.type = astNodeTypes.ObjectPattern;
+        for (i = 0, len = expr.properties.length; i < len; i += 1) {
+            property = expr.properties[i];
+            if (property.kind !== "init") {
+                throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
+            }
+            reinterpretAsAssignmentBindingPattern(property.value);
+        }
+    } else if (expr.type === astNodeTypes.ArrayExpression) {
+        expr.type = astNodeTypes.ArrayPattern;
+        for (i = 0, len = expr.elements.length; i < len; i += 1) {
+            element = expr.elements[i];
+            /* istanbul ignore else */
+            if (element) {
+                reinterpretAsAssignmentBindingPattern(element);
+            }
+        }
+    } else if (expr.type === astNodeTypes.Identifier) {
+        if (syntax.isRestrictedWord(expr.name)) {
+            throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
+        }
+    } else if (expr.type === astNodeTypes.SpreadElement) {
+        reinterpretAsAssignmentBindingPattern(expr.argument);
+        if (expr.argument.type === astNodeTypes.ObjectPattern) {
+            throwErrorTolerant({}, Messages.ObjectPatternAsSpread);
+        }
+    } else {
+        /* istanbul ignore else */
+        if (expr.type !== astNodeTypes.MemberExpression && expr.type !== astNodeTypes.CallExpression && expr.type !== astNodeTypes.NewExpression) {
+            throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
+        }
+    }
+}
+
+// 13.2.3 BindingPattern
+
+function reinterpretAsDestructuredParameter(options, expr) {
+    var i, len, property, element,
+        allowDestructuring = extra.ecmaFeatures.destructuring;
+
+    if (!allowDestructuring) {
+         throwUnexpected(lex());
+    }
+
+    if (expr.type === astNodeTypes.ObjectExpression) {
+        expr.type = astNodeTypes.ObjectPattern;
+        for (i = 0, len = expr.properties.length; i < len; i += 1) {
+            property = expr.properties[i];
+            if (property.kind !== "init") {
+                throwErrorTolerant({}, Messages.InvalidLHSInFormalsList);
+            }
+            reinterpretAsDestructuredParameter(options, property.value);
+        }
+    } else if (expr.type === astNodeTypes.ArrayExpression) {
+        expr.type = astNodeTypes.ArrayPattern;
+        for (i = 0, len = expr.elements.length; i < len; i += 1) {
+            element = expr.elements[i];
+            if (element) {
+                reinterpretAsDestructuredParameter(options, element);
+            }
+        }
+    } else if (expr.type === astNodeTypes.Identifier) {
+        validateParam(options, expr, expr.name);
+    } else if (expr.type === astNodeTypes.SpreadElement) {
+        // BindingRestElement only allows BindingIdentifier
+        if (expr.argument.type !== astNodeTypes.Identifier) {
+            throwErrorTolerant({}, Messages.InvalidLHSInFormalsList);
+        }
+        validateParam(options, expr.argument, expr.argument.name);
+    } else {
+        throwError({}, Messages.InvalidLHSInFormalsList);
+    }
+}
+
 function parseAssignmentExpression() {
-    var token, left, right, list, node, params,
+    var token, left, right, node, params,
         marker,
+        startsWithParen = false,
         oldParenthesisCount = state.parenthesisCount,
         allowGenerators = extra.ecmaFeatures.generators;
 
@@ -3289,45 +3368,52 @@ function parseAssignmentExpression() {
         token = lookahead2();
         if (token.value === ")" && token.type === Token.Punctuator) {
             params = parseParams();
-            list = {
-                defaults: [],
-                params: params.params
-            };
-            return markerApply(marker, parseArrowFunctionExpression(list, marker));
+            if (!match("=>")) {
+                throwUnexpected(lex());
+            }
+            return parseArrowFunctionExpression(params, marker);
         }
+        startsWithParen = true;
     }
 
     // revert to the previous lookahead style object
     token = lookahead;
     node = left = parseConditionalExpression();
 
-    if (node === PlaceHolders.ArrowParameterPlaceHolder || match("=>")) {
-        if (state.parenthesisCount === oldParenthesisCount ||
-            state.parenthesisCount === (oldParenthesisCount + 1)) {
-            if (node.type === astNodeTypes.Identifier) {
-                list = reinterpretAsCoverFormalsList([ node ]);
-            } else if (node.type === astNodeTypes.AssignmentExpression) {
-                list = reinterpretAsCoverFormalsList([ node ]);
-            } else if (node.type === astNodeTypes.SequenceExpression) {
-                list = reinterpretAsCoverFormalsList(node.expressions);
-            } else if (node === PlaceHolders.ArrowParameterPlaceHolder) {
-                list = reinterpretAsCoverFormalsList([]);
+    if (match("=>") &&
+            (state.parenthesisCount === oldParenthesisCount ||
+            state.parenthesisCount === (oldParenthesisCount + 1))) {
+
+        if (node.type === astNodeTypes.Identifier) {
+            params = reinterpretAsCoverFormalsList([ node ]);
+        } else if (node.type === astNodeTypes.AssignmentExpression ||
+            node.type === astNodeTypes.ArrayExpression ||
+            node.type === astNodeTypes.ObjectExpression) {
+            if (!startsWithParen) {
+                throwUnexpected(lex());
             }
-            if (list) {
-                return parseArrowFunctionExpression(list, marker);
-            }
+            params = reinterpretAsCoverFormalsList([ node ]);
+        } else if (node.type === astNodeTypes.SequenceExpression) {
+            params = reinterpretAsCoverFormalsList(node.expressions);
+        }
+
+        if (params) {
+            return parseArrowFunctionExpression(params, marker);
         }
     }
 
     if (matchAssign()) {
-        // LeftHandSideExpression
-        if (!isLeftHandSide(left)) {
-            throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
-        }
 
         // 11.13.1
         if (strict && left.type === astNodeTypes.Identifier && syntax.isRestrictedWord(left.name)) {
             throwErrorTolerant(token, Messages.StrictLHSAssignment);
+        }
+
+        // ES.next draf 11.13 Runtime Semantics step 1
+        if (match("=") && (node.type === astNodeTypes.ObjectExpression || node.type === astNodeTypes.ArrayExpression)) {
+            reinterpretAsAssignmentBindingPattern(node);
+        } else if (!isLeftHandSide(node)) {
+            throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
         }
 
         token = lex();
@@ -3412,18 +3498,29 @@ function parseVariableIdentifier() {
 }
 
 function parseVariableDeclaration(kind) {
-    var init = null, id,
-        marker = markerCreate();
-
-    id = parseVariableIdentifier();
-
-    // 12.2.1
-    if (strict && syntax.isRestrictedWord(id.name)) {
-        throwErrorTolerant({}, Messages.StrictVarName);
+    var id,
+        marker = markerCreate(),
+        init = null;
+    if (match("{")) {
+        id = parseObjectInitialiser();
+        reinterpretAsAssignmentBindingPattern(id);
+    } else if (match("[")) {
+        id = parseArrayInitialiser();
+        reinterpretAsAssignmentBindingPattern(id);
+    } else {
+        /* istanbul ignore next */
+        id = state.allowKeyword ? parseNonComputedProperty() : parseVariableIdentifier();
+        // 12.2.1
+        if (strict && syntax.isRestrictedWord(id.name)) {
+            throwErrorTolerant({}, Messages.StrictVarName);
+        }
     }
 
     // TODO: Verify against feature flags
     if (kind === "const") {
+        if (!match("=")) {
+            throwError({}, Messages.NoUnintializedConst);
+        }
         expect("=");
         init = parseAssignmentExpression();
     } else if (match("=")) {
@@ -3678,7 +3775,7 @@ function parseForStatement(opts) {
 // 12.7 The continue statement
 
 function parseContinueStatement() {
-    var label = null, key;
+    var label = null;
 
     expectKeyword("continue");
 
@@ -3704,8 +3801,7 @@ function parseContinueStatement() {
     if (lookahead.type === Token.Identifier) {
         label = parseVariableIdentifier();
 
-        key = "$" + label.name;
-        if (!Object.prototype.hasOwnProperty.call(state.labelSet, key)) {
+        if (!state.labelSet.has(label.name)) {
             throwError({}, Messages.UnknownLabel, label.name);
         }
     }
@@ -3722,7 +3818,7 @@ function parseContinueStatement() {
 // 12.8 The break statement
 
 function parseBreakStatement() {
-    var label = null, key;
+    var label = null;
 
     expectKeyword("break");
 
@@ -3748,8 +3844,7 @@ function parseBreakStatement() {
     if (lookahead.type === Token.Identifier) {
         label = parseVariableIdentifier();
 
-        key = "$" + label.name;
-        if (!Object.prototype.hasOwnProperty.call(state.labelSet, key)) {
+        if (!state.labelSet.has(label.name)) {
             throwError({}, Messages.UnknownLabel, label.name);
         }
     }
@@ -3974,7 +4069,6 @@ function parseStatement() {
     var type = lookahead.type,
         expr,
         labeledBody,
-        key,
         marker;
 
     if (type === Token.EOF) {
@@ -3991,6 +4085,8 @@ function parseStatement() {
         switch (lookahead.value) {
             case ";":
                 return markerApply(marker, parseEmptyStatement());
+            case "{":
+                return parseBlock();
             case "(":
                 return markerApply(marker, parseExpressionStatement());
             default:
@@ -4042,14 +4138,13 @@ function parseStatement() {
     if ((expr.type === astNodeTypes.Identifier) && match(":")) {
         lex();
 
-        key = "$" + expr.name;
-        if (Object.prototype.hasOwnProperty.call(state.labelSet, key)) {
+        if (state.labelSet.has(expr.name)) {
             throwError({}, Messages.Redeclaration, "Label", expr.name);
         }
 
-        state.labelSet[key] = true;
+        state.labelSet.set(expr.name, true);
         labeledBody = parseStatement();
-        delete state.labelSet[key];
+        state.labelSet.delete(expr.name);
         return markerApply(marker, astNodeFactory.createLabeledStatement(expr, labeledBody));
     }
 
@@ -4105,7 +4200,7 @@ function parseFunctionSourceElements() {
     oldInFunctionBody = state.inFunctionBody;
     oldParenthesisCount = state.parenthesizedCount;
 
-    state.labelSet = {};
+    state.labelSet = new StringMap();
     state.inIteration = false;
     state.inSwitch = false;
     state.inFunctionBody = true;
@@ -4137,13 +4232,12 @@ function parseFunctionSourceElements() {
 }
 
 function validateParam(options, param, name) {
-    var key = "$" + name;
     if (strict) {
         if (syntax.isRestrictedWord(name)) {
             options.stricted = param;
             options.message = Messages.StrictParamName;
         }
-        if (Object.prototype.hasOwnProperty.call(options.paramSet, key)) {
+        if (options.paramSet.has(name)) {
             options.stricted = param;
             options.message = Messages.StrictParamDupe;
         }
@@ -4154,59 +4248,71 @@ function validateParam(options, param, name) {
         } else if (syntax.isStrictModeReservedWord(name)) {
             options.firstRestricted = param;
             options.message = Messages.StrictReservedWord;
-        } else if (Object.prototype.hasOwnProperty.call(options.paramSet, key)) {
+        } else if (options.paramSet.has(name)) {
             options.firstRestricted = param;
             options.message = Messages.StrictParamDupe;
         }
     }
-    options.paramSet[key] = true;
+    options.paramSet.set(name, true);
 }
 
-function parseParams(firstRestricted) {
-    var param, params = [], defaults = [], defaultCount = 0, token, stricted, paramSet, key, message, def,
+function parseParam(options) {
+    var token, param, def,
+        allowDestructuring = extra.ecmaFeatures.destructuring,
         allowDefaultParams = extra.ecmaFeatures.defaultParams;
+
+    token = lookahead;
+
+    if (match("[")) {
+        if (!allowDestructuring) {
+            throwUnexpected(lookahead);
+        }
+        param = parseArrayInitialiser();
+        reinterpretAsDestructuredParameter(options, param);
+    } else if (match("{")) {
+        if (!allowDestructuring) {
+            throwUnexpected(lookahead);
+        }
+        param = parseObjectInitialiser();
+        reinterpretAsDestructuredParameter(options, param);
+    } else {
+        param = parseVariableIdentifier();
+        validateParam(options, token, token.value);
+    }
+
+    if (match("=")) {
+        if (!allowDefaultParams) {
+            throwUnexpected(lookahead);
+        }
+        lex();
+        def = parseAssignmentExpression();
+        ++options.defaultCount;
+    }
+
+    options.params.push(param);
+    options.defaults.push(def ? def : null); // TODO: determine if null or undefined (see: #55)
+
+    return !match(")");
+}
+
+
+function parseParams(firstRestricted) {
+    var options, marker = markerCreate();
+
+    options = {
+        params: [],
+        defaultCount: 0,
+        defaults: [],
+        rest: null,
+        firstRestricted: firstRestricted
+    };
+
     expect("(");
 
     if (!match(")")) {
-        paramSet = {};
+        options.paramSet = new StringMap();
         while (index < length) {
-            def = null;
-            token = lookahead;
-            param = parseVariableIdentifier();
-            key = "$" + token.value;
-            if (strict) {
-                if (syntax.isRestrictedWord(token.value)) {
-                    stricted = token;
-                    message = Messages.StrictParamName;
-                }
-                if (Object.prototype.hasOwnProperty.call(paramSet, key)) {
-                    stricted = token;
-                    message = Messages.StrictParamDupe;
-                }
-            } else if (!firstRestricted) {
-                if (syntax.isRestrictedWord(token.value)) {
-                    firstRestricted = token;
-                    message = Messages.StrictParamName;
-                } else if (syntax.isStrictModeReservedWord(token.value)) {
-                    firstRestricted = token;
-                    message = Messages.StrictReservedWord;
-                } else if (Object.prototype.hasOwnProperty.call(paramSet, key)) {
-                    firstRestricted = token;
-                    message = Messages.StrictParamDupe;
-                }
-            }
-            if (match("=")) {
-                if (!allowDefaultParams) {
-                    throwUnexpected(lookahead);
-                }
-                lex();
-                def = parseAssignmentExpression();
-                ++defaultCount;
-            }
-            defaults.push(def);
-            params.push(param);
-            paramSet[key] = true;
-            if (match(")")) {
+            if (!parseParam(options)) {
                 break;
             }
             expect(",");
@@ -4215,17 +4321,11 @@ function parseParams(firstRestricted) {
 
     expect(")");
 
-    if (defaultCount === 0) {
-        defaults = [];
+    if (options.defaultCount === 0) {
+        options.defaults = [];
     }
 
-    return {
-        params: params,
-        stricted: stricted,
-        defaults: defaults,
-        firstRestricted: firstRestricted,
-        message: message
-    };
+    return markerApply(marker, options);
 }
 
 function parseFunctionDeclaration() {
@@ -4611,7 +4711,7 @@ function parse(code, options) {
     lookahead = null;
     state = {
         allowIn: true,
-        labelSet: {},
+        labelSet: new StringMap(),
         parenthesisCount: 0,
         inFunctionBody: false,
         inIteration: false,

@@ -151,6 +151,7 @@
         "result": {
             "AssignmentExpression": "AssignmentExpression",
             "ArrayExpression": "ArrayExpression",
+            "ArrayPattern": "ArrayPattern",
             "ArrowFunctionExpression": "ArrowFunctionExpression",
             "BlockStatement": "BlockStatement",
             "BinaryExpression": "BinaryExpression",
@@ -176,6 +177,7 @@
             "MemberExpression": "MemberExpression",
             "NewExpression": "NewExpression",
             "ObjectExpression": "ObjectExpression",
+            "ObjectPattern": "ObjectPattern",
             "Program": "Program",
             "Property": "Property",
             "ReturnStatement": "ReturnStatement",
