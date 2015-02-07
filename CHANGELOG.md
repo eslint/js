@@ -1,3 +1,9 @@
+v1.8.1 - February 7, 2015
+
+* 1.8.1 (Nicholas C. Zakas)
+* Build: Add Node.js 0.12 testing (Nicholas C. Zakas)
+* Fix: Actuall fix tokenization issue with templates (fixes #44) (Nicholas C. Zakas)
+
 v1.8.0 - February 6, 2015
 
 * 1.8.0 (Nicholas C. Zakas)
