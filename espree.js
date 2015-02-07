@@ -956,7 +956,8 @@ function scanTemplate() {
         octal = false,
         start = index,
         terminated = false,
-        tail = false;
+        tail = false,
+        head = (source[index] === "`");
 
     ++index;
 
@@ -1001,6 +1002,7 @@ function scanTemplate() {
             cooked: cooked,
             raw: source.slice(start + 1, index - ((tail) ? 1 : 2))
         },
+        head: head,
         tail: tail,
         octal: octal,
         lineNumber: lineNumber,
@@ -1030,6 +1032,10 @@ function scanTemplateElement(options) {
     }
 
     template = scanTemplate();
+
+    if (!template.tail) {
+        extra.curlies.push("template");
+    }
 
     peek();
 
@@ -2916,7 +2922,8 @@ function parseLeftHandSideExpressionAllowCall() {
     expr = matchKeyword("new") ? parseNewExpression() : parsePrimaryExpression();
     state.allowIn = previousAllowIn;
 
-    while (match(".") || match("[") || match("(") || lookahead.type === Token.Template) {
+    // only start parsing template literal if the lookahead is a head (beginning with `)
+    while (match(".") || match("[") || match("(") || (lookahead.type === Token.Template && lookahead.head)) {
         if (match("(")) {
             args = parseArguments();
             expr = markerApply(marker, astNodeFactory.createCallExpression(expr, args));
@@ -2924,7 +2931,7 @@ function parseLeftHandSideExpressionAllowCall() {
             expr = markerApply(marker, astNodeFactory.createMemberExpression("[", expr, parseComputedMember()));
         } else if (match(".")) {
             expr = markerApply(marker, astNodeFactory.createMemberExpression(".", expr, parseNonComputedMember()));
-        } else {
+        } else if (!lookahead.tail) {
             expr = markerApply(marker, astNodeFactory.createTaggedTemplateExpression(expr, parseTemplateLiteral()));
         }
     }
@@ -2940,7 +2947,8 @@ function parseLeftHandSideExpression() {
     expr = matchKeyword("new") ? parseNewExpression() : parsePrimaryExpression();
     state.allowIn = previousAllowIn;
 
-    while (match(".") || match("[") || lookahead.type === Token.Template) {
+    // only start parsing template literal if the lookahead is a head (beginning with `)
+    while (match(".") || match("[") || (lookahead.type === Token.Template && lookahead.head)) {
         if (match("[")) {
             expr = markerApply(marker, astNodeFactory.createMemberExpression("[", expr, parseComputedMember()));
         } else if (match(".")) {

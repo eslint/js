@@ -160,6 +160,7 @@ In an effort to help those wanting to transition from other parsers to Espree, t
 ### Esprima/Harmony Branch
 
 * Esprima/Harmony uses a different comment attachment algorithm that results in some comments being added in different places than Espree. The algorithm Espree uses is the same one used in Esprima 1.2.2.
+* Template tokens have a `head` property in addition to `tail`. Esprima has only `tail`.
 
 ### Esprima-FB
 
