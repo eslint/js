@@ -65,6 +65,9 @@ var ast = espree.parse(code, {
         // enable parsing of let/const
         blockBindings: true,
 
+        // enable parsing of destructured arrays and objects
+        destructuring: true,
+
         // enable parsing of regular expression y flag
         regexYFlag: true,
 
