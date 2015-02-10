@@ -182,6 +182,7 @@
             "Property": "Property",
             "ReturnStatement": "ReturnStatement",
             "SequenceExpression": "SequenceExpression",
+            "SpreadElement": "SpreadElement",
             "SwitchCase": "SwitchCase",
             "SwitchStatement": "SwitchStatement",
             "TaggedTemplateExpression": "TaggedTemplateExpression",

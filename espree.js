@@ -553,7 +553,7 @@ function scanPunctuator() {
     }
 
     // The ... operator only valid in JSX mode for now
-    if (extra.ecmaFeatures.jsx && state.inJSXSpreadAttribute) {
+    if (extra.ecmaFeatures.restParams || (extra.ecmaFeatures.jsx && state.inJSXSpreadAttribute)) {
         if (ch1 === "." && ch2 === "." && ch3 === ".") {
             index += 3;
             return {
@@ -2860,6 +2860,15 @@ function parseArguments() {
     return args;
 }
 
+function parseSpreadOrAssignmentExpression() {
+    if (match("...")) {
+        var marker = markerCreate();
+        lex();
+        return markerApply(marker, astNodeFactory.createSpreadElement(parseAssignmentExpression()));
+    }
+    return parseAssignmentExpression();
+}
+
 function parseNonComputedProperty() {
     var token,
         marker = markerCreate();
@@ -3218,6 +3227,13 @@ function reinterpretAsCoverFormalsList(expressions) {
             reinterpretAsDestructuredParameter(options, param);
             params.push(param);
             defaults.push(null);
+        } else if (param.type === astNodeTypes.SpreadElement) {
+            assert(i === len - 1, "It is guaranteed that SpreadElement is last element by parseExpression");
+            if (param.argument.type !== astNodeTypes.Identifier) {
+                throwError({}, Messages.InvalidLHSInFormalsList);
+            }
+            reinterpretAsDestructuredParameter(options, param.argument);
+            rest = param.argument;
         } else if (param.type === astNodeTypes.AssignmentExpression) {
             params.push(param.left);
             defaults.push(param.right);
@@ -3266,7 +3282,13 @@ function parseArrowFunctionExpression(options, marker) {
     }
 
     strict = previousStrict;
-    return markerApply(marker, astNodeFactory.createArrowFunctionExpression(options.params, options.defaults, body, body.type !== astNodeTypes.BlockStatement));
+    return markerApply(marker, astNodeFactory.createArrowFunctionExpression(
+        options.params,
+        options.defaults,
+        body,
+        options.rest,
+        body.type !== astNodeTypes.BlockStatement
+    ));
 }
 
 // 11.13 Assignment Operators
@@ -3323,7 +3345,7 @@ function reinterpretAsDestructuredParameter(options, expr) {
         allowDestructuring = extra.ecmaFeatures.destructuring;
 
     if (!allowDestructuring) {
-         throwUnexpected(lex());
+        throwUnexpected(lex());
     }
 
     if (expr.type === astNodeTypes.ObjectExpression) {
@@ -3374,7 +3396,7 @@ function parseAssignmentExpression() {
 
     if (match("(")) {
         token = lookahead2();
-        if (token.value === ")" && token.type === Token.Punctuator) {
+        if ((token.value === ")" && token.type === Token.Punctuator) || token.value === "...") {
             params = parseParams();
             if (!match("=>")) {
                 throwUnexpected(lex());
@@ -3435,26 +3457,37 @@ function parseAssignmentExpression() {
 // 11.14 Comma Operator
 
 function parseExpression() {
-    var expr,
-        marker = markerCreate();
-
-    expr = parseAssignmentExpression();
+    var marker = markerCreate(),
+        expr = parseAssignmentExpression(),
+        expressions = [ expr ],
+        sequence, spreadFound;
 
     if (match(",")) {
-        expr = astNodeFactory.createSequenceExpression([ expr ]);
-
         while (index < length) {
             if (!match(",")) {
                 break;
             }
             lex();
-            expr.expressions.push(parseAssignmentExpression());
+            expr = parseSpreadOrAssignmentExpression();
+            expressions.push(expr);
+
+            if (expr.type === astNodeTypes.SpreadElement) {
+                spreadFound = true;
+                if (!match(")")) {
+                    throwError({}, Messages.ElementAfterSpreadElement);
+                }
+                break;
+            }
         }
 
-        markerApply(marker, expr);
+        sequence = markerApply(marker, astNodeFactory.createSequenceExpression(expressions));
     }
 
-    return expr;
+    if (spreadFound && lookahead2().value !== "=>") {
+        throwError({}, Messages.IllegalSpread);
+    }
+
+    return sequence || expr;
 }
 
 // 12.1 Block
@@ -4265,11 +4298,19 @@ function validateParam(options, param, name) {
 }
 
 function parseParam(options) {
-    var token, param, def,
+    var token, rest, param, def,
+        allowRestParams = extra.ecmaFeatures.restParams,
         allowDestructuring = extra.ecmaFeatures.destructuring,
         allowDefaultParams = extra.ecmaFeatures.defaultParams;
 
     token = lookahead;
+    if (token.value === "...") {
+        if (!allowRestParams) {
+            throwUnexpected(lookahead);
+        }
+        token = lex();
+        rest = true;
+    }
 
     if (match("[")) {
         if (!allowDestructuring) {
@@ -4278,6 +4319,9 @@ function parseParam(options) {
         param = parseArrayInitialiser();
         reinterpretAsDestructuredParameter(options, param);
     } else if (match("{")) {
+        if (rest) {
+            throwError({}, Messages.ObjectPatternAsRestParameter);
+        }
         if (!allowDestructuring) {
             throwUnexpected(lookahead);
         }
@@ -4289,12 +4333,23 @@ function parseParam(options) {
     }
 
     if (match("=")) {
+        if (rest) {
+            throwErrorTolerant(lookahead, Messages.DefaultRestParameter);
+        }
         if (!allowDefaultParams) {
             throwUnexpected(lookahead);
         }
         lex();
         def = parseAssignmentExpression();
         ++options.defaultCount;
+    }
+
+    if (rest) {
+        if (!match(")")) {
+            throwError({}, Messages.ParameterAfterRestParameter);
+        }
+        options.rest = param;
+        return false;
     }
 
     options.params.push(param);
