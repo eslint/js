@@ -89,6 +89,9 @@ var ast = espree.parse(code, {
         // enable parsing of default parameters
         defaultParams: false,
 
+        // enable parsing of rest parameters
+        restParams: true,
+
         // enable parsing of for-of statement
         forOf: true,
 
