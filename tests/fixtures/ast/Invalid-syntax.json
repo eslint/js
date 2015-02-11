@@ -1318,5 +1318,11 @@
         "lineNumber": 1,
         "column": 22,
         "message": "Error: Line 1: Unexpected end of input"
+    },
+    "left = (aSize.width/2) - ()": {
+      "index": 26,
+      "lineNumber": 1,
+      "column": 27,
+      "message": "Error: Line 1: Unexpected token )"
     }
 }
