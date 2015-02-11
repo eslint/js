@@ -552,8 +552,11 @@ function scanPunctuator() {
         };
     }
 
-    // The ... operator only valid in JSX mode for now
-    if (extra.ecmaFeatures.restParams || (extra.ecmaFeatures.jsx && state.inJSXSpreadAttribute)) {
+    // The ... operator (spread, restParams, JSX, etc.)
+    if (extra.ecmaFeatures.spread ||
+        extra.ecmaFeatures.restParams ||
+        (extra.ecmaFeatures.jsx && state.inJSXSpreadAttribute)
+    ) {
         if (ch1 === "." && ch2 === "." && ch3 === ".") {
             index += 3;
             return {
@@ -2338,24 +2341,29 @@ function isLeftHandSide(expr) {
 
 function parseArrayInitialiser() {
     var elements = [],
-        marker = markerCreate();
+        marker = markerCreate(),
+        tmp;
 
     expect("[");
 
     while (!match("]")) {
         if (match(",")) {
-            lex();
+            lex(); // only get here when you have [a,,] or similar
             elements.push(null);
         } else {
-            elements.push(parseAssignmentExpression());
-
-            if (!match("]")) {
-                expect(",");
+            tmp = parseSpreadOrAssignmentExpression();
+            elements.push(tmp);
+            if (tmp && tmp.type === astNodeTypes.SpreadElement) {
+                if (!match("]")) {
+                    throwError({}, Messages.ElementAfterSpreadElement);
+                }
+            } else if (!(match("]"))) {
+                expect(","); // handles the common case of comma-separated values
             }
         }
     }
 
-    lex();
+    expect("]");
 
     return markerApply(marker, astNodeFactory.createArrayExpression(elements));
 }
@@ -2841,16 +2849,21 @@ function parsePrimaryExpression() {
 // 11.2 Left-Hand-Side Expressions
 
 function parseArguments() {
-    var args = [];
+    var args = [], arg;
 
     expect("(");
 
     if (!match(")")) {
         while (index < length) {
-            args.push(parseAssignmentExpression());
+            arg = parseSpreadOrAssignmentExpression();
+            args.push(arg);
+
             if (match(")")) {
                 break;
+            } else if (arg.type === astNodeTypes.SpreadElement) {
+                throwError({}, Messages.ElementAfterSpreadElement);
             }
+
             expect(",");
         }
     }
