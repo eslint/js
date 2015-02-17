@@ -4003,13 +4003,13 @@
                                     "generator": false,
                                     "expression": false,
                                     "range": [
-                                        32,
+                                        25,
                                         34
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 1,
-                                            "column": 32
+                                            "column": 25
                                         },
                                         "end": {
                                             "line": 1,
@@ -4671,13 +4671,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            32,
+                                            29,
                                             34
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 32
+                                                "column": 29
                                             },
                                             "end": {
                                                 "line": 1,
@@ -4751,13 +4751,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            44,
+                                            41,
                                             46
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 44
+                                                "column": 41
                                             },
                                             "end": {
                                                 "line": 1,
@@ -5026,13 +5026,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            39,
+                                            36,
                                             41
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 39
+                                                "column": 36
                                             },
                                             "end": {
                                                 "line": 1,
@@ -5262,13 +5262,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            33,
+                                            29,
                                             35
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 33
+                                                "column": 29
                                             },
                                             "end": {
                                                 "line": 1,

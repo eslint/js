@@ -2375,8 +2375,7 @@ function parsePropertyFunction(options) {
         previousYieldAllowed = state.yieldAllowed,
         params = options.params || [],
         defaults = options.defaults || [],
-        body,
-        marker = markerCreate();
+        body;
 
     state.yieldAllowed = options.generator;
 
@@ -2393,7 +2392,7 @@ function parsePropertyFunction(options) {
     strict = previousStrict;
     state.yieldAllowed = previousYieldAllowed;
 
-    return markerApply(marker, astNodeFactory.createFunctionExpression(
+    return markerApply(options.marker, astNodeFactory.createFunctionExpression(
         null,
         params,
         defaults,
@@ -2406,6 +2405,7 @@ function parsePropertyFunction(options) {
 
 function parsePropertyMethodFunction(options) {
     var previousStrict = strict,
+        marker = markerCreate(),
         tmp,
         method;
 
@@ -2421,7 +2421,8 @@ function parsePropertyMethodFunction(options) {
         params: tmp.params,
         defaults: tmp.defaults,
         rest: tmp.rest,
-        generator: options ? options.generator : false
+        generator: options ? options.generator : false,
+        marker: marker
     });
 
     strict = previousStrict;
@@ -2461,7 +2462,7 @@ function parseObjectPropertyKey() {
 }
 
 function parseObjectProperty() {
-    var token, key, id, param, computed;
+    var token, key, id, param, computed, methodMarker;
     var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties,
         allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods,
         allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties,
@@ -2483,6 +2484,7 @@ function parseObjectProperty() {
         if (token.value === "get" && !(match(":") || match("("))) {
             computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
+            methodMarker = markerCreate();
             expect("(");
             expect(")");
             return markerApply(
@@ -2490,7 +2492,10 @@ function parseObjectProperty() {
                 astNodeFactory.createProperty(
                     "get",
                     key,
-                    parsePropertyFunction({ generator: false }),
+                    parsePropertyFunction({
+                        generator: false,
+                        marker: methodMarker
+                    }),
                     false,
                     false,
                     computed
@@ -2501,6 +2506,7 @@ function parseObjectProperty() {
         if (token.value === "set" && !(match(":") || match("("))) {
             computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
+            methodMarker = markerCreate();
             expect("(");
             token = lookahead;
             param = [ parseVariableIdentifier() ];
@@ -2513,7 +2519,8 @@ function parseObjectProperty() {
                     parsePropertyFunction({
                         params: param,
                         generator: false,
-                        name: token
+                        name: token,
+                        marker: methodMarker
                     }),
                     false,
                     false,
