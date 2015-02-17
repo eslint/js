@@ -107,13 +107,13 @@ module.exports = {
                             "generator": false,
                             "expression": false,
                             "range": [
-                                17,
+                                4,
                                 19
                             ],
                             "loc": {
                                 "start": {
                                     "line": 1,
-                                    "column": 17
+                                    "column": 4
                                 },
                                 "end": {
                                     "line": 1,
