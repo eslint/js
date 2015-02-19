@@ -2678,6 +2678,23 @@ function parseObjectProperty() {
             );
         }
 
+        // destructuring defaults (shorthand syntax)
+        if (allowDestructuring && match("=")) {
+            lex();
+            var value = parseAssignmentExpression();
+            var prop = markerApply(marker, astNodeFactory.createAssignmentExpression("=", id, value));
+            prop.type = astNodeTypes.AssignmentPattern;
+            var fullProperty = astNodeFactory.createProperty(
+                "init",
+                id,
+                prop,
+                false,
+                true, // shorthand
+                computed
+            );
+            return markerApply(marker, fullProperty);
+        }
+
         /*
          * Only other possibility is that this is a shorthand property. Computed
          * properties cannot use shorthand notation, so that's a syntax error.
@@ -3478,9 +3495,15 @@ function reinterpretAsAssignmentBindingPattern(expr) {
         if (expr.argument.type === astNodeTypes.ObjectPattern) {
             throwErrorTolerant({}, Messages.ObjectPatternAsSpread);
         }
+    } else if (expr.type === "AssignmentExpression" && expr.operator === "=") {
+        expr.type = astNodeTypes.AssignmentPattern;
     } else {
         /* istanbul ignore else */
-        if (expr.type !== astNodeTypes.MemberExpression && expr.type !== astNodeTypes.CallExpression && expr.type !== astNodeTypes.NewExpression) {
+        if (expr.type !== astNodeTypes.MemberExpression &&
+            expr.type !== astNodeTypes.CallExpression &&
+            expr.type !== astNodeTypes.NewExpression &&
+            expr.type !== astNodeTypes.AssignmentPattern
+        ) {
             throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
         }
     }
@@ -3521,7 +3544,9 @@ function reinterpretAsDestructuredParameter(options, expr) {
             throwErrorTolerant({}, Messages.InvalidLHSInFormalsList);
         }
         validateParam(options, expr.argument, expr.argument.name);
-    } else {
+    } else if (expr.type === astNodeTypes.AssignmentExpression && expr.operator === "=") {
+        expr.type = astNodeTypes.AssignmentPattern;
+    } else if (expr.type !== astNodeTypes.AssignmentPattern) {
         throwError({}, Messages.InvalidLHSInFormalsList);
     }
 }
@@ -4488,12 +4513,13 @@ function parseParam(options) {
         if (rest) {
             throwErrorTolerant(lookahead, Messages.DefaultRestParameter);
         }
-        if (!allowDefaultParams) {
+        if (allowDefaultParams || allowDestructuring) {
+            lex();
+            def = parseAssignmentExpression();
+            ++options.defaultCount;
+        } else {
             throwUnexpected(lookahead);
         }
-        lex();
-        def = parseAssignmentExpression();
-        ++options.defaultCount;
     }
 
     if (rest) {
