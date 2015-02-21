@@ -3997,7 +3997,7 @@ function parseSwitchCase() {
         if (match("}") || matchKeyword("default") || matchKeyword("case")) {
             break;
         }
-        statement = parseStatement();
+        statement = parseSourceElement();
         consequent.push(statement);
     }
 
