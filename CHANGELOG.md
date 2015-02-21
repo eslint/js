@@ -1,3 +1,12 @@
+v1.9.0 - February 21, 2015
+
+* 1.9.0 (Nicholas C. Zakas)
+* Fix: Extend property method range and loc to include params (fixes #36) (Brandon Mills)
+* New: spread operator (refs #10) (Jamund Ferguson)
+* Fix: incorrectly parsed arrow fragment (refs #58) (Jamund Ferguson)
+* New: Rest Parameter (refs: #10) (Jamund Ferguson)
+* New: Destructuring (refs #10) (Jamund Ferguson)
+
 v1.8.1 - February 7, 2015
 
 * 1.8.1 (Nicholas C. Zakas)
