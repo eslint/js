@@ -1,3 +1,8 @@
+v1.9.1 - February 21, 2015
+
+* 1.9.1 (Nicholas C. Zakas)
+* Fix: Allow let/const in switchcase (fixes #54) (Nicholas C. Zakas)
+
 v1.9.0 - February 21, 2015
 
 * 1.9.0 (Nicholas C. Zakas)
