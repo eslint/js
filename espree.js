@@ -42,7 +42,8 @@ var syntax = require("./lib/syntax"),
     defaultFeatures = require("./lib/features"),
     Messages = require("./lib/messages"),
     XHTMLEntities = require("./lib/xhtml-entities"),
-    StringMap = require("./lib/string-map");
+    StringMap = require("./lib/string-map"),
+    commentAttachment = require("./lib/comment-attachment");
 
 var Token = tokenInfo.Token,
     TokenName = tokenInfo.TokenName,
@@ -105,9 +106,9 @@ function addComment(type, value, start, end, loc) {
         comment.loc = loc;
     }
     extra.comments.push(comment);
+
     if (extra.attachComment) {
-        extra.leadingComments.push(comment);
-        extra.trailingComments.push(comment);
+        commentAttachment.addComment(comment);
     }
 }
 
@@ -1989,7 +1990,7 @@ function markerApply(marker, node) {
 
     // attach leading and trailing comments if requested
     if (extra.attachComment) {
-        processComment(node);
+        commentAttachment.processComment(node);
     }
 
     return node;
@@ -2042,115 +2043,6 @@ function markerCreatePreserveWhitespace() {
 //------------------------------------------------------------------------------
 // Syntax Tree Delegate
 //------------------------------------------------------------------------------
-
-
-function processComment(node) {
-    var lastChild,
-        trailingComments,
-        i;
-
-    if (node.type === astNodeTypes.Program) {
-        if (node.body.length > 0) {
-            return;
-        }
-    }
-
-    if (extra.trailingComments.length > 0) {
-
-        /*
-         * If the first comment in trailingComments comes after the
-         * current node, then we're good - all comments in the array will
-         * come after the node and so it's safe to add then as official
-         * trailingComments.
-         */
-        if (extra.trailingComments[0].range[0] >= node.range[1]) {
-            trailingComments = extra.trailingComments;
-            extra.trailingComments = [];
-        } else {
-
-            /*
-             * Otherwise, if the first comment doesn't come after the
-             * current node, that means we have a mix of leading and trailing
-             * comments in the array and that leadingComments contains the
-             * same items as trailingComments. Reset trailingComments to
-             * zero items and we'll handle this by evaluating leadingComments
-             * later.
-             */
-            extra.trailingComments.length = 0;
-        }
-    } else {
-        if (extra.bottomRightStack.length > 0 &&
-                extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments &&
-                extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments[0].range[0] >= node.range[1]) {
-            trailingComments = extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments;
-            delete extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments;
-        }
-    }
-
-    // Eating the stack.
-    while (extra.bottomRightStack.length > 0 && extra.bottomRightStack[extra.bottomRightStack.length - 1].range[0] >= node.range[0]) {
-        lastChild = extra.bottomRightStack.pop();
-    }
-
-    if (lastChild) {
-        if (lastChild.leadingComments && lastChild.leadingComments[lastChild.leadingComments.length - 1].range[1] <= node.range[0]) {
-            node.leadingComments = lastChild.leadingComments;
-            delete lastChild.leadingComments;
-        }
-    } else if (extra.leadingComments.length > 0) {
-
-        if (extra.leadingComments[extra.leadingComments.length - 1].range[1] <= node.range[0]) {
-            node.leadingComments = extra.leadingComments;
-            extra.leadingComments = [];
-        } else {
-
-            // https://github.com/eslint/espree/issues/2
-
-            /*
-             * In special cases, such as return (without a value) and
-             * debugger, all comments will end up as leadingComments and
-             * will otherwise be eliminated. This extra step runs when the
-             * bottomRightStack is empty and there are comments left
-             * in leadingComments.
-             *
-             * This loop figures out the stopping point between the actual
-             * leading and trailing comments by finding the location of the
-             * first comment that comes after the given node.
-             */
-            for (i = 0; i < extra.leadingComments.length; i++) {
-                if (extra.leadingComments[i].range[1] > node.range[0]) {
-                    break;
-                }
-            }
-
-            /*
-             * Split the array based on the location of the first comment
-             * that comes after the node. Keep in mind that this could
-             * result in an empty array, and if so, the array must be
-             * deleted.
-             */
-            node.leadingComments = extra.leadingComments.slice(0, i);
-            if (node.leadingComments.length === 0) {
-                delete node.leadingComments;
-            }
-
-            /*
-             * Similarly, trailing comments are attached later. The variable
-             * must be reset to null if there are no trailing comments.
-             */
-            trailingComments = extra.leadingComments.slice(i);
-            if (trailingComments.length === 0) {
-                trailingComments = null;
-            }
-        }
-    }
-
-    if (trailingComments) {
-        node.trailingComments = trailingComments;
-    }
-
-    extra.bottomRightStack.push(node);
-}
 
 // Return true if there is a line terminator before the next token.
 
@@ -4839,9 +4731,7 @@ function parse(code, options) {
         if (extra.attachComment) {
             extra.range = true;
             extra.comments = [];
-            extra.bottomRightStack = [];
-            extra.trailingComments = [];
-            extra.leadingComments = [];
+            commentAttachment.reset();
         }
     }
 
