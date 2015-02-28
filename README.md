@@ -110,8 +110,11 @@ var ast = espree.parse(code, {
         // enable parsing of generators/yield
         generators: true,
 
-        // support the spread operator
+        // enable parsing spread operator
         spread: true,
+
+        // enable parsing classes
+        classes: true,
 
         // enable React JSX parsing
         jsx: true,
