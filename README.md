@@ -75,7 +75,7 @@ var ast = espree.parse(code, {
         regexUFlag: true,
 
         // enable parsing of template strings
-        templateStrings: false,
+        templateStrings: true,
 
         // enable parsing of binary literals
         binaryLiterals: true,
@@ -87,7 +87,7 @@ var ast = espree.parse(code, {
         unicodeCodePointEscapes: true,
 
         // enable parsing of default parameters
-        defaultParams: false,
+        defaultParams: true,
 
         // enable parsing of rest parameters
         restParams: true,
