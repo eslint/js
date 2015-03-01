@@ -1,3 +1,9 @@
+v1.10.0 - March 1, 2015
+
+* 1.10.0 (Nicholas C. Zakas)
+* New: Support ES6 classes (refs #10) (Nicholas C. Zakas)
+* Docs: Update README.md (Jamund Ferguson)
+
 v1.9.1 - February 21, 2015
 
 * 1.9.1 (Nicholas C. Zakas)
