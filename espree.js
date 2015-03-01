@@ -2172,6 +2172,7 @@ function peekLineTerminator() {
 // Throw an exception
 
 function throwError(token, messageFormat) {
+
     var error,
         args = Array.prototype.slice.call(arguments, 2),
         msg = messageFormat.replace(
@@ -2370,14 +2371,13 @@ function parseArrayInitialiser() {
 
 // 11.1.5 Object Initialiser
 
-function parsePropertyFunction(options) {
+function parsePropertyFunction(paramInfo, options) {
     var previousStrict = strict,
         previousYieldAllowed = state.yieldAllowed,
-        params = options.params || [],
-        defaults = options.defaults || [],
+        generator = options ? options.generator : false,
         body;
 
-    state.yieldAllowed = options.generator;
+    state.yieldAllowed = generator;
 
     /*
      * Esprima uses parseConciseBody() here, which is incorrect. Object literal
@@ -2385,8 +2385,12 @@ function parsePropertyFunction(options) {
      */
     body = parseFunctionSourceElements();
 
-    if (options.name && strict && syntax.isRestrictedWord(params[0].name)) {
-        throwErrorTolerant(options.name, Messages.StrictParamName);
+    if (strict && paramInfo.firstRestricted) {
+        throwErrorTolerant(paramInfo.firstRestricted, Messages.StrictParamName);
+    }
+
+    if (strict && paramInfo.stricted) {
+        throwErrorTolerant(paramInfo.stricted, paramInfo.message);
     }
 
     strict = previousStrict;
@@ -2394,11 +2398,11 @@ function parsePropertyFunction(options) {
 
     return markerApply(options.marker, astNodeFactory.createFunctionExpression(
         null,
-        params,
-        defaults,
+        paramInfo.params,
+        paramInfo.defaults,
         body,
-        options.rest || null,
-        options.generator,
+        paramInfo.rest,
+        generator,
         body.type !== astNodeTypes.BlockStatement
     ));
 }
@@ -2406,21 +2410,18 @@ function parsePropertyFunction(options) {
 function parsePropertyMethodFunction(options) {
     var previousStrict = strict,
         marker = markerCreate(),
-        tmp,
+        params,
         method;
 
     strict = true;
 
-    tmp = parseParams();
+    params = parseParams();
 
-    if (tmp.stricted) {
-        throwErrorTolerant(tmp.stricted, tmp.message);
+    if (params.stricted) {
+        throwErrorTolerant(params.stricted, params.message);
     }
 
-    method = parsePropertyFunction({
-        params: tmp.params,
-        defaults: tmp.defaults,
-        rest: tmp.rest,
+    method = parsePropertyFunction(params, {
         generator: options ? options.generator : false,
         marker: marker
     });
@@ -2433,36 +2434,135 @@ function parsePropertyMethodFunction(options) {
 function parseObjectPropertyKey() {
     var marker = markerCreate(),
         token = lex(),
-        propertyKey,
+        allowObjectLiteralComputed = extra.ecmaFeatures.objectLiteralComputedProperties,
+        expr,
         result;
 
     // Note: This function is called only from parseObjectProperty(), where
     // EOF and Punctuator tokens are already filtered out.
 
-    if (token.type === Token.StringLiteral || token.type === Token.NumericLiteral) {
-        if (strict && token.octal) {
-            throwErrorTolerant(token, Messages.StrictOctalLiteral);
-        }
-        return markerApply(marker, astNodeFactory.createLiteralFromSource(token, source));
+    switch (token.type) {
+        case Token.StringLiteral:
+        case Token.NumericLiteral:
+            if (strict && token.octal) {
+                throwErrorTolerant(token, Messages.StrictOctalLiteral);
+            }
+            return markerApply(marker, astNodeFactory.createLiteralFromSource(token, source));
+
+        case Token.Identifier:
+        case Token.BooleanLiteral:
+        case Token.NullLiteral:
+        case Token.Keyword:
+            return markerApply(marker, astNodeFactory.createIdentifier(token.value));
+
+        case Token.Punctuator:
+            if ((!state.inObjectLiteral || allowObjectLiteralComputed) &&
+                    token.value === "[") {
+                // For computed properties we should skip the [ and ], and
+                // capture in marker only the assignment expression itself.
+                marker = markerCreate();
+                expr = parseAssignmentExpression();
+                result = markerApply(marker, expr);
+                expect("]");
+                return result;
+            }
+
+        // no default
     }
 
-    if (extra.ecmaFeatures.objectLiteralComputedProperties &&
-        token.type === Token.Punctuator && token.value === "["
-    ) {
-        // For computed properties we should skip the [ and ], and
-        // capture in marker only the assignment expression itself.
-        marker = markerCreate();
-        propertyKey = parseAssignmentExpression();
-        result = markerApply(marker, propertyKey);
-        expect("]");
-        return result;
-    }
-
-    return markerApply(marker, astNodeFactory.createIdentifier(token.value));
+    throwUnexpected(token);
 }
 
+function lookaheadPropertyName() {
+    switch (lookahead.type) {
+        case Token.Identifier:
+        case Token.StringLiteral:
+        case Token.BooleanLiteral:
+        case Token.NullLiteral:
+        case Token.NumericLiteral:
+        case Token.Keyword:
+            return true;
+        case Token.Punctuator:
+            return lookahead.value === "[";
+        // no default
+    }
+    return false;
+}
+
+// This function is to try to parse a MethodDefinition as defined in 14.3. But in the case of object literals,
+// it might be called at a position where there is in fact a short hand identifier pattern or a data property.
+// This can only be determined after we consumed up to the left parentheses.
+// In order to avoid back tracking, it returns `null` if the position is not a MethodDefinition and the caller
+// is responsible to visit other options.
+function tryParseMethodDefinition(token, key, computed, marker) {
+    var value, options, methodMarker;
+
+    if (token.type === Token.Identifier) {
+        // check for `get` and `set`;
+
+        if (token.value === "get" && lookaheadPropertyName()) {
+
+            computed = match("[");
+            key = parseObjectPropertyKey();
+            methodMarker = markerCreate();
+            expect("(");
+            expect(")");
+
+            value = parsePropertyFunction({
+                params: [],
+                defaults: [],
+                stricted: null,
+                firstRestricted: null,
+                message: null,
+                rest: null
+            }, {
+                marker: methodMarker
+            });
+
+            return markerApply(marker, astNodeFactory.createProperty("get", key, value, false, false, computed));
+
+        } else if (token.value === "set" && lookaheadPropertyName()) {
+            computed = match("[");
+            key = parseObjectPropertyKey();
+            methodMarker = markerCreate();
+            expect("(");
+
+            options = {
+                params: [],
+                defaultCount: 0,
+                defaults: [],
+                stricted: null,
+                firstRestricted: null,
+                paramSet: new StringMap(),
+                rest: null
+            };
+            if (match(")")) {
+                throwErrorTolerant(lookahead, Messages.UnexpectedToken);
+            } else {
+                parseParam(options);
+                if (options.defaultCount === 0) {
+                    options.defaults = [];
+                }
+            }
+            expect(")");
+
+            value = parsePropertyFunction(options, { marker: methodMarker });
+            return markerApply(marker, astNodeFactory.createProperty("set", key, value, false, false, computed));
+        }
+    }
+
+    if (match("(")) {
+        value = parsePropertyMethodFunction();
+        return markerApply(marker, astNodeFactory.createProperty("init", key, value, true, false, computed));
+    }
+
+    // Not a MethodDefinition.
+    return null;
+}
+
+// TODO(nzakas): Update to match Esprima
 function parseObjectProperty() {
-    var token, key, id, param, computed, methodMarker;
+    var token, key, id, computed, methodMarker, options;
     var allowComputed = extra.ecmaFeatures.objectLiteralComputedProperties,
         allowMethod = extra.ecmaFeatures.objectLiteralShorthandMethods,
         allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties,
@@ -2487,13 +2587,15 @@ function parseObjectProperty() {
             methodMarker = markerCreate();
             expect("(");
             expect(")");
+
             return markerApply(
                 marker,
                 astNodeFactory.createProperty(
                     "get",
                     key,
                     parsePropertyFunction({
-                        generator: false,
+                        generator: false
+                    }, {
                         marker: methodMarker
                     }),
                     false,
@@ -2508,18 +2610,34 @@ function parseObjectProperty() {
             key = parseObjectPropertyKey();
             methodMarker = markerCreate();
             expect("(");
-            token = lookahead;
-            param = [ parseVariableIdentifier() ];
+
+            options = {
+                params: [],
+                defaultCount: 0,
+                defaults: [],
+                stricted: null,
+                firstRestricted: null,
+                paramSet: new StringMap(),
+                rest: null
+            };
+
+            if (match(")")) {
+                throwErrorTolerant(lookahead, Messages.UnexpectedToken, lookahead.value);
+            } else {
+                parseParam(options);
+                if (options.defaultCount === 0) {
+                    options.defaults = [];
+                }
+            }
+
             expect(")");
+
             return markerApply(
                 marker,
                 astNodeFactory.createProperty(
                     "set",
                     key,
-                    parsePropertyFunction({
-                        params: param,
-                        generator: false,
-                        name: token,
+                    parsePropertyFunction(options, {
                         marker: methodMarker
                     }),
                     false,
@@ -2674,6 +2792,8 @@ function parseObjectInitialiser() {
         storedKind,
         kindMap = new StringMap();
 
+    state.inObjectLiteral = true;
+
     expect("{");
 
     while (!match("}")) {
@@ -2719,6 +2839,8 @@ function parseObjectInitialiser() {
     }
 
     expect("}");
+
+    state.inObjectLiteral = false;
 
     return markerApply(marker, astNodeFactory.createObjectExpression(properties));
 }
@@ -2784,7 +2906,8 @@ function parsePrimaryExpression() {
     var type, token, expr,
         marker,
         allowJSX = extra.ecmaFeatures.jsx,
-        allowSuper = extra.ecmaFeatures.superInFunctions;
+        allowSuper = extra.ecmaFeatures.superInFunctions,
+        allowClasses = extra.ecmaFeatures.classes;
 
     if (match("(")) {
         return parseGroupExpression();
@@ -2824,11 +2947,16 @@ function parsePrimaryExpression() {
         }
 
         if (matchKeyword("this")) {
+            marker = markerCreate();
             lex();
-            expr = astNodeFactory.createThisExpression();
-        } else {
-            throwUnexpected(lex());
+            return markerApply(marker, astNodeFactory.createThisExpression());
         }
+
+        if (allowClasses && matchKeyword("class")) {
+            return parseClassExpression();
+        }
+
+        throwUnexpected(lex());
     } else if (type === Token.BooleanLiteral) {
         token = lex();
         token.value = (token.value === "true");
@@ -4245,6 +4373,7 @@ function parseFunctionSourceElements() {
         directive = source.slice(token.range[0] + 1, token.range[1] - 1);
         if (directive === "use strict") {
             strict = true;
+
             if (firstRestricted) {
                 throwErrorTolerant(firstRestricted, Messages.StrictOctalLiteral);
             }
@@ -4293,11 +4422,13 @@ function parseFunctionSourceElements() {
 }
 
 function validateParam(options, param, name) {
+
     if (strict) {
         if (syntax.isRestrictedWord(name)) {
             options.stricted = param;
             options.message = Messages.StrictParamName;
         }
+
         if (options.paramSet.has(name)) {
             options.stricted = param;
             options.message = Messages.StrictParamDupe;
@@ -4322,6 +4453,7 @@ function parseParam(options) {
         allowRestParams = extra.ecmaFeatures.restParams,
         allowDestructuring = extra.ecmaFeatures.destructuring,
         allowDefaultParams = extra.ecmaFeatures.defaultParams;
+
 
     token = lookahead;
     if (token.value === "...") {
@@ -4380,7 +4512,7 @@ function parseParam(options) {
 
 
 function parseParams(firstRestricted) {
-    var options, marker = markerCreate();
+    var options;
 
     options = {
         params: [],
@@ -4408,7 +4540,14 @@ function parseParams(firstRestricted) {
         options.defaults = [];
     }
 
-    return markerApply(marker, options);
+    return {
+        params: options.params,
+        defaults: options.defaults,
+        rest: options.rest,
+        stricted: options.stricted,
+        firstRestricted: options.firstRestricted,
+        message: options.message
+    };
 }
 
 function parseFunctionDeclaration() {
@@ -4565,14 +4704,148 @@ function parseYieldExpression() {
     return markerApply(marker, astNodeFactory.createYieldExpression(expr, delegateFlag));
 }
 
+// 14 Functions and classes
 
-// 14 Program
+// 14.1 Functions is defined above (13 in ES5)
+// 14.2 Arrow Functions Definitions is defined in (7.3 assignments)
+
+// 14.3 Method Definitions
+// 14.3.7
+
+// 14.5 Class Definitions
+
+function parseClassBody() {
+    var token, isStatic, hasConstructor = false, body = [], method, computed, key;
+
+    var existingProps = {},
+        topMarker = markerCreate(),
+        marker;
+
+    existingProps.static = new StringMap();
+    existingProps.prototype = new StringMap();
+
+    expect("{");
+
+    while (!match("}")) {
+
+        // extra semicolons are fine
+        if (match(";")) {
+            lex();
+            continue;
+        }
+
+        token = lookahead;
+        isStatic = false;
+        computed = match("[");
+        marker = markerCreate();
+        key = parseObjectPropertyKey();
+
+        if (key.name === "static" && lookaheadPropertyName()) {
+            token = lookahead;
+            isStatic = true;
+            computed = match("[");
+            key = parseObjectPropertyKey();
+        }
+
+        method = tryParseMethodDefinition(token, key, computed, marker);
+
+        if (method) {
+            method.static = isStatic;
+            if (method.kind === "init") {
+                method.kind = "method";
+            }
+
+            if (!isStatic) {
+                if (!method.computed && (method.key.name || method.key.value.toString()) === "constructor") {
+                    if (method.kind !== "method" || !method.method || method.value.generator) {
+                        throwUnexpected(token, Messages.ConstructorSpecialMethod);
+                    }
+                    if (hasConstructor) {
+                        throwUnexpected(token, Messages.DuplicateConstructor);
+                    } else {
+                        hasConstructor = true;
+                    }
+                    method.kind = "constructor";
+                }
+            } else {
+                if (!method.computed && (method.key.name || method.key.value.toString()) === "prototype") {
+                    throwUnexpected(token, Messages.StaticPrototype);
+                }
+            }
+            method.type = astNodeTypes.MethodDefinition;
+            delete method.method;
+            delete method.shorthand;
+            body.push(method);
+        } else {
+            throwUnexpected(lookahead);
+        }
+    }
+
+    lex();
+    return markerApply(topMarker, astNodeFactory.createClassBody(body));
+}
+
+function parseClassExpression() {
+    var id = null, superClass = null, marker = markerCreate(),
+        previousStrict = strict, classBody;
+
+    // classes run in strict mode
+    strict = true;
+
+    expectKeyword("class");
+
+    if (lookahead.type === Token.Identifier) {
+        id = parseVariableIdentifier();
+    }
+
+    if (matchKeyword("extends")) {
+        lex();
+        superClass = parseLeftHandSideExpressionAllowCall();
+    }
+
+    classBody = parseClassBody();
+    strict = previousStrict;
+
+    return markerApply(marker, astNodeFactory.createClassExpression(id, superClass, classBody));
+}
+
+function parseClassDeclaration() {
+    var id, superClass = null, marker = markerCreate(),
+        previousStrict = strict, classBody;
+
+    // classes run in strict mode
+    strict = true;
+
+    expectKeyword("class");
+
+    id = parseVariableIdentifier();
+
+    if (matchKeyword("extends")) {
+        lex();
+        superClass = parseLeftHandSideExpressionAllowCall();
+    }
+
+    classBody = parseClassBody();
+    strict = previousStrict;
+
+    return markerApply(marker, astNodeFactory.createClassDeclaration(id, superClass, classBody));
+}
+
+// 15 Program
 
 function parseSourceElement() {
+
+    var allowClasses = extra.ecmaFeatures.classes;
+
     if (lookahead.type === Token.Keyword) {
         switch (lookahead.value) {
             case "function":
                 return parseFunctionDeclaration();
+            case "class":
+                if (allowClasses) {
+                    return parseClassDeclaration();
+                }
+                break;
             case "const":
             case "let":
                 if (extra.ecmaFeatures.blockBindings) {

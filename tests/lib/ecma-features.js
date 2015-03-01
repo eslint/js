@@ -84,14 +84,18 @@ describe("ecmaFeatures", function() {
 
                 // if the result is an error, create an error object so deepEqual works
                 if (expected.message || expected.description) {
+
                     var expectedError = new Error(expected.message || expected.description);
                     Object.keys(expected).forEach(function(key) {
                         expectedError[key] = expected[key];
                     });
                     expected = expectedError;
+                } else {
+                    throw ex;
                 }
 
                 result = ex;    // if an error is thrown, match the error
+
             }
             assert.deepEqual(result, expected);
         });
