@@ -4220,14 +4220,14 @@ function parseCatchClause() {
 }
 
 function parseTryStatement() {
-    var block, handlers = [], finalizer = null;
+    var block, handler = null, finalizer = null;
 
     expectKeyword("try");
 
     block = parseBlock();
 
     if (matchKeyword("catch")) {
-        handlers.push(parseCatchClause());
+        handler = parseCatchClause();
     }
 
     if (matchKeyword("finally")) {
@@ -4235,11 +4235,11 @@ function parseTryStatement() {
         finalizer = parseBlock();
     }
 
-    if (handlers.length === 0 && !finalizer) {
+    if (!handler && !finalizer) {
         throwError({}, Messages.NoCatchOrFinally);
     }
 
-    return astNodeFactory.createTryStatement(block, [], handlers, finalizer);
+    return astNodeFactory.createTryStatement(block, handler, finalizer);
 }
 
 // 12.15 The debugger statement
