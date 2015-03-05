@@ -59,8 +59,14 @@ var ast = espree.parse(code, {
     // specify parsing features (default only has blockBindings: true)
     ecmaFeatures: {
 
+        // enable parsing of arrow functions
+        arrowFunctions: true,
+
         // enable parsing of let/const
         blockBindings: true,
+
+        // enable parsing of destructured arrays and objects
+        destructuring: true,
 
         // enable parsing of regular expression y flag
         regexYFlag: true,
@@ -69,7 +75,7 @@ var ast = espree.parse(code, {
         regexUFlag: true,
 
         // enable parsing of template strings
-        templateStrings: false,
+        templateStrings: true,
 
         // enable parsing of binary literals
         binaryLiterals: true,
@@ -81,7 +87,10 @@ var ast = espree.parse(code, {
         unicodeCodePointEscapes: true,
 
         // enable parsing of default parameters
-        defaultParams: false,
+        defaultParams: true,
+
+        // enable parsing of rest parameters
+        restParams: true,
 
         // enable parsing of for-of statement
         forOf: true,
@@ -101,8 +110,17 @@ var ast = espree.parse(code, {
         // enable parsing of generators/yield
         generators: true,
 
-        // React JSX parsing
-        jsx: true
+        // enable parsing spread operator
+        spread: true,
+
+        // enable parsing classes
+        classes: true,
+
+        // enable React JSX parsing
+        jsx: true,
+
+        // enable return in global scope
+        globalReturn: true
     }
 });
 ```
@@ -154,6 +172,7 @@ In an effort to help those wanting to transition from other parsers to Espree, t
 ### Esprima/Harmony Branch
 
 * Esprima/Harmony uses a different comment attachment algorithm that results in some comments being added in different places than Espree. The algorithm Espree uses is the same one used in Esprima 1.2.2.
+* Template tokens have a `head` property in addition to `tail`. Esprima has only `tail`.
 
 ### Esprima-FB
 

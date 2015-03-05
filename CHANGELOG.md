@@ -1,3 +1,38 @@
+v1.10.0 - March 1, 2015
+
+* 1.10.0 (Nicholas C. Zakas)
+* New: Support ES6 classes (refs #10) (Nicholas C. Zakas)
+* Docs: Update README.md (Jamund Ferguson)
+
+v1.9.1 - February 21, 2015
+
+* 1.9.1 (Nicholas C. Zakas)
+* Fix: Allow let/const in switchcase (fixes #54) (Nicholas C. Zakas)
+
+v1.9.0 - February 21, 2015
+
+* 1.9.0 (Nicholas C. Zakas)
+* Fix: Extend property method range and loc to include params (fixes #36) (Brandon Mills)
+* New: spread operator (refs #10) (Jamund Ferguson)
+* Fix: incorrectly parsed arrow fragment (refs #58) (Jamund Ferguson)
+* New: Rest Parameter (refs: #10) (Jamund Ferguson)
+* New: Destructuring (refs #10) (Jamund Ferguson)
+
+v1.8.1 - February 7, 2015
+
+* 1.8.1 (Nicholas C. Zakas)
+* Build: Add Node.js 0.12 testing (Nicholas C. Zakas)
+* Fix: Actuall fix tokenization issue with templates (fixes #44) (Nicholas C. Zakas)
+
+v1.8.0 - February 6, 2015
+
+* 1.8.0 (Nicholas C. Zakas)
+* New: Support for Arrow Functions (refs #10) (Jamund Ferguson)
+* New: Allow super references in functions (refs #10) (Nicholas C. Zakas)
+* Update create-test.js (Jamund Ferguson)
+* Fix: Tokenization for template strings (fixes #44) (Nicholas C. Zakas)
+* New: Allow return in global scope (fixes #46) (Nicholas C. Zakas)
+
 v1.7.1 - January 23, 2015
 
 * 1.7.1 (Nicholas C. Zakas)

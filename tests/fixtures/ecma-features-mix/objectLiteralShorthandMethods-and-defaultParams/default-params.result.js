@@ -149,13 +149,13 @@ module.exports = {
                                     "generator": false,
                                     "expression": false,
                                     "range": [
-                                        38,
+                                        29,
                                         40
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 4,
-                                            "column": 13
+                                            "column": 4
                                         },
                                         "end": {
                                             "line": 4,
@@ -287,13 +287,13 @@ module.exports = {
                                     "generator": false,
                                     "expression": false,
                                     "range": [
-                                        58,
+                                        46,
                                         60
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 5,
-                                            "column": 16
+                                            "column": 4
                                         },
                                         "end": {
                                             "line": 5,
@@ -444,13 +444,13 @@ module.exports = {
                                     "generator": false,
                                     "expression": false,
                                     "range": [
-                                        83,
+                                        68,
                                         85
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 6,
-                                            "column": 21
+                                            "column": 6
                                         },
                                         "end": {
                                             "line": 6,

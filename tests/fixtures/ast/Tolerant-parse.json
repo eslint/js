@@ -644,6 +644,59 @@
                         }
                     }
                 ],
+                "handler": {
+                    "type": "CatchClause",
+                    "param": {
+                        "type": "Identifier",
+                        "name": "eval",
+                        "range": [
+                            28,
+                            32
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 28
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 32
+                            }
+                        }
+                    },
+                    "body": {
+                        "type": "BlockStatement",
+                        "body": [],
+                        "range": [
+                            34,
+                            36
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 34
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 36
+                            }
+                        }
+                    },
+                    "range": [
+                        21,
+                        36
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 21
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 36
+                        }
+                    }
+                },
                 "finalizer": null,
                 "range": [
                     14,
@@ -799,6 +852,59 @@
                         }
                     }
                 ],
+                "handler": {
+                    "type": "CatchClause",
+                    "param": {
+                        "type": "Identifier",
+                        "name": "arguments",
+                        "range": [
+                            28,
+                            37
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 28
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 37
+                            }
+                        }
+                    },
+                    "body": {
+                        "type": "BlockStatement",
+                        "body": [],
+                        "range": [
+                            39,
+                            41
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 39
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 41
+                            }
+                        }
+                    },
+                    "range": [
+                        21,
+                        41
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 21
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 41
+                        }
+                    }
+                },
                 "finalizer": null,
                 "range": [
                     14,
@@ -4003,13 +4109,13 @@
                                     "generator": false,
                                     "expression": false,
                                     "range": [
-                                        32,
+                                        25,
                                         34
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 1,
-                                            "column": 32
+                                            "column": 25
                                         },
                                         "end": {
                                             "line": 1,
@@ -4671,13 +4777,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            32,
+                                            29,
                                             34
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 32
+                                                "column": 29
                                             },
                                             "end": {
                                                 "line": 1,
@@ -4751,13 +4857,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            44,
+                                            41,
                                             46
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 44
+                                                "column": 41
                                             },
                                             "end": {
                                                 "line": 1,
@@ -5026,13 +5132,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            39,
+                                            36,
                                             41
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 39
+                                                "column": 36
                                             },
                                             "end": {
                                                 "line": 1,
@@ -5262,13 +5368,13 @@
                                         "generator": false,
                                         "expression": false,
                                         "range": [
-                                            33,
+                                            29,
                                             35
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 33
+                                                "column": 29
                                             },
                                             "end": {
                                                 "line": 1,
