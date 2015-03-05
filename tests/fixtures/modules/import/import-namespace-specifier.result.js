@@ -1,0 +1,92 @@
+module.exports = {
+    "type": "Program",
+    "body": [
+        {
+            "type": "ImportDeclaration",
+            "specifiers": [
+                {
+                    "type": "ImportNamespaceSpecifier",
+                    "local": {
+                        "type": "Identifier",
+                        "name": "foo",
+                        "range": [
+                            12,
+                            15
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 12
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 15
+                            }
+                        }
+                    },
+                    "range": [
+                        7,
+                        15
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 7
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 15
+                        }
+                    }
+                }
+            ],
+            "source": {
+                "type": "Literal",
+                "value": "foo",
+                "raw": "\"foo\"",
+                "range": [
+                    21,
+                    26
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 21
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 26
+                    }
+                }
+            },
+            "range": [
+                0,
+                27
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 27
+                }
+            }
+        }
+    ],
+    "range": [
+        0,
+        27
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 27
+        }
+    }
+};
