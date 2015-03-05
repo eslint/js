@@ -4842,8 +4842,7 @@ function parseExportDefaultDeclaration() {
           declaration = parseFunctionExpression();
           return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         } else if (lookahead.value === "class") {
-            // TODO: change this to declaration once we get ClassDeclaration with nullable name
-            parseClassExpression();
+            declaration = parseClassDeclaration();
             return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         }
     }
@@ -5106,7 +5105,7 @@ function parseClassExpression() {
 }
 
 function parseClassDeclaration() {
-    var id, superClass = null, marker = markerCreate(),
+    var id = null, superClass = null, marker = markerCreate(),
         previousStrict = strict, classBody;
 
     // classes run in strict mode
@@ -5114,7 +5113,9 @@ function parseClassDeclaration() {
 
     expectKeyword("class");
 
-    id = parseVariableIdentifier();
+    if (lookahead.type === Token.Identifier) {
+        id = parseVariableIdentifier();
+    }
 
     if (matchKeyword("extends")) {
         lex();
