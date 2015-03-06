@@ -4888,6 +4888,9 @@ function parseExportAllDeclaration() {
 }
 
 function parseExportDeclaration() {
+    if (state.inFunctionBody) {
+        throwError({}, Messages.IllegalExportDeclaration);
+    }
     var declarationType = lookahead2().value;
     if (declarationType === "default") {
         return parseExportDefaultDeclaration();
@@ -4949,6 +4952,10 @@ function parseImportNamespaceSpecifier() {
 
 function parseImportDeclaration() {
     var specifiers, src, marker = markerCreate();
+
+    if (state.inFunctionBody) {
+        throwError({}, Messages.IllegalImportDeclaration);
+    }
 
     expectKeyword("import");
     specifiers = [];
