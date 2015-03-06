@@ -141,4 +141,4 @@ module.exports = {
             "column": 14
         }
     }
-}
+};

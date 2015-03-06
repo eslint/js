@@ -69,15 +69,11 @@ function outputResult(result, testResultFilename) {
 // Setup
 //------------------------------------------------------------------------------
 
-var MODULES_IMPORT_DIR = "./tests/fixtures/modules/import",
-    MODULES_EXPORT_DIR = "./tests/fixtures/modules/export",
-    FIXTURES_DIR = "./tests/fixtures/ecma-features",
+var FIXTURES_DIR = "./tests/fixtures/ecma-features",
     FIXTURES_MIX_DIR = "./tests/fixtures/ecma-features-mix",
     COMMENTS_DIR = "./tests/fixtures/attach-comments";
 
-var moduleImportFiles = getTestFilenames(MODULES_IMPORT_DIR),
-    moduleExportFiles = getTestFilenames(MODULES_EXPORT_DIR),
-    testFiles = getTestFilenames(FIXTURES_DIR),
+var testFiles = getTestFilenames(FIXTURES_DIR),
     mixFiles = getTestFilenames(FIXTURES_MIX_DIR),
     commentFiles = getTestFilenames(COMMENTS_DIR);
 
@@ -90,40 +86,6 @@ commentFiles.forEach(function(filename) {
             range: true,
             attachComment: true
         });
-
-    outputResult(result, testResultFilename);
-});
-
-// update all tests in modules/import
-moduleImportFiles.forEach(function(filename) {
-
-    var code = shelljs.cat(path.resolve(MODULES_IMPORT_DIR, filename) + ".src.js"),
-        config = {
-            loc: true,
-            range: true,
-            ecmaFeatures: {},
-            sourceType: "module"
-        };
-
-    var testResultFilename = path.resolve(__dirname, "..", MODULES_IMPORT_DIR, filename) + ".result.js";
-    var result = getExpectedResult(code, config);
-
-    outputResult(result, testResultFilename);
-});
-
-// update all tests in modules/export
-moduleExportFiles.forEach(function(filename) {
-
-    var code = shelljs.cat(path.resolve(MODULES_EXPORT_DIR, filename) + ".src.js"),
-        config = {
-            loc: true,
-            range: true,
-            ecmaFeatures: {},
-            sourceType: "module"
-        };
-
-    var testResultFilename = path.resolve(__dirname, "..", MODULES_EXPORT_DIR, filename) + ".result.js";
-    var result = getExpectedResult(code, config);
 
     outputResult(result, testResultFilename);
 });

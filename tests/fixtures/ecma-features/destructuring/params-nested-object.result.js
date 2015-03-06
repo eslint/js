@@ -283,4 +283,4 @@ module.exports = {
             "column": 36
         }
     }
-}
+};

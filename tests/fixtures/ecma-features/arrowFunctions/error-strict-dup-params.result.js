@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 21,
     "description": "Strict mode function may not have duplicate parameter names"
-}
+};

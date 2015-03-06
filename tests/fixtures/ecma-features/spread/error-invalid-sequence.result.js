@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 9,
     "description": "Illegal spread element"
-}
+};

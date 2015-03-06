@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 27,
     "description": "Invalid left-hand side in formals list"
-}
+};

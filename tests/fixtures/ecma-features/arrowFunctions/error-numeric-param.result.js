@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 6,
     "description": "Unexpected token =>"
-}
+};

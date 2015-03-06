@@ -1,54 +1,15 @@
 module.exports = {
-    "range": [
-        0,
-        20
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 1,
-            "column": 20
-        }
-    },
     "type": "Program",
     "body": [
         {
-            "range": [
-                0,
-                20
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 20
-                }
-            },
             "type": "ExpressionStatement",
             "expression": {
-                "range": [
-                    1,
-                    18
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 1
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 18
-                    }
-                },
                 "type": "ClassExpression",
-                "name": null,
+                "id": null,
                 "superClass": {
+                    "type": "Literal",
+                    "value": 0,
+                    "raw": "0",
                     "range": [
                         15,
                         16
@@ -62,12 +23,11 @@ module.exports = {
                             "line": 1,
                             "column": 16
                         }
-                    },
-                    "type": "Literal",
-                    "value": 0,
-                    "raw": "0"
+                    }
                 },
                 "body": {
+                    "type": "ClassBody",
+                    "body": [],
                     "range": [
                         16,
                         18
@@ -81,11 +41,51 @@ module.exports = {
                             "line": 1,
                             "column": 18
                         }
+                    }
+                },
+                "range": [
+                    1,
+                    18
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 1
                     },
-                    "type": "ClassBody",
-                    "body": []
+                    "end": {
+                        "line": 1,
+                        "column": 18
+                    }
+                }
+            },
+            "range": [
+                0,
+                20
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 20
                 }
             }
         }
-    ]
-}
+    ],
+    "range": [
+        0,
+        20
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 20
+        }
+    }
+};

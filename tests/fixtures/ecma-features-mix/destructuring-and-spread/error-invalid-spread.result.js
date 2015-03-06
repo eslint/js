@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 11,
     "description": "Invalid spread argument"
-}
+};

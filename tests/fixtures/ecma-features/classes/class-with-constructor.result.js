@@ -1,37 +1,11 @@
 module.exports = {
-    "range": [
-        0,
-        26
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 1,
-            "column": 26
-        }
-    },
     "type": "Program",
     "body": [
         {
-            "range": [
-                0,
-                25
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 25
-                }
-            },
             "type": "ClassDeclaration",
-            "name": {
+            "id": {
+                "type": "Identifier",
+                "name": "A",
                 "range": [
                     6,
                     7
@@ -45,29 +19,75 @@ module.exports = {
                         "line": 1,
                         "column": 7
                     }
-                },
-                "type": "Identifier",
-                "name": "A"
+                }
             },
             "superClass": null,
             "body": {
-                "range": [
-                    8,
-                    25
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 8
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 25
-                    }
-                },
                 "type": "ClassBody",
                 "body": [
                     {
+                        "type": "MethodDefinition",
+                        "key": {
+                            "type": "Identifier",
+                            "name": "constructor",
+                            "range": [
+                                9,
+                                20
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 9
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 20
+                                }
+                            }
+                        },
+                        "value": {
+                            "type": "FunctionExpression",
+                            "id": null,
+                            "params": [],
+                            "defaults": [],
+                            "body": {
+                                "type": "BlockStatement",
+                                "body": [],
+                                "range": [
+                                    22,
+                                    24
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 22
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 24
+                                    }
+                                }
+                            },
+                            "rest": null,
+                            "generator": false,
+                            "expression": false,
+                            "range": [
+                                20,
+                                24
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 20
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 24
+                                }
+                            }
+                        },
+                        "kind": "constructor",
+                        "computed": false,
                         "range": [
                             9,
                             24
@@ -82,74 +102,41 @@ module.exports = {
                                 "column": 24
                             }
                         },
-                        "type": "MethodDefinition",
-                        "key": {
-                            "range": [
-                                9,
-                                20
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 9
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 20
-                                }
-                            },
-                            "type": "Identifier",
-                            "name": "constructor"
-                        },
-                        "computed": false,
-                        "value": {
-                            "range": [
-                                20,
-                                24
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 20
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 24
-                                }
-                            },
-                            "type": "FunctionExpression",
-                            "id": null,
-                            "params": [],
-                            "defaults": [],
-                            "body": {
-                                "range": [
-                                    22,
-                                    24
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 1,
-                                        "column": 22
-                                    },
-                                    "end": {
-                                        "line": 1,
-                                        "column": 24
-                                    }
-                                },
-                                "type": "BlockStatement",
-                                "body": []
-                            },
-                            "rest": null,
-                            "generator": false,
-                            "expression": false
-                        },
-                        "kind": "constructor",
                         "static": false
                     }
-                ]
+                ],
+                "range": [
+                    8,
+                    25
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 8
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 25
+                    }
+                }
+            },
+            "range": [
+                0,
+                25
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 25
+                }
             }
         },
         {
+            "type": "EmptyStatement",
             "range": [
                 25,
                 26
@@ -163,8 +150,21 @@ module.exports = {
                     "line": 1,
                     "column": 26
                 }
-            },
-            "type": "EmptyStatement"
+            }
         }
-    ]
-}
+    ],
+    "range": [
+        0,
+        26
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 26
+        }
+    }
+};

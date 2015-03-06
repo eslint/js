@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 15,
     "description": "Illegal export declaration"
-}
+};

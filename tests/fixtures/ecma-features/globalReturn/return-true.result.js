@@ -1,37 +1,12 @@
 module.exports = {
-    "range": [
-        0,
-        12
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 1,
-            "column": 12
-        }
-    },
     "type": "Program",
     "body": [
         {
-            "range": [
-                0,
-                12
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 12
-                }
-            },
             "type": "ReturnStatement",
             "argument": {
+                "type": "Literal",
+                "value": true,
+                "raw": "true",
                 "range": [
                     7,
                     11
@@ -45,11 +20,36 @@ module.exports = {
                         "line": 1,
                         "column": 11
                     }
+                }
+            },
+            "range": [
+                0,
+                12
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
                 },
-                "type": "Literal",
-                "value": true,
-                "raw": "true"
+                "end": {
+                    "line": 1,
+                    "column": 12
+                }
             }
         }
-    ]
+    ],
+    "range": [
+        0,
+        12
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 12
+        }
+    }
 };
