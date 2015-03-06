@@ -116,6 +116,9 @@ var ast = espree.parse(code, {
         // enable parsing classes
         classes: true,
 
+        // enable parsing of modules
+        modules: true,
+
         // enable React JSX parsing
         jsx: true,
 

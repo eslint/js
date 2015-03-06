@@ -4776,8 +4776,7 @@ function parseExportNamedDeclaration() {
             case "let":
             case "const":
             case "var":
-            // TODO: enable this case when Class gets implemented
-            // case "class":
+            case "class":
             case "function":
                 declaration = parseSourceElement();
                 return markerApply(marker, astNodeFactory.createExportNamedDeclaration(declaration, specifiers, null));
@@ -4825,8 +4824,8 @@ function parseExportDefaultDeclaration() {
     // export default ...
     expectKeyword("export");
     expectKeyword("default");
-    // TODO: or matchKeyword("class") after implementing classes
-    if (matchKeyword("function")) {
+
+    if (matchKeyword("function") || matchKeyword("class")) {
         possibleIdentifierToken = lookahead2();
         if (isIdentifierName(possibleIdentifierToken)) {
             // covers:
@@ -4842,13 +4841,11 @@ function parseExportDefaultDeclaration() {
           // TODO: change this to declaration once we get FunctionDeclaration with nullable name
           declaration = parseFunctionExpression();
           return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
+        } else if (lookahead.value === "class") {
+            // TODO: change this to declaration once we get ClassDeclaration with nullable name
+            parseClassExpression();
+            return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         }
-        // TODO: enable after implementing classes
-        // else if (lookahead.value === "class") {
-        //     // TODO: change this to declaration once we get ClassDeclaration with nullable name
-        //     parseClassExpression()
-        //     return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
-        // }
     }
 
     if (matchContextualKeyword("from")) {
@@ -5127,17 +5124,19 @@ function parseClassDeclaration() {
 
 function parseSourceElement() {
 
-    var allowClasses = extra.ecmaFeatures.classes;
+    var allowClasses = extra.ecmaFeatures.classes,
+        allowModules = extra.ecmaFeatures.modules,
+        allowBlockBindings = extra.ecmaFeatures.blockBindings;
 
     if (lookahead.type === Token.Keyword) {
         switch (lookahead.value) {
             case "export":
-                if (!extra.isModule) {
+                if (!allowModules) {
                     throwErrorTolerant({}, Messages.IllegalExportDeclaration);
                 }
                 return parseExportDeclaration();
             case "import":
-                if (!extra.isModule) {
+                if (!allowModules) {
                     throwErrorTolerant({}, Messages.IllegalImportDeclaration);
                 }
                 return parseImportDeclaration();
@@ -5150,7 +5149,7 @@ function parseSourceElement() {
                 break;
             case "const":
             case "let":
-                if (extra.ecmaFeatures.blockBindings) {
+                if (allowBlockBindings) {
                     return parseConstLetDeclaration(lookahead.value);
                 }
                 /* falls through */
@@ -5210,7 +5209,7 @@ function parseProgram() {
     skipComment();
     peek();
     marker = markerCreate();
-    strict = extra.isModule;
+    strict = extra.ecmaFeatures.modules;
 
     body = parseSourceElements();
     return markerApply(marker, astNodeFactory.createProgram(body));
@@ -5393,11 +5392,6 @@ function parse(code, options) {
         extra.loc = (typeof options.loc === "boolean") && options.loc;
         extra.attachComment = (typeof options.attachComment === "boolean") && options.attachComment;
 
-        // apply parsing flags
-        if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-            extra.ecmaFeatures = options.ecmaFeatures;
-        }
-
         if (extra.loc && options.source !== null && options.source !== undefined) {
             extra.source = toString(options.source);
         }
@@ -5418,8 +5412,8 @@ function parse(code, options) {
             extra.trailingComments = [];
             extra.leadingComments = [];
         }
+
         if (options.sourceType === "module") {
-            // TODO: enable all other ES6 features that are supported in modules
             extra.ecmaFeatures.blockBindings = true;
             extra.ecmaFeatures.regexUFlag = true;
             extra.ecmaFeatures.regexYFlag = true;
@@ -5434,9 +5428,16 @@ function parse(code, options) {
             extra.ecmaFeatures.objectLiteralShorthandProperties = true;
             extra.ecmaFeatures.objectLiteralDuplicateProperties = true;
             extra.ecmaFeatures.generators = true;
-            extra.isModule = true;
-            // TODO: enable classes when it becomes available
+            extra.ecmaFeatures.destructuring = true;
+            extra.ecmaFeatures.classes = true;
+            extra.ecmaFeatures.modules = true;
         }
+
+        // apply parsing flags after sourceType to allow overriding
+        if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
+            extra.ecmaFeatures = options.ecmaFeatures;
+        }
+
     }
 
     try {
