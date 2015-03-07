@@ -1,3 +1,21 @@
+v1.11.0 - March 7, 2015
+
+* 1.11.0 (Nicholas C. Zakas)
+* Fix: Don't allow default export class by mistake (fixes #82) (Nicholas C. Zakas)
+* Fix: Export default function should be FunctionDeclaration (fixes #81) (Nicholas C. Zakas)
+* Fix: Ensure class declarations must have IDs outside of exports (refs #72) (Nicholas C. Zakas)
+* Fix: export class expression support (refs #72) (Jamund Ferguson)
+* Update: Add tests for sourceType=module (refs #72) (Nicholas C. Zakas)
+* Fix: Class name should be id (fixes #78) (Nicholas C. Zakas)
+* Fix: disallow import/export in functions (refs #72) (Jamund Ferguson)
+* Test: strict mode enforced in modules (refs #72) (Jamund Ferguson)
+* New: Add modules feature flag (refs #72) (Nicholas C. Zakas)
+* merging upstream and solving conflicts for PR #43 (Caridy Patino)
+* New: Add ES6 module support (fixes #35) (Caridy Patino)
+* Update: Add TryStatement.handler (fixes #69) (Brandon Mills)
+* Fix: Destructured Defaults (fixes #56) (Jamund Ferguson)
+* Update: Refactor out comment attachment logic (Nicholas C. Zakas)
+
 v1.10.0 - March 1, 2015
 
 * 1.10.0 (Nicholas C. Zakas)
