@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 20,
     "description": "Rest parameter can not have a default value"
-}
+};

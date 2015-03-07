@@ -1,37 +1,11 @@
 module.exports = {
-    "range": [
-        0,
-        11
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 1,
-            "column": 11
-        }
-    },
     "type": "Program",
     "body": [
         {
-            "range": [
-                0,
-                10
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 10
-                }
-            },
             "type": "ClassDeclaration",
-            "name": {
+            "id": {
+                "type": "Identifier",
+                "name": "A",
                 "range": [
                     6,
                     7
@@ -45,12 +19,12 @@ module.exports = {
                         "line": 1,
                         "column": 7
                     }
-                },
-                "type": "Identifier",
-                "name": "A"
+                }
             },
             "superClass": null,
             "body": {
+                "type": "ClassBody",
+                "body": [],
                 "range": [
                     8,
                     10
@@ -64,12 +38,25 @@ module.exports = {
                         "line": 1,
                         "column": 10
                     }
+                }
+            },
+            "range": [
+                0,
+                10
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
                 },
-                "type": "ClassBody",
-                "body": []
+                "end": {
+                    "line": 1,
+                    "column": 10
+                }
             }
         },
         {
+            "type": "EmptyStatement",
             "range": [
                 10,
                 11
@@ -83,8 +70,21 @@ module.exports = {
                     "line": 1,
                     "column": 11
                 }
-            },
-            "type": "EmptyStatement"
+            }
         }
-    ]
-}
+    ],
+    "range": [
+        0,
+        11
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 11
+        }
+    }
+};

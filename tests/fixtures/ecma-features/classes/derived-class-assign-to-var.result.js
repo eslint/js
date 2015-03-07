@@ -1,54 +1,14 @@
 module.exports = {
-    "range": [
-        0,
-        28
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 1,
-            "column": 28
-        }
-    },
     "type": "Program",
     "body": [
         {
-            "range": [
-                0,
-                28
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 28
-                }
-            },
             "type": "VariableDeclaration",
             "declarations": [
                 {
-                    "range": [
-                        4,
-                        27
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 4
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 27
-                        }
-                    },
                     "type": "VariableDeclarator",
                     "id": {
+                        "type": "Identifier",
+                        "name": "x",
                         "range": [
                             4,
                             5
@@ -62,27 +22,13 @@ module.exports = {
                                 "line": 1,
                                 "column": 5
                             }
-                        },
-                        "type": "Identifier",
-                        "name": "x"
+                        }
                     },
                     "init": {
-                        "range": [
-                            8,
-                            27
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 8
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 27
-                            }
-                        },
                         "type": "ClassExpression",
-                        "name": {
+                        "id": {
+                            "type": "Identifier",
+                            "name": "A",
                             "range": [
                                 14,
                                 15
@@ -96,11 +42,12 @@ module.exports = {
                                     "line": 1,
                                     "column": 15
                                 }
-                            },
-                            "type": "Identifier",
-                            "name": "A"
+                            }
                         },
                         "superClass": {
+                            "type": "Literal",
+                            "value": 0,
+                            "raw": "0",
                             "range": [
                                 24,
                                 25
@@ -114,12 +61,11 @@ module.exports = {
                                     "line": 1,
                                     "column": 25
                                 }
-                            },
-                            "type": "Literal",
-                            "value": 0,
-                            "raw": "0"
+                            }
                         },
                         "body": {
+                            "type": "ClassBody",
+                            "body": [],
                             "range": [
                                 25,
                                 27
@@ -133,14 +79,68 @@ module.exports = {
                                     "line": 1,
                                     "column": 27
                                 }
+                            }
+                        },
+                        "range": [
+                            8,
+                            27
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 8
                             },
-                            "type": "ClassBody",
-                            "body": []
+                            "end": {
+                                "line": 1,
+                                "column": 27
+                            }
+                        }
+                    },
+                    "range": [
+                        4,
+                        27
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 4
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 27
                         }
                     }
                 }
             ],
-            "kind": "var"
+            "kind": "var",
+            "range": [
+                0,
+                28
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 28
+                }
+            }
         }
-    ]
-}
+    ],
+    "range": [
+        0,
+        28
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 28
+        }
+    }
+};
