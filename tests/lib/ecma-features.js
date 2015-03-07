@@ -50,11 +50,18 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
 });
 
+var moduleTestFiles = testFiles.filter(function(filename) {
+    return !/jsx|globalReturn|invalid|not\-strict/.test(filename);
+});
+
 var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
 }).map(function(filename) {
     return filename.substring(FIXTURES_MIX_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
 });
+
+// console.dir(moduleTestFiles);
+// return;
 
 //------------------------------------------------------------------------------
 // Tests
@@ -62,16 +69,21 @@ var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
 
 describe("ecmaFeatures", function() {
 
-    leche.withData(testFiles, function(filename) {
-        // Uncomment and fill in filename to focus on a single file
-        // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
-        var feature = path.dirname(filename),
-            code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js"),
-            config = {
+    var config;
+
+    beforeEach(function() {
+        config = {
                 loc: true,
                 range: true,
                 ecmaFeatures: {}
             };
+    });
+
+    leche.withData(testFiles, function(filename) {
+        // Uncomment and fill in filename to focus on a single file
+        // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
+        var feature = path.dirname(filename),
+            code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
         it("should parse correctly when " + feature + " is true", function() {
             config.ecmaFeatures[feature] = true;
@@ -110,15 +122,45 @@ describe("ecmaFeatures", function() {
         });
     });
 
+    leche.withData(moduleTestFiles, function(filename) {
+
+        var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+
+        it("should parse correctly when sourceType is module", function() {
+            var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+            var result;
+
+            config.sourceType = "module";
+
+            try {
+                result = espree.parse(code, config);
+            } catch (ex) {
+
+                // if the result is an error, create an error object so deepEqual works
+                if (expected.message || expected.description) {
+
+                    var expectedError = new Error(expected.message || expected.description);
+                    Object.keys(expected).forEach(function(key) {
+                        expectedError[key] = expected[key];
+                    });
+                    expected = expectedError;
+                } else {
+                    throw ex;
+                }
+
+                result = ex;    // if an error is thrown, match the error
+
+            }
+            assert.deepEqual(result, expected);
+        });
+
+    });
+
+
     leche.withData(mixFiles, function(filename) {
 
         var features = path.dirname(filename),
-            code = shelljs.cat(path.resolve(FIXTURES_MIX_DIR, filename) + ".src.js"),
-            config = {
-                loc: true,
-                range: true,
-                ecmaFeatures: {}
-            };
+            code = shelljs.cat(path.resolve(FIXTURES_MIX_DIR, filename) + ".src.js");
 
         it("should parse correctly when " + features + " are true", function() {
             config.ecmaFeatures = require(path.resolve(__dirname, "../../", FIXTURES_MIX_DIR, filename) + ".config.js");

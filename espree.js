@@ -695,7 +695,6 @@ function scanOctalLiteral(prefix, start) {
         number = "";
     }
 
-
     while (index < length) {
         if (!syntax.isOctalDigit(source[index])) {
             break;
@@ -715,7 +714,7 @@ function scanOctalLiteral(prefix, start) {
     return {
         type: Token.NumericLiteral,
         value: parseInt(number, 8),
-        octal: true,
+        octal: octal,
         lineNumber: lineNumber,
         lineStart: lineStart,
         range: [start, index]
@@ -5422,28 +5421,41 @@ function parse(code, options) {
         }
 
         if (options.sourceType === "module") {
-            extra.ecmaFeatures.blockBindings = true;
-            extra.ecmaFeatures.regexUFlag = true;
-            extra.ecmaFeatures.regexYFlag = true;
-            extra.ecmaFeatures.templateStrings = true;
-            extra.ecmaFeatures.binaryLiterals = true;
-            extra.ecmaFeatures.octalLiterals = true;
-            extra.ecmaFeatures.unicodeCodePointEscapes = true;
-            extra.ecmaFeatures.defaultParams = true;
-            extra.ecmaFeatures.forOf = true;
-            extra.ecmaFeatures.objectLiteralComputedProperties = true;
-            extra.ecmaFeatures.objectLiteralShorthandMethods = true;
-            extra.ecmaFeatures.objectLiteralShorthandProperties = true;
-            extra.ecmaFeatures.objectLiteralDuplicateProperties = true;
-            extra.ecmaFeatures.generators = true;
-            extra.ecmaFeatures.destructuring = true;
-            extra.ecmaFeatures.classes = true;
-            extra.ecmaFeatures.modules = true;
+            extra.ecmaFeatures = {
+                arrowFunctions: true,
+                blockBindings: true,
+                regexUFlag: true,
+                regexYFlag: true,
+                templateStrings: true,
+                binaryLiterals: true,
+                octalLiterals: true,
+                unicodeCodePointEscapes: true,
+                superInFunctions: true,
+                defaultParams: true,
+                restParams: true,
+                forOf: true,
+                objectLiteralComputedProperties: true,
+                objectLiteralShorthandMethods: true,
+                objectLiteralShorthandProperties: true,
+                objectLiteralDuplicateProperties: true,
+                generators: true,
+                destructuring: true,
+                classes: true,
+                modules: true
+            };
         }
 
         // apply parsing flags after sourceType to allow overriding
         if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-            extra.ecmaFeatures = options.ecmaFeatures;
+
+            // if it's a module, augment the ecmaFeatures
+            if (options.sourceType === "module") {
+                Object.keys(options.ecmaFeatures).forEach(function(key) {
+                    extra.ecmaFeatures[key] = options.ecmaFeatures[key];
+                });
+            } else {
+                extra.ecmaFeatures = options.ecmaFeatures;
+            }
         }
 
     }
