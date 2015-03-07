@@ -1,1 +1,1 @@
-function x(a, { a }){};
+function x(a, { b }){};

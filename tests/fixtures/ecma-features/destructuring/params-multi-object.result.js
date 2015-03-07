@@ -47,7 +47,7 @@ module.exports = {
                             "type": "Property",
                             "key": {
                                 "type": "Identifier",
-                                "name": "a",
+                                "name": "b",
                                 "range": [
                                     16,
                                     17
@@ -65,7 +65,7 @@ module.exports = {
                             },
                             "value": {
                                 "type": "Identifier",
-                                "name": "a",
+                                "name": "b",
                                 "range": [
                                     16,
                                     17
