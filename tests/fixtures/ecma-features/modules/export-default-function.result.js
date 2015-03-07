@@ -4,7 +4,7 @@ module.exports = {
         {
             "type": "ExportDefaultDeclaration",
             "declaration": {
-                "type": "FunctionExpression",
+                "type": "FunctionDeclaration",
                 "id": null,
                 "params": [],
                 "defaults": [],

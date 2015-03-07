@@ -4471,8 +4471,8 @@ function parseParams(firstRestricted) {
     };
 }
 
-function parseFunctionDeclaration() {
-        var id, body, token, tmp, firstRestricted, message, previousStrict, previousYieldAllowed, generator,
+function parseFunctionDeclaration(identifierIsOptional) {
+        var id = null, body, token, tmp, firstRestricted, message, previousStrict, previousYieldAllowed, generator,
             marker = markerCreate(),
             allowGenerators = extra.ecmaFeatures.generators;
 
@@ -4484,21 +4484,24 @@ function parseFunctionDeclaration() {
             generator = true;
         }
 
-        token = lookahead;
+        if (!identifierIsOptional || !match("(")) {
 
-        id = parseVariableIdentifier();
+            token = lookahead;
 
-        if (strict) {
-            if (syntax.isRestrictedWord(token.value)) {
-                throwErrorTolerant(token, Messages.StrictFunctionName);
-            }
-        } else {
-            if (syntax.isRestrictedWord(token.value)) {
-                firstRestricted = token;
-                message = Messages.StrictFunctionName;
-            } else if (syntax.isStrictModeReservedWord(token.value)) {
-                firstRestricted = token;
-                message = Messages.StrictReservedWord;
+            id = parseVariableIdentifier();
+
+            if (strict) {
+                if (syntax.isRestrictedWord(token.value)) {
+                    throwErrorTolerant(token, Messages.StrictFunctionName);
+                }
+            } else {
+                if (syntax.isRestrictedWord(token.value)) {
+                    firstRestricted = token;
+                    message = Messages.StrictFunctionName;
+                } else if (syntax.isStrictModeReservedWord(token.value)) {
+                    firstRestricted = token;
+                    message = Messages.StrictReservedWord;
+                }
             }
         }
 
@@ -4733,9 +4736,8 @@ function parseExportDefaultDeclaration() {
         // export default function () {}
         // export default class {}
         if (lookahead.value === "function") {
-          // TODO: change this to declaration once we get FunctionDeclaration with nullable name
-          declaration = parseFunctionExpression();
-          return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
+            declaration = parseFunctionDeclaration(true);
+            return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         } else if (lookahead.value === "class") {
             declaration = parseClassDeclaration(true);
             return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
