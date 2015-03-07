@@ -4716,6 +4716,7 @@ function parseExportDefaultDeclaration() {
     var declaration = null,
         expression = null,
         possibleIdentifierToken,
+        allowClasses = extra.ecmaFeatures.classes,
         marker = markerCreate();
 
     // covers:
@@ -4738,7 +4739,7 @@ function parseExportDefaultDeclaration() {
         if (lookahead.value === "function") {
             declaration = parseFunctionDeclaration(true);
             return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
-        } else if (lookahead.value === "class") {
+        } else if (allowClasses && lookahead.value === "class") {
             declaration = parseClassDeclaration(true);
             return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         }
