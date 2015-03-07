@@ -3596,7 +3596,11 @@ function parseVariableIdentifier() {
     token = lex();
 
     if (token.type !== Token.Identifier) {
-        throwUnexpected(token);
+        if (strict && token.type === Token.Keyword && syntax.isStrictModeReservedWord(token.value)) {
+            throwErrorTolerant(token, Messages.StrictReservedWord);
+        } else {
+            throwUnexpected(token);
+        }
     }
 
     return markerApply(marker, astNodeFactory.createIdentifier(token.value));
@@ -4718,7 +4722,7 @@ function parseExportDefaultDeclaration() {
 
     if (matchKeyword("function") || matchKeyword("class")) {
         possibleIdentifierToken = lookahead2();
-        if (isIdentifierName(possibleIdentifierToken)) {
+        if (possibleIdentifierToken.type === Token.Identifier) {
             // covers:
             // export default function foo () {}
             // export default class foo {}
@@ -4733,7 +4737,7 @@ function parseExportDefaultDeclaration() {
           declaration = parseFunctionExpression();
           return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         } else if (lookahead.value === "class") {
-            declaration = parseClassDeclaration();
+            declaration = parseClassDeclaration(true);
             return markerApply(marker, astNodeFactory.createExportDefaultDeclaration(declaration));
         }
     }
@@ -4995,7 +4999,7 @@ function parseClassExpression() {
     return markerApply(marker, astNodeFactory.createClassExpression(id, superClass, classBody));
 }
 
-function parseClassDeclaration() {
+function parseClassDeclaration(identifierIsOptional) {
     var id = null, superClass = null, marker = markerCreate(),
         previousStrict = strict, classBody;
 
@@ -5004,7 +5008,7 @@ function parseClassDeclaration() {
 
     expectKeyword("class");
 
-    if (lookahead.type === Token.Identifier) {
+    if (!identifierIsOptional || lookahead.type === Token.Identifier) {
         id = parseVariableIdentifier();
     }
 
