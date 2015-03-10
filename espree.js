@@ -1957,7 +1957,7 @@ function parseJSXElement() {
  * Applies location information to the given node by using the given marker.
  * The marker indicates the point at which the node is said to have to begun
  * in the source code.
- * @param {Object} marker The market to use for the node.
+ * @param {Object} marker The marker to use for the node.
  * @param {ASTNode} node The AST node to apply location information to.
  * @returns {ASTNode} The node that was passed in.
  * @private
@@ -2451,6 +2451,33 @@ function tryParseMethodDefinition(token, key, computed, marker) {
     return null;
 }
 
+/**
+ * Parses Generator Properties
+ * @param {ASTNode} key The property key (usually an identifier).
+ * @param {Object} marker The marker to use for the node.
+ * @returns {ASTNode} The generator property node.
+ */
+function parseGeneratorProperty(key, marker) {
+
+    var computed = (lookahead.type === Token.Punctuator && lookahead.value === "[");
+
+    if (!match("(")) {
+        throwUnexpected(lex());
+    }
+
+    return markerApply(
+        marker,
+        astNodeFactory.createProperty(
+            "init",
+            key,
+            parsePropertyMethodFunction({ generator: true }),
+            true,
+            false,
+            computed
+        )
+    );
+}
+
 // TODO(nzakas): Update to match Esprima
 function parseObjectProperty() {
     var token, key, id, computed, methodMarker, options;
@@ -2610,32 +2637,17 @@ function parseObjectProperty() {
         );
     }
 
-    // only possibility in this branch is a generator
+    // only possibility in this branch is a shorthand generator
     if (token.type === Token.EOF || token.type === Token.Punctuator) {
-        if (!allowGenerators || !match("*")) {
+        if (!allowGenerators || !match("*") || !allowMethod) {
             throwUnexpected(token);
         }
-        lex();
 
-        computed = (lookahead.type === Token.Punctuator && lookahead.value === "[");
+        lex();
 
         id = parseObjectPropertyKey();
 
-        if (!match("(")) {
-            throwUnexpected(lex());
-        }
-
-        return markerApply(
-            marker,
-            astNodeFactory.createProperty(
-                "init",
-                id,
-                parsePropertyMethodFunction({ generator: true }),
-                true,
-                false,
-                computed
-            )
-        );
+        return parseGeneratorProperty(id, marker);
 
     }
 
@@ -4908,7 +4920,9 @@ function parseImportDeclaration() {
 // 14.5 Class Definitions
 
 function parseClassBody() {
-    var token, isStatic, hasConstructor = false, body = [], method, computed, key;
+    var hasConstructor = false, generator = false,
+        allowGenerators = extra.ecmaFeatures.generators,
+        token, isStatic, body = [], method, computed, key;
 
     var existingProps = {},
         topMarker = markerCreate(),
@@ -4929,9 +4943,27 @@ function parseClassBody() {
 
         token = lookahead;
         isStatic = false;
+        generator = match("*");
         computed = match("[");
         marker = markerCreate();
+
+        if (generator) {
+            if (!allowGenerators) {
+                throwUnexpected(lookahead);
+            }
+            lex();
+        }
+
         key = parseObjectPropertyKey();
+
+        // static generator methods
+        if (key.name === "static" && match("*")) {
+            if (!allowGenerators) {
+                throwUnexpected(lookahead);
+            }
+            generator = true;
+            lex();
+        }
 
         if (key.name === "static" && lookaheadPropertyName()) {
             token = lookahead;
@@ -4940,7 +4972,11 @@ function parseClassBody() {
             key = parseObjectPropertyKey();
         }
 
-        method = tryParseMethodDefinition(token, key, computed, marker);
+        if (generator) {
+            method = parseGeneratorProperty(key, marker);
+        } else {
+            method = tryParseMethodDefinition(token, key, computed, marker, generator);
+        }
 
         if (method) {
             method.static = isStatic;
