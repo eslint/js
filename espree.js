@@ -2256,11 +2256,7 @@ function parseArrayInitialiser() {
         } else {
             tmp = parseSpreadOrAssignmentExpression();
             elements.push(tmp);
-            if (tmp && tmp.type === astNodeTypes.SpreadElement) {
-                if (!match("]")) {
-                    throwError({}, Messages.ElementAfterSpreadElement);
-                }
-            } else if (!(match("]"))) {
+            if (!(match("]"))) {
                 expect(","); // handles the common case of comma-separated values
             }
         }
@@ -2927,8 +2923,6 @@ function parseArguments() {
 
             if (match(")")) {
                 break;
-            } else if (arg.type === astNodeTypes.SpreadElement) {
-                throwError({}, Messages.ElementAfterSpreadElement);
             }
 
             expect(",");
