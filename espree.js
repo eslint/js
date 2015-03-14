@@ -442,6 +442,14 @@ function scanPunctuator() {
                     extra.openCurlyToken = extra.tokens.length;
                 }
             }
+
+            // 123 is {, 125 is }
+            if (code === 123) {
+                state.curlyStack.push("{");
+            } else if (code === 125) {
+                state.curlyStack.pop();
+            }
+
             return {
                 type: Token.Punctuator,
                 value: String.fromCharCode(code),
@@ -993,6 +1001,14 @@ function scanTemplate() {
         throwError({}, Messages.UnexpectedToken, "ILLEGAL");
     }
 
+    if (!tail) {
+        state.curlyStack.push("template");
+    }
+
+    if (!head) {
+        state.curlyStack.pop();
+    }
+
     return {
         type: Token.Template,
         value: {
@@ -1029,10 +1045,6 @@ function scanTemplateElement(options) {
     }
 
     template = scanTemplate();
-
-    if (!template.tail) {
-        extra.curlies.push("template");
-    }
 
     peek();
 
@@ -1385,8 +1397,7 @@ function advance() {
 
         // template strings start with backtick (96) or open curly (125) but only if the open
         // curly closes a previously opened curly from a template.
-        if (ch === 96 || (ch === 125 && extra.curlies[extra.curlies.length - 1] === "template")) {
-            extra.curlies.pop();
+        if (ch === 96 || (ch === 125 && state.curlyStack[state.curlyStack.length - 1] === "template")) {
             return scanTemplate();
         }
     }
@@ -1475,18 +1486,18 @@ function lex() {
 
     if (token.type === Token.Template) {
         if (token.tail) {
-            extra.curlies.pop();
+            state.curlyStack.pop();
         } else {
-            extra.curlies.push("template");
+            state.curlyStack.push("template");
         }
     }
 
     if (token.value === "{") {
-        extra.curlies.push("{");
+        state.curlyStack.push("{");
     }
 
     if (token.value === "}") {
-        extra.curlies.pop();
+        state.curlyStack.pop();
     }
 
     return token;
@@ -5235,7 +5246,7 @@ function tokenize(code, options) {
     extra.openCurlyToken = -1;
 
     // Needed when using template string tokenization
-    extra.curlies = [];
+    state.curlyStack = [];
 
     extra.range = (typeof options.range === "boolean") && options.range;
     extra.loc = (typeof options.loc === "boolean") && options.loc;
@@ -5328,7 +5339,7 @@ function parse(code, options) {
     };
 
     // for template strings
-    extra.curlies = [];
+    state.curlyStack = [];
 
     if (typeof options !== "undefined") {
         extra.range = (typeof options.range === "boolean") && options.range;
