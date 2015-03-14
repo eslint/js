@@ -35,7 +35,7 @@
                 "column": 6
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 6,
                 "lineNumber": 1,
@@ -227,7 +227,7 @@
                 "column": 43
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 29,
                 "lineNumber": 1,
@@ -403,7 +403,7 @@
                 "column": 37
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 29,
                 "lineNumber": 1,
@@ -520,7 +520,7 @@
                 "column": 22
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 22,
                 "lineNumber": 1,
@@ -728,7 +728,7 @@
                 "column": 36
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 32,
                 "lineNumber": 1,
@@ -936,7 +936,7 @@
                 "column": 41
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 37,
                 "lineNumber": 1,
@@ -1055,7 +1055,7 @@
                 "column": 23
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 22,
                 "lineNumber": 1,
@@ -1174,7 +1174,7 @@
                 "column": 28
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 27,
                 "lineNumber": 1,
@@ -1309,7 +1309,7 @@
                 "column": 23
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 14,
                 "lineNumber": 1,
@@ -1426,7 +1426,7 @@
                 "column": 21
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 18,
                 "lineNumber": 1,
@@ -1543,7 +1543,7 @@
                 "column": 21
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 20,
                 "lineNumber": 1,
@@ -1678,7 +1678,7 @@
                 "column": 28
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 14,
                 "lineNumber": 1,
@@ -1795,7 +1795,7 @@
                 "column": 26
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 23,
                 "lineNumber": 1,
@@ -1912,7 +1912,7 @@
                 "column": 26
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 25,
                 "lineNumber": 1,
@@ -2163,7 +2163,7 @@
                 "column": 24
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 23,
                 "lineNumber": 1,
@@ -2301,7 +2301,7 @@
                 "column": 33
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 23,
                 "lineNumber": 1,
@@ -2439,7 +2439,7 @@
                 "column": 38
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 23,
                 "lineNumber": 1,
@@ -2577,7 +2577,7 @@
                 "column": 38
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 23,
                 "lineNumber": 1,
@@ -2715,7 +2715,7 @@
                 "column": 35
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 24,
                 "lineNumber": 1,
@@ -2853,7 +2853,7 @@
                 "column": 40
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 24,
                 "lineNumber": 1,
@@ -2991,7 +2991,7 @@
                 "column": 40
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 24,
                 "lineNumber": 1,
@@ -3148,7 +3148,7 @@
                 "column": 34
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 25,
                 "lineNumber": 1,
@@ -3305,7 +3305,7 @@
                 "column": 39
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 25,
                 "lineNumber": 1,
@@ -3480,7 +3480,7 @@
                 "column": 39
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 31,
                 "lineNumber": 1,
@@ -3637,7 +3637,7 @@
                 "column": 36
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 26,
                 "lineNumber": 1,
@@ -3794,7 +3794,7 @@
                 "column": 41
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 26,
                 "lineNumber": 1,
@@ -3969,7 +3969,7 @@
                 "column": 41
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 32,
                 "lineNumber": 1,
@@ -4203,7 +4203,7 @@
                 "column": 36
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 26,
                 "lineNumber": 1,
@@ -4361,7 +4361,7 @@
                 "column": 55
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 19,
                 "lineNumber": 1,
@@ -4460,7 +4460,7 @@
                 "column": 19
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 0,
                 "lineNumber": 1,
@@ -4656,7 +4656,7 @@
                 "column": 31
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 24,
                 "lineNumber": 1,
@@ -4953,7 +4953,7 @@
                 "column": 48
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 46,
                 "lineNumber": 1,
@@ -5228,7 +5228,7 @@
                 "column": 43
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 41,
                 "lineNumber": 1,
@@ -5522,7 +5522,7 @@
                 "column": 44
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 42,
                 "lineNumber": 1,
@@ -5658,7 +5658,7 @@
                 "column": 16
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 10,
                 "lineNumber": 1,
@@ -5758,7 +5758,7 @@
                 "column": 5
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 1,
                 "lineNumber": 1,
@@ -5840,7 +5840,7 @@
                 "column": 3
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 1,
                 "lineNumber": 1,
@@ -5922,7 +5922,7 @@
                 "column": 3
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 3,
                 "lineNumber": 1,
@@ -6022,7 +6022,7 @@
                 "column": 16
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 6,
                 "lineNumber": 1,
@@ -6127,7 +6127,7 @@
                 "column": 18
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 17,
                 "lineNumber": 1,
@@ -6232,7 +6232,7 @@
                 "column": 23
             }
         },
-        "errors": [
+        "sourceType": "script", "errors": [
             {
                 "index": 17,
                 "lineNumber": 1,

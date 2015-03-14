@@ -5152,15 +5152,16 @@ function parseSourceElements() {
 
 function parseProgram() {
     var body,
-        marker;
+        marker,
+        isModule = !!extra.ecmaFeatures.modules;
 
     skipComment();
     peek();
     marker = markerCreate();
-    strict = extra.ecmaFeatures.modules;
+    strict = isModule;
 
     body = parseSourceElements();
-    return markerApply(marker, astNodeFactory.createProgram(body));
+    return markerApply(marker, astNodeFactory.createProgram(body, isModule ? "module" : "script"));
 }
 
 function filterTokenLocation() {

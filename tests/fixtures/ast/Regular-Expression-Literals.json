@@ -95,7 +95,7 @@
                 "column": 16
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
@@ -220,7 +220,7 @@
             0,
             16
         ],
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
@@ -335,7 +335,7 @@
                 "column": 16
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
@@ -494,7 +494,7 @@
                 "column": 17
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
@@ -669,7 +669,7 @@
                 "column": 15
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
@@ -844,7 +844,7 @@
                 "column": 18
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
@@ -1019,7 +1019,7 @@
                 "column": 21
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "var",
