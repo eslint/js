@@ -166,6 +166,7 @@ module.exports = {
             }
         }
     ],
+    "sourceType": "script",
     "range": [
         8,
         53

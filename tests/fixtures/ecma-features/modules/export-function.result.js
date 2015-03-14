@@ -79,6 +79,7 @@ module.exports = {
             }
         }
     ],
+    "sourceType": "module",
     "range": [
         0,
         25

@@ -51,7 +51,7 @@
                 "column": 0
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Keyword",
                 "value": "this",
@@ -126,7 +126,7 @@
                 "column": 0
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Null",
                 "value": "null",
@@ -201,7 +201,7 @@
                 "column": 0
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Numeric",
                 "value": "42",

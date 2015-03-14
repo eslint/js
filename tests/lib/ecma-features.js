@@ -132,6 +132,11 @@ describe("ecmaFeatures", function() {
 
             config.sourceType = "module";
 
+            // set sourceType of program node to module
+            if (expected.type === "Program") {
+                expected.sourceType = "module";
+            }
+
             try {
                 result = espree.parse(code, config);
             } catch (ex) {

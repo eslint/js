@@ -358,6 +358,7 @@ module.exports = {
             }
         }
     ],
+    "sourceType": "script",
     "range": [
         0,
         42

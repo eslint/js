@@ -77,7 +77,7 @@
             0,
             46
         ],
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " block comment 1 ",
@@ -218,7 +218,7 @@
                 ]
             }
         ],
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "range": [
                     7,
@@ -330,7 +330,7 @@
         },
         "type": "Program",
         "body": [],
-        "leadingComments": [
+        "sourceType": "script", "leadingComments": [
             {
                 "range": [
                     0,
@@ -517,7 +517,7 @@
                 "column": 28
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " assignmenr ",
@@ -647,7 +647,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " assignmenr ",
@@ -722,7 +722,7 @@
                 "column": 21
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "The",
@@ -785,7 +785,7 @@
             0,
             21
         ],
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "the",
@@ -894,7 +894,7 @@
                 "column": 21
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " The * answer ",
@@ -1025,7 +1025,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "a\r\nb",
@@ -1100,7 +1100,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "a\rb",
@@ -1195,7 +1195,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "a\nb",
@@ -1290,7 +1290,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "a\nc",
@@ -1328,7 +1328,7 @@
                 "column": 8
             }
         },
-        "leadingComments": [
+        "sourceType": "script", "leadingComments": [
             {
                 "type": "Line",
                 "value": " one\\n",
@@ -1479,7 +1479,7 @@
                 "column": 18
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " line comment",
@@ -1574,7 +1574,7 @@
                 "column": 2
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " Hello, world!",
@@ -1612,7 +1612,7 @@
                 "column": 0
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " Hello, world!",
@@ -1646,7 +1646,7 @@
                 "column": 0
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " Hallo, world!",
@@ -1737,7 +1737,7 @@
                 "column": 2
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": "",
@@ -1775,7 +1775,7 @@
                 "column": 2
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": "",
@@ -1803,7 +1803,7 @@
             3,
             3
         ],
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " ",
@@ -1888,7 +1888,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "",
@@ -1983,7 +1983,7 @@
                 "column": 6
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": "",
@@ -2096,7 +2096,7 @@
                 "column": 2
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " Hello, world!",
@@ -2281,7 +2281,7 @@
                 "column": 2
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " Some comment",
@@ -2448,7 +2448,7 @@
                 "column": 11
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " Some comment",
@@ -2615,7 +2615,7 @@
                 "column": 38
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " Some comment ",
@@ -2782,7 +2782,7 @@
                 "column": 38
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " Some comment ",
@@ -2969,7 +2969,7 @@
                 "column": 50
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " perfect ",
@@ -3156,7 +3156,7 @@
                 "column": 50
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " perfect ",
@@ -3420,7 +3420,7 @@
                 "column": 56
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " header ",
@@ -3704,7 +3704,7 @@
                 "column": 54
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " sync ",
@@ -3728,7 +3728,7 @@
     "<!-- foo": {
         "type": "Program",
         "body": [],
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " foo"
@@ -3757,7 +3757,7 @@
                 "kind": "var"
             }
         ],
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": "foo"
@@ -3781,7 +3781,7 @@
                 "column": 11
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " comment",
@@ -3819,7 +3819,7 @@
                 "column": 12
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " comment",
@@ -3857,7 +3857,7 @@
                 "column": 14
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Line",
                 "value": " comment",
@@ -3895,7 +3895,7 @@
                 "column": 35
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " block comment ",
@@ -3951,7 +3951,7 @@
                 "column": 30
             }
         },
-        "comments": [
+        "sourceType": "script", "comments": [
             {
                 "type": "Block",
                 "value": " block comment ",
@@ -4116,6 +4116,7 @@
                 "column": 23
             }
         },
+        "sourceType": "script",
         "tokens": [
             {
                 "type": "Punctuator",

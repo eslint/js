@@ -59,7 +59,7 @@
             0,
             1
         ],
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Numeric",
                 "value": "3",
@@ -112,7 +112,7 @@
                 "column": 1
             }
         },
-        "tokens": [
+        "sourceType": "script", "tokens": [
             {
                 "type": "Numeric",
                 "value": "5",
