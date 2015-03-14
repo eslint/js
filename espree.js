@@ -2710,6 +2710,7 @@ function parseObjectInitialiser() {
         propertyFn,
         kind,
         storedKind,
+        previousInObjectLiteral = state.inObjectLiteral,
         kindMap = new StringMap();
 
     state.inObjectLiteral = true;
@@ -2760,7 +2761,7 @@ function parseObjectInitialiser() {
 
     expect("}");
 
-    state.inObjectLiteral = false;
+    state.inObjectLiteral = previousInObjectLiteral;
 
     return markerApply(marker, astNodeFactory.createObjectExpression(properties));
 }
@@ -2826,8 +2827,8 @@ function parsePrimaryExpression() {
     var type, token, expr,
         marker,
         allowJSX = extra.ecmaFeatures.jsx,
-        allowSuper = extra.ecmaFeatures.superInFunctions,
-        allowClasses = extra.ecmaFeatures.classes;
+        allowClasses = extra.ecmaFeatures.classes,
+        allowSuper = allowClasses || extra.ecmaFeatures.superInFunctions;
 
     if (match("(")) {
         return parseGroupExpression();
