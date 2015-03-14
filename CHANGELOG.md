@@ -1,3 +1,14 @@
+v1.12.0 - March 14, 2015
+
+* 1.12.0 (Nicholas C. Zakas)
+* Fix: Update broken tests (Nicholas C. Zakas)
+* New: Add sourceType to Program node (fixes #93) (Nicholas C. Zakas)
+* Allow spread in more places (fixes #89) (Nicholas C. Zakas)
+* Fix: Deeply nested template literals (fixes #86) (Nicholas C. Zakas)
+* Fix: Allow super in classes by default (fixes #87) (Nicholas C. Zakas)
+* Fix: generator methods in classes (fixes #85) (Jamund Ferguson)
+* Remove XJS note from Esprima-FB incompatibilities (Joe Lencioni)
+
 v1.11.0 - March 7, 2015
 
 * 1.11.0 (Nicholas C. Zakas)
