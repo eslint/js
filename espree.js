@@ -2435,7 +2435,7 @@ function tryParseMethodDefinition(token, key, computed, marker) {
                 rest: null
             };
             if (match(")")) {
-                throwErrorTolerant(lookahead, Messages.UnexpectedToken);
+                throwErrorTolerant(lookahead, Messages.UnexpectedToken, lookahead.value);
             } else {
                 parseParam(options);
                 if (options.defaultCount === 0) {
