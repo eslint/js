@@ -2506,7 +2506,8 @@ function parseObjectProperty() {
          * Check for getters and setters. Be careful! "get" and "set" are legal
          * method names. It's only a getter or setter if followed by a space.
          */
-        if (token.value === "get" && !(match(":") || match("("))) {
+        if (token.value === "get" &&
+                !(match(":") || match("(") || match(",") || match("}"))) {
             computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
             methodMarker = markerCreate();
@@ -2530,7 +2531,8 @@ function parseObjectProperty() {
             );
         }
 
-        if (token.value === "set" && !(match(":") || match("("))) {
+        if (token.value === "set" &&
+                !(match(":") || match("(") || match(",") || match("}"))) {
             computed = (lookahead.value === "[");
             key = parseObjectPropertyKey();
             methodMarker = markerCreate();
