@@ -1,7 +1,9 @@
 var foo,
-    bar;
+    get,
+    set;
 
 var x = {
     foo,
-    bar
+    get,
+    set
 };
