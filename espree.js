@@ -4132,7 +4132,11 @@ function parseThrowStatement() {
 
 function parseCatchClause() {
     var param, body,
-        marker = markerCreate();
+        marker = markerCreate(),
+        allowDestructuring = extra.ecmaFeatures.destructuring,
+        options = {
+            paramSet: new StringMap()
+        };
 
     expectKeyword("catch");
 
@@ -4141,9 +4145,25 @@ function parseCatchClause() {
         throwUnexpected(lookahead);
     }
 
-    param = parseVariableIdentifier();
+    if (match("[")) {
+        if (!allowDestructuring) {
+            throwUnexpected(lookahead);
+        }
+        param = parseArrayInitialiser();
+        reinterpretAsDestructuredParameter(options, param);
+    } else if (match("{")) {
+
+        if (!allowDestructuring) {
+            throwUnexpected(lookahead);
+        }
+        param = parseObjectInitialiser();
+        reinterpretAsDestructuredParameter(options, param);
+    } else {
+        param = parseVariableIdentifier();
+    }
+
     // 12.14.1
-    if (strict && syntax.isRestrictedWord(param.name)) {
+    if (strict && param.name && syntax.isRestrictedWord(param.name)) {
         throwErrorTolerant({}, Messages.StrictCatchVariable);
     }
 
