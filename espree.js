@@ -974,7 +974,6 @@ function scanTemplate() {
     var cooked = "",
         ch,
         escapedSequence,
-        octal = false,
         start = index,
         terminated = false,
         tail = false,
@@ -999,8 +998,13 @@ function scanTemplate() {
         } else if (ch === "\\") {
             ch = source[index++];
             escapedSequence = scanEscapeSequence(ch);
+
+            if (escapedSequence.octal) {
+                throwError({}, Messages.TemplateOctalLiteral);
+            }
+
             cooked += escapedSequence.ch;
-            octal = escapedSequence.octal || octal;
+
         } else if (syntax.isLineTerminator(ch.charCodeAt(0))) {
             ++lineNumber;
             if (ch === "\r" && source[index] === "\n") {
@@ -1037,7 +1041,6 @@ function scanTemplate() {
         },
         head: head,
         tail: tail,
-        octal: octal,
         lineNumber: lineNumber,
         lineStart: lineStart,
         range: [start, index]
@@ -2769,10 +2772,6 @@ function parseTemplateElement(option) {
 
     marker = markerCreate();
     token = lex();
-
-    if (strict && token.octal) {
-        throwError(token, Messages.StrictOctalLiteral);
-    }
 
     return markerApply(
         marker,
