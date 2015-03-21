@@ -1,3 +1,11 @@
+v1.12.1 - March 21, 2015
+
+* 1.12.1 (Nicholas C. Zakas)
+* Fix: Disallow octals in template strings (fixes #96) (Nicholas C. Zakas)
+* Fix: Template string parsing (fixes #95) (Nicholas C. Zakas)
+* Fix: shorthand properties named get or set (fixes #100) (Brandon Mills)
+* Fix: bad error in parsing invalid class setter (fixes #98) (Marsup)
+
 v1.12.0 - March 14, 2015
 
 * 1.12.0 (Nicholas C. Zakas)

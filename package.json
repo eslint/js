@@ -8,7 +8,7 @@
     "esparse": "./bin/esparse.js",
     "esvalidate": "./bin/esvalidate.js"
   },
-  "version": "1.12.0",
+  "version": "1.12.1",
   "files": [
     "bin",
     "lib",
