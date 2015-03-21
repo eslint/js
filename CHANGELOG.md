@@ -1,3 +1,8 @@
+v1.12.2 - March 21, 2015
+
+* 1.12.2 (Nicholas C. Zakas)
+* Fix: Destructured arg for catch (fixes #105) (Nicholas C. Zakas)
+
 v1.12.1 - March 21, 2015
 
 * 1.12.1 (Nicholas C. Zakas)
