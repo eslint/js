@@ -427,27 +427,43 @@ function scanPunctuator() {
         case 41:   // ) close bracket
         case 59:   // ; semicolon
         case 44:   // , comma
-        case 123:  // { open curly brace
-        case 125:  // } close curly brace
         case 91:   // [
         case 93:   // ]
         case 58:   // :
         case 63:   // ?
         case 126:  // ~
             ++index;
-            if (extra.tokenize) {
-                if (code === 40) {
-                    extra.openParenToken = extra.tokens.length;
-                } else if (code === 123) {
-                    extra.openCurlyToken = extra.tokens.length;
-                }
+
+            if (extra.tokenize && code === 40) {
+                extra.openParenToken = extra.tokens.length;
             }
 
-            // 123 is {, 125 is }
-            if (code === 123) {
-                state.curlyStack.push("{");
-            } else if (code === 125) {
-                state.curlyStack.pop();
+            return {
+                type: Token.Punctuator,
+                value: String.fromCharCode(code),
+                lineNumber: lineNumber,
+                lineStart: lineStart,
+                range: [start, index]
+            };
+
+        case 123:  // { open curly brace
+        case 125:  // } close curly brace
+            ++index;
+
+            if (extra.tokenize && code === 123) {
+                extra.openCurlyToken = extra.tokens.length;
+            }
+
+            // lookahead2 function can cause tokens to be scanned twice and in doing so
+            // would wreck the curly stack by pushing the same token onto the stack twice.
+            // curlyLastIndex ensures each token is pushed or popped exactly once
+            if (index > state.curlyLastIndex) {
+                state.curlyLastIndex = index;
+                if (code === 123) {
+                    state.curlyStack.push("{");
+                } else {
+                    state.curlyStack.pop();
+                }
             }
 
             return {
@@ -1001,12 +1017,16 @@ function scanTemplate() {
         throwError({}, Messages.UnexpectedToken, "ILLEGAL");
     }
 
-    if (!tail) {
-        state.curlyStack.push("template");
-    }
+    if (index > state.curlyLastIndex) {
+        state.curlyLastIndex = index;
 
-    if (!head) {
-        state.curlyStack.pop();
+        if (!tail) {
+            state.curlyStack.push("template");
+        }
+
+        if (!head) {
+            state.curlyStack.pop();
+        }
     }
 
     return {
@@ -1022,33 +1042,6 @@ function scanTemplate() {
         lineStart: lineStart,
         range: [start, index]
     };
-}
-
-/**
- * Scan a template string element and return a ASTNode representation
- * @param {Object} options Scan options
- * @param {Object} options.head True if this element is the first in the
- *                               template string, false otherwise.
- * @returns {ASTNode} The template element node
- * @private
- */
-function scanTemplateElement(options) {
-    var startsWith, template;
-
-    lookahead = null;
-    skipComment();
-
-    startsWith = (options.head) ? "`" : "}";
-
-    if (source[index] !== startsWith) {
-        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
-    }
-
-    template = scanTemplate();
-
-    peek();
-
-    return template;
 }
 
 function testRegExp(pattern, flags) {
@@ -1483,22 +1476,6 @@ function lex() {
     index = token.range[1];
     lineNumber = token.lineNumber;
     lineStart = token.lineStart;
-
-    if (token.type === Token.Template) {
-        if (token.tail) {
-            state.curlyStack.pop();
-        } else {
-            state.curlyStack.push("template");
-        }
-    }
-
-    if (token.value === "{") {
-        state.curlyStack.push("{");
-    }
-
-    if (token.value === "}") {
-        state.curlyStack.pop();
-    }
 
     return token;
 }
@@ -2777,19 +2754,36 @@ function parseObjectInitialiser() {
 
 /**
  * Parse a template string element and return its ASTNode representation
- * @param {Object} options Parsing & scanning options
- * @param {Object} options.head True if this element is the first in the
+ * @param {Object} option Parsing & scanning options
+ * @param {Object} option.head True if this element is the first in the
  *                               template string, false otherwise.
  * @returns {ASTNode} The template element node with marker info applied
  * @private
  */
-function parseTemplateElement(options) {
-    var marker = markerCreate(),
-        token = scanTemplateElement(options);
+function parseTemplateElement(option) {
+    var marker, token;
+
+    if (lookahead.type !== Token.Template || (option.head && !lookahead.head)) {
+        throwError({}, Messages.UnexpectedToken, "ILLEGAL");
+    }
+
+    marker = markerCreate();
+    token = lex();
+
     if (strict && token.octal) {
         throwError(token, Messages.StrictOctalLiteral);
     }
-    return markerApply(marker, astNodeFactory.createTemplateElement({ raw: token.value.raw, cooked: token.value.cooked }, token.tail));
+
+    return markerApply(
+        marker,
+        astNodeFactory.createTemplateElement(
+            {
+                raw: token.value.raw,
+                cooked: token.value.cooked
+            },
+            token.tail
+        )
+    );
 }
 
 /**
@@ -5221,6 +5215,8 @@ function tokenize(code, options) {
         inSwitch: false,
         lastCommentStart: -1,
         yieldAllowed: false,
+        curlyStack: [],
+        curlyLastIndex: 0,
         inJSXSpreadAttribute: false,
         inJSXChild: false,
         inJSXTag: false
@@ -5241,9 +5237,6 @@ function tokenize(code, options) {
     // The following two fields are necessary to compute the Regex tokens.
     extra.openParenToken = -1;
     extra.openCurlyToken = -1;
-
-    // Needed when using template string tokenization
-    state.curlyStack = [];
 
     extra.range = (typeof options.range === "boolean") && options.range;
     extra.loc = (typeof options.loc === "boolean") && options.loc;
@@ -5326,6 +5319,8 @@ function parse(code, options) {
         inSwitch: false,
         lastCommentStart: -1,
         yieldAllowed: false,
+        curlyStack: [],
+        curlyLastIndex: 0,
         inJSXSpreadAttribute: false,
         inJSXChild: false,
         inJSXTag: false
