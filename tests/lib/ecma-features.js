@@ -122,44 +122,48 @@ describe("ecmaFeatures", function() {
         });
     });
 
-    leche.withData(moduleTestFiles, function(filename) {
+    describe("Modules", function() {
 
-        var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+        leche.withData(moduleTestFiles, function(filename) {
 
-        it("should parse correctly when sourceType is module", function() {
-            var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
-            var result;
+            var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
-            config.sourceType = "module";
+            it("should parse correctly when sourceType is module", function() {
+                var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+                var result;
 
-            // set sourceType of program node to module
-            if (expected.type === "Program") {
-                expected.sourceType = "module";
-            }
+                config.sourceType = "module";
 
-            try {
-                result = espree.parse(code, config);
-            } catch (ex) {
-
-                // if the result is an error, create an error object so deepEqual works
-                if (expected.message || expected.description) {
-
-                    var expectedError = new Error(expected.message || expected.description);
-                    Object.keys(expected).forEach(function(key) {
-                        expectedError[key] = expected[key];
-                    });
-                    expected = expectedError;
-                } else {
-                    throw ex;
+                // set sourceType of program node to module
+                if (expected.type === "Program") {
+                    expected.sourceType = "module";
                 }
 
-                result = ex;    // if an error is thrown, match the error
+                try {
+                    result = espree.parse(code, config);
+                } catch (ex) {
 
-            }
-            assert.deepEqual(result, expected);
+                    // if the result is an error, create an error object so deepEqual works
+                    if (expected.message || expected.description) {
+
+                        var expectedError = new Error(expected.message || expected.description);
+                        Object.keys(expected).forEach(function(key) {
+                            expectedError[key] = expected[key];
+                        });
+                        expected = expectedError;
+                    } else {
+                        throw ex;
+                    }
+
+                    result = ex;    // if an error is thrown, match the error
+
+                }
+                assert.deepEqual(result, expected);
+            });
+
         });
-
     });
+
 
 
     leche.withData(mixFiles, function(filename) {
