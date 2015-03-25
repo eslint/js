@@ -2998,7 +2998,7 @@ function parseLeftHandSideExpressionAllowCall() {
             expr = markerApply(marker, astNodeFactory.createMemberExpression("[", expr, parseComputedMember()));
         } else if (match(".")) {
             expr = markerApply(marker, astNodeFactory.createMemberExpression(".", expr, parseNonComputedMember()));
-        } else if (!lookahead.tail) {
+        } else {
             expr = markerApply(marker, astNodeFactory.createTaggedTemplateExpression(expr, parseTemplateLiteral()));
         }
     }
