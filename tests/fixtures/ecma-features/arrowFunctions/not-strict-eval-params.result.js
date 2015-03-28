@@ -64,7 +64,6 @@ module.exports = {
                         }
                     }
                 },
-                "rest": null,
                 "generator": false,
                 "expression": true,
                 "range": [

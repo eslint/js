@@ -82,6 +82,41 @@ module.exports = {
                                 "column": 6
                             }
                         }
+                    },
+                    {
+                        "type": "RestElement",
+                        "argument": {
+                            "type": "Identifier",
+                            "name": "b",
+                            "range": [
+                                11,
+                                12
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 11
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 12
+                                }
+                            }
+                        },
+                        "range": [
+                            8,
+                            12
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 8
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 12
+                            }
+                        }
                     }
                 ],
                 "defaults": [],
@@ -100,24 +135,6 @@ module.exports = {
                         "end": {
                             "line": 1,
                             "column": 19
-                        }
-                    }
-                },
-                "rest": {
-                    "type": "Identifier",
-                    "name": "b",
-                    "range": [
-                        11,
-                        12
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 11
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 12
                         }
                     }
                 },

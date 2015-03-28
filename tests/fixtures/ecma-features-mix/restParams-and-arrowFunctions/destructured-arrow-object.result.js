@@ -119,6 +119,41 @@ module.exports = {
                                 "column": 14
                             }
                         }
+                    },
+                    {
+                        "type": "RestElement",
+                        "argument": {
+                            "type": "Identifier",
+                            "name": "c",
+                            "range": [
+                                19,
+                                20
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 19
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 20
+                                }
+                            }
+                        },
+                        "range": [
+                            16,
+                            20
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 16
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 20
+                            }
+                        }
                     }
                 ],
                 "defaults": [],
@@ -137,24 +172,6 @@ module.exports = {
                         "end": {
                             "line": 1,
                             "column": 27
-                        }
-                    }
-                },
-                "rest": {
-                    "type": "Identifier",
-                    "name": "c",
-                    "range": [
-                        19,
-                        20
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 19
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 20
                         }
                     }
                 },

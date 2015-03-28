@@ -6,7 +6,43 @@ module.exports = {
             "expression": {
                 "type": "ArrowFunctionExpression",
                 "id": null,
-                "params": [],
+                "params": [
+                    {
+                        "type": "RestElement",
+                        "argument": {
+                            "type": "Identifier",
+                            "name": "a",
+                            "range": [
+                                4,
+                                5
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 4
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 5
+                                }
+                            }
+                        },
+                        "range": [
+                            1,
+                            5
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 1
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 5
+                            }
+                        }
+                    }
+                ],
                 "defaults": [],
                 "body": {
                     "type": "BlockStatement",
@@ -23,24 +59,6 @@ module.exports = {
                         "end": {
                             "line": 1,
                             "column": 12
-                        }
-                    }
-                },
-                "rest": {
-                    "type": "Identifier",
-                    "name": "a",
-                    "range": [
-                        4,
-                        5
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 4
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 5
                         }
                     }
                 },

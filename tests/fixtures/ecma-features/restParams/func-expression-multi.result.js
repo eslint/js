@@ -45,6 +45,41 @@ module.exports = {
                                         "column": 18
                                     }
                                 }
+                            },
+                            {
+                                "type": "RestElement",
+                                "argument": {
+                                    "type": "Identifier",
+                                    "name": "b",
+                                    "range": [
+                                        23,
+                                        24
+                                    ],
+                                    "loc": {
+                                        "start": {
+                                            "line": 1,
+                                            "column": 23
+                                        },
+                                        "end": {
+                                            "line": 1,
+                                            "column": 24
+                                        }
+                                    }
+                                },
+                                "range": [
+                                    20,
+                                    24
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 20
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 24
+                                    }
+                                }
                             }
                         ],
                         "defaults": [],
@@ -63,24 +98,6 @@ module.exports = {
                                 "end": {
                                     "line": 1,
                                     "column": 28
-                                }
-                            }
-                        },
-                        "rest": {
-                            "type": "Identifier",
-                            "name": "b",
-                            "range": [
-                                23,
-                                24
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 23
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 24
                                 }
                             }
                         },

@@ -230,7 +230,6 @@ module.exports = {
                     }
                 }
             },
-            "rest": null,
             "generator": false,
             "expression": false,
             "range": [
