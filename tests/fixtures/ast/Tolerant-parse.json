@@ -588,62 +588,6 @@
                         }
                     }
                 },
-                "guardedHandlers": [],
-                "handlers": [
-                    {
-                        "type": "CatchClause",
-                        "param": {
-                            "type": "Identifier",
-                            "name": "eval",
-                            "range": [
-                                28,
-                                32
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 28
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 32
-                                }
-                            }
-                        },
-                        "body": {
-                            "type": "BlockStatement",
-                            "body": [],
-                            "range": [
-                                34,
-                                36
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 34
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 36
-                                }
-                            }
-                        },
-                        "range": [
-                            21,
-                            36
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 21
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 36
-                            }
-                        }
-                    }
-                ],
                 "handler": {
                     "type": "CatchClause",
                     "param": {
@@ -796,62 +740,7 @@
                         }
                     }
                 },
-                "guardedHandlers": [],
-                "handlers": [
-                    {
-                        "type": "CatchClause",
-                        "param": {
-                            "type": "Identifier",
-                            "name": "arguments",
-                            "range": [
-                                28,
-                                37
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 28
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 37
-                                }
-                            }
-                        },
-                        "body": {
-                            "type": "BlockStatement",
-                            "body": [],
-                            "range": [
-                                39,
-                                41
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 39
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 41
-                                }
-                            }
-                        },
-                        "range": [
-                            21,
-                            41
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 21
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 41
-                            }
-                        }
-                    }
-                ],
+
                 "handler": {
                     "type": "CatchClause",
                     "param": {

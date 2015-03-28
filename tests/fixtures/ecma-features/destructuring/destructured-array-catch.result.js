@@ -1,39 +1,11 @@
 module.exports = {
-    "range": [
-        0,
-        72
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 7,
-            "column": 2
-        }
-    },
     "type": "Program",
-    "sourceType": "script",
     "body": [
         {
-            "range": [
-                0,
-                71
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 7,
-                    "column": 1
-                }
-            },
-            "rest": null,
             "type": "FunctionDeclaration",
             "id": {
+                "type": "Identifier",
+                "name": "x",
                 "range": [
                     9,
                     10
@@ -47,29 +19,54 @@ module.exports = {
                         "line": 1,
                         "column": 10
                     }
-                },
-                "type": "Identifier",
-                "name": "x"
+                }
             },
             "params": [
                 {
-                    "range": [
-                        11,
-                        14
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 11
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 14
-                        }
-                    },
                     "type": "ObjectPattern",
                     "properties": [
                         {
+                            "type": "Property",
+                            "key": {
+                                "type": "Identifier",
+                                "name": "a",
+                                "range": [
+                                    12,
+                                    13
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 12
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 13
+                                    }
+                                }
+                            },
+                            "value": {
+                                "type": "Identifier",
+                                "name": "a",
+                                "range": [
+                                    12,
+                                    13
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 12
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 13
+                                    }
+                                }
+                            },
+                            "kind": "init",
+                            "method": false,
+                            "shorthand": true,
+                            "computed": false,
                             "range": [
                                 12,
                                 13
@@ -83,154 +80,84 @@ module.exports = {
                                     "line": 1,
                                     "column": 13
                                 }
-                            },
-                            "type": "Property",
-                            "key": {
-                                "range": [
-                                    12,
-                                    13
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 1,
-                                        "column": 12
-                                    },
-                                    "end": {
-                                        "line": 1,
-                                        "column": 13
-                                    }
-                                },
-                                "type": "Identifier",
-                                "name": "a"
-                            },
-                            "computed": false,
-                            "value": {
-                                "range": [
-                                    12,
-                                    13
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 1,
-                                        "column": 12
-                                    },
-                                    "end": {
-                                        "line": 1,
-                                        "column": 13
-                                    }
-                                },
-                                "type": "Identifier",
-                                "name": "a"
-                            },
-                            "kind": "init",
-                            "method": false,
-                            "shorthand": true
+                            }
                         }
-                    ]
+                    ],
+                    "range": [
+                        11,
+                        14
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 11
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 14
+                        }
+                    }
                 }
             ],
             "defaults": [],
             "body": {
-                "range": [
-                    16,
-                    71
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 16
-                    },
-                    "end": {
-                        "line": 7,
-                        "column": 1
-                    }
-                },
                 "type": "BlockStatement",
                 "body": [
                     {
-                        "range": [
-                            20,
-                            69
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 2,
-                                "column": 2
-                            },
-                            "end": {
-                                "line": 6,
-                                "column": 3
-                            }
-                        },
                         "type": "TryStatement",
                         "block": {
-                            "range": [
-                                24,
-                                46
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 2,
-                                    "column": 6
-                                },
-                                "end": {
-                                    "line": 4,
-                                    "column": 3
-                                }
-                            },
                             "type": "BlockStatement",
                             "body": [
                                 {
-                                    "range": [
-                                        30,
-                                        42
-                                    ],
-                                    "loc": {
-                                        "start": {
-                                            "line": 3,
-                                            "column": 4
-                                        },
-                                        "end": {
-                                            "line": 3,
-                                            "column": 16
-                                        }
-                                    },
                                     "type": "VariableDeclaration",
                                     "declarations": [
                                         {
-                                            "range": [
-                                                34,
-                                                41
-                                            ],
-                                            "loc": {
-                                                "start": {
-                                                    "line": 3,
-                                                    "column": 8
-                                                },
-                                                "end": {
-                                                    "line": 3,
-                                                    "column": 15
-                                                }
-                                            },
                                             "type": "VariableDeclarator",
                                             "id": {
-                                                "range": [
-                                                    34,
-                                                    37
-                                                ],
-                                                "loc": {
-                                                    "start": {
-                                                        "line": 3,
-                                                        "column": 8
-                                                    },
-                                                    "end": {
-                                                        "line": 3,
-                                                        "column": 11
-                                                    }
-                                                },
                                                 "type": "ObjectPattern",
                                                 "properties": [
                                                     {
+                                                        "type": "Property",
+                                                        "key": {
+                                                            "type": "Identifier",
+                                                            "name": "b",
+                                                            "range": [
+                                                                35,
+                                                                36
+                                                            ],
+                                                            "loc": {
+                                                                "start": {
+                                                                    "line": 3,
+                                                                    "column": 9
+                                                                },
+                                                                "end": {
+                                                                    "line": 3,
+                                                                    "column": 10
+                                                                }
+                                                            }
+                                                        },
+                                                        "value": {
+                                                            "type": "Identifier",
+                                                            "name": "b",
+                                                            "range": [
+                                                                35,
+                                                                36
+                                                            ],
+                                                            "loc": {
+                                                                "start": {
+                                                                    "line": 3,
+                                                                    "column": 9
+                                                                },
+                                                                "end": {
+                                                                    "line": 3,
+                                                                    "column": 10
+                                                                }
+                                                            }
+                                                        },
+                                                        "kind": "init",
+                                                        "method": false,
+                                                        "shorthand": true,
+                                                        "computed": false,
                                                         "range": [
                                                             35,
                                                             36
@@ -244,52 +171,27 @@ module.exports = {
                                                                 "line": 3,
                                                                 "column": 10
                                                             }
-                                                        },
-                                                        "type": "Property",
-                                                        "key": {
-                                                            "range": [
-                                                                35,
-                                                                36
-                                                            ],
-                                                            "loc": {
-                                                                "start": {
-                                                                    "line": 3,
-                                                                    "column": 9
-                                                                },
-                                                                "end": {
-                                                                    "line": 3,
-                                                                    "column": 10
-                                                                }
-                                                            },
-                                                            "type": "Identifier",
-                                                            "name": "b"
-                                                        },
-                                                        "computed": false,
-                                                        "value": {
-                                                            "range": [
-                                                                35,
-                                                                36
-                                                            ],
-                                                            "loc": {
-                                                                "start": {
-                                                                    "line": 3,
-                                                                    "column": 9
-                                                                },
-                                                                "end": {
-                                                                    "line": 3,
-                                                                    "column": 10
-                                                                }
-                                                            },
-                                                            "type": "Identifier",
-                                                            "name": "b"
-                                                        },
-                                                        "kind": "init",
-                                                        "method": false,
-                                                        "shorthand": true
+                                                        }
                                                     }
-                                                ]
+                                                ],
+                                                "range": [
+                                                    34,
+                                                    37
+                                                ],
+                                                "loc": {
+                                                    "start": {
+                                                        "line": 3,
+                                                        "column": 8
+                                                    },
+                                                    "end": {
+                                                        "line": 3,
+                                                        "column": 11
+                                                    }
+                                                }
                                             },
                                             "init": {
+                                                "type": "Identifier",
+                                                "name": "a",
                                                 "range": [
                                                     40,
                                                     41
@@ -303,125 +205,64 @@ module.exports = {
                                                         "line": 3,
                                                         "column": 15
                                                     }
-                                                },
-                                                "type": "Identifier",
-                                                "name": "a"
-                                            }
-                                        }
-                                    ],
-                                    "kind": "var"
-                                }
-                            ]
-                        },
-                        "guardedHandlers": [],
-                        "handlers": [
-                            {
-                                "range": [
-                                    49,
-                                    69
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 5,
-                                        "column": 2
-                                    },
-                                    "end": {
-                                        "line": 6,
-                                        "column": 3
-                                    }
-                                },
-                                "type": "CatchClause",
-                                "param": {
-                                    "range": [
-                                        55,
-                                        62
-                                    ],
-                                    "loc": {
-                                        "start": {
-                                            "line": 5,
-                                            "column": 8
-                                        },
-                                        "end": {
-                                            "line": 5,
-                                            "column": 15
-                                        }
-                                    },
-                                    "type": "ArrayPattern",
-                                    "elements": [
-                                        {
+                                                }
+                                            },
                                             "range": [
-                                                56,
-                                                61
+                                                34,
+                                                41
                                             ],
                                             "loc": {
                                                 "start": {
-                                                    "line": 5,
-                                                    "column": 9
+                                                    "line": 3,
+                                                    "column": 8
                                                 },
                                                 "end": {
-                                                    "line": 5,
-                                                    "column": 14
+                                                    "line": 3,
+                                                    "column": 15
                                                 }
-                                            },
-                                            "type": "Identifier",
-                                            "name": "stack"
+                                            }
                                         }
-                                    ]
-                                },
-                                "body": {
+                                    ],
+                                    "kind": "var",
                                     "range": [
-                                        64,
-                                        69
+                                        30,
+                                        42
                                     ],
                                     "loc": {
                                         "start": {
-                                            "line": 5,
-                                            "column": 17
+                                            "line": 3,
+                                            "column": 4
                                         },
                                         "end": {
-                                            "line": 6,
-                                            "column": 3
+                                            "line": 3,
+                                            "column": 16
                                         }
-                                    },
-                                    "type": "BlockStatement",
-                                    "body": []
+                                    }
                                 }
-                            }
-                        ],
-                        "handler": {
+                            ],
                             "range": [
-                                49,
-                                69
+                                24,
+                                46
                             ],
                             "loc": {
                                 "start": {
-                                    "line": 5,
-                                    "column": 2
+                                    "line": 2,
+                                    "column": 6
                                 },
                                 "end": {
-                                    "line": 6,
+                                    "line": 4,
                                     "column": 3
                                 }
-                            },
+                            }
+                        },
+                        "handler": {
                             "type": "CatchClause",
                             "param": {
-                                "range": [
-                                    55,
-                                    62
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 5,
-                                        "column": 8
-                                    },
-                                    "end": {
-                                        "line": 5,
-                                        "column": 15
-                                    }
-                                },
                                 "type": "ArrayPattern",
                                 "elements": [
                                     {
+                                        "type": "Identifier",
+                                        "name": "stack",
                                         "range": [
                                             56,
                                             61
@@ -435,13 +276,27 @@ module.exports = {
                                                 "line": 5,
                                                 "column": 14
                                             }
-                                        },
-                                        "type": "Identifier",
-                                        "name": "stack"
+                                        }
                                     }
-                                ]
+                                ],
+                                "range": [
+                                    55,
+                                    62
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 5,
+                                        "column": 8
+                                    },
+                                    "end": {
+                                        "line": 5,
+                                        "column": 15
+                                    }
+                                }
                             },
                             "body": {
+                                "type": "BlockStatement",
+                                "body": [],
                                 "range": [
                                     64,
                                     69
@@ -455,19 +310,75 @@ module.exports = {
                                         "line": 6,
                                         "column": 3
                                     }
+                                }
+                            },
+                            "range": [
+                                49,
+                                69
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 5,
+                                    "column": 2
                                 },
-                                "type": "BlockStatement",
-                                "body": []
+                                "end": {
+                                    "line": 6,
+                                    "column": 3
+                                }
                             }
                         },
-                        "finalizer": null
+                        "finalizer": null,
+                        "range": [
+                            20,
+                            69
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 2,
+                                "column": 2
+                            },
+                            "end": {
+                                "line": 6,
+                                "column": 3
+                            }
+                        }
                     }
-                ]
+                ],
+                "range": [
+                    16,
+                    71
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 16
+                    },
+                    "end": {
+                        "line": 7,
+                        "column": 1
+                    }
+                }
             },
+            "rest": null,
             "generator": false,
-            "expression": false
+            "expression": false,
+            "range": [
+                0,
+                71
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 7,
+                    "column": 1
+                }
+            }
         },
         {
+            "type": "EmptyStatement",
             "range": [
                 71,
                 72
@@ -481,8 +392,22 @@ module.exports = {
                     "line": 7,
                     "column": 2
                 }
-            },
-            "type": "EmptyStatement"
+            }
         }
-    ]
-}
+    ],
+    "sourceType": "script",
+    "range": [
+        0,
+        72
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 7,
+            "column": 2
+        }
+    }
+};
