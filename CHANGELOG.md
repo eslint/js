@@ -1,3 +1,8 @@
+v1.12.3 - March 28, 2015
+
+* 1.12.3 (Nicholas C. Zakas)
+* Fix: Tagged template strings (fixes #110) (Nicholas C. Zakas)
+
 v1.12.2 - March 21, 2015
 
 * 1.12.2 (Nicholas C. Zakas)
