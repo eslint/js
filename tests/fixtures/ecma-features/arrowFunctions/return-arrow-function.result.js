@@ -26,7 +26,6 @@ module.exports = {
                         }
                     }
                 ],
-                "defaults": [],
                 "body": {
                     "type": "ArrowFunctionExpression",
                     "id": null,
@@ -50,7 +49,6 @@ module.exports = {
                             }
                         }
                     ],
-                    "defaults": [],
                     "body": {
                         "type": "Literal",
                         "value": 42,

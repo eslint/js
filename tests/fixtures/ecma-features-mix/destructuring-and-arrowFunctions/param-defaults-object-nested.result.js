@@ -273,7 +273,6 @@ module.exports = {
                         }
                     }
                 ],
-                "defaults": [],
                 "body": {
                     "type": "ArrayExpression",
                     "elements": [

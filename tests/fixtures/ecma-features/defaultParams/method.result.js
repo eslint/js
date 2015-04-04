@@ -52,37 +52,52 @@ module.exports = {
                                 "id": null,
                                 "params": [
                                     {
-                                        "type": "Identifier",
-                                        "name": "a",
+                                        "type": "AssignmentPattern",
+                                        "left": {
+                                            "type": "Identifier",
+                                            "name": "a",
+                                            "range": [
+                                                18,
+                                                19
+                                            ],
+                                            "loc": {
+                                                "start": {
+                                                    "line": 1,
+                                                    "column": 18
+                                                },
+                                                "end": {
+                                                    "line": 1,
+                                                    "column": 19
+                                                }
+                                            }
+                                        },
+                                        "right": {
+                                            "type": "Literal",
+                                            "value": 1,
+                                            "raw": "1",
+                                            "range": [
+                                                20,
+                                                21
+                                            ],
+                                            "loc": {
+                                                "start": {
+                                                    "line": 1,
+                                                    "column": 20
+                                                },
+                                                "end": {
+                                                    "line": 1,
+                                                    "column": 21
+                                                }
+                                            }
+                                        },
                                         "range": [
                                             18,
-                                            19
-                                        ],
-                                        "loc": {
-                                            "start": {
-                                                "line": 1,
-                                                "column": 18
-                                            },
-                                            "end": {
-                                                "line": 1,
-                                                "column": 19
-                                            }
-                                        }
-                                    }
-                                ],
-                                "defaults": [
-                                    {
-                                        "type": "Literal",
-                                        "value": 1,
-                                        "raw": "1",
-                                        "range": [
-                                            20,
                                             21
                                         ],
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 20
+                                                "column": 18
                                             },
                                             "end": {
                                                 "line": 1,

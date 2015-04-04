@@ -31,94 +31,132 @@ module.exports = {
                             "id": null,
                             "params": [
                                 {
-                                    "type": "ObjectPattern",
-                                    "properties": [
-                                        {
-                                            "type": "Property",
-                                            "key": {
-                                                "type": "Identifier",
-                                                "name": "x",
-                                                "range": [
-                                                    5,
-                                                    6
-                                                ],
-                                                "loc": {
-                                                    "start": {
-                                                        "line": 1,
-                                                        "column": 5
-                                                    },
-                                                    "end": {
-                                                        "line": 1,
-                                                        "column": 6
+                                    "type": "AssignmentPattern",
+                                    "left": {
+                                        "type": "ObjectPattern",
+                                        "properties": [
+                                            {
+                                                "type": "Property",
+                                                "key": {
+                                                    "type": "Identifier",
+                                                    "name": "x",
+                                                    "range": [
+                                                        5,
+                                                        6
+                                                    ],
+                                                    "loc": {
+                                                        "start": {
+                                                            "line": 1,
+                                                            "column": 5
+                                                        },
+                                                        "end": {
+                                                            "line": 1,
+                                                            "column": 6
+                                                        }
                                                     }
-                                                }
-                                            },
-                                            "value": {
-                                                "type": "Identifier",
-                                                "name": "x",
-                                                "range": [
-                                                    5,
-                                                    6
-                                                ],
-                                                "loc": {
-                                                    "start": {
-                                                        "line": 1,
-                                                        "column": 5
-                                                    },
-                                                    "end": {
-                                                        "line": 1,
-                                                        "column": 6
-                                                    }
-                                                }
-                                            },
-                                            "kind": "init",
-                                            "method": false,
-                                            "shorthand": true,
-                                            "computed": false,
-                                            "range": [
-                                                5,
-                                                6
-                                            ],
-                                            "loc": {
-                                                "start": {
-                                                    "line": 1,
-                                                    "column": 5
                                                 },
-                                                "end": {
-                                                    "line": 1,
-                                                    "column": 6
+                                                "value": {
+                                                    "type": "Identifier",
+                                                    "name": "x",
+                                                    "range": [
+                                                        5,
+                                                        6
+                                                    ],
+                                                    "loc": {
+                                                        "start": {
+                                                            "line": 1,
+                                                            "column": 5
+                                                        },
+                                                        "end": {
+                                                            "line": 1,
+                                                            "column": 6
+                                                        }
+                                                    }
+                                                },
+                                                "kind": "init",
+                                                "method": false,
+                                                "shorthand": true,
+                                                "computed": false,
+                                                "range": [
+                                                    5,
+                                                    6
+                                                ],
+                                                "loc": {
+                                                    "start": {
+                                                        "line": 1,
+                                                        "column": 5
+                                                    },
+                                                    "end": {
+                                                        "line": 1,
+                                                        "column": 6
+                                                    }
                                                 }
                                             }
+                                        ],
+                                        "range": [
+                                            4,
+                                            7
+                                        ],
+                                        "loc": {
+                                            "start": {
+                                                "line": 1,
+                                                "column": 4
+                                            },
+                                            "end": {
+                                                "line": 1,
+                                                "column": 7
+                                            }
                                         }
-                                    ],
-                                    "range": [
-                                        4,
-                                        7
-                                    ],
-                                    "loc": {
-                                        "start": {
-                                            "line": 1,
-                                            "column": 4
-                                        },
-                                        "end": {
-                                            "line": 1,
-                                            "column": 7
-                                        }
-                                    }
-                                }
-                            ],
-                            "defaults": [
-                                {
-                                    "type": "ObjectExpression",
-                                    "properties": [
-                                        {
-                                            "type": "Property",
-                                            "key": {
-                                                "type": "Identifier",
-                                                "name": "x",
+                                    },
+                                    "right": {
+                                        "type": "ObjectExpression",
+                                        "properties": [
+                                            {
+                                                "type": "Property",
+                                                "key": {
+                                                    "type": "Identifier",
+                                                    "name": "x",
+                                                    "range": [
+                                                        11,
+                                                        12
+                                                    ],
+                                                    "loc": {
+                                                        "start": {
+                                                            "line": 1,
+                                                            "column": 11
+                                                        },
+                                                        "end": {
+                                                            "line": 1,
+                                                            "column": 12
+                                                        }
+                                                    }
+                                                },
+                                                "value": {
+                                                    "type": "Literal",
+                                                    "value": 10,
+                                                    "raw": "10",
+                                                    "range": [
+                                                        14,
+                                                        16
+                                                    ],
+                                                    "loc": {
+                                                        "start": {
+                                                            "line": 1,
+                                                            "column": 14
+                                                        },
+                                                        "end": {
+                                                            "line": 1,
+                                                            "column": 16
+                                                        }
+                                                    }
+                                                },
+                                                "kind": "init",
+                                                "method": false,
+                                                "shorthand": false,
+                                                "computed": false,
                                                 "range": [
                                                     11,
-                                                    12
+                                                    16
                                                 ],
                                                 "loc": {
                                                     "start": {
@@ -127,57 +165,34 @@ module.exports = {
                                                     },
                                                     "end": {
                                                         "line": 1,
-                                                        "column": 12
-                                                    }
-                                                }
-                                            },
-                                            "value": {
-                                                "type": "Literal",
-                                                "value": 10,
-                                                "raw": "10",
-                                                "range": [
-                                                    14,
-                                                    16
-                                                ],
-                                                "loc": {
-                                                    "start": {
-                                                        "line": 1,
-                                                        "column": 14
-                                                    },
-                                                    "end": {
-                                                        "line": 1,
                                                         "column": 16
                                                     }
                                                 }
+                                            }
+                                        ],
+                                        "range": [
+                                            10,
+                                            17
+                                        ],
+                                        "loc": {
+                                            "start": {
+                                                "line": 1,
+                                                "column": 10
                                             },
-                                            "kind": "init",
-                                            "method": false,
-                                            "shorthand": false,
-                                            "computed": false,
-                                            "range": [
-                                                11,
-                                                16
-                                            ],
-                                            "loc": {
-                                                "start": {
-                                                    "line": 1,
-                                                    "column": 11
-                                                },
-                                                "end": {
-                                                    "line": 1,
-                                                    "column": 16
-                                                }
+                                            "end": {
+                                                "line": 1,
+                                                "column": 17
                                             }
                                         }
-                                    ],
+                                    },
                                     "range": [
-                                        10,
+                                        4,
                                         17
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 1,
-                                            "column": 10
+                                            "column": 4
                                         },
                                         "end": {
                                             "line": 1,

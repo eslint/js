@@ -7,7 +7,6 @@ module.exports = {
                 "type": "ArrowFunctionExpression",
                 "id": null,
                 "params": [],
-                "defaults": [],
                 "body": {
                     "type": "Literal",
                     "value": "test",

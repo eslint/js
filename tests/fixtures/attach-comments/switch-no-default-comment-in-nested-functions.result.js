@@ -83,7 +83,6 @@ module.exports = {
                             }
                         }
                     ],
-                    "defaults": [],
                     "body": {
                         "type": "BlockStatement",
                         "body": [
@@ -127,7 +126,6 @@ module.exports = {
                                         }
                                     }
                                 ],
-                                "defaults": [],
                                 "body": {
                                     "type": "BlockStatement",
                                     "body": [

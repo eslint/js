@@ -2277,7 +2277,6 @@ function parsePropertyFunction(paramInfo, options) {
     return markerApply(options.marker, astNodeFactory.createFunctionExpression(
         null,
         paramInfo.params,
-        paramInfo.defaults,
         body,
         generator,
         body.type !== astNodeTypes.BlockStatement
@@ -2387,7 +2386,6 @@ function tryParseMethodDefinition(token, key, computed, marker) {
 
             value = parsePropertyFunction({
                 params: [],
-                defaults: [],
                 stricted: null,
                 firstRestricted: null,
                 message: null
@@ -2406,7 +2404,6 @@ function tryParseMethodDefinition(token, key, computed, marker) {
             options = {
                 params: [],
                 defaultCount: 0,
-                defaults: [],
                 stricted: null,
                 firstRestricted: null,
                 paramSet: new StringMap()
@@ -2415,9 +2412,6 @@ function tryParseMethodDefinition(token, key, computed, marker) {
                 throwErrorTolerant(lookahead, Messages.UnexpectedToken, lookahead.value);
             } else {
                 parseParam(options);
-                if (options.defaultCount === 0) {
-                    options.defaults = [];
-                }
             }
             expect(")");
 
@@ -2518,7 +2512,6 @@ function parseObjectProperty() {
             options = {
                 params: [],
                 defaultCount: 0,
-                defaults: [],
                 stricted: null,
                 firstRestricted: null,
                 paramSet: new StringMap()
@@ -2528,9 +2521,6 @@ function parseObjectProperty() {
                 throwErrorTolerant(lookahead, Messages.UnexpectedToken, lookahead.value);
             } else {
                 parseParam(options);
-                if (options.defaultCount === 0) {
-                    options.defaults = [];
-                }
             }
 
             expect(")");
@@ -3271,11 +3261,9 @@ function parseConciseBody() {
 }
 
 function reinterpretAsCoverFormalsList(expressions) {
-    var i, len, param, params, defaults, defaultCount, options;
+    var i, len, param, params, options;
 
     params = [];
-    defaults = [];
-    defaultCount = 0;
     options = {
         paramSet: new StringMap()
     };
@@ -3284,12 +3272,10 @@ function reinterpretAsCoverFormalsList(expressions) {
         param = expressions[i];
         if (param.type === astNodeTypes.Identifier) {
             params.push(param);
-            defaults.push(null);
             validateParam(options, param, param.name);
         }  else if (param.type === astNodeTypes.ObjectExpression || param.type === astNodeTypes.ArrayExpression) {
             reinterpretAsDestructuredParameter(options, param);
             params.push(param);
-            defaults.push(null);
         } else if (param.type === astNodeTypes.SpreadElement) {
             assert(i === len - 1, "It is guaranteed that SpreadElement is last element by parseExpression");
             if (param.argument.type !== astNodeTypes.Identifier) {
@@ -3299,15 +3285,16 @@ function reinterpretAsCoverFormalsList(expressions) {
             reinterpretAsDestructuredParameter(options, param.argument);
             param.type = astNodeTypes.RestElement;
             params.push(param);
-            defaults.push(null);
         } else if (param.type === astNodeTypes.RestElement) {
             params.push(param);
-            defaults.push(null);
             validateParam(options, param.argument, param.argument.name);
         } else if (param.type === astNodeTypes.AssignmentExpression) {
-            params.push(param.left);
-            defaults.push(param.right);
-            ++defaultCount;
+
+            // TODO: Find a less hacky way of doing this
+            param.type = astNodeTypes.AssignmentPattern;
+            delete param.operator;
+
+            params.push(param);
             validateParam(options, param.left, param.left.name);
         } else {
             return null;
@@ -3321,14 +3308,8 @@ function reinterpretAsCoverFormalsList(expressions) {
         );
     }
 
-    // must be here so it's not an array of [null, null]
-    if (defaultCount === 0) {
-        defaults = [];
-    }
-
     return {
         params: params,
-        defaults: defaults,
         stricted: options.stricted,
         firstRestricted: options.firstRestricted,
         message: options.message
@@ -3353,7 +3334,6 @@ function parseArrowFunctionExpression(options, marker) {
     strict = previousStrict;
     return markerApply(marker, astNodeFactory.createArrowFunctionExpression(
         options.params,
-        options.defaults,
         body,
         body.type !== astNodeTypes.BlockStatement
     ));
@@ -4428,8 +4408,8 @@ function parseParam(options) {
     var token, param, def,
         allowRestParams = extra.ecmaFeatures.restParams,
         allowDestructuring = extra.ecmaFeatures.destructuring,
-        allowDefaultParams = extra.ecmaFeatures.defaultParams;
-
+        allowDefaultParams = extra.ecmaFeatures.defaultParams,
+        marker = markerCreate();
 
     token = lookahead;
     if (token.value === "...") {
@@ -4439,7 +4419,6 @@ function parseParam(options) {
         param = parseRestElement();
         validateParam(options, param.argument, param.argument.name);
         options.params.push(param);
-        options.defaults.push(null);
         return false;
     }
 
@@ -4470,8 +4449,17 @@ function parseParam(options) {
         }
     }
 
-    options.params.push(param);
-    options.defaults.push(def ? def : null); // TODO: determine if null or undefined (see: #55)
+    if (def) {
+        options.params.push(markerApply(
+            marker,
+            astNodeFactory.createAssignmentPattern(
+                param,
+                def
+            )
+        ));
+    } else {
+        options.params.push(param);
+    }
 
     return !match(")");
 }
@@ -4483,7 +4471,6 @@ function parseParams(firstRestricted) {
     options = {
         params: [],
         defaultCount: 0,
-        defaults: [],
         firstRestricted: firstRestricted
     };
 
@@ -4501,13 +4488,8 @@ function parseParams(firstRestricted) {
 
     expect(")");
 
-    if (options.defaultCount === 0) {
-        options.defaults = [];
-    }
-
     return {
         params: options.params,
-        defaults: options.defaults,
         stricted: options.stricted,
         firstRestricted: options.firstRestricted,
         message: options.message
@@ -4574,7 +4556,6 @@ function parseFunctionDeclaration(identifierIsOptional) {
             astNodeFactory.createFunctionDeclaration(
                 id,
                 tmp.params,
-                tmp.defaults,
                 body,
                 generator,
                 false
@@ -4640,7 +4621,6 @@ function parseFunctionExpression() {
         astNodeFactory.createFunctionExpression(
             id,
             tmp.params,
-            tmp.defaults,
             body,
             generator,
             false

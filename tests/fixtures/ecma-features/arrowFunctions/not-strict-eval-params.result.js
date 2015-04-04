@@ -44,7 +44,6 @@ module.exports = {
                         }
                     }
                 ],
-                "defaults": [],
                 "body": {
                     "type": "Literal",
                     "value": 42,

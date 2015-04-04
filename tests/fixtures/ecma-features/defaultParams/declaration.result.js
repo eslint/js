@@ -23,37 +23,52 @@ module.exports = {
             },
             "params": [
                 {
-                    "type": "Identifier",
-                    "name": "a",
+                    "type": "AssignmentPattern",
+                    "left": {
+                        "type": "Identifier",
+                        "name": "a",
+                        "range": [
+                            11,
+                            12
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 11
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 12
+                            }
+                        }
+                    },
+                    "right": {
+                        "type": "Literal",
+                        "value": 1,
+                        "raw": "1",
+                        "range": [
+                            15,
+                            16
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 15
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 16
+                            }
+                        }
+                    },
                     "range": [
                         11,
-                        12
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 11
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 12
-                        }
-                    }
-                }
-            ],
-            "defaults": [
-                {
-                    "type": "Literal",
-                    "value": 1,
-                    "raw": "1",
-                    "range": [
-                        15,
                         16
                     ],
                     "loc": {
                         "start": {
                             "line": 1,
-                            "column": 15
+                            "column": 11
                         },
                         "end": {
                             "line": 1,

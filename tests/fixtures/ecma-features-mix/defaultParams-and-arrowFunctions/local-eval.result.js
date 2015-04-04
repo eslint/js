@@ -8,37 +8,52 @@ module.exports = {
                 "id": null,
                 "params": [
                     {
-                        "type": "Identifier",
-                        "name": "eval",
+                        "type": "AssignmentPattern",
+                        "left": {
+                            "type": "Identifier",
+                            "name": "eval",
+                            "range": [
+                                1,
+                                5
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 1
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 5
+                                }
+                            }
+                        },
+                        "right": {
+                            "type": "Literal",
+                            "value": 10,
+                            "raw": "10",
+                            "range": [
+                                8,
+                                10
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 8
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 10
+                                }
+                            }
+                        },
                         "range": [
                             1,
-                            5
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 1
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 5
-                            }
-                        }
-                    }
-                ],
-                "defaults": [
-                    {
-                        "type": "Literal",
-                        "value": 10,
-                        "raw": "10",
-                        "range": [
-                            8,
                             10
                         ],
                         "loc": {
                             "start": {
                                 "line": 1,
-                                "column": 8
+                                "column": 1
                             },
                             "end": {
                                 "line": 1,

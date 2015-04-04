@@ -24,7 +24,6 @@ module.exports = {
                     }
                 },
                 "params": [],
-                "defaults": [],
                 "body": {
                     "type": "BlockStatement",
                     "body": [],
