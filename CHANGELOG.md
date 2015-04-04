@@ -1,3 +1,13 @@
+v2.0.0 - April 4, 2015
+
+* 2.0.0 (Nicholas C. Zakas)
+* Docs: Update README with latest info (Nicholas C. Zakas)
+* Breaking: Use ESTree format for default params (fixes #114) (Nicholas C. Zakas)
+* New: Add Super node (fixes #115) (Nicholas C. Zakas)
+* Breaking: Switch to RestElement for rest args (fixes #84) (Nicholas C. Zakas)
+* Docs: Correct license info on README (fixes #117) (AJ Ortega)
+* Breaking: Remove guardedHandlers/handlers from try (fixes #71) (Nicholas C. Zakas)
+
 v1.12.3 - March 28, 2015
 
 * 1.12.3 (Nicholas C. Zakas)
