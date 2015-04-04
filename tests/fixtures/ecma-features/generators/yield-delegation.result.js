@@ -7,7 +7,6 @@ module.exports = {
                 "type": "FunctionExpression",
                 "id": null,
                 "params": [],
-                "defaults": [],
                 "body": {
                     "type": "BlockStatement",
                     "body": [

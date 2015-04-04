@@ -23,75 +23,90 @@ module.exports = {
             },
             "params": [
                 {
-                    "type": "ArrayPattern",
-                    "elements": [
-                        {
-                            "type": "Identifier",
-                            "name": "x",
-                            "range": [
-                                12,
-                                13
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 12
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 13
+                    "type": "AssignmentPattern",
+                    "left": {
+                        "type": "ArrayPattern",
+                        "elements": [
+                            {
+                                "type": "Identifier",
+                                "name": "x",
+                                "range": [
+                                    12,
+                                    13
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 12
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 13
+                                    }
                                 }
                             }
+                        ],
+                        "range": [
+                            11,
+                            14
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 11
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 14
+                            }
                         }
-                    ],
+                    },
+                    "right": {
+                        "type": "ArrayExpression",
+                        "elements": [
+                            {
+                                "type": "Literal",
+                                "value": 1,
+                                "raw": "1",
+                                "range": [
+                                    18,
+                                    19
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 18
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 19
+                                    }
+                                }
+                            }
+                        ],
+                        "range": [
+                            17,
+                            20
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 17
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 20
+                            }
+                        }
+                    },
                     "range": [
                         11,
-                        14
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 11
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 14
-                        }
-                    }
-                }
-            ],
-            "defaults": [
-                {
-                    "type": "ArrayExpression",
-                    "elements": [
-                        {
-                            "type": "Literal",
-                            "value": 1,
-                            "raw": "1",
-                            "range": [
-                                18,
-                                19
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 18
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 19
-                                }
-                            }
-                        }
-                    ],
-                    "range": [
-                        17,
                         20
                     ],
                     "loc": {
                         "start": {
                             "line": 1,
-                            "column": 17
+                            "column": 11
                         },
                         "end": {
                             "line": 1,

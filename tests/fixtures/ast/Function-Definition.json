@@ -20,7 +20,7 @@
             }
         },
         "params": [],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [
@@ -132,7 +132,7 @@
             }
         },
         "params": [],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [],
@@ -190,7 +190,7 @@
             }
         },
         "params": [],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [],
@@ -285,7 +285,7 @@
                 }
             }
         ],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [],
@@ -382,7 +382,7 @@
                     }
                 }
             ],
-            "defaults": [],
+
             "body": {
                 "type": "BlockStatement",
                 "body": [],
@@ -455,7 +455,7 @@
             }
         },
         "params": [],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [
@@ -480,7 +480,7 @@
                         }
                     },
                     "params": [],
-                    "defaults": [],
+
                     "body": {
                         "type": "BlockStatement",
                         "body": [
@@ -628,7 +628,7 @@
                 }
             }
         ],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [
@@ -777,7 +777,7 @@
                 }
             }
         ],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [
@@ -895,7 +895,7 @@
                     "type": "FunctionExpression",
                     "id": null,
                     "params": [],
-                    "defaults": [],
+
                     "body": {
                         "type": "BlockStatement",
                         "body": [
@@ -1062,7 +1062,7 @@
                         }
                     },
                     "params": [],
-                    "defaults": [],
+
                     "body": {
                         "type": "BlockStatement",
                         "body": [],
@@ -1175,7 +1175,7 @@
                         }
                     },
                     "params": [],
-                    "defaults": [],
+
                     "body": {
                         "type": "BlockStatement",
                         "body": [],
@@ -1288,7 +1288,7 @@
                         }
                     },
                     "params": [],
-                    "defaults": [],
+
                     "body": {
                         "type": "BlockStatement",
                         "body": [
@@ -1417,7 +1417,7 @@
             "type": "FunctionExpression",
             "id": null,
             "params": [],
-            "defaults": [],
+
             "body": {
                 "type": "BlockStatement",
                 "body": [],
@@ -1509,7 +1509,7 @@
                 }
             }
         ],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [],
@@ -1567,7 +1567,7 @@
             }
         },
         "params": [],
-        "defaults": [],
+
         "body": {
             "type": "BlockStatement",
             "body": [

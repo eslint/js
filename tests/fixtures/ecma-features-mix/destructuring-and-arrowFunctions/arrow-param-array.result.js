@@ -45,7 +45,6 @@ module.exports = {
                         }
                     }
                 ],
-                "defaults": [],
                 "body": {
                     "type": "Identifier",
                     "name": "x",

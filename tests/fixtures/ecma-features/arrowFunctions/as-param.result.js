@@ -28,7 +28,6 @@ module.exports = {
                         "type": "ArrowFunctionExpression",
                         "id": null,
                         "params": [],
-                        "defaults": [],
                         "body": {
                             "type": "BlockStatement",
                             "body": [],

@@ -58,7 +58,6 @@ module.exports = {
                     }
                 }
             ],
-            "defaults": [],
             "body": {
                 "type": "BlockStatement",
                 "body": [],

@@ -26,7 +26,6 @@ module.exports = {
                         }
                     }
                 ],
-                "defaults": [],
                 "body": {
                     "type": "ObjectExpression",
                     "properties": [
