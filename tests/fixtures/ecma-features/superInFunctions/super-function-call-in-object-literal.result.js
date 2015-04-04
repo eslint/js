@@ -60,8 +60,7 @@ module.exports = {
                                                 "expression": {
                                                     "type": "CallExpression",
                                                     "callee": {
-                                                        "type": "Identifier",
-                                                        "name": "super",
+                                                        "type": "Super",
                                                         "range": [
                                                             41,
                                                             46

@@ -2862,7 +2862,7 @@ function parsePrimaryExpression() {
         if (allowSuper && matchKeyword("super") && state.inFunctionBody) {
             marker = markerCreate();
             lex();
-            return markerApply(marker, astNodeFactory.createIdentifier("super"));
+            return markerApply(marker, astNodeFactory.createSuper());
         }
 
         if (matchKeyword("this")) {
