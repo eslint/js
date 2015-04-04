@@ -41,7 +41,7 @@
     "complexity-report": "~0.6.1",
     "dateformat": "^1.0.11",
     "eslint": "^0.9.2",
-    "esprima": "git://github.com/ariya/esprima#harmony",
+    "esprima": "git://github.com/jquery/esprima",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "istanbul": "~0.2.6",
     "json-diff": "~0.3.1",

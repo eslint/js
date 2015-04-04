@@ -21,7 +21,43 @@ module.exports = {
                     }
                 }
             },
-            "params": [],
+            "params": [
+                {
+                    "type": "RestElement",
+                    "argument": {
+                        "type": "Identifier",
+                        "name": "b",
+                        "range": [
+                            14,
+                            15
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 14
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 15
+                            }
+                        }
+                    },
+                    "range": [
+                        11,
+                        15
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 11
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 15
+                        }
+                    }
+                }
+            ],
             "defaults": [],
             "body": {
                 "type": "BlockStatement",
@@ -38,24 +74,6 @@ module.exports = {
                     "end": {
                         "line": 1,
                         "column": 19
-                    }
-                }
-            },
-            "rest": {
-                "type": "Identifier",
-                "name": "b",
-                "range": [
-                    14,
-                    15
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 14
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 15
                     }
                 }
             },

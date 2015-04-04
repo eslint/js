@@ -27,7 +27,43 @@ module.exports = {
                     "init": {
                         "type": "FunctionExpression",
                         "id": null,
-                        "params": [],
+                        "params": [
+                            {
+                                "type": "RestElement",
+                                "argument": {
+                                    "type": "Identifier",
+                                    "name": "a",
+                                    "range": [
+                                        21,
+                                        22
+                                    ],
+                                    "loc": {
+                                        "start": {
+                                            "line": 1,
+                                            "column": 21
+                                        },
+                                        "end": {
+                                            "line": 1,
+                                            "column": 22
+                                        }
+                                    }
+                                },
+                                "range": [
+                                    18,
+                                    22
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 18
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 22
+                                    }
+                                }
+                            }
+                        ],
                         "defaults": [],
                         "body": {
                             "type": "BlockStatement",
@@ -44,24 +80,6 @@ module.exports = {
                                 "end": {
                                     "line": 1,
                                     "column": 26
-                                }
-                            }
-                        },
-                        "rest": {
-                            "type": "Identifier",
-                            "name": "a",
-                            "range": [
-                                21,
-                                22
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 21
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 22
                                 }
                             }
                         },

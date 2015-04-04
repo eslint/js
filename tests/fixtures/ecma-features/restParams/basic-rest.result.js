@@ -39,6 +39,41 @@ module.exports = {
                             "column": 12
                         }
                     }
+                },
+                {
+                    "type": "RestElement",
+                    "argument": {
+                        "type": "Identifier",
+                        "name": "b",
+                        "range": [
+                            17,
+                            18
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 17
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 18
+                            }
+                        }
+                    },
+                    "range": [
+                        14,
+                        18
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 14
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 18
+                        }
+                    }
                 }
             ],
             "defaults": [],
@@ -57,24 +92,6 @@ module.exports = {
                     "end": {
                         "line": 1,
                         "column": 22
-                    }
-                }
-            },
-            "rest": {
-                "type": "Identifier",
-                "name": "b",
-                "range": [
-                    17,
-                    18
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 17
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 18
                     }
                 }
             },
