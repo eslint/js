@@ -8,10 +8,9 @@ parser written in ECMAScript (also popularly known as
 ## Features
 
 - Full support for ECMAScript 5.1 ([ECMA-262](http://www.ecma-international.org/publications/standards/Ecma-262.htm))
-- Sensible syntax tree format compatible with Mozilla
-[Parser AST](https://developer.mozilla.org/en/SpiderMonkey/Parser_API)
+- Implements [ESTree](https://github.com/estree/estree) (both ES5 and ES6 specs) as the AST format.
 - Optional tracking of syntax node location (index-based and line-column)
-- Heavily tested (> 650 unit tests) with full code coverage
+- Heavily tested and battle-hardened by inclusion in [ESLint](http://eslint.org)
 
 ## Usage
 
@@ -144,7 +143,7 @@ The immediate plans are:
 
 ## Esprima Compatibility Going Forward
 
-The primary goal is to produce the exact same AST structure as Esprima and Acorn, and that takes precedence over anything else. (The AST structure being the SpiderMonkey Parser API with JSX extensions.) Separate from that, Espree may deviate from what Esprima outputs in terms of where and how comments are attached, as well as what additional information is available on AST nodes. That is to say, Espree may add more things to the AST nodes than Esprima does but the overall AST structure produced will be the same.
+The primary goal is to produce the exact same AST structure as Esprima and Acorn, and that takes precedence over anything else. (The AST structure being the ESTree API with JSX extensions.) Separate from that, Espree may deviate from what Esprima outputs in terms of where and how comments are attached, as well as what additional information is available on AST nodes. That is to say, Espree may add more things to the AST nodes than Esprima does but the overall AST structure produced will be the same.
 
 Espree may also deviate from Esprima in the interface it exposes.
 
@@ -175,7 +174,7 @@ In an effort to help those wanting to transition from other parsers to Espree, t
 ### Esprima/Harmony Branch
 
 * Esprima/Harmony uses a different comment attachment algorithm that results in some comments being added in different places than Espree. The algorithm Espree uses is the same one used in Esprima 1.2.2.
-* Template tokens have a `head` property in addition to `tail`. Esprima has only `tail`.
+* Espree uses ESTree format for the AST nodes whereas Esprima/Harmony uses a nonstandard format.
 
 ### Esprima-FB
 
@@ -193,6 +192,8 @@ We decided the only way for us to move forward was to create our own parser, bri
 
 Yes. Since the start of ESLint, we've regularly filed bugs and feature requests with Esprima. Unfortunately, we've been unable to make much progress towards getting our needs addressed.
 
+We are actively working with Esprima as part of its adoption by the jQuery Foundation. We are hoping to reconcile Espree with Esprima at some point in the future, but there are some different philosophies around how the projects work that need to be worked through. We're committed to a goal of merging Espree back into Esprima, or at the very least, to have Espree track Esprima as an upstream target so there's no duplication of effort. In the meantime, we will continue to update and maintain Espree.
+
 ### Why don't you just use Facebook's Esprima fork?
 
 `esprima-fb` is Facebook's Esprima fork that features JSX and Flow type annotations. We tried working with `esprima-fb` in our evaluation of how to support ECMAScript 6 and JSX in ESLint. Unfortunately, we were hampered by bugs that were part of Esprima (not necessarily Facebook's code). Since `esprima-fb` tracks the Esprima Harmony branch, that means we still were unable to get fixes or features we needed in a timely manner.
@@ -205,7 +206,7 @@ We expect there are other tools like ESLint that rely on more than just the AST 
 
 ### What ECMAScript 6 features do you support?
 
-Please see the [tracking issue](https://github.com/eslint/espree/issues/10) for the most up-to-date information.
+All of them.
 
 ### Why use Espree instead of Esprima?
 
