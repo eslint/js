@@ -34,8 +34,7 @@ module.exports = {
                                 "type": "MemberExpression",
                                 "computed": false,
                                 "object": {
-                                    "type": "Identifier",
-                                    "name": "super",
+                                    "type": "Super",
                                     "range": [
                                         21,
                                         26
