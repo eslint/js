@@ -1,3 +1,8 @@
+v2.0.1 - April 11, 2015
+
+* 2.0.1 (Nicholas C. Zakas)
+* Fix: Yield should parse without an argument (fixes #121) (Nicholas C. Zakas)
+
 v2.0.0 - April 4, 2015
 
 * 2.0.0 (Nicholas C. Zakas)
