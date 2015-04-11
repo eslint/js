@@ -4644,7 +4644,15 @@ function parseYieldExpression() {
         delegateFlag = true;
     }
 
-    expr = parseAssignmentExpression();
+    if (peekLineTerminator()) {
+        return markerApply(marker, astNodeFactory.createYieldExpression(null, delegateFlag));
+    }
+
+    if (!match(";")) {
+        if (!match("}") && lookahead.type !== Token.EOF) {
+            expr = parseAssignmentExpression();
+        }
+    }
 
     return markerApply(marker, astNodeFactory.createYieldExpression(expr, delegateFlag));
 }
