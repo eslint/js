@@ -37,7 +37,7 @@
   ],
   "devDependencies": {
     "browserify": "^7.0.0",
-    "chai": "^1.10.0",
+    "chai": "^2.3.0",
     "complexity-report": "~0.6.1",
     "dateformat": "^1.0.11",
     "eslint": "^0.9.2",
@@ -79,5 +79,7 @@
     "benchmark": "node test/benchmarks.js",
     "benchmark-quick": "node test/benchmarks.js quick"
   },
-  "dependencies": {}
+  "dependencies": {
+    "acorn": "^1.0.3"
+  }
 }

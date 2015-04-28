@@ -46,6 +46,11 @@ var testFiles = shelljs.find("./tests/fixtures/attach-comments").filter(function
     return filename.substring(0, filename.length - 7);  // strip off ".src.js"
 });
 
+
+function getRaw(ast) {
+    return JSON.parse(JSON.stringify(ast));
+}
+
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -63,7 +68,12 @@ describe("attachComment: true", function() {
                 attachComment: true
             });
 
-            assert.deepEqual(result, output);
+            assert.deepEqual(getRaw(result), output);
+            // assert.deepEqual(Object.keys(result).sort(), Object.keys(output).sort());
+
+            // Object.keys(output).forEach(function(key) {
+            //     assert.deepEqual(result[key], output[key], key);
+            // });
         });
 
     });
