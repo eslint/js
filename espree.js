@@ -3261,7 +3261,8 @@ function parseConciseBody() {
 }
 
 function reinterpretAsCoverFormalsList(expressions) {
-    var i, len, param, params, options;
+    var i, len, param, params, options,
+        allowRestParams = extra.ecmaFeatures.restParams;
 
     params = [];
     options = {
@@ -3280,8 +3281,13 @@ function reinterpretAsCoverFormalsList(expressions) {
             assert(i === len - 1, "It is guaranteed that SpreadElement is last element by parseExpression");
             if (param.argument.type !== astNodeTypes.Identifier) {
                 throwError({}, Messages.UnexpectedToken, "[");
-                // throwError({}, Messages.InvalidLHSInFormalsList);
             }
+
+            if (!allowRestParams) {
+                // can't get correct line/column here :(
+                throwError({}, Messages.UnexpectedToken, ".");
+            }
+
             reinterpretAsDestructuredParameter(options, param.argument);
             param.type = astNodeTypes.RestElement;
             params.push(param);
