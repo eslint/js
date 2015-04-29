@@ -1,3 +1,10 @@
+v2.0.2 - April 28, 2015
+
+* 2.0.2 (Nicholas C. Zakas)
+* Fix: Allow yield without value as function param (fixes #134) (Nicholas C. Zakas)
+* Fix: Allow computed generators in classes (fixes #123) (Nicholas C. Zakas)
+* Fix: Don't allow arrow function rest param (fixes #130) (Nicholas C. Zakas)
+
 v2.0.1 - April 11, 2015
 
 * 2.0.1 (Nicholas C. Zakas)
