@@ -4648,7 +4648,7 @@ function parseYieldExpression() {
         return markerApply(marker, astNodeFactory.createYieldExpression(null, delegateFlag));
     }
 
-    if (!match(";")) {
+    if (!match(";") && !match(")")) {
         if (!match("}") && lookahead.type !== Token.EOF) {
             expr = parseAssignmentExpression();
         }
