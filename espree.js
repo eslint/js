@@ -5002,7 +5002,8 @@ function parseClassBody() {
             }
 
             if (!isStatic) {
-                if (!method.computed && (method.key.name || method.key.value.toString()) === "constructor") {
+
+                if (!method.computed && (method.key.name || (method.key.value && method.key.value.toString())) === "constructor") {
                     if (method.kind !== "method" || !method.method || method.value.generator) {
                         throwUnexpected(token, Messages.ConstructorSpecialMethod);
                     }
