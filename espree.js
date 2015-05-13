@@ -5272,7 +5272,9 @@ function tokenize(code, options) {
 
     // apply parsing flags
     if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-        extra.ecmaFeatures = options.ecmaFeatures;
+        Object.keys(options.ecmaFeatures).forEach(function(key) {
+            extra.ecmaFeatures[key] = options.ecmaFeatures[key];
+        });
     }
 
     try {
@@ -5406,15 +5408,9 @@ function parse(code, options) {
 
         // apply parsing flags after sourceType to allow overriding
         if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-
-            // if it's a module, augment the ecmaFeatures
-            if (options.sourceType === "module") {
-                Object.keys(options.ecmaFeatures).forEach(function(key) {
-                    extra.ecmaFeatures[key] = options.ecmaFeatures[key];
-                });
-            } else {
-                extra.ecmaFeatures = options.ecmaFeatures;
-            }
+            Object.keys(options.ecmaFeatures).forEach(function(key) {
+                extra.ecmaFeatures[key] = options.ecmaFeatures[key];
+            });
         }
 
     }
