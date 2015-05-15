@@ -56,6 +56,7 @@ var ast = espree.parse(code, {
     tolerant: true,
 
     // specify parsing features (default only has blockBindings: true)
+    // setting this option replaces the default values
     ecmaFeatures: {
 
         // enable parsing of arrow functions
