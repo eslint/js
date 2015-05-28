@@ -41,8 +41,7 @@ var assert = require("chai").assert,
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-features",
-    FIXTURES_MIX_DIR = "./tests/fixtures/ecma-features-mix";
+var FIXTURES_DIR = "./tests/fixtures/ecma-features";
 
 var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
@@ -50,15 +49,6 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
 });
 
-var moduleTestFiles = testFiles.filter(function(filename) {
-    return !/jsx|globalReturn|invalid|not\-strict/.test(filename);
-});
-
-var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
-    return filename.indexOf(".src.js") > -1;
-}).map(function(filename) {
-    return filename.substring(FIXTURES_MIX_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
-});
 
 // console.dir(moduleTestFiles);
 // return;

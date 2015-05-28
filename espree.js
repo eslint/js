@@ -35,30 +35,13 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var syntax = require("./lib/syntax"),
-    tokenInfo = require("./lib/token-info"),
+var tokenInfo = require("./lib/token-info"),
     astNodeTypes = require("./lib/ast-node-types"),
-    astNodeFactory = require("./lib/ast-node-factory"),
-    defaultFeatures = require("./lib/features"),
-    Messages = require("./lib/messages"),
-    XHTMLEntities = require("./lib/xhtml-entities"),
-    StringMap = require("./lib/string-map"),
     commentAttachment = require("./lib/comment-attachment"),
     acorn = require("acorn");
 
 var Token = tokenInfo.Token,
-    TokenName = tokenInfo.TokenName,
-    FnExprTokens = tokenInfo.FnExprTokens,
-    Regex = syntax.Regex,
-    PropertyKind,
-    source,
-    strict,
-    index,
-    lineNumber,
-    lineStart,
-    length,
     lookahead,
-    state,
     extra,
     lastToken;
 
@@ -80,7 +63,6 @@ function resetExtra() {
 
 
 var tt = acorn.tokTypes,
-    Node = acorn.Node,
     Parser = acorn.Parser,
     pp = Parser.prototype;
 
@@ -89,8 +71,7 @@ var tt = acorn.tokTypes,
 
 var finishNode = pp.finishNode,
     finishNodeAt = pp.finishNodeAt,
-    eat = pp.eat,
-    parseArrowExpression = pp.parseArrowExpression;
+    eat = pp.eat;
 
 function esprimaFinishNode(result) {
     delete result.start;
@@ -118,7 +99,7 @@ pp.finishNodeAt = function() {
 };
 
 pp.eat = function(type) {
-    if (type == tt.arrow && !extra.ecmaFeatures.arrowFunctions) {
+    if (type === tt.arrow && !extra.ecmaFeatures.arrowFunctions) {
         this.unexpected();
     }
 
@@ -138,31 +119,7 @@ function tokenize(code, options) {
         code = toString(code);
     }
 
-    source = code;
-    index = 0;
-    lineNumber = (source.length > 0) ? 1 : 0;
-    lineStart = 0;
-    length = source.length;
     lookahead = null;
-    state = {
-        allowIn: true,
-        labelSet: {},
-        parenthesisCount: 0,
-        inFunctionBody: false,
-        inIteration: false,
-        inSwitch: false,
-        lastCommentStart: -1,
-        yieldAllowed: false,
-        curlyStack: [],
-        curlyLastIndex: 0,
-        inJSXSpreadAttribute: false,
-        inJSXChild: false,
-        inJSXTag: false
-    };
-
-    extra = {
-        ecmaFeatures: defaultFeatures
-    };
 
     // Options matching.
     options = options || {};
@@ -192,15 +149,16 @@ function tokenize(code, options) {
     }
 
     try {
-        peek();
+        // peek();
         if (lookahead.type === Token.EOF) {
             return extra.tokens;
         }
 
-        lex();
+        // lex();
         while (lookahead.type !== Token.EOF) {
             try {
-                lex();
+                // lex();
+                console.log("hi");
             } catch (lexError) {
                 if (extra.errors) {
                     extra.errors.push(lexError);
@@ -213,7 +171,7 @@ function tokenize(code, options) {
             }
         }
 
-        filterTokenLocation();
+        // filterTokenLocation();
         tokens = extra.tokens;
 
         if (typeof extra.comments !== "undefined") {
@@ -393,7 +351,6 @@ function parse(code, options) {
         };
 
         if (extra.attachComment || extra.comment) {
-            console.log('her')
             acornOptions.onComment = function() {
                 var comment = convertAcornCommentToEsprimaComment.apply(this, arguments);
                 extra.comments.push(comment);
