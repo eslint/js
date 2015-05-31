@@ -1324,5 +1324,11 @@
       "lineNumber": 1,
       "column": 27,
       "message": "Error: Line 1: Unexpected token )"
+    },
+    "switch(x) {  case 'x':  break;\n": {
+        "index": 31,
+        "lineNumber": 2,
+        "column": 1,
+        "message": "Error: Line 2: Unexpected end of input"
     }
 }
