@@ -4068,6 +4068,9 @@ function parseSwitchCase() {
             break;
         }
         statement = parseSourceElement();
+        if (typeof statement === "undefined") {
+            break;
+        }
         consequent.push(statement);
     }
 
