@@ -1,3 +1,9 @@
+v2.0.3 - June 2, 2015
+
+* 2.0.3 (Nicholas C. Zakas)
+* Fix: Incomplete Switch Statement Hangs (Fixes #146) (Jamund Ferguson)
+* Docs: Clarify ecmaFeatures usage (Dan Wolff)
+
 v2.0.2 - April 28, 2015
 
 * 2.0.2 (Nicholas C. Zakas)
