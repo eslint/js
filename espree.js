@@ -41,8 +41,7 @@ var tokenInfo = require("./lib/token-info"),
     commentAttachment = require("./lib/comment-attachment"),
     acorn = require("acorn-jsx");
 
-var Token = tokenInfo.Token,
-    lookahead,
+var lookahead,
     extra,
     lastToken;
 
@@ -278,24 +277,32 @@ function tokenize(code, options) {
     // Options matching.
     options = options || {};
 
+    var acornOptions = {
+        ecmaVersion: 6
+    };
+
+    resetExtra();
+
     // Of course we collect tokens here.
     options.tokens = true;
-    extra.tokens = [];
     extra.tokenize = true;
 
-    // The following two fields are necessary to compute the Regex tokens.
-    extra.openParenToken = -1;
-    extra.openCurlyToken = -1;
-
     extra.range = (typeof options.range === "boolean") && options.range;
-    extra.loc = (typeof options.loc === "boolean") && options.loc;
+    acornOptions.ranges = extra.range;
 
-    if (typeof options.comment === "boolean" && options.comment) {
-        extra.comments = [];
+    extra.loc = (typeof options.loc === "boolean") && options.loc;
+    acornOptions.locations = extra.loc;
+
+    extra.comment = typeof options.comment === "boolean" && options.comment;
+
+    if (extra.comment) {
+        acornOptions.onComment = function() {
+            var comment = convertAcornCommentToEsprimaComment.apply(this, arguments);
+            extra.comments.push(comment);
+        };
     }
-    if (typeof options.tolerant === "boolean" && options.tolerant) {
-        extra.errors = [];
-    }
+
+    extra.tolerant = typeof options.tolerant === "boolean" && options.tolerant;
 
     // apply parsing flags
     if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
@@ -303,16 +310,12 @@ function tokenize(code, options) {
     }
 
     try {
-        // peek();
-        if (lookahead.type === Token.EOF) {
-            return extra.tokens;
-        }
+        var tokenizer = acorn.tokenizer(code, acornOptions);
 
-        // lex();
-        while (lookahead.type !== Token.EOF) {
+        while ((lookahead = tokenizer.getToken()).type !== tt.eof) {
             try {
-                // lex();
-                console.log("hi");
+                lookahead = convertAcornTokenToEsprimaToken(lookahead, code);
+                extra.tokens.push(lookahead);
             } catch (lexError) {
                 if (extra.errors) {
                     extra.errors.push(lexError);
@@ -328,16 +331,14 @@ function tokenize(code, options) {
         // filterTokenLocation();
         tokens = extra.tokens;
 
-        if (typeof extra.comments !== "undefined") {
+        if (extra.comment) {
             tokens.comments = extra.comments;
         }
-        if (typeof extra.errors !== "undefined") {
+        if (extra.tolerant) {
             tokens.errors = extra.errors;
         }
     } catch (e) {
         throw e;
-    } finally {
-        extra = {};
     }
     return tokens;
 }
@@ -346,7 +347,7 @@ function tokenize(code, options) {
 // Parser
 //------------------------------------------------------------------------------
 
-function convertAcornTokenToEsprimaToken(token) {
+function convertAcornTokenToEsprimaToken(token, code) {
 
     var type = token.type;
 
@@ -355,22 +356,13 @@ function convertAcornTokenToEsprimaToken(token) {
     } else if (type === tt.semi || type === tt.comma ||
              type === tt.parenL || type === tt.parenR ||
              type === tt.braceL || type === tt.braceR ||
-             type === tt.slash || type === tt.dot ||
-             type === tt.bracketL || type === tt.bracketR ||
-             type === tt.ellipsis || type === tt.arrow ||
-             type === tt.star ||
+             type === tt.dot || type === tt.bracketL ||
+             type === tt.bracketR || type === tt.ellipsis ||
+             type === tt.arrow || type === tt.jsxTagStart ||
+             type === tt.jsxTagEnd || type.binop ||
              type.isAssign) {
         token.type = "Punctuator";
-    }
-
-    if (!token.value) {
-        token.value = type.label;
-    } else if (type === tt.jsxTagStart) {
-        token.type = "Punctuator";
-        token.value = "<";
-    } else if (type === tt.jsxTagEnd) {
-        token.type = "Punctuator";
-        token.value = ">";
+        token.value = code.slice(token.start, token.end);
     } else if (type === tt.jsxName) {
         token.type = "JSXIdentifier";
     } else if (type.keyword) {
@@ -381,7 +373,22 @@ function convertAcornTokenToEsprimaToken(token) {
     } else if (type === tt.string) {
         token.type = "String";
         token.value = JSON.stringify(token.value);
+    } else if (type === tt.regexp) {
+        token.type = "RegularExpression";
+        var value = token.value;
+        token.regex = {
+            flags: value.flags,
+            pattern: value.pattern
+        };
+        token.value = "/" + value.pattern + "/" + value.flags;
+    } else if (type === tt.dollarBraceL || type === tt.backQuote ||
+             type === tt.template) {
+        token.type = "Template";
+        token.value = code.slice(token.start, token.end);
     }
+
+    delete token.start;
+    delete token.end;
 
     return token;
 }
@@ -494,13 +501,15 @@ function parse(code, options) {
         }
 
         acornOptions.onToken = function(token) {
-            if (extra.token) {
-                extra.tokens.push(convertAcornTokenToEsprimaToken(token));
+            if (token.type === tt.eof) {
+                return;
             }
 
-            if (token.type !== tt.eof) {
-                lastToken = token;
+            if (extra.tokens) {
+                extra.tokens.push(convertAcornTokenToEsprimaToken(token, code));
             }
+
+            lastToken = token;
         };
 
         if (extra.attachComment || extra.comment) {

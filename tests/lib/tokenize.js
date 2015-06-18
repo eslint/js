@@ -1,6 +1,7 @@
 /**
  * @fileoverview Tests for tokenize().
  * @author Nicholas C. Zakas
+ * @copyright 2015 Ingvar Stepanyan. All rights reserved.
  * @copyright 2014 Nicholas C. Zakas. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +34,10 @@
 var assert = require("chai").assert,
     espree = require("../../espree");
 
+function getRaw(ast) {
+    return JSON.parse(JSON.stringify(ast));
+}
+
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -45,7 +50,7 @@ describe("tokenize()", function() {
 
             assert.throws(function() {
                 espree.tokenize("var foo = /foo/u;");
-            }, /Invalid regular expression flag/);
+            }, "Unexpected token /foo/u");
 
         });
 
@@ -53,7 +58,7 @@ describe("tokenize()", function() {
 
             assert.throws(function() {
                 espree.tokenize("var foo = /foo/y;");
-            }, /Invalid regular expression flag/);
+            }, "Unexpected token /foo/y");
 
         });
 
@@ -65,6 +70,7 @@ describe("tokenize()", function() {
             loc: true,
             range: true
         });
+        tokens = getRaw(tokens);
         assert.deepEqual(tokens, require("../fixtures/tokenize/let-result.tokens.js"));
     });
 
@@ -74,6 +80,7 @@ describe("tokenize()", function() {
             loc: true,
             range: true
         });
+        tokens = getRaw(tokens);
         assert.deepEqual(tokens, require("../fixtures/tokenize/const-result.tokens.js"));
     });
 
@@ -83,6 +90,7 @@ describe("tokenize()", function() {
             loc: true,
             range: true
         });
+        tokens = getRaw(tokens);
         assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-u-result.tokens.js"));
     });
 
@@ -92,6 +100,7 @@ describe("tokenize()", function() {
             loc: true,
             range: true
         });
+        tokens = getRaw(tokens);
         assert.deepEqual(tokens, require("../fixtures/tokenize/regexp-y-result.tokens.js"));
     });
 
@@ -103,6 +112,7 @@ describe("tokenize()", function() {
                 loc: true,
                 range: true
             });
+            tokens = getRaw(tokens);
             assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-simple-result.tokens.js"));
         });
 
@@ -112,6 +122,7 @@ describe("tokenize()", function() {
                 loc: true,
                 range: true
             });
+            tokens = getRaw(tokens);
             assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-embedded-result.tokens.js"));
         });
 
@@ -121,7 +132,7 @@ describe("tokenize()", function() {
                 loc: true,
                 range: true
             });
-
+            tokens = getRaw(tokens);
             assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-embedded2-result.tokens.js"));
         });
 
@@ -132,16 +143,17 @@ describe("tokenize()", function() {
                 loc: true,
                 range: true
             });
-
+            ast = getRaw(ast);
             assert.deepEqual(ast.tokens, require("../fixtures/tokenize/template-string-embedded2-result.tokens.js"));
         });
 
-        it("should produce tokens when tokenizing template string with embedded expressions", function() {
+        it.only("should produce tokens when tokenizing template string with embedded expressions", function() {
             var tokens = espree.tokenize("var foo = `Hello ${b}. a + 5 = ${a + 5}`;", {
                 ecmaFeatures: { templateStrings: true },
                 loc: true,
                 range: true
             });
+            tokens = getRaw(tokens);
             assert.deepEqual(tokens, require("../fixtures/tokenize/template-string-expressions-result.tokens.js"));
         });
 
@@ -154,6 +166,7 @@ describe("tokenize()", function() {
             loc: true,
             range: true
         });
+        tokens = getRaw(tokens);
         assert.deepEqual(tokens, require("../fixtures/tokenize/regex-in-parens-result.tokens.js"));
     });
 
@@ -163,6 +176,7 @@ describe("tokenize()", function() {
             range: true,
             tokens: true
         });
+        ast = getRaw(ast);
         assert.deepEqual(ast.tokens, require("../fixtures/tokenize/regex-in-parens-result.tokens.js"));
     });
 
