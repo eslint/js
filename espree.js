@@ -245,7 +245,7 @@ pp.raise = function(pos, message) {
 pp.unexpected = function(pos) {
     var message = "Unexpected token ";
     if (pos != null) {
-        this.pos = this.start;
+        this.pos = pos;
         if (this.options.locations) {
             while (this.pos < this.lineStart) {
                 this.lineStart = this.input.lastIndexOf("\n", this.lineStart - 2) + 1;
