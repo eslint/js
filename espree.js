@@ -75,7 +75,79 @@ var finishNode = pp.finishNode,
     finishNodeAt = pp.finishNodeAt,
     next = pp.next;
 
+function isValidNode(node) {
+    var ecma = extra.ecmaFeatures;
+
+    switch (node.type) {
+        case "VariableDeclaration":
+            return node.kind === "var" || ecma.blockBindings;
+
+        case "ObjectPattern":
+        case "ArrayPattern":
+            return ecma.destructuring;
+
+        case "AssignmentPattern":
+            // TODO: enhance analysis for separate options
+            return ecma.destructuring || ecma.defaultParams;
+
+        case "RestElement":
+            // TODO: enhance analysis for separate options
+            return ecma.destructuring || ecma.restParams;
+
+        case "ForOfStatement":
+            return ecma.forOf;
+
+        case "Property":
+            if (node.computed && !ecma.objectLiteralComputedProperties) {
+                return false;
+            }
+            if (node.method && !ecma.objectLiteralShorthandMethods) {
+                return false;
+            }
+            if (node.shorthand && !ecma.objectLiteralShorthandProperties) {
+                return false;
+            }
+            // TODO: analyse for objectLiteralDuplicateProperties: false in ES6
+            return true;
+
+        case "FunctionExpression":
+        case "FunctionDeclaration":
+            if (node.generator && !ecma.generators) {
+                return false;
+            }
+            return true;
+
+        case "YieldExpression":
+            return ecma.generators;
+
+        case "SpreadElement":
+            return ecma.spread;
+
+        case "ClassDeclaration":
+        case "ClassExpression":
+            return ecma.classes;
+
+        case "Super":
+            // TODO: enhance analysis for separate options
+            return ecma.classes || ecma.superInFunctions;
+
+        case "ImportDeclaration":
+        case "ExportNamedDeclaration":
+        case "ExportDefaultDeclaration":
+        case "ExportAllDeclaration":
+            return ecma.modules;
+
+        default:
+            return true;
+    }
+}
+
 function esprimaFinishNode(result) {
+    // ensure that parsed node was allowed through ecmaFeatures
+    if (!isValidNode(result)) {
+        this.unexpected(result.start);
+    }
+
     // hide acorn-specific properties from comparison
     // but leave for internal needs:
     Object.defineProperties(result, {
@@ -95,51 +167,49 @@ function esprimaFinishNode(result) {
 }
 
 function isValidToken(parser) {
+    var ecma = extra.ecmaFeatures;
     var type = parser.type;
 
     switch (type) {
         case tt.arrow:
-            return extra.ecmaFeatures.arrowFunctions;
+            return ecma.arrowFunctions;
 
         case tt.num:
             switch (parser.input.substr(parser.start, 2).toLowerCase()) {
                 case "0b":
-                    return extra.ecmaFeatures.binaryLiterals;
+                    return ecma.binaryLiterals;
 
                 case "0o":
-                    return extra.ecmaFeatures.octalLiterals;
+                    return ecma.octalLiterals;
 
                 default:
                     return true;
             }
             break;
 
-        case tt._const:
-            return extra.ecmaFeatures.blockBindings;
-
-        case tt._class:
-            return extra.ecmaFeatures.classes;
-
-        case tt._import:
-        case tt._export:
-            return extra.ecmaFeatures.modules;
+        case tt.regexp:
+            var flags = this.value.flags;
+            if (flags.indexOf("y") >= 0 && !ecma.regexYFlag) {
+                return false;
+            }
+            if (flags.indexOf("u") >= 0 && !ecma.regexUFlag) {
+                return false;
+            }
+            return true;
 
         case tt.ellipsis:
-            return extra.ecmaFeatures.restParams || extra.ecmaFeatures.spread;
-
-        case tt._super:
-            return extra.ecmaFeatures.classes || extra.ecmaFeatures.superInFunctions;
+            return ecma.restParams || ecma.spread;
 
         case tt.backQuote:
         case tt.template:
         case tt.dollarBraceL:
-            return extra.ecmaFeatures.templateStrings;
+            return ecma.templateStrings;
 
         case tt.jsxName:
         case tt.jsxText:
         case tt.jsxTagStart:
         case tt.jsxTagEnd:
-            return extra.ecmaFeatures.jsx;
+            return ecma.jsx;
 
         default:
             return true;
@@ -148,12 +218,12 @@ function isValidToken(parser) {
 
 pp.finishNode = function() {
     var result = finishNode.apply(this, arguments);
-    return esprimaFinishNode(result);
+    return esprimaFinishNode.call(this, result);
 };
 
 pp.finishNodeAt = function() {
     var result = finishNodeAt.apply(this, arguments);
-    return esprimaFinishNode(result);
+    return esprimaFinishNode.call(this, result);
 };
 
 pp.next = function() {
