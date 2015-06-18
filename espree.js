@@ -69,12 +69,6 @@ var tt = acorn.tokTypes,
     getLineInfo = acorn.getLineInfo;
 
 
-// hack Node
-
-var finishNode = pp.finishNode,
-    finishNodeAt = pp.finishNodeAt,
-    next = pp.next;
-
 function isValidNode(node) {
     var ecma = extra.ecmaFeatures;
 
@@ -216,22 +210,28 @@ function isValidToken(parser) {
     }
 }
 
-pp.finishNode = function() {
-    var result = finishNode.apply(this, arguments);
-    return esprimaFinishNode.call(this, result);
-};
+pp.extend("finishNode", function(finishNode) {
+    return function () {
+        var result = finishNode.apply(this, arguments);
+        return esprimaFinishNode.call(this, result);
+    };
+});
 
-pp.finishNodeAt = function() {
-    var result = finishNodeAt.apply(this, arguments);
-    return esprimaFinishNode.call(this, result);
-};
+pp.extend("finishNodeAt", function(finishNodeAt) {
+    return function() {
+        var result = finishNodeAt.apply(this, arguments);
+        return esprimaFinishNode.call(this, result);
+    };
+});
 
-pp.next = function() {
-    if (!isValidToken(this)) {
-        this.unexpected();
-    }
-    return next.apply(this, arguments);
-};
+pp.extend("next", function(next) {
+    return function () {
+        if (!isValidToken(this)) {
+            this.unexpected();
+        }
+        return next.apply(this, arguments);
+    };
+});
 
 pp.raise = function(pos, message) {
     var loc = getLineInfo(this.input, pos);
@@ -244,12 +244,18 @@ pp.raise = function(pos, message) {
 
 pp.unexpected = function(pos) {
     var message = "Unexpected token ";
-    if (pos == null) {
-        pos = this.start;
-        message += this.input.slice(this.start, this.end);
-    } else {
-        message += this.input[pos];
+    if (pos != null) {
+        this.pos = this.start;
+        if (this.options.locations) {
+            while (this.pos < this.lineStart) {
+                this.lineStart = this.input.lastIndexOf("\n", this.lineStart - 2) + 1;
+                --this.curLine;
+            }
+        }
+        this.nextToken();
     }
+    pos = this.start;
+    message += this.input.slice(this.start, this.end);
     this.raise(pos, message);
 };
 
