@@ -93,32 +93,35 @@ describe("ecmaFeatures", function() {
         it("should parse correctly when " + feature + " is true", function() {
             config.ecmaFeatures[feature] = true;
             var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+
+            var errorMsg = expected.message || expected.description;
+
+            // if expecting an error, create an error object so deepEqual works
+            if (errorMsg) {
+                var expectedError = new SyntaxError(errorMsg);
+                expectedError.description = errorMsg;
+                Object.keys(expected).forEach(function(key) {
+                    if (key !== "message" && key !== "description") {
+                        expectedError[key] = expected[key];
+                    }
+                });
+                expected = expectedError;
+            }
+
             var result;
 
             try {
                 result = espree.parse(code, config);
                 result = getRaw(result);
             } catch (ex) {
-
-                var message = expected.message || expected.description;
-
-                // if the result is an error, create an error object so deepEqual works
-                if (message && ex instanceof SyntaxError) {
-
-                    var expectedError = new SyntaxError(message);
-                    expectedError.description = message;
-                    Object.keys(expected).forEach(function(key) {
-                        if (key !== "message" && key !== "description") {
-                            expectedError[key] = expected[key];
-                        }
-                    });
-                    expected = expectedError;
-                } else {
+                if (!errorMsg || !(ex instanceof SyntaxError)) {
                     throw ex;
                 }
-
                 ex.description = ex.message;
-                result = ex; // if an error is thrown, match the error
+                result = ex; // if a syntax error is thrown, match the error
+            }
+            if (expected instanceof SyntaxError) {
+                assert.instanceOf(result, SyntaxError);
             }
             assert.deepEqual(result, expected);
         });
