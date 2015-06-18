@@ -1,6 +1,7 @@
 /**
  * @fileoverview Tests for ECMA feature flags
  * @author Nicholas C. Zakas
+ * @copyright 2015 Ingvar Stepanyan. All rights reserved.
  * @copyright 2014 Nicholas C. Zakas. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -92,20 +93,25 @@ describe("ecmaFeatures", function() {
                 result = getRaw(result);
             } catch (ex) {
 
-                // if the result is an error, create an error object so deepEqual works
-                if (expected.message || expected.description) {
+                var message = expected.message || expected.description;
 
-                    var expectedError = new Error(expected.message || expected.description);
+                // if the result is an error, create an error object so deepEqual works
+                if (message && ex instanceof SyntaxError) {
+
+                    var expectedError = new SyntaxError(message);
+                    expectedError.description = message;
                     Object.keys(expected).forEach(function(key) {
-                        expectedError[key] = expected[key];
+                        if (key !== "message" && key !== "description") {
+                            expectedError[key] = expected[key];
+                        }
                     });
                     expected = expectedError;
                 } else {
                     throw ex;
                 }
 
-                result = ex;    // if an error is thrown, match the error
-
+                ex.description = ex.message;
+                result = ex; // if an error is thrown, match the error
             }
             assert.deepEqual(result, expected);
         });

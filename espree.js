@@ -1,4 +1,5 @@
 /*
+Copyright (C) 2015 Ingvar Stepanyan <me@rreverser.com>
 Copyright (C) 2015 Fred K. Schott <fkschott@gmail.com>
 Copyright (C) 2013 Ariya Hidayat <ariya.hidayat@gmail.com>
 Copyright (C) 2013 Thaddee Tyl <thaddee.tyl@gmail.com>
@@ -64,18 +65,23 @@ function resetExtra() {
 
 var tt = acorn.tokTypes,
     Parser = acorn.Parser,
-    pp = Parser.prototype;
+    pp = Parser.prototype,
+    getLineInfo = acorn.getLineInfo;
 
 
 // hack Node
 
 var finishNode = pp.finishNode,
     finishNodeAt = pp.finishNodeAt,
-    eat = pp.eat;
+    next = pp.next;
 
 function esprimaFinishNode(result) {
-    delete result.start;
-    delete result.end;
+    // hide acorn-specific properties from comparison
+    // but leave for internal needs:
+    Object.defineProperties(result, {
+        start: { enumerable: false },
+        end: { enumerable: false }
+    });
 
     if (extra.attachComment) {
         commentAttachment.processComment(result);
@@ -88,6 +94,58 @@ function esprimaFinishNode(result) {
     return result;
 }
 
+function isValidToken(parser) {
+    var type = parser.type;
+
+    switch (type) {
+        case tt.arrow:
+            return extra.ecmaFeatures.arrowFunctions;
+
+        case tt.num:
+            switch (parser.input.substr(parser.start, 2).toLowerCase()) {
+                case "0b":
+                    return extra.ecmaFeatures.binaryLiterals;
+
+                case "0o":
+                    return extra.ecmaFeatures.octalLiterals;
+
+                default:
+                    return true;
+            }
+            break;
+
+        case tt._const:
+            return extra.ecmaFeatures.blockBindings;
+
+        case tt._class:
+            return extra.ecmaFeatures.classes;
+
+        case tt._import:
+        case tt._export:
+            return extra.ecmaFeatures.modules;
+
+        case tt.ellipsis:
+            return extra.ecmaFeatures.restParams || extra.ecmaFeatures.spread;
+
+        case tt._super:
+            return extra.ecmaFeatures.classes || extra.ecmaFeatures.superInFunctions;
+
+        case tt.backQuote:
+        case tt.template:
+        case tt.dollarBraceL:
+            return extra.ecmaFeatures.templateStrings;
+
+        case tt.jsxName:
+        case tt.jsxText:
+        case tt.jsxTagStart:
+        case tt.jsxTagEnd:
+            return extra.ecmaFeatures.jsx;
+
+        default:
+            return true;
+    }
+}
+
 pp.finishNode = function() {
     var result = finishNode.apply(this, arguments);
     return esprimaFinishNode(result);
@@ -98,12 +156,29 @@ pp.finishNodeAt = function() {
     return esprimaFinishNode(result);
 };
 
-pp.eat = function(type) {
-    if (type === tt.arrow && !extra.ecmaFeatures.arrowFunctions) {
+pp.next = function() {
+    if (!isValidToken(this)) {
         this.unexpected();
     }
+    return next.apply(this, arguments);
+};
 
-    return eat.apply(this, arguments);
+pp.raise = function(pos, message) {
+    var loc = getLineInfo(this.input, pos);
+    var err = new SyntaxError(message);
+    err.index = pos;
+    err.lineNumber = loc.line;
+    err.column = loc.column + 1; // acorn uses 0-based columns
+    throw err;
+};
+
+pp.unexpected = function(pos) {
+    var message = "Unexpected token";
+    if (pos == null) {
+        pos = this.start;
+        message += " " + this.input.slice(this.start, this.end);
+    }
+    this.raise(pos, message);
 };
 
 //------------------------------------------------------------------------------
