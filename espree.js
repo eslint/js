@@ -36,8 +36,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var tokenInfo = require("./lib/token-info"),
-    astNodeTypes = require("./lib/ast-node-types"),
+var astNodeTypes = require("./lib/ast-node-types"),
     commentAttachment = require("./lib/comment-attachment"),
     acorn = require("acorn-jsx");
 
@@ -139,6 +138,11 @@ function esprimaFinishNode(result) {
     // ensure that parsed node was allowed through ecmaFeatures
     if (!isValidNode(result)) {
         this.unexpected(result.start);
+    }
+
+    // TODO: remove when marijnh/acorn#281 is resolved
+    if (result.type === "AssignmentPattern") {
+        delete result.operator;
     }
 
     // hide acorn-specific properties from comparison

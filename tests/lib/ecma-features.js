@@ -59,31 +59,7 @@ function getRaw(ast) {
 
 testFiles = testFiles.filter(function(filename) {
     var feature = filename.split("/")[0];
-    switch (feature) {
-        case "arrowFunctions":
-        case "binaryLiterals":
-        case "blockBindings":
-        case "classes":
-        case "forOf":
-        case "generators":
-        case "globalReturn":
-        case "jsx":
-        case "objectLiteralComputedProperties":
-        case "objectLiteralDuplicateProperties":
-        case "objectLiteralShorthandMethods":
-        case "objectLiteralShorthandProperties":
-        case "octalLiterals":
-        case "regexUFlag":
-        case "regexYFlag":
-        case "restParams":
-        case "spread":
-        case "superInFunctions":
-        case "templateStrings":
-        case "unicodeCodePointEscapes":
-            return true;
-        default:
-            return false;
-    }
+    return feature !== "destructuring" && feature !== "modules";
 });
 
 //------------------------------------------------------------------------------
