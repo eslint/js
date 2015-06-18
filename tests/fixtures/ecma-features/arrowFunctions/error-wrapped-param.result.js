@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 6,
+    "index": 1,
     "lineNumber": 1,
-    "column": 7,
-    "description": "Unexpected token =>"
+    "column": 2,
+    "description": "Unexpected token ("
 };

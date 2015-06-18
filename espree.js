@@ -243,10 +243,12 @@ pp.raise = function(pos, message) {
 };
 
 pp.unexpected = function(pos) {
-    var message = "Unexpected token";
+    var message = "Unexpected token ";
     if (pos == null) {
         pos = this.start;
-        message += " " + this.input.slice(this.start, this.end);
+        message += this.input.slice(this.start, this.end);
+    } else {
+        message += this.input[pos];
     }
     this.raise(pos, message);
 };

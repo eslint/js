@@ -58,7 +58,14 @@ function getRaw(ast) {
 }
 
 testFiles = testFiles.filter(function(filename) {
-    return /jsx/.test(filename);
+    var feature = filename.split("/")[0];
+    switch (feature) {
+        case "arrowFunctions":
+        case "jsx":
+            return true;
+        default:
+            return false;
+    }
 });
 
 //------------------------------------------------------------------------------

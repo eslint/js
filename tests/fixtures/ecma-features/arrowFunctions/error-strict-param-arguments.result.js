@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 34,
+    "index": 15,
     "lineNumber": 1,
-    "column": 35,
-    "description": "Parameter name eval or arguments is not allowed in strict mode"
+    "column": 16,
+    "description": "Binding arguments in strict mode"
 };
