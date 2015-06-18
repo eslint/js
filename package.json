@@ -80,6 +80,6 @@
     "benchmark-quick": "node test/benchmarks.js quick"
   },
   "dependencies": {
-    "acorn": "^1.0.3"
+    "acorn-jsx": "^1.1.0"
   }
 }

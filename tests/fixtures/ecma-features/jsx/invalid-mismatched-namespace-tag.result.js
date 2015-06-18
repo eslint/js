@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 9,
+    "index": 5,
     "lineNumber": 1,
-    "column": 10,
-    "description": "Expected corresponding JSX closing tag for a:b"
+    "column": 6,
+    "description": "Expected corresponding JSX closing tag for <a:b>"
 };

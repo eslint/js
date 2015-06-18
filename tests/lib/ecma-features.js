@@ -58,7 +58,7 @@ function getRaw(ast) {
 }
 
 testFiles = testFiles.filter(function(filename) {
-    return /arrowFunctions/.test(filename);
+    return /jsx/.test(filename);
 });
 
 //------------------------------------------------------------------------------

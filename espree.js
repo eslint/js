@@ -39,7 +39,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var tokenInfo = require("./lib/token-info"),
     astNodeTypes = require("./lib/ast-node-types"),
     commentAttachment = require("./lib/comment-attachment"),
-    acorn = require("acorn");
+    acorn = require("acorn-jsx");
 
 var Token = tokenInfo.Token,
     lookahead,
@@ -405,9 +405,6 @@ function parse(code, options) {
                         acornOptions.allowReturnOutsideFunction = true;
                         break;
 
-                    case "jsx":
-                        break;
-
                     default:
                         acornOptions.ecmaVersion = 6;
                 }
@@ -443,8 +440,14 @@ function parse(code, options) {
         if (extra.loc) {
             acornOptions.locations = true;
         }
-    }
 
+        if (extra.ecmaFeatures.jsx) {
+            if (extra.ecmaFeatures.spread !== false) {
+                extra.ecmaFeatures.spread = true;
+            }
+            acornOptions.plugins = { jsx: true };
+        }
+    }
 
     program = acorn.parse(code, acornOptions);
     program.sourceType = extra.ecmaFeatures.modules ? "module" : "script";
