@@ -34,17 +34,17 @@ module.exports = {
                             },
                             "tail": true,
                             "range": [
-                                3,
-                                8
+                                4,
+                                7
                             ],
                             "loc": {
                                 "start": {
                                     "line": 1,
-                                    "column": 3
+                                    "column": 4
                                 },
                                 "end": {
                                     "line": 1,
-                                    "column": 8
+                                    "column": 7
                                 }
                             }
                         }

@@ -65,7 +65,7 @@ module.exports = {
                         },
                         "range": [
                             20,
-                            29
+                            28
                         ],
                         "loc": {
                             "start": {
@@ -74,7 +74,7 @@ module.exports = {
                             },
                             "end": {
                                 "line": 1,
-                                "column": 29
+                                "column": 28
                             }
                         }
                     }

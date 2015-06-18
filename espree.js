@@ -182,7 +182,7 @@ function isValidToken(parser) {
             break;
 
         case tt.regexp:
-            var flags = this.value.flags;
+            var flags = parser.value.flags;
             if (flags.indexOf("y") >= 0 && !ecma.regexYFlag) {
                 return false;
             }
@@ -243,7 +243,7 @@ pp.raise = function(pos, message) {
 };
 
 pp.unexpected = function(pos) {
-    var message = "Unexpected token ";
+    var message = "Unexpected token";
     if (pos != null) {
         this.pos = pos;
         if (this.options.locations) {
@@ -254,9 +254,10 @@ pp.unexpected = function(pos) {
         }
         this.nextToken();
     }
-    pos = this.start;
-    message += this.input.slice(this.start, this.end);
-    this.raise(pos, message);
+    if (this.end > this.start) {
+        message += " " + this.input.slice(this.start, this.end);
+    }
+    this.raise(this.start, message);
 };
 
 //------------------------------------------------------------------------------
@@ -476,15 +477,17 @@ function parse(code, options) {
 
             // if it's a module, augment the ecmaFeatures
             flags.forEach(function(key) {
-                extra.ecmaFeatures[key] = options.ecmaFeatures[key];
+                var value = extra.ecmaFeatures[key] = options.ecmaFeatures[key];
 
-                switch (key) {
-                    case "globalReturn":
-                        acornOptions.allowReturnOutsideFunction = true;
-                        break;
+                if (value) {
+                    switch (key) {
+                        case "globalReturn":
+                            acornOptions.allowReturnOutsideFunction = true;
+                            break;
 
-                    default:
-                        acornOptions.ecmaVersion = 6;
+                        default:
+                            acornOptions.ecmaVersion = 6;
+                    }
                 }
             });
 

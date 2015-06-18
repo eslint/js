@@ -162,17 +162,17 @@ module.exports = {
                         },
                         "tail": false,
                         "range": [
-                            28,
-                            37
+                            29,
+                            35
                         ],
                         "loc": {
                             "start": {
                                 "line": 4,
-                                "column": 0
+                                "column": 1
                             },
                             "end": {
                                 "line": 4,
-                                "column": 9
+                                "column": 7
                             }
                         }
                     },
@@ -184,17 +184,17 @@ module.exports = {
                         },
                         "tail": false,
                         "range": [
-                            38,
-                            51
+                            39,
+                            49
                         ],
                         "loc": {
                             "start": {
                                 "line": 4,
-                                "column": 10
+                                "column": 11
                             },
                             "end": {
                                 "line": 4,
-                                "column": 23
+                                "column": 21
                             }
                         }
                     },
@@ -206,17 +206,17 @@ module.exports = {
                         },
                         "tail": true,
                         "range": [
-                            56,
-                            58
+                            57,
+                            57
                         ],
                         "loc": {
                             "start": {
                                 "line": 4,
-                                "column": 28
+                                "column": 29
                             },
                             "end": {
                                 "line": 4,
-                                "column": 30
+                                "column": 29
                             }
                         }
                     }

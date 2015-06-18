@@ -14,17 +14,17 @@ module.exports = {
                         },
                         "tail": true,
                         "range": [
-                            0,
-                            4
+                            1,
+                            3
                         ],
                         "loc": {
                             "start": {
                                 "line": 1,
-                                "column": 0
+                                "column": 1
                             },
                             "end": {
                                 "line": 1,
-                                "column": 4
+                                "column": 3
                             }
                         }
                     }

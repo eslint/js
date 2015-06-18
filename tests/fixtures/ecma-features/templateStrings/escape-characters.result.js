@@ -35,17 +35,17 @@ module.exports = {
                                 },
                                 "tail": true,
                                 "range": [
-                                    9,
-                                    39
+                                    10,
+                                    38
                                 ],
                                 "loc": {
                                     "start": {
                                         "line": 1,
-                                        "column": 9
+                                        "column": 10
                                     },
                                     "end": {
                                         "line": 1,
-                                        "column": 39
+                                        "column": 38
                                     }
                                 }
                             }

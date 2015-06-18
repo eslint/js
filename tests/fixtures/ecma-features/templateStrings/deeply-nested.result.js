@@ -34,17 +34,17 @@ module.exports = {
                             },
                             "tail": false,
                             "range": [
-                                3,
-                                12
+                                4,
+                                10
                             ],
                             "loc": {
                                 "start": {
                                     "line": 1,
-                                    "column": 3
+                                    "column": 4
                                 },
                                 "end": {
                                     "line": 1,
-                                    "column": 12
+                                    "column": 10
                                 }
                             }
                         },
@@ -56,17 +56,17 @@ module.exports = {
                             },
                             "tail": true,
                             "range": [
-                                42,
-                                44
+                                43,
+                                43
                             ],
                             "loc": {
                                 "start": {
                                     "line": 1,
-                                    "column": 42
+                                    "column": 43
                                 },
                                 "end": {
                                     "line": 1,
-                                    "column": 44
+                                    "column": 43
                                 }
                             }
                         }
@@ -83,17 +83,17 @@ module.exports = {
                                     },
                                     "tail": false,
                                     "range": [
-                                        12,
-                                        22
+                                        13,
+                                        20
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 1,
-                                            "column": 12
+                                            "column": 13
                                         },
                                         "end": {
                                             "line": 1,
-                                            "column": 22
+                                            "column": 20
                                         }
                                     }
                                 },
@@ -105,17 +105,17 @@ module.exports = {
                                     },
                                     "tail": true,
                                     "range": [
-                                        35,
-                                        42
+                                        36,
+                                        41
                                     ],
                                     "loc": {
                                         "start": {
                                             "line": 1,
-                                            "column": 35
+                                            "column": 36
                                         },
                                         "end": {
                                             "line": 1,
-                                            "column": 42
+                                            "column": 41
                                         }
                                     }
                                 }
@@ -135,17 +135,17 @@ module.exports = {
                                                 },
                                                 "tail": true,
                                                 "range": [
-                                                    22,
-                                                    30
+                                                    23,
+                                                    29
                                                 ],
                                                 "loc": {
                                                     "start": {
                                                         "line": 1,
-                                                        "column": 22
+                                                        "column": 23
                                                     },
                                                     "end": {
                                                         "line": 1,
-                                                        "column": 30
+                                                        "column": 29
                                                     }
                                                 }
                                             }
