@@ -147,7 +147,7 @@ describe("tokenize()", function() {
             assert.deepEqual(ast.tokens, require("../fixtures/tokenize/template-string-embedded2-result.tokens.js"));
         });
 
-        it.only("should produce tokens when tokenizing template string with embedded expressions", function() {
+        it("should produce tokens when tokenizing template string with embedded expressions", function() {
             var tokens = espree.tokenize("var foo = `Hello ${b}. a + 5 = ${a + 5}`;", {
                 ecmaFeatures: { templateStrings: true },
                 loc: true,
