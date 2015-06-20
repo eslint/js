@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 4,
+    "index": 1,
     "lineNumber": 1,
-    "column": 5,
-    "description": "Octal literals are not allowed in template strings."
+    "column": 2,
+    "description": "Octal literal in strict mode"
 };
