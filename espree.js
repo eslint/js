@@ -213,19 +213,16 @@ function isValidToken(parser) {
     }
 }
 
-pp.extend("finishNode", function(finishNode) {
+function wrapFinishNode(finishNode) {
     return function () {
         var result = finishNode.apply(this, arguments);
         return esprimaFinishNode.call(this, result);
     };
-});
+}
 
-pp.extend("finishNodeAt", function(finishNodeAt) {
-    return function() {
-        var result = finishNodeAt.apply(this, arguments);
-        return esprimaFinishNode.call(this, result);
-    };
-});
+pp.extend("finishNode", wrapFinishNode);
+
+pp.extend("finishNodeAt", wrapFinishNode);
 
 pp.extend("next", function(next) {
     return function () {
