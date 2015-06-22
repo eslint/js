@@ -113,6 +113,9 @@ var ast = espree.parse(code, {
         // enable parsing spread operator
         spread: true,
 
+        // enable super in functions
+        superInFunctions: true,
+
         // enable parsing classes
         classes: true,
 
