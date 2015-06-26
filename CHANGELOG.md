@@ -1,3 +1,9 @@
+v2.0.4 - June 26, 2015
+
+* 2.0.4 (Nicholas C. Zakas)
+* Docs: added missing `ecmaFeatures.superInFunctions` option from doc (Clément Fiorio)
+* Fix: "await" is a future reserved word (fixes #151) (Jose Roberto Vidal)
+
 v2.0.3 - June 2, 2015
 
 * 2.0.3 (Nicholas C. Zakas)
