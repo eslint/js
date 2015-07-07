@@ -2959,6 +2959,19 @@ function parseNewExpression() {
         marker = markerCreate();
 
     expectKeyword("new");
+
+    if (extra.ecmaFeatures.newTarget && match(".")) {
+        lex();
+        if (lookahead.type === Token.Identifier && lookahead.value === "target") {
+            if (state.inFunctionBody) {
+                lex();
+                return markerApply(marker, astNodeFactory.createMetaProperty("new", "target"));
+            }
+        }
+
+        throwUnexpected(lookahead);
+    }
+
     callee = parseLeftHandSideExpression();
     args = match("(") ? parseArguments() : [];
 
@@ -5403,7 +5416,8 @@ function parse(code, options) {
                 generators: true,
                 destructuring: true,
                 classes: true,
-                modules: true
+                modules: true,
+                newTarget: true
             };
         }
 
