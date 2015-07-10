@@ -56,12 +56,25 @@ describe("attachComment: true", function() {
         it("should produce correct AST when parsed with attachComments", function() {
             var output = require(path.resolve(__dirname, "../../", filename + ".result.js"));
             var input = shelljs.cat(filename + ".src.js");
+            var result;
 
-            var result = espree.parse(input, {
-                loc: true,
-                range: true,
-                attachComment: true
-            });
+            if (output.sourceType === "script") {
+                result = espree.parse(input, {
+                    loc: true,
+                    range: true,
+                    attachComment: true
+                });
+            } else {
+                result = espree.parse(input, {
+                    loc: true,
+                    range: true,
+                    attachComment: true,
+                    ecmaFeatures: {
+                        classes: true,
+                        modules: true
+                    }
+                });
+            }
 
             assert.deepEqual(result, output);
         });
