@@ -1,3 +1,9 @@
+v2.1.0 - July 10, 2015
+
+* 2.1.0 (Nicholas C. Zakas)
+* Fix: Leading comments for anonymous classes (fixes #155, fixes #158) (Toru Nagashima)
+* New: Add newTarget option (fixes #157) (Nicholas C. Zakas)
+
 v2.0.4 - June 26, 2015
 
 * 2.0.4 (Nicholas C. Zakas)
