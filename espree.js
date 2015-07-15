@@ -580,6 +580,7 @@ function scanPunctuator() {
     // The ... operator (spread, restParams, JSX, etc.)
     if (extra.ecmaFeatures.spread ||
         extra.ecmaFeatures.restParams ||
+        extra.ecmaFeatures.experimentalObjectRestSpread ||
         (extra.ecmaFeatures.jsx && state.inJSXSpreadAttribute)
     ) {
         if (ch1 === "." && ch2 === "." && ch3 === ".") {
@@ -2464,6 +2465,7 @@ function parseObjectProperty() {
         allowShorthand = extra.ecmaFeatures.objectLiteralShorthandProperties,
         allowGenerators = extra.ecmaFeatures.generators,
         allowDestructuring = extra.ecmaFeatures.destructuring,
+        allowSpread = extra.ecmaFeatures.experimentalObjectRestSpread,
         marker = markerCreate();
 
     token = lookahead;
@@ -2612,6 +2614,12 @@ function parseObjectProperty() {
         );
     }
 
+    // object spread property
+    if (allowSpread && match("...")) {
+        lex();
+        return markerApply(marker, astNodeFactory.createExperimentalSpreadProperty(parseVariableIdentifier()));
+    }
+
     // only possibility in this branch is a shorthand generator
     if (token.type === Token.EOF || token.type === Token.Punctuator) {
         if (!allowGenerators || !match("*") || !allowMethod) {
@@ -2696,7 +2704,7 @@ function parseObjectInitialiser() {
 
         property = parseObjectProperty();
 
-        if (!property.computed) {
+        if (!property.computed && property.type.indexOf("Experimental") === -1) {
 
             name = getFieldName(property.key);
             propertyFn = (property.kind === "get") ? PropertyKind.Get : PropertyKind.Set;
@@ -3364,7 +3372,8 @@ function parseArrowFunctionExpression(options, marker) {
 
 function reinterpretAsAssignmentBindingPattern(expr) {
     var i, len, property, element,
-        allowDestructuring = extra.ecmaFeatures.destructuring;
+        allowDestructuring = extra.ecmaFeatures.destructuring,
+        allowRest = extra.ecmaFeatures.experimentalObjectRestSpread;
 
     if (!allowDestructuring) {
         throwUnexpected(lex());
@@ -3374,6 +3383,12 @@ function reinterpretAsAssignmentBindingPattern(expr) {
         expr.type = astNodeTypes.ObjectPattern;
         for (i = 0, len = expr.properties.length; i < len; i += 1) {
             property = expr.properties[i];
+
+            if (allowRest && property.type === astNodeTypes.ExperimentalSpreadProperty) {
+                property.type = astNodeTypes.ExperimentalRestProperty;
+                return;
+            }
+
             if (property.kind !== "init") {
                 throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
             }
