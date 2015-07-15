@@ -1,3 +1,9 @@
+v2.2.0 - July 15, 2015
+
+* 2.2.0 (Nicholas C. Zakas)
+* New: Add experimental object rest/spread (fixes #163) (Nicholas C. Zakas)
+* Fix: npm browserify (fixes #156) (Jason Laster)
+
 v2.1.0 - July 10, 2015
 
 * 2.1.0 (Nicholas C. Zakas)
