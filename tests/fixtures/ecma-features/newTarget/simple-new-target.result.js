@@ -1,38 +1,11 @@
 module.exports = {
-    "range": [
-        0,
-        40
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 3,
-            "column": 1
-        }
-    },
-    "sourceType": "script",
     "type": "Program",
     "body": [
         {
-            "range": [
-                0,
-                40
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 3,
-                    "column": 1
-                }
-            },
             "type": "FunctionDeclaration",
             "id": {
+                "type": "Identifier",
+                "name": "f",
                 "range": [
                     9,
                     10
@@ -46,62 +19,20 @@ module.exports = {
                         "line": 1,
                         "column": 10
                     }
-                },
-                "type": "Identifier",
-                "name": "f"
+                }
             },
             "params": [],
             "body": {
-                "range": [
-                    13,
-                    40
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 13
-                    },
-                    "end": {
-                        "line": 3,
-                        "column": 1
-                    }
-                },
                 "type": "BlockStatement",
                 "body": [
                     {
-                        "range": [
-                            19,
-                            38
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 2,
-                                "column": 4
-                            },
-                            "end": {
-                                "line": 2,
-                                "column": 23
-                            }
-                        },
                         "type": "VariableDeclaration",
                         "declarations": [
                             {
-                                "range": [
-                                    23,
-                                    37
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 2,
-                                        "column": 8
-                                    },
-                                    "end": {
-                                        "line": 2,
-                                        "column": 22
-                                    }
-                                },
                                 "type": "VariableDeclarator",
                                 "id": {
+                                    "type": "Identifier",
+                                    "name": "x",
                                     "range": [
                                         23,
                                         24
@@ -115,11 +46,12 @@ module.exports = {
                                             "line": 2,
                                             "column": 9
                                         }
-                                    },
-                                    "type": "Identifier",
-                                    "name": "x"
+                                    }
                                 },
                                 "init": {
+                                    "type": "MetaProperty",
+                                    "meta": "new",
+                                    "property": "target",
                                     "range": [
                                         27,
                                         37
@@ -133,19 +65,87 @@ module.exports = {
                                             "line": 2,
                                             "column": 22
                                         }
+                                    }
+                                },
+                                "range": [
+                                    23,
+                                    37
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 2,
+                                        "column": 8
                                     },
-                                    "type": "MetaProperty",
-                                    "meta": "new",
-                                    "property": "target"
+                                    "end": {
+                                        "line": 2,
+                                        "column": 22
+                                    }
                                 }
                             }
                         ],
-                        "kind": "var"
+                        "kind": "var",
+                        "range": [
+                            19,
+                            38
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 2,
+                                "column": 4
+                            },
+                            "end": {
+                                "line": 2,
+                                "column": 23
+                            }
+                        }
                     }
-                ]
+                ],
+                "range": [
+                    13,
+                    40
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 13
+                    },
+                    "end": {
+                        "line": 3,
+                        "column": 1
+                    }
+                }
             },
             "generator": false,
-            "expression": false
+            "expression": false,
+            "range": [
+                0,
+                40
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 3,
+                    "column": 1
+                }
+            }
         }
-    ]
+    ],
+    "sourceType": "script",
+    "range": [
+        0,
+        40
+    ],
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 3,
+            "column": 1
+        }
+    }
 };
