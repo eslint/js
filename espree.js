@@ -3321,6 +3321,17 @@ function reinterpretAsCoverFormalsList(expressions) {
             param.type = astNodeTypes.AssignmentPattern;
             delete param.operator;
 
+            if (param.right.type === astNodeTypes.YieldExpression) {
+                if (param.right.argument) {
+                    throwUnexpected(lookahead);
+                }
+
+                param.right.type = astNodeTypes.Identifier;
+                param.right.name = "yield";
+                delete param.right.argument;
+                delete param.right.delegate;
+            }
+
             params.push(param);
             validateParam(options, param.left, param.left.name);
         } else {
