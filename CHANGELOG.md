@@ -1,3 +1,7 @@
+v2.2.1 - July 16, 2015
+
+* 2.2.1 (Nicholas C. Zakas)
+
 v2.2.0 - July 15, 2015
 
 * 2.2.0 (Nicholas C. Zakas)
