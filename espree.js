@@ -2617,7 +2617,7 @@ function parseObjectProperty() {
     // object spread property
     if (allowSpread && match("...")) {
         lex();
-        return markerApply(marker, astNodeFactory.createExperimentalSpreadProperty(parseVariableIdentifier()));
+        return markerApply(marker, astNodeFactory.createExperimentalSpreadProperty(parseAssignmentExpression()));
     }
 
     // only possibility in this branch is a shorthand generator
@@ -3385,6 +3385,12 @@ function reinterpretAsAssignmentBindingPattern(expr) {
             property = expr.properties[i];
 
             if (allowRest && property.type === astNodeTypes.ExperimentalSpreadProperty) {
+
+                // only allow identifiers
+                if (property.argument.type !== astNodeTypes.Identifier) {
+                    throwErrorTolerant({}, "Invalid object rest.");
+                }
+
                 property.type = astNodeTypes.ExperimentalRestProperty;
                 return;
             }
