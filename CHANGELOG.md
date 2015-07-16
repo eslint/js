@@ -1,3 +1,10 @@
+v2.2.2 - July 16, 2015
+
+* 2.2.2 (Nicholas C. Zakas)
+* 2.2.1 (Nicholas C. Zakas)
+* Fix: Yield as identifier in arrow func args (fixes #165) (Nicholas C. Zakas)
+* Fix: Allow AssignmentExpression in object spread (fixes #167) (Nicholas C. Zakas)
+
 v2.2.1 - July 16, 2015
 
 * 2.2.1 (Nicholas C. Zakas)
