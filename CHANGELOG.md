@@ -1,3 +1,8 @@
+v2.2.3 - July 22, 2015
+
+* 2.2.3 (Nicholas C. Zakas)
+* Fix: Incorrect error location (fixes #173) (Nicholas C. Zakas)
+
 v2.2.2 - July 16, 2015
 
 * 2.2.2 (Nicholas C. Zakas)
