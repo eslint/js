@@ -2070,7 +2070,7 @@ function throwError(token, messageFormat) {
         error = new Error("Line " + token.lineNumber + ": " + msg);
         error.index = token.range[0];
         error.lineNumber = token.lineNumber;
-        error.column = token.range[0] - lineStart + 1;
+        error.column = token.range[0] - token.lineStart + 1;
     } else {
         error = new Error("Line " + lineNumber + ": " + msg);
         error.index = index;
