@@ -4771,7 +4771,7 @@ function parseExportNamedDeclaration() {
         do {
             isExportFromIdentifier = isExportFromIdentifier || matchKeyword("default");
             specifiers.push(parseExportSpecifier());
-        } while (match(",") && lex());
+        } while (match(",") && lex() && !match("}"));
     }
     expect("}");
 
@@ -4901,7 +4901,7 @@ function parseNamedImports() {
     if (!match("}")) {
         do {
             specifiers.push(parseImportSpecifier());
-        } while (match(",") && lex());
+        } while (match(",") && lex() && !match("}"));
     }
     expect("}");
     return specifiers;
