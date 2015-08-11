@@ -3309,7 +3309,7 @@ function reinterpretAsCoverFormalsList(expressions) {
                 throwError({}, Messages.UnexpectedToken, ".");
             }
 
-            reinterpretAsDestructuredParameter(options, param.argument);
+            validateParam(options, param.argument, param.argument.name);
             param.type = astNodeTypes.RestElement;
             params.push(param);
         } else if (param.type === astNodeTypes.RestElement) {
