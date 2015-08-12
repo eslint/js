@@ -3356,9 +3356,14 @@ function reinterpretAsCoverFormalsList(expressions) {
 
 function parseArrowFunctionExpression(options, marker) {
     var previousStrict, body;
+    var arrowStart = lineNumber;
 
     expect("=>");
     previousStrict = strict;
+
+    if (lineNumber > arrowStart) {
+        throwError({}, Messages.UnexpectedToken, "=>");
+    }
 
     body = parseConciseBody();
 
