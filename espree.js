@@ -3520,7 +3520,6 @@ function parseAssignmentExpression() {
     if (match("=>") &&
             (state.parenthesisCount === oldParenthesisCount ||
             state.parenthesisCount === (oldParenthesisCount + 1))) {
-
         if (node.type === astNodeTypes.Identifier) {
             params = reinterpretAsCoverFormalsList([ node ]);
         } else if (node.type === astNodeTypes.AssignmentExpression ||
@@ -3535,6 +3534,7 @@ function parseAssignmentExpression() {
         }
 
         if (params) {
+            state.parenthesisCount--;
             return parseArrowFunctionExpression(params, marker);
         }
     }
@@ -4398,7 +4398,7 @@ function parseFunctionSourceElements() {
     oldInIteration = state.inIteration;
     oldInSwitch = state.inSwitch;
     oldInFunctionBody = state.inFunctionBody;
-    oldParenthesisCount = state.parenthesizedCount;
+    oldParenthesisCount = state.parenthesisCount;
 
     state.labelSet = new StringMap();
     state.inIteration = false;
@@ -4426,7 +4426,7 @@ function parseFunctionSourceElements() {
     state.inIteration = oldInIteration;
     state.inSwitch = oldInSwitch;
     state.inFunctionBody = oldInFunctionBody;
-    state.parenthesizedCount = oldParenthesisCount;
+    state.parenthesisCount = oldParenthesisCount;
 
     return markerApply(marker, astNodeFactory.createBlockStatement(sourceElements));
 }
