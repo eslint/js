@@ -1,3 +1,12 @@
+v2.2.4 - August 13, 2015
+
+* 2.2.4 (Nicholas C. Zakas)
+* Fix: newlines in arrow functions (fixes #172) (Jamund Ferguson)
+* Fix: nested arrow function as default param (fixes #145) (Jamund Ferguson)
+* Fix: Rest Params & Arrow Functions (fixes #187) (Jamund Ferguson)
+* Fix: trailing commas in import/export (fixes #148) (Jamund Ferguson)
+* Build: Added sudo false to Travis to build faster (fixes #177) (KahWee Teng)
+
 v2.2.3 - July 22, 2015
 
 * 2.2.3 (Nicholas C. Zakas)
