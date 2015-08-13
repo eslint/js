@@ -1,0 +1,50 @@
+module.exports = { type: 'Program',
+    body:
+    [ { type: 'ExpressionStatement',
+        expression:
+        { type: 'ArrowFunctionExpression',
+            id: null,
+            params:
+                [ { type: 'Identifier',
+                    name: 'a',
+                    range: [ 1, 2 ],
+                    loc: { start: { line: 1, column: 1 }, end: { line: 1, column: 2 } } },
+                    { type: 'AssignmentPattern',
+                        left:
+                        { type: 'Identifier',
+                            name: 'b',
+                            range: [ 4, 5 ],
+                            loc: { start: { line: 1, column: 4 }, end: { line: 1, column: 5 } } },
+                        right:
+                        { type: 'ArrowFunctionExpression',
+                            id: null,
+                            params:
+                                [ { type: 'Identifier',
+                                    name: 'c',
+                                    range: [ 7, 8 ],
+                                    loc: { start: { line: 1, column: 7 }, end: { line: 1, column: 8 } } } ],
+                            body:
+                            { type: 'BlockStatement',
+                                body: [],
+                                range: [ 11, 13 ],
+                                loc: { start: { line: 1, column: 11 }, end: { line: 1, column: 13 } } },
+                            generator: false,
+                            expression: false,
+                            range: [ 6, 13 ],
+                            loc: { start: { line: 1, column: 6 }, end: { line: 1, column: 13 } } },
+                        range: [ 4, 13 ],
+                        loc: { start: { line: 1, column: 4 }, end: { line: 1, column: 13 } } } ],
+            body:
+            { type: 'BlockStatement',
+                body: [],
+                range: [ 18, 20 ],
+                loc: { start: { line: 1, column: 18 }, end: { line: 1, column: 20 } } },
+            generator: false,
+            expression: false,
+            range: [ 0, 20 ],
+            loc: { start: { line: 1, column: 0 }, end: { line: 1, column: 20 } } },
+        range: [ 0, 20 ],
+        loc: { start: { line: 1, column: 0 }, end: { line: 1, column: 20 } } } ],
+        sourceType: 'script',
+    range: [ 0, 20 ],
+    loc: { start: { line: 1, column: 0 }, end: { line: 1, column: 20 } } }

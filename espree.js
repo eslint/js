@@ -3309,7 +3309,7 @@ function reinterpretAsCoverFormalsList(expressions) {
                 throwError({}, Messages.UnexpectedToken, ".");
             }
 
-            reinterpretAsDestructuredParameter(options, param.argument);
+            validateParam(options, param.argument, param.argument.name);
             param.type = astNodeTypes.RestElement;
             params.push(param);
         } else if (param.type === astNodeTypes.RestElement) {
@@ -3356,9 +3356,14 @@ function reinterpretAsCoverFormalsList(expressions) {
 
 function parseArrowFunctionExpression(options, marker) {
     var previousStrict, body;
+    var arrowStart = lineNumber;
 
     expect("=>");
     previousStrict = strict;
+
+    if (lineNumber > arrowStart) {
+        throwError({}, Messages.UnexpectedToken, "=>");
+    }
 
     body = parseConciseBody();
 
@@ -3520,7 +3525,6 @@ function parseAssignmentExpression() {
     if (match("=>") &&
             (state.parenthesisCount === oldParenthesisCount ||
             state.parenthesisCount === (oldParenthesisCount + 1))) {
-
         if (node.type === astNodeTypes.Identifier) {
             params = reinterpretAsCoverFormalsList([ node ]);
         } else if (node.type === astNodeTypes.AssignmentExpression ||
@@ -3535,6 +3539,7 @@ function parseAssignmentExpression() {
         }
 
         if (params) {
+            state.parenthesisCount--;
             return parseArrowFunctionExpression(params, marker);
         }
     }
@@ -4398,7 +4403,7 @@ function parseFunctionSourceElements() {
     oldInIteration = state.inIteration;
     oldInSwitch = state.inSwitch;
     oldInFunctionBody = state.inFunctionBody;
-    oldParenthesisCount = state.parenthesizedCount;
+    oldParenthesisCount = state.parenthesisCount;
 
     state.labelSet = new StringMap();
     state.inIteration = false;
@@ -4426,7 +4431,7 @@ function parseFunctionSourceElements() {
     state.inIteration = oldInIteration;
     state.inSwitch = oldInSwitch;
     state.inFunctionBody = oldInFunctionBody;
-    state.parenthesizedCount = oldParenthesisCount;
+    state.parenthesisCount = oldParenthesisCount;
 
     return markerApply(marker, astNodeFactory.createBlockStatement(sourceElements));
 }
