@@ -3560,6 +3560,7 @@ function parseAssignmentExpression() {
 
         token = lex();
         right = parseAssignmentExpression();
+
         node = markerApply(marker, astNodeFactory.createAssignmentExpression(token.value, left, right));
     }
 
@@ -3895,6 +3896,11 @@ function parseForStatement(opts) {
             state.allowIn = false;
             init = parseExpression();
             state.allowIn = true;
+
+            if (init.type === astNodeTypes.ArrayExpression) {
+                init.type = astNodeTypes.ArrayPattern;
+            }
+
 
             if (allowForOf && matchContextualKeyword("of")) {
                 operator = lex();
