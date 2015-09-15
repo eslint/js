@@ -1,3 +1,8 @@
+v2.2.5 - September 15, 2015
+
+* 2.2.5 (Nicholas C. Zakas)
+* Fix: Ensure node type is correct for destructured (fixes #195) (Nicholas C. Zakas)
+
 v2.2.4 - August 13, 2015
 
 * 2.2.4 (Nicholas C. Zakas)
