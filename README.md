@@ -163,7 +163,7 @@ Espree will not do giant releases. Releases will happen periodically as changes 
 
 ## Contributing
 
-Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing.html), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/espree/issues).
+Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/espree/issues).
 
 Espree is licensed under a permissive BSD 2-clause license.
 
@@ -218,15 +218,3 @@ We expect there are other tools like ESLint that rely on more than just the AST 
 
 All of them.
 
-### Why use Espree instead of Esprima?
-
-* Faster turnaround time on bug fixes
-* More frequent releases
-* Better communication and responsiveness to issues
-* Ongoing development
-
-### Why use Espree instead of Esprima-FB?
-
-* Opt-in to just the ECMAScript 6 features you want
-* JSX support is off by default, so you're not forced to use it to use ECMAScript 6
-* Stricter ECMAScript 6 support
