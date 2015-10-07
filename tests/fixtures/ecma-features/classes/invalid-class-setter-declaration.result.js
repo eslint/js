@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 18,
+    "index": 17,
     "lineNumber": 1,
-    "column": 19,
-    "description": "Unexpected token )"
+    "column": 18,
+    "message": "setter should have exactly one param"
 };

@@ -1,87 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExportNamedDeclaration",
-            "declaration": {
-                "type": "FunctionDeclaration",
-                "id": {
-                    "type": "Identifier",
-                    "name": "foo",
-                    "range": [
-                        16,
-                        19
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 16
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 19
-                        }
-                    }
-                },
-                "params": [],
-                "body": {
-                    "type": "BlockStatement",
-                    "body": [],
-                    "range": [
-                        23,
-                        25
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 23
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 25
-                        }
-                    }
-                },
-                "generator": false,
-                "expression": false,
-                "range": [
-                    7,
-                    25
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 7
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 25
-                    }
-                }
-            },
-            "specifiers": [],
-            "source": null,
-            "range": [
-                0,
-                25
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 25
-                }
-            }
-        }
-    ],
-    "sourceType": "module",
-    "range": [
-        0,
-        25
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -92,14 +10,92 @@ module.exports = {
             "column": 25
         }
     },
+    "range": [
+        0,
+        25
+    ],
+    "body": [
+        {
+            "type": "ExportNamedDeclaration",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 25
+                }
+            },
+            "range": [
+                0,
+                25
+            ],
+            "declaration": {
+                "type": "FunctionDeclaration",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 7
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 25
+                    }
+                },
+                "range": [
+                    7,
+                    25
+                ],
+                "id": {
+                    "type": "Identifier",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 16
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 19
+                        }
+                    },
+                    "range": [
+                        16,
+                        19
+                    ],
+                    "name": "foo"
+                },
+                "generator": false,
+                "expression": false,
+                "params": [],
+                "body": {
+                    "type": "BlockStatement",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 23
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 25
+                        }
+                    },
+                    "range": [
+                        23,
+                        25
+                    ],
+                    "body": []
+                }
+            },
+            "specifiers": [],
+            "source": null
+        }
+    ],
+    "sourceType": "module",
     "tokens": [
         {
             "type": "Keyword",
             "value": "export",
-            "range": [
-                0,
-                6
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -109,15 +105,15 @@ module.exports = {
                     "line": 1,
                     "column": 6
                 }
-            }
+            },
+            "range": [
+                0,
+                6
+            ]
         },
         {
             "type": "Keyword",
             "value": "function",
-            "range": [
-                7,
-                15
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -127,15 +123,15 @@ module.exports = {
                     "line": 1,
                     "column": 15
                 }
-            }
+            },
+            "range": [
+                7,
+                15
+            ]
         },
         {
             "type": "Identifier",
             "value": "foo",
-            "range": [
-                16,
-                19
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -145,15 +141,15 @@ module.exports = {
                     "line": 1,
                     "column": 19
                 }
-            }
+            },
+            "range": [
+                16,
+                19
+            ]
         },
         {
             "type": "Punctuator",
             "value": "(",
-            "range": [
-                20,
-                21
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -163,15 +159,15 @@ module.exports = {
                     "line": 1,
                     "column": 21
                 }
-            }
+            },
+            "range": [
+                20,
+                21
+            ]
         },
         {
             "type": "Punctuator",
             "value": ")",
-            "range": [
-                21,
-                22
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -181,15 +177,15 @@ module.exports = {
                     "line": 1,
                     "column": 22
                 }
-            }
+            },
+            "range": [
+                21,
+                22
+            ]
         },
         {
             "type": "Punctuator",
             "value": "{",
-            "range": [
-                23,
-                24
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -199,15 +195,15 @@ module.exports = {
                     "line": 1,
                     "column": 24
                 }
-            }
+            },
+            "range": [
+                23,
+                24
+            ]
         },
         {
             "type": "Punctuator",
             "value": "}",
-            "range": [
-                24,
-                25
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -217,7 +213,11 @@ module.exports = {
                     "line": 1,
                     "column": 25
                 }
-            }
+            },
+            "range": [
+                24,
+                25
+            ]
         }
     ]
 };

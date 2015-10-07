@@ -1,30 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ReturnStatement",
-            "argument": null,
-            "range": [
-                0,
-                7
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 7
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        7
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -35,14 +10,35 @@ module.exports = {
             "column": 7
         }
     },
+    "range": [
+        0,
+        7
+    ],
+    "body": [
+        {
+            "type": "ReturnStatement",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 7
+                }
+            },
+            "range": [
+                0,
+                7
+            ],
+            "argument": null
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Keyword",
             "value": "return",
-            "range": [
-                0,
-                6
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -52,15 +48,15 @@ module.exports = {
                     "line": 1,
                     "column": 6
                 }
-            }
+            },
+            "range": [
+                0,
+                6
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                6,
-                7
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -70,7 +66,11 @@ module.exports = {
                     "line": 1,
                     "column": 7
                 }
-            }
+            },
+            "range": [
+                6,
+                7
+            ]
         }
     ]
 };

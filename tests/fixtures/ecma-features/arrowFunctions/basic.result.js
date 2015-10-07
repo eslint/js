@@ -1,69 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExpressionStatement",
-            "expression": {
-                "type": "ArrowFunctionExpression",
-                "id": null,
-                "params": [],
-                "body": {
-                    "type": "Literal",
-                    "value": "test",
-                    "raw": "\"test\"",
-                    "range": [
-                        6,
-                        12
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 6
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 12
-                        }
-                    }
-                },
-                "generator": false,
-                "expression": true,
-                "range": [
-                    0,
-                    12
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 0
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 12
-                    }
-                }
-            },
-            "range": [
-                0,
-                13
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 13
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        13
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -74,14 +10,74 @@ module.exports = {
             "column": 13
         }
     },
+    "range": [
+        0,
+        13
+    ],
+    "body": [
+        {
+            "type": "ExpressionStatement",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 13
+                }
+            },
+            "range": [
+                0,
+                13
+            ],
+            "expression": {
+                "type": "ArrowFunctionExpression",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 12
+                    }
+                },
+                "range": [
+                    0,
+                    12
+                ],
+                "id": null,
+                "generator": false,
+                "expression": true,
+                "params": [],
+                "body": {
+                    "type": "Literal",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 6
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 12
+                        }
+                    },
+                    "range": [
+                        6,
+                        12
+                    ],
+                    "value": "test",
+                    "raw": "\"test\""
+                }
+            }
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Punctuator",
             "value": "(",
-            "range": [
-                0,
-                1
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -91,15 +87,15 @@ module.exports = {
                     "line": 1,
                     "column": 1
                 }
-            }
+            },
+            "range": [
+                0,
+                1
+            ]
         },
         {
             "type": "Punctuator",
             "value": ")",
-            "range": [
-                1,
-                2
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -109,15 +105,15 @@ module.exports = {
                     "line": 1,
                     "column": 2
                 }
-            }
+            },
+            "range": [
+                1,
+                2
+            ]
         },
         {
             "type": "Punctuator",
             "value": "=>",
-            "range": [
-                3,
-                5
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -127,15 +123,15 @@ module.exports = {
                     "line": 1,
                     "column": 5
                 }
-            }
+            },
+            "range": [
+                3,
+                5
+            ]
         },
         {
             "type": "String",
             "value": "\"test\"",
-            "range": [
-                6,
-                12
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -145,15 +141,15 @@ module.exports = {
                     "line": 1,
                     "column": 12
                 }
-            }
+            },
+            "range": [
+                6,
+                12
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                12,
-                13
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -163,7 +159,11 @@ module.exports = {
                     "line": 1,
                     "column": 13
                 }
-            }
+            },
+            "range": [
+                12,
+                13
+            ]
         }
     ]
 };

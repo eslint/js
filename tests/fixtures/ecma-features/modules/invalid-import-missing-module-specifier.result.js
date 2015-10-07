@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 19,
-    "lineNumber": 1,
-    "column": 20,
-    "description": "Missing from clause"
+    "index": 20,
+    "lineNumber": 2,
+    "column": 1,
+    "message": "Unexpected token"
 };

@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 11,
+    "index": 4,
     "lineNumber": 1,
-    "column": 12,
-    "description": "Unexpected token ILLEGAL"
+    "column": 5,
+    "message": "Code point out of bounds"
 };

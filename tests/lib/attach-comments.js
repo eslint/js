@@ -34,7 +34,8 @@ var assert = require("chai").assert,
     leche = require("leche"),
     path = require("path"),
     espree = require("../../espree"),
-    shelljs = require("shelljs");
+    shelljs = require("shelljs"),
+    tester = require("./tester");
 
 //------------------------------------------------------------------------------
 // Setup
@@ -44,6 +45,8 @@ var testFiles = shelljs.find("./tests/fixtures/attach-comments").filter(function
     return filename.indexOf(".src.js") > -1;
 }).map(function(filename) {
     return filename.substring(0, filename.length - 7);  // strip off ".src.js"
+// }).filter(function(filename) {
+//     return /line-and-block/.test(filename);
 });
 
 //------------------------------------------------------------------------------
@@ -78,7 +81,7 @@ describe("attachComment: true", function() {
                 });
             }
 
-            assert.deepEqual(result, output);
+            assert.deepEqual(tester.getRaw(result), output);
         });
 
     });

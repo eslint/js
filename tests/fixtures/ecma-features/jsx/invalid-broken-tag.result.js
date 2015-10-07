@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 12,
+    "index": 7,
     "lineNumber": 1,
-    "column": 13,
-    "description": "Unexpected token ILLEGAL"
+    "column": 8,
+    "message": "Unterminated string constant"
 };

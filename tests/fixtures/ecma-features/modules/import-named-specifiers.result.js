@@ -1,156 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ImportDeclaration",
-            "specifiers": [
-                {
-                    "type": "ImportSpecifier",
-                    "local": {
-                        "type": "Identifier",
-                        "name": "bar",
-                        "range": [
-                            8,
-                            11
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 8
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 11
-                            }
-                        }
-                    },
-                    "imported": {
-                        "type": "Identifier",
-                        "name": "bar",
-                        "range": [
-                            8,
-                            11
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 8
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 11
-                            }
-                        }
-                    },
-                    "range": [
-                        8,
-                        11
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 8
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 11
-                        }
-                    }
-                },
-                {
-                    "type": "ImportSpecifier",
-                    "local": {
-                        "type": "Identifier",
-                        "name": "baz",
-                        "range": [
-                            13,
-                            16
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 13
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 16
-                            }
-                        }
-                    },
-                    "imported": {
-                        "type": "Identifier",
-                        "name": "baz",
-                        "range": [
-                            13,
-                            16
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 13
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 16
-                            }
-                        }
-                    },
-                    "range": [
-                        13,
-                        16
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 13
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 16
-                        }
-                    }
-                }
-            ],
-            "source": {
-                "type": "Literal",
-                "value": "foo",
-                "raw": "\"foo\"",
-                "range": [
-                    23,
-                    28
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 23
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 28
-                    }
-                }
-            },
-            "range": [
-                0,
-                29
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 29
-                }
-            }
-        }
-    ],
-    "sourceType": "module",
-    "range": [
-        0,
-        29
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -161,14 +10,161 @@ module.exports = {
             "column": 29
         }
     },
+    "range": [
+        0,
+        29
+    ],
+    "body": [
+        {
+            "type": "ImportDeclaration",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 29
+                }
+            },
+            "range": [
+                0,
+                29
+            ],
+            "specifiers": [
+                {
+                    "type": "ImportSpecifier",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 8
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 11
+                        }
+                    },
+                    "range": [
+                        8,
+                        11
+                    ],
+                    "imported": {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 8
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 11
+                            }
+                        },
+                        "range": [
+                            8,
+                            11
+                        ],
+                        "name": "bar"
+                    },
+                    "local": {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 8
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 11
+                            }
+                        },
+                        "range": [
+                            8,
+                            11
+                        ],
+                        "name": "bar"
+                    }
+                },
+                {
+                    "type": "ImportSpecifier",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 13
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 16
+                        }
+                    },
+                    "range": [
+                        13,
+                        16
+                    ],
+                    "imported": {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 13
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 16
+                            }
+                        },
+                        "range": [
+                            13,
+                            16
+                        ],
+                        "name": "baz"
+                    },
+                    "local": {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 13
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 16
+                            }
+                        },
+                        "range": [
+                            13,
+                            16
+                        ],
+                        "name": "baz"
+                    }
+                }
+            ],
+            "source": {
+                "type": "Literal",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 23
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 28
+                    }
+                },
+                "range": [
+                    23,
+                    28
+                ],
+                "value": "foo",
+                "raw": "\"foo\""
+            }
+        }
+    ],
+    "sourceType": "module",
     "tokens": [
         {
             "type": "Keyword",
             "value": "import",
-            "range": [
-                0,
-                6
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -178,15 +174,15 @@ module.exports = {
                     "line": 1,
                     "column": 6
                 }
-            }
+            },
+            "range": [
+                0,
+                6
+            ]
         },
         {
             "type": "Punctuator",
             "value": "{",
-            "range": [
-                7,
-                8
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -196,15 +192,15 @@ module.exports = {
                     "line": 1,
                     "column": 8
                 }
-            }
+            },
+            "range": [
+                7,
+                8
+            ]
         },
         {
             "type": "Identifier",
             "value": "bar",
-            "range": [
-                8,
-                11
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -214,15 +210,15 @@ module.exports = {
                     "line": 1,
                     "column": 11
                 }
-            }
+            },
+            "range": [
+                8,
+                11
+            ]
         },
         {
             "type": "Punctuator",
             "value": ",",
-            "range": [
-                11,
-                12
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -232,15 +228,15 @@ module.exports = {
                     "line": 1,
                     "column": 12
                 }
-            }
+            },
+            "range": [
+                11,
+                12
+            ]
         },
         {
             "type": "Identifier",
             "value": "baz",
-            "range": [
-                13,
-                16
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -250,15 +246,15 @@ module.exports = {
                     "line": 1,
                     "column": 16
                 }
-            }
+            },
+            "range": [
+                13,
+                16
+            ]
         },
         {
             "type": "Punctuator",
             "value": "}",
-            "range": [
-                16,
-                17
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -268,15 +264,15 @@ module.exports = {
                     "line": 1,
                     "column": 17
                 }
-            }
+            },
+            "range": [
+                16,
+                17
+            ]
         },
         {
             "type": "Identifier",
             "value": "from",
-            "range": [
-                18,
-                22
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -286,15 +282,15 @@ module.exports = {
                     "line": 1,
                     "column": 22
                 }
-            }
+            },
+            "range": [
+                18,
+                22
+            ]
         },
         {
             "type": "String",
             "value": "\"foo\"",
-            "range": [
-                23,
-                28
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -304,15 +300,15 @@ module.exports = {
                     "line": 1,
                     "column": 28
                 }
-            }
+            },
+            "range": [
+                23,
+                28
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                28,
-                29
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -322,7 +318,11 @@ module.exports = {
                     "line": 1,
                     "column": 29
                 }
-            }
+            },
+            "range": [
+                28,
+                29
+            ]
         }
     ]
 };

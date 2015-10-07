@@ -36,11 +36,13 @@
     }
   ],
   "devDependencies": {
+    "acorn-jsx": "^2.0.1",
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
     "complexity-report": "~0.6.1",
     "dateformat": "^1.0.11",
-    "eslint": "^0.9.2",
+    "eslint": "^1.8.0",
+    "eslint-config-eslint": "^1.0.1",
     "esprima": "git://github.com/jquery/esprima",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "istanbul": "~0.2.6",
@@ -64,20 +66,15 @@
   ],
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
-    "test": "npm run-script lint && node Makefile.js test && node test/run.js",
+    "test": "npm run-script lint && node Makefile.js test",
     "lint": "node Makefile.js lint",
     "patch": "node Makefile.js patch",
     "minor": "node Makefile.js minor",
     "major": "node Makefile.js major",
-    "browserify": "node Makefile.js browserify",
-    "coverage": "npm run-script analyze-coverage && npm run-script check-coverage",
-    "analyze-coverage": "node node_modules/istanbul/lib/cli.js cover test/runner.js",
-    "check-coverage": "node node_modules/istanbul/lib/cli.js check-coverage --statement 99 --branch 99 --function 99",
-    "complexity": "npm run-script analyze-complexity && npm run-script check-complexity",
-    "analyze-complexity": "node tools/list-complexity.js",
-    "check-complexity": "node node_modules/complexity-report/src/cli.js --maxcc 14 --silent -l -w espree.js",
-    "benchmark": "node test/benchmarks.js",
-    "benchmark-quick": "node test/benchmarks.js quick"
+    "browserify": "node Makefile.js browserify"
   },
-  "dependencies": {}
+  "dependencies": {
+    "acorn": "^2.6.4",
+    "acorn-jsx": "^2.0.1"
+  }
 }

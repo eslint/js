@@ -1,106 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExpressionStatement",
-            "expression": {
-                "type": "ArrowFunctionExpression",
-                "id": null,
-                "params": [
-                    {
-                        "type": "Identifier",
-                        "name": "a",
-                        "range": [
-                            1,
-                            2
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 1
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 2
-                            }
-                        }
-                    },
-                    {
-                        "type": "Identifier",
-                        "name": "b",
-                        "range": [
-                            4,
-                            5
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 4
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 5
-                            }
-                        }
-                    }
-                ],
-                "body": {
-                    "type": "Literal",
-                    "value": "test",
-                    "raw": "\"test\"",
-                    "range": [
-                        10,
-                        16
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 10
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 16
-                        }
-                    }
-                },
-                "generator": false,
-                "expression": true,
-                "range": [
-                    0,
-                    16
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 0
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 16
-                    }
-                }
-            },
-            "range": [
-                0,
-                17
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 17
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        17
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -111,14 +10,111 @@ module.exports = {
             "column": 17
         }
     },
+    "range": [
+        0,
+        17
+    ],
+    "body": [
+        {
+            "type": "ExpressionStatement",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 17
+                }
+            },
+            "range": [
+                0,
+                17
+            ],
+            "expression": {
+                "type": "ArrowFunctionExpression",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 16
+                    }
+                },
+                "range": [
+                    0,
+                    16
+                ],
+                "id": null,
+                "generator": false,
+                "expression": true,
+                "params": [
+                    {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 1
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 2
+                            }
+                        },
+                        "range": [
+                            1,
+                            2
+                        ],
+                        "name": "a"
+                    },
+                    {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 4
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 5
+                            }
+                        },
+                        "range": [
+                            4,
+                            5
+                        ],
+                        "name": "b"
+                    }
+                ],
+                "body": {
+                    "type": "Literal",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 10
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 16
+                        }
+                    },
+                    "range": [
+                        10,
+                        16
+                    ],
+                    "value": "test",
+                    "raw": "\"test\""
+                }
+            }
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Punctuator",
             "value": "(",
-            "range": [
-                0,
-                1
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -128,15 +124,15 @@ module.exports = {
                     "line": 1,
                     "column": 1
                 }
-            }
+            },
+            "range": [
+                0,
+                1
+            ]
         },
         {
             "type": "Identifier",
             "value": "a",
-            "range": [
-                1,
-                2
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -146,15 +142,15 @@ module.exports = {
                     "line": 1,
                     "column": 2
                 }
-            }
+            },
+            "range": [
+                1,
+                2
+            ]
         },
         {
             "type": "Punctuator",
             "value": ",",
-            "range": [
-                2,
-                3
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -164,15 +160,15 @@ module.exports = {
                     "line": 1,
                     "column": 3
                 }
-            }
+            },
+            "range": [
+                2,
+                3
+            ]
         },
         {
             "type": "Identifier",
             "value": "b",
-            "range": [
-                4,
-                5
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -182,15 +178,15 @@ module.exports = {
                     "line": 1,
                     "column": 5
                 }
-            }
+            },
+            "range": [
+                4,
+                5
+            ]
         },
         {
             "type": "Punctuator",
             "value": ")",
-            "range": [
-                5,
-                6
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -200,15 +196,15 @@ module.exports = {
                     "line": 1,
                     "column": 6
                 }
-            }
+            },
+            "range": [
+                5,
+                6
+            ]
         },
         {
             "type": "Punctuator",
             "value": "=>",
-            "range": [
-                7,
-                9
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -218,15 +214,15 @@ module.exports = {
                     "line": 1,
                     "column": 9
                 }
-            }
+            },
+            "range": [
+                7,
+                9
+            ]
         },
         {
             "type": "String",
             "value": "\"test\"",
-            "range": [
-                10,
-                16
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -236,15 +232,15 @@ module.exports = {
                     "line": 1,
                     "column": 16
                 }
-            }
+            },
+            "range": [
+                10,
+                16
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                16,
-                17
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -254,7 +250,11 @@ module.exports = {
                     "line": 1,
                     "column": 17
                 }
-            }
+            },
+            "range": [
+                16,
+                17
+            ]
         }
     ]
 };

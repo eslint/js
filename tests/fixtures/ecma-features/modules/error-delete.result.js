@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 27,
+    "index": 19,
     "lineNumber": 2,
-    "column": 9,
-    "description": "Delete of an unqualified identifier in strict mode."
+    "column": 1,
+    "message": "Deleting local variable in strict mode"
 };
