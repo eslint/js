@@ -84,6 +84,7 @@ commentFiles.forEach(function(filename) {
         result = getExpectedResult(code, {
             loc: true,
             range: true,
+            tokens: true,
             attachComment: true
         });
 
@@ -98,6 +99,7 @@ testFiles.forEach(function(filename) {
         config = {
             loc: true,
             range: true,
+            tokens: true,
             ecmaFeatures: {}
         };
 
@@ -116,6 +118,7 @@ mixFiles.forEach(function(filename) {
         config = {
             loc: true,
             range: true,
+            tokens: true,
             ecmaFeatures: {}
         };
 
