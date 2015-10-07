@@ -75,5 +75,43 @@ module.exports = {
             "line": 6,
             "column": 13
         }
-    }
+    },
+    "tokens": [
+        {
+            "type": "Template",
+            "value": "`The last man on Earth\n                 sat alone in a room.\n    There was\n    a knock\n    on the\n    door...`",
+            "range": [
+                0,
+                110
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 6,
+                    "column": 12
+                }
+            }
+        },
+        {
+            "type": "Punctuator",
+            "value": ";",
+            "range": [
+                110,
+                111
+            ],
+            "loc": {
+                "start": {
+                    "line": 6,
+                    "column": 12
+                },
+                "end": {
+                    "line": 6,
+                    "column": 13
+                }
+            }
+        }
+    ]
 };

@@ -51,7 +51,7 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
 });
 
 var moduleTestFiles = testFiles.filter(function(filename) {
-    return !/jsx|globalReturn|invalid|experimental|not\-strict/.test(filename);
+    return !/jsx|globalReturn|invalid|experimental|generators|not\-strict/.test(filename);
 });
 
 var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
@@ -75,6 +75,7 @@ describe("ecmaFeatures", function() {
         config = {
                 loc: true,
                 range: true,
+                tokens: true,
                 ecmaFeatures: {}
             };
     });

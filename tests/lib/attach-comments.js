@@ -62,12 +62,14 @@ describe("attachComment: true", function() {
                 result = espree.parse(input, {
                     loc: true,
                     range: true,
+                    tokens: true,
                     attachComment: true
                 });
             } else {
                 result = espree.parse(input, {
                     loc: true,
                     range: true,
+                    tokens: true,
                     attachComment: true,
                     ecmaFeatures: {
                         classes: true,
