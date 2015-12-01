@@ -31,7 +31,8 @@
 //------------------------------------------------------------------------------
 
 var assert = require("chai").assert,
-    espree = require("../../espree");
+    espree = require("../../espree"),
+    tester = require("./tester");
 
 //------------------------------------------------------------------------------
 // Tests
@@ -52,4 +53,21 @@ describe("parse()", function() {
 
     });
 
+    describe("general", function() {
+        it("should output tokens, comments, locs, and ranges when called with those options", function() {
+            var ast = espree.parse("let foo = bar;", {
+                ecmaFeatures: {
+                    blockBindings: true
+                },
+                comment: true,
+                tokens: true,
+                range: true,
+                loc: true
+            });
+
+            assert.deepEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
+        });
+
+
+    });
 });

@@ -39,6 +39,7 @@
 
 var shelljs = require("shelljs"),
     espree = require("../espree"),
+    tester = require("../tests/lib/tester"),
     path = require("path");
 
 //------------------------------------------------------------------------------
@@ -47,9 +48,11 @@ var shelljs = require("shelljs"),
 
 function getExpectedResult(code, config) {
     try {
-        return espree.parse(code, config);
+        return tester.getRaw(espree.parse(code, config));
     } catch (ex) {
-        return ex;    // if an error is thrown, match the error
+        var raw = tester.getRaw(ex);
+        raw.message = ex.message;
+        return raw;
     }
 }
 
@@ -58,6 +61,14 @@ function getTestFilenames(directory) {
         return filename.indexOf(".src.js") > -1;
     }).map(function(filename) {
         return filename.substring(directory.length - 1, filename.length - 7);  // strip off ".src.js"
+    });
+}
+
+function getLibraryFilenames(directory) {
+    return shelljs.find(directory).filter(function(filename) {
+        return filename.indexOf(".js") > -1 && filename.indexOf(".result.js") === -1;
+    }).map(function(filename) {
+        return filename.substring(directory.length - 1);  // strip off directory
     });
 }
 
@@ -71,11 +82,13 @@ function outputResult(result, testResultFilename) {
 
 var FIXTURES_DIR = "./tests/fixtures/ecma-features",
     FIXTURES_MIX_DIR = "./tests/fixtures/ecma-features-mix",
-    COMMENTS_DIR = "./tests/fixtures/attach-comments";
+    COMMENTS_DIR = "./tests/fixtures/attach-comments",
+    LIBRARIES_DIR = "./tests/fixtures/libraries";
 
 var testFiles = getTestFilenames(FIXTURES_DIR),
     mixFiles = getTestFilenames(FIXTURES_MIX_DIR),
-    commentFiles = getTestFilenames(COMMENTS_DIR);
+    commentFiles = getTestFilenames(COMMENTS_DIR),
+    libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
 
 commentFiles.forEach(function(filename) {
@@ -85,10 +98,28 @@ commentFiles.forEach(function(filename) {
             loc: true,
             range: true,
             tokens: true,
-            attachComment: true
+            attachComment: true,
+            ecmaFeatures: {
+                modules: true,
+                classes: true
+            }
         });
 
     outputResult(result, testResultFilename);
+    result = null;
+});
+
+libraryFiles.forEach(function(filename) {
+    var testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
+        code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename)),
+        result = getExpectedResult(code, {
+            loc: true,
+            range: true,
+            tokens: true,
+            attachComment: true
+        });
+    JSON.stringify(result).to(testResultFilename);
+    result = null;
 });
 
 // update all tests in ecma-features

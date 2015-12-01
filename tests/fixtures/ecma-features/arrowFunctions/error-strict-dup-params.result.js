@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 20,
+    "index": 18,
     "lineNumber": 1,
-    "column": 21,
-    "description": "Strict mode function may not have duplicate parameter names"
+    "column": 19,
+    "message": "Argument name clash"
 };

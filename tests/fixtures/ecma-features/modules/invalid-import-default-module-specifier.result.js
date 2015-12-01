@@ -2,5 +2,5 @@ module.exports = {
     "index": 16,
     "lineNumber": 1,
     "column": 17,
-    "description": "Invalid module specifier"
+    "message": "Unexpected token bar"
 };

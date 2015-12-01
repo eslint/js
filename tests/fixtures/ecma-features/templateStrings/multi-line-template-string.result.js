@@ -1,71 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExpressionStatement",
-            "expression": {
-                "type": "TemplateLiteral",
-                "quasis": [
-                    {
-                        "type": "TemplateElement",
-                        "value": {
-                            "raw": "The last man on Earth\n                 sat alone in a room.\n    There was\n    a knock\n    on the\n    door...",
-                            "cooked": "The last man on Earth\n                 sat alone in a room.\n    There was\n    a knock\n    on the\n    door..."
-                        },
-                        "tail": true,
-                        "range": [
-                            0,
-                            110
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 0
-                            },
-                            "end": {
-                                "line": 6,
-                                "column": 12
-                            }
-                        }
-                    }
-                ],
-                "expressions": [],
-                "range": [
-                    0,
-                    110
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 0
-                    },
-                    "end": {
-                        "line": 6,
-                        "column": 12
-                    }
-                }
-            },
-            "range": [
-                0,
-                111
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 6,
-                    "column": 13
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        111
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -76,14 +10,76 @@ module.exports = {
             "column": 13
         }
     },
+    "range": [
+        0,
+        111
+    ],
+    "body": [
+        {
+            "type": "ExpressionStatement",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 6,
+                    "column": 13
+                }
+            },
+            "range": [
+                0,
+                111
+            ],
+            "expression": {
+                "type": "TemplateLiteral",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 6,
+                        "column": 12
+                    }
+                },
+                "range": [
+                    0,
+                    110
+                ],
+                "expressions": [],
+                "quasis": [
+                    {
+                        "type": "TemplateElement",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 0
+                            },
+                            "end": {
+                                "line": 6,
+                                "column": 12
+                            }
+                        },
+                        "range": [
+                            0,
+                            110
+                        ],
+                        "value": {
+                            "raw": "The last man on Earth\n                 sat alone in a room.\n    There was\n    a knock\n    on the\n    door...",
+                            "cooked": "The last man on Earth\n                 sat alone in a room.\n    There was\n    a knock\n    on the\n    door..."
+                        },
+                        "tail": true
+                    }
+                ]
+            }
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Template",
             "value": "`The last man on Earth\n                 sat alone in a room.\n    There was\n    a knock\n    on the\n    door...`",
-            "range": [
-                0,
-                110
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -93,15 +89,15 @@ module.exports = {
                     "line": 6,
                     "column": 12
                 }
-            }
+            },
+            "range": [
+                0,
+                110
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                110,
-                111
-            ],
             "loc": {
                 "start": {
                     "line": 6,
@@ -111,7 +107,11 @@ module.exports = {
                     "line": 6,
                     "column": 13
                 }
-            }
+            },
+            "range": [
+                110,
+                111
+            ]
         }
     ]
 };

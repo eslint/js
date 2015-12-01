@@ -1,101 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExpressionStatement",
-            "expression": {
-                "type": "CallExpression",
-                "callee": {
-                    "type": "Identifier",
-                    "name": "foo",
-                    "range": [
-                        0,
-                        3
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 0
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 3
-                        }
-                    }
-                },
-                "arguments": [
-                    {
-                        "type": "SpreadElement",
-                        "argument": {
-                            "type": "Identifier",
-                            "name": "a",
-                            "range": [
-                                7,
-                                8
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 7
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 8
-                                }
-                            }
-                        },
-                        "range": [
-                            4,
-                            8
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 4
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 8
-                            }
-                        }
-                    }
-                ],
-                "range": [
-                    0,
-                    9
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 0
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 9
-                    }
-                }
-            },
-            "range": [
-                0,
-                10
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 10
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        10
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -106,14 +10,106 @@ module.exports = {
             "column": 10
         }
     },
+    "range": [
+        0,
+        10
+    ],
+    "body": [
+        {
+            "type": "ExpressionStatement",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 10
+                }
+            },
+            "range": [
+                0,
+                10
+            ],
+            "expression": {
+                "type": "CallExpression",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 9
+                    }
+                },
+                "range": [
+                    0,
+                    9
+                ],
+                "callee": {
+                    "type": "Identifier",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 0
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 3
+                        }
+                    },
+                    "range": [
+                        0,
+                        3
+                    ],
+                    "name": "foo"
+                },
+                "arguments": [
+                    {
+                        "type": "SpreadElement",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 4
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 8
+                            }
+                        },
+                        "range": [
+                            4,
+                            8
+                        ],
+                        "argument": {
+                            "type": "Identifier",
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 7
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 8
+                                }
+                            },
+                            "range": [
+                                7,
+                                8
+                            ],
+                            "name": "a"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Identifier",
             "value": "foo",
-            "range": [
-                0,
-                3
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -123,15 +119,15 @@ module.exports = {
                     "line": 1,
                     "column": 3
                 }
-            }
+            },
+            "range": [
+                0,
+                3
+            ]
         },
         {
             "type": "Punctuator",
             "value": "(",
-            "range": [
-                3,
-                4
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -141,15 +137,15 @@ module.exports = {
                     "line": 1,
                     "column": 4
                 }
-            }
+            },
+            "range": [
+                3,
+                4
+            ]
         },
         {
             "type": "Punctuator",
             "value": "...",
-            "range": [
-                4,
-                7
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -159,15 +155,15 @@ module.exports = {
                     "line": 1,
                     "column": 7
                 }
-            }
+            },
+            "range": [
+                4,
+                7
+            ]
         },
         {
             "type": "Identifier",
             "value": "a",
-            "range": [
-                7,
-                8
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -177,15 +173,15 @@ module.exports = {
                     "line": 1,
                     "column": 8
                 }
-            }
+            },
+            "range": [
+                7,
+                8
+            ]
         },
         {
             "type": "Punctuator",
             "value": ")",
-            "range": [
-                8,
-                9
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -195,15 +191,15 @@ module.exports = {
                     "line": 1,
                     "column": 9
                 }
-            }
+            },
+            "range": [
+                8,
+                9
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                9,
-                10
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -213,7 +209,11 @@ module.exports = {
                     "line": 1,
                     "column": 10
                 }
-            }
+            },
+            "range": [
+                9,
+                10
+            ]
         }
     ]
 };

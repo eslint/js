@@ -1,106 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExpressionStatement",
-            "expression": {
-                "type": "TaggedTemplateExpression",
-                "tag": {
-                    "type": "Identifier",
-                    "name": "foo",
-                    "range": [
-                        0,
-                        3
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 0
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 3
-                        }
-                    }
-                },
-                "quasi": {
-                    "type": "TemplateLiteral",
-                    "quasis": [
-                        {
-                            "type": "TemplateElement",
-                            "value": {
-                                "raw": "foo",
-                                "cooked": "foo"
-                            },
-                            "tail": true,
-                            "range": [
-                                3,
-                                8
-                            ],
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 3
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 8
-                                }
-                            }
-                        }
-                    ],
-                    "expressions": [],
-                    "range": [
-                        3,
-                        8
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 3
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 8
-                        }
-                    }
-                },
-                "range": [
-                    0,
-                    8
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 0
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 8
-                    }
-                }
-            },
-            "range": [
-                0,
-                9
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 9
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        9
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -111,14 +10,111 @@ module.exports = {
             "column": 9
         }
     },
+    "range": [
+        0,
+        9
+    ],
+    "body": [
+        {
+            "type": "ExpressionStatement",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 9
+                }
+            },
+            "range": [
+                0,
+                9
+            ],
+            "expression": {
+                "type": "TaggedTemplateExpression",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 8
+                    }
+                },
+                "range": [
+                    0,
+                    8
+                ],
+                "tag": {
+                    "type": "Identifier",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 0
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 3
+                        }
+                    },
+                    "range": [
+                        0,
+                        3
+                    ],
+                    "name": "foo"
+                },
+                "quasi": {
+                    "type": "TemplateLiteral",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 3
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 8
+                        }
+                    },
+                    "range": [
+                        3,
+                        8
+                    ],
+                    "expressions": [],
+                    "quasis": [
+                        {
+                            "type": "TemplateElement",
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 3
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 8
+                                }
+                            },
+                            "range": [
+                                3,
+                                8
+                            ],
+                            "value": {
+                                "raw": "foo",
+                                "cooked": "foo"
+                            },
+                            "tail": true
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Identifier",
             "value": "foo",
-            "range": [
-                0,
-                3
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -128,15 +124,15 @@ module.exports = {
                     "line": 1,
                     "column": 3
                 }
-            }
+            },
+            "range": [
+                0,
+                3
+            ]
         },
         {
             "type": "Template",
             "value": "`foo`",
-            "range": [
-                3,
-                8
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -146,15 +142,15 @@ module.exports = {
                     "line": 1,
                     "column": 8
                 }
-            }
+            },
+            "range": [
+                3,
+                8
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                8,
-                9
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -164,7 +160,11 @@ module.exports = {
                     "line": 1,
                     "column": 9
                 }
-            }
+            },
+            "range": [
+                8,
+                9
+            ]
         }
     ]
 };

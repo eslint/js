@@ -34,7 +34,8 @@ var assert = require("chai").assert,
     leche = require("leche"),
     path = require("path"),
     espree = require("../../espree"),
-    shelljs = require("shelljs");
+    shelljs = require("shelljs"),
+    tester = require("./tester");
 
 // var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
@@ -48,6 +49,8 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
 }).map(function(filename) {
     return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
+// }).filter(function(filename) {
+//     return /simple-new-target/.test(filename);
 });
 
 var moduleTestFiles = testFiles.filter(function(filename) {
@@ -58,10 +61,10 @@ var mixFiles = shelljs.find(FIXTURES_MIX_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
 }).map(function(filename) {
     return filename.substring(FIXTURES_MIX_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
+// }).filter(function(filename) {
+//     return /template/.test(filename);
 });
 
-// console.dir(moduleTestFiles);
-// return;
 
 //------------------------------------------------------------------------------
 // Tests
@@ -73,11 +76,11 @@ describe("ecmaFeatures", function() {
 
     beforeEach(function() {
         config = {
-                loc: true,
-                range: true,
-                tokens: true,
-                ecmaFeatures: {}
-            };
+            loc: true,
+            range: true,
+            tokens: true,
+            ecmaFeatures: {}
+        };
     });
 
     leche.withData(testFiles, function(filename) {
@@ -89,28 +92,8 @@ describe("ecmaFeatures", function() {
         it("should parse correctly when " + feature + " is true", function() {
             config.ecmaFeatures[feature] = true;
             var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
-            var result;
 
-            try {
-                result = espree.parse(code, config);
-            } catch (ex) {
-
-                // if the result is an error, create an error object so deepEqual works
-                if (expected.message || expected.description) {
-
-                    var expectedError = new Error(expected.message || expected.description);
-                    Object.keys(expected).forEach(function(key) {
-                        expectedError[key] = expected[key];
-                    });
-                    expected = expectedError;
-                } else {
-                    throw ex;
-                }
-
-                result = ex;    // if an error is thrown, match the error
-
-            }
-            assert.deepEqual(result, expected);
+            tester.assertMatches(code, config, expected);
         });
 
         it("should throw an error when " + feature + " is false", function() {
@@ -131,7 +114,6 @@ describe("ecmaFeatures", function() {
 
             it("should parse correctly when sourceType is module", function() {
                 var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
-                var result;
 
                 config.sourceType = "module";
 
@@ -140,26 +122,7 @@ describe("ecmaFeatures", function() {
                     expected.sourceType = "module";
                 }
 
-                try {
-                    result = espree.parse(code, config);
-                } catch (ex) {
-
-                    // if the result is an error, create an error object so deepEqual works
-                    if (expected.message || expected.description) {
-
-                        var expectedError = new Error(expected.message || expected.description);
-                        Object.keys(expected).forEach(function(key) {
-                            expectedError[key] = expected[key];
-                        });
-                        expected = expectedError;
-                    } else {
-                        throw ex;
-                    }
-
-                    result = ex;    // if an error is thrown, match the error
-
-                }
-                assert.deepEqual(result, expected);
+                tester.assertMatches(code, config, expected);
             });
 
         });
@@ -176,24 +139,8 @@ describe("ecmaFeatures", function() {
             config.ecmaFeatures = require(path.resolve(__dirname, "../../", FIXTURES_MIX_DIR, filename) + ".config.js");
 
             var expected = require(path.resolve(__dirname, "../../", FIXTURES_MIX_DIR, filename) + ".result.js");
-            var result;
 
-            try {
-                result = espree.parse(code, config);
-            } catch (ex) {
-
-                // if the result is an error, create an error object so deepEqual works
-                if (expected.message) {
-                    var expectedError = new Error(expected.message);
-                    Object.keys(expected).forEach(function(key) {
-                        expectedError[key] = expected[key];
-                    });
-                    expected = expectedError;
-                }
-                result = ex;    // if an error is thrown, match the error
-            }
-
-            assert.deepEqual(result, expected);
+            tester.assertMatches(code, config, expected);
         });
 
     });

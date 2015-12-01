@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 78,
+    "index": 62,
     "lineNumber": 7,
-    "column": 18,
-    "description": "Duplicate '__proto__' property in object literal are not allowed"
+    "column": 2,
+    "message": "Redefinition of __proto__ property"
 };

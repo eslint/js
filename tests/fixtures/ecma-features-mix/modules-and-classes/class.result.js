@@ -1,102 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExportNamedDeclaration",
-            "declaration": {
-                "type": "ClassDeclaration",
-                "id": {
-                    "type": "Identifier",
-                    "name": "foo",
-                    "range": [
-                        13,
-                        16
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 13
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 16
-                        }
-                    }
-                },
-                "superClass": null,
-                "body": {
-                    "type": "ClassBody",
-                    "body": [],
-                    "range": [
-                        17,
-                        19
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 17
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 19
-                        }
-                    }
-                },
-                "range": [
-                    7,
-                    19
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 7
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 19
-                    }
-                }
-            },
-            "specifiers": [],
-            "source": null,
-            "range": [
-                0,
-                19
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 19
-                }
-            }
-        },
-        {
-            "type": "EmptyStatement",
-            "range": [
-                19,
-                20
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 19
-                },
-                "end": {
-                    "line": 1,
-                    "column": 20
-                }
-            }
-        }
-    ],
-    "sourceType": "module",
-    "range": [
-        0,
-        20
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -107,14 +10,13 @@ module.exports = {
             "column": 20
         }
     },
-    "tokens": [
+    "range": [
+        0,
+        20
+    ],
+    "body": [
         {
-            "type": "Keyword",
-            "value": "export",
-            "range": [
-                0,
-                6
-            ],
+            "type": "ExportNamedDeclaration",
             "loc": {
                 "start": {
                     "line": 1,
@@ -122,89 +24,72 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 6
-                }
-            }
-        },
-        {
-            "type": "Keyword",
-            "value": "class",
-            "range": [
-                7,
-                12
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 7
-                },
-                "end": {
-                    "line": 1,
-                    "column": 12
-                }
-            }
-        },
-        {
-            "type": "Identifier",
-            "value": "foo",
-            "range": [
-                13,
-                16
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 13
-                },
-                "end": {
-                    "line": 1,
-                    "column": 16
-                }
-            }
-        },
-        {
-            "type": "Punctuator",
-            "value": "{",
-            "range": [
-                17,
-                18
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 17
-                },
-                "end": {
-                    "line": 1,
-                    "column": 18
-                }
-            }
-        },
-        {
-            "type": "Punctuator",
-            "value": "}",
-            "range": [
-                18,
-                19
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 18
-                },
-                "end": {
-                    "line": 1,
                     "column": 19
                 }
-            }
+            },
+            "range": [
+                0,
+                19
+            ],
+            "declaration": {
+                "type": "ClassDeclaration",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 7
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 19
+                    }
+                },
+                "range": [
+                    7,
+                    19
+                ],
+                "id": {
+                    "type": "Identifier",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 13
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 16
+                        }
+                    },
+                    "range": [
+                        13,
+                        16
+                    ],
+                    "name": "foo"
+                },
+                "superClass": null,
+                "body": {
+                    "type": "ClassBody",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 17
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 19
+                        }
+                    },
+                    "range": [
+                        17,
+                        19
+                    ],
+                    "body": []
+                }
+            },
+            "specifiers": [],
+            "source": null
         },
         {
-            "type": "Punctuator",
-            "value": ";",
-            "range": [
-                19,
-                20
-            ],
+            "type": "EmptyStatement",
             "loc": {
                 "start": {
                     "line": 1,
@@ -214,7 +99,122 @@ module.exports = {
                     "line": 1,
                     "column": 20
                 }
-            }
+            },
+            "range": [
+                19,
+                20
+            ]
+        }
+    ],
+    "sourceType": "module",
+    "tokens": [
+        {
+            "type": "Keyword",
+            "value": "export",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 6
+                }
+            },
+            "range": [
+                0,
+                6
+            ]
+        },
+        {
+            "type": "Keyword",
+            "value": "class",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 7
+                },
+                "end": {
+                    "line": 1,
+                    "column": 12
+                }
+            },
+            "range": [
+                7,
+                12
+            ]
+        },
+        {
+            "type": "Identifier",
+            "value": "foo",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 13
+                },
+                "end": {
+                    "line": 1,
+                    "column": 16
+                }
+            },
+            "range": [
+                13,
+                16
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": "{",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 17
+                },
+                "end": {
+                    "line": 1,
+                    "column": 18
+                }
+            },
+            "range": [
+                17,
+                18
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": "}",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 18
+                },
+                "end": {
+                    "line": 1,
+                    "column": 19
+                }
+            },
+            "range": [
+                18,
+                19
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": ";",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 19
+                },
+                "end": {
+                    "line": 1,
+                    "column": 20
+                }
+            },
+            "range": [
+                19,
+                20
+            ]
         }
     ]
 };

@@ -1,33 +1,39 @@
 module.exports = {
     "type": "Program",
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 22
+        }
+    },
+    "range": [
+        0,
+        22
+    ],
     "body": [
         {
             "type": "ImportDeclaration",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 22
+                }
+            },
+            "range": [
+                0,
+                22
+            ],
             "specifiers": [
                 {
                     "type": "ImportDefaultSpecifier",
-                    "local": {
-                        "type": "Identifier",
-                        "name": "$",
-                        "range": [
-                            7,
-                            8
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 7
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 8
-                            }
-                        }
-                    },
-                    "range": [
-                        7,
-                        8
-                    ],
                     "loc": {
                         "start": {
                             "line": 1,
@@ -37,17 +43,33 @@ module.exports = {
                             "line": 1,
                             "column": 8
                         }
+                    },
+                    "range": [
+                        7,
+                        8
+                    ],
+                    "local": {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 7
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 8
+                            }
+                        },
+                        "range": [
+                            7,
+                            8
+                        ],
+                        "name": "$"
                     }
                 }
             ],
             "source": {
                 "type": "Literal",
-                "value": "jquery",
-                "raw": "\"jquery\"",
-                "range": [
-                    14,
-                    22
-                ],
                 "loc": {
                     "start": {
                         "line": 1,
@@ -57,47 +79,21 @@ module.exports = {
                         "line": 1,
                         "column": 22
                     }
-                }
-            },
-            "range": [
-                0,
-                23
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
                 },
-                "end": {
-                    "line": 2,
-                    "column": 0
-                }
+                "range": [
+                    14,
+                    22
+                ],
+                "value": "jquery",
+                "raw": "\"jquery\""
             }
         }
     ],
     "sourceType": "module",
-    "range": [
-        0,
-        23
-    ],
-    "loc": {
-        "start": {
-            "line": 1,
-            "column": 0
-        },
-        "end": {
-            "line": 2,
-            "column": 0
-        }
-    },
     "tokens": [
         {
             "type": "Keyword",
             "value": "import",
-            "range": [
-                0,
-                6
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -107,15 +103,15 @@ module.exports = {
                     "line": 1,
                     "column": 6
                 }
-            }
+            },
+            "range": [
+                0,
+                6
+            ]
         },
         {
             "type": "Identifier",
             "value": "$",
-            "range": [
-                7,
-                8
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -125,15 +121,15 @@ module.exports = {
                     "line": 1,
                     "column": 8
                 }
-            }
+            },
+            "range": [
+                7,
+                8
+            ]
         },
         {
             "type": "Identifier",
             "value": "from",
-            "range": [
-                9,
-                13
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -143,15 +139,15 @@ module.exports = {
                     "line": 1,
                     "column": 13
                 }
-            }
+            },
+            "range": [
+                9,
+                13
+            ]
         },
         {
             "type": "String",
             "value": "\"jquery\"",
-            "range": [
-                14,
-                22
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -161,7 +157,11 @@ module.exports = {
                     "line": 1,
                     "column": 22
                 }
-            }
+            },
+            "range": [
+                14,
+                22
+            ]
         }
     ]
 };

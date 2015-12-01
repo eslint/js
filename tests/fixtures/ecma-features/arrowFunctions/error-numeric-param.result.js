@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 5,
+    "index": 1,
     "lineNumber": 1,
-    "column": 6,
-    "description": "Unexpected token =>"
+    "column": 2,
+    "message": "Assigning to rvalue"
 };

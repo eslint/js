@@ -1,48 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "ExportDefaultDeclaration",
-            "declaration": {
-                "type": "Literal",
-                "value": 42,
-                "raw": "42",
-                "range": [
-                    15,
-                    17
-                ],
-                "loc": {
-                    "start": {
-                        "line": 1,
-                        "column": 15
-                    },
-                    "end": {
-                        "line": 1,
-                        "column": 17
-                    }
-                }
-            },
-            "range": [
-                0,
-                18
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 18
-                }
-            }
-        }
-    ],
-    "sourceType": "module",
-    "range": [
-        0,
-        18
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -53,14 +10,53 @@ module.exports = {
             "column": 18
         }
     },
+    "range": [
+        0,
+        18
+    ],
+    "body": [
+        {
+            "type": "ExportDefaultDeclaration",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 18
+                }
+            },
+            "range": [
+                0,
+                18
+            ],
+            "declaration": {
+                "type": "Literal",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 15
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 17
+                    }
+                },
+                "range": [
+                    15,
+                    17
+                ],
+                "value": 42,
+                "raw": "42"
+            }
+        }
+    ],
+    "sourceType": "module",
     "tokens": [
         {
             "type": "Keyword",
             "value": "export",
-            "range": [
-                0,
-                6
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -70,15 +66,15 @@ module.exports = {
                     "line": 1,
                     "column": 6
                 }
-            }
+            },
+            "range": [
+                0,
+                6
+            ]
         },
         {
             "type": "Keyword",
             "value": "default",
-            "range": [
-                7,
-                14
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -88,15 +84,15 @@ module.exports = {
                     "line": 1,
                     "column": 14
                 }
-            }
+            },
+            "range": [
+                7,
+                14
+            ]
         },
         {
             "type": "Numeric",
             "value": "42",
-            "range": [
-                15,
-                17
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -106,15 +102,15 @@ module.exports = {
                     "line": 1,
                     "column": 17
                 }
-            }
+            },
+            "range": [
+                15,
+                17
+            ]
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                17,
-                18
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -124,7 +120,11 @@ module.exports = {
                     "line": 1,
                     "column": 18
                 }
-            }
+            },
+            "range": [
+                17,
+                18
+            ]
         }
     ]
 };

@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 14,
-    "lineNumber": 1,
-    "column": 15,
-    "description": "Illegal export declaration"
+    "index": 16,
+    "lineNumber": 2,
+    "column": 2,
+    "message": "'import' and 'export' may only appear at the top level"
 };

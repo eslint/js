@@ -1,90 +1,5 @@
 module.exports = {
     "type": "Program",
-    "body": [
-        {
-            "type": "VariableDeclaration",
-            "declarations": [
-                {
-                    "type": "VariableDeclarator",
-                    "id": {
-                        "type": "Identifier",
-                        "name": "x",
-                        "range": [
-                            4,
-                            5
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 4
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 5
-                            }
-                        }
-                    },
-                    "init": {
-                        "type": "Literal",
-                        "value": null,
-                        "raw": "/[\\u{0000000000000061}-\\u{7A}]/u",
-                        "regex": {
-                            "pattern": "[\\u{0000000000000061}-\\u{7A}]",
-                            "flags": "u"
-                        },
-                        "range": [
-                            8,
-                            40
-                        ],
-                        "loc": {
-                            "start": {
-                                "line": 1,
-                                "column": 8
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 40
-                            }
-                        }
-                    },
-                    "range": [
-                        4,
-                        40
-                    ],
-                    "loc": {
-                        "start": {
-                            "line": 1,
-                            "column": 4
-                        },
-                        "end": {
-                            "line": 1,
-                            "column": 40
-                        }
-                    }
-                }
-            ],
-            "kind": "var",
-            "range": [
-                0,
-                41
-            ],
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 0
-                },
-                "end": {
-                    "line": 1,
-                    "column": 41
-                }
-            }
-        }
-    ],
-    "sourceType": "script",
-    "range": [
-        0,
-        41
-    ],
     "loc": {
         "start": {
             "line": 1,
@@ -95,14 +10,95 @@ module.exports = {
             "column": 41
         }
     },
+    "range": [
+        0,
+        41
+    ],
+    "body": [
+        {
+            "type": "VariableDeclaration",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 41
+                }
+            },
+            "range": [
+                0,
+                41
+            ],
+            "declarations": [
+                {
+                    "type": "VariableDeclarator",
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 4
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 40
+                        }
+                    },
+                    "range": [
+                        4,
+                        40
+                    ],
+                    "id": {
+                        "type": "Identifier",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 4
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 5
+                            }
+                        },
+                        "range": [
+                            4,
+                            5
+                        ],
+                        "name": "x"
+                    },
+                    "init": {
+                        "type": "Literal",
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 8
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 40
+                            }
+                        },
+                        "range": [
+                            8,
+                            40
+                        ],
+                        "value": null,
+                        "raw": "/[\\u{0000000000000061}-\\u{7A}]/u",
+                        "regex": {
+                            "pattern": "[\\u{0000000000000061}-\\u{7A}]",
+                            "flags": "u"
+                        }
+                    }
+                }
+            ],
+            "kind": "var"
+        }
+    ],
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Keyword",
             "value": "var",
-            "range": [
-                0,
-                3
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -112,15 +108,15 @@ module.exports = {
                     "line": 1,
                     "column": 3
                 }
-            }
+            },
+            "range": [
+                0,
+                3
+            ]
         },
         {
             "type": "Identifier",
             "value": "x",
-            "range": [
-                4,
-                5
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -130,15 +126,15 @@ module.exports = {
                     "line": 1,
                     "column": 5
                 }
-            }
+            },
+            "range": [
+                4,
+                5
+            ]
         },
         {
             "type": "Punctuator",
             "value": "=",
-            "range": [
-                6,
-                7
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -148,19 +144,15 @@ module.exports = {
                     "line": 1,
                     "column": 7
                 }
-            }
+            },
+            "range": [
+                6,
+                7
+            ]
         },
         {
             "type": "RegularExpression",
             "value": "/[\\u{0000000000000061}-\\u{7A}]/u",
-            "regex": {
-                "pattern": "[\\u{0000000000000061}-\\u{7A}]",
-                "flags": "u"
-            },
-            "range": [
-                8,
-                40
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -170,15 +162,19 @@ module.exports = {
                     "line": 1,
                     "column": 40
                 }
+            },
+            "range": [
+                8,
+                40
+            ],
+            "regex": {
+                "flags": "u",
+                "pattern": "[\\u{0000000000000061}-\\u{7A}]"
             }
         },
         {
             "type": "Punctuator",
             "value": ";",
-            "range": [
-                40,
-                41
-            ],
             "loc": {
                 "start": {
                     "line": 1,
@@ -188,7 +184,11 @@ module.exports = {
                     "line": 1,
                     "column": 41
                 }
-            }
+            },
+            "range": [
+                40,
+                41
+            ]
         }
     ]
 };
