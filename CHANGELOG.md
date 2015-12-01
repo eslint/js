@@ -1,3 +1,12 @@
+v3.0.0-alpha-1 - December 1, 2015
+
+* 3.0.0-alpha-1 (Nicholas C. Zakas)
+* Fix: parse unicode escapes in identifiers (fixes #181) (Nicholas C. Zakas)
+* Fix: Ensur object rest works in destructed arg (fixes #213) (Nicholas C. Zakas)
+* Breaking: Switch to Acorn (fixes #200) (Nicholas C. Zakas)
+* Update: Add tokens to tests (fixes #203) (Nicholas C. Zakas)
+* Docs: Update README (Nicholas C. Zakas)
+
 v2.2.5 - September 15, 2015
 
 * 2.2.5 (Nicholas C. Zakas)
