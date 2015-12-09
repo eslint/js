@@ -849,3 +849,26 @@ exports.Syntax = (function() {
 
     return types;
 }());
+
+/* istanbul ignore next */
+exports.VisitorKeys = (function() {
+    var visitorKeys = require("./lib/visitor-keys");
+    var name,
+        keys = {};
+
+    if (typeof Object.create === "function") {
+        keys = Object.create(null);
+    }
+
+    for (name in visitorKeys) {
+        if (visitorKeys.hasOwnProperty(name)) {
+            keys[name] = visitorKeys[name];
+        }
+    }
+
+    if (typeof Object.freeze === "function") {
+        Object.freeze(keys);
+    }
+
+    return keys;
+}());
