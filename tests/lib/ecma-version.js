@@ -1,7 +1,7 @@
 /**
- * @fileoverview Tests for ECMA feature flags
+ * @fileoverview Tests for ECMAScript version features.
  * @author Nicholas C. Zakas
- * @copyright 2014 Nicholas C. Zakas. All rights reserved.
+ * @copyright 2015 Nicholas C. Zakas. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,10 +30,8 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var assert = require("chai").assert,
-    leche = require("leche"),
+var leche = require("leche"),
     path = require("path"),
-    espree = require("../../espree"),
     shelljs = require("shelljs"),
     tester = require("./tester");
 
@@ -42,22 +40,27 @@ var assert = require("chai").assert,
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-features";
+var FIXTURES_DIR = "./tests/fixtures/ecma-version/6";
 
-var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
+var allTestFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
 }).map(function(filename) {
     return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
-// }).filter(function(filename) {
-//     return /simple-new-target/.test(filename);
 });
 
+var scriptOnlyTestFiles = allTestFiles.filter(function(filename) {
+    return filename.indexOf("modules") === -1;
+});
+
+var moduleTestFiles = allTestFiles.filter(function(filename) {
+    return filename.indexOf("not-strict") === -1;
+});
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-describe("ecmaFeatures", function() {
+describe("ecmaVersion", function() {
 
     var config;
 
@@ -66,32 +69,48 @@ describe("ecmaFeatures", function() {
             loc: true,
             range: true,
             tokens: true,
-            ecmaVersion: 6,
-            ecmaFeatures: {}
+            ecmaVersion: 6
         };
     });
 
-    leche.withData(testFiles, function(filename) {
-        // Uncomment and fill in filename to focus on a single file
-        // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
-        var feature = path.dirname(filename),
-            code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+    describe("Scripts", function() {
 
-        it("should parse correctly when " + feature + " is true", function() {
-            config.ecmaFeatures[feature] = true;
-            var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+        leche.withData(scriptOnlyTestFiles, function(filename) {
+            // Uncomment and fill in filename to focus on a single file
+            // var filename = "newTarget/simple-new-target";
+            var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
-            tester.assertMatches(code, config, expected);
+            it("should parse correctly when sourceType is script", function() {
+                var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+
+                tester.assertMatches(code, config, expected);
+            });
+
         });
 
-        it("should throw an error when " + feature + " is false", function() {
-            config.ecmaFeatures[feature] = false;
+    });
 
-            assert.throws(function() {
-                espree.parse(code, config);
+    describe("Modules", function() {
+
+        leche.withData(moduleTestFiles, function(filename) {
+
+            var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+
+            it("should parse correctly when sourceType is module", function() {
+                var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+
+                config.sourceType = "module";
+
+                // set sourceType of program node to module
+                if (expected.type === "Program") {
+                    expected.sourceType = "module";
+                }
+
+                tester.assertMatches(code, config, expected);
             });
 
         });
     });
+
 
 });
