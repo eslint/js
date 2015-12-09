@@ -1,3 +1,9 @@
+v3.0.0-alpha-2 - December 9, 2015
+
+* 3.0.0-alpha-2 (Nicholas C. Zakas)
+* Breaking: move ecmaFeatures into ecmaVersion (fixes #222) (Nicholas C. Zakas)
+* New: Export VisitorKeys (fixes #220) (Nicholas C. Zakas)
+
 v3.0.0-alpha-1 - December 1, 2015
 
 * 3.0.0-alpha-1 (Nicholas C. Zakas)
