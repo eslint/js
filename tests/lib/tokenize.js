@@ -42,7 +42,7 @@ describe("tokenize()", function() {
 
     it("should produce tokens when using let", function() {
         var tokens = espree.tokenize("let foo = bar;", {
-            ecmaFeatures: { blockBindings: true },
+            ecmaVersion: 6,
             loc: true,
             range: true
         });
@@ -51,7 +51,7 @@ describe("tokenize()", function() {
 
     it("should produce tokens when using const", function() {
         var tokens = espree.tokenize("const foo = bar;", {
-            ecmaFeatures: { blockBindings: true },
+            ecmaVersion: 6,
             loc: true,
             range: true
         });
@@ -60,7 +60,7 @@ describe("tokenize()", function() {
 
     it("should produce tokens when using regular expression u flag", function() {
         var tokens = espree.tokenize("var foo = /foo/u;", {
-            ecmaFeatures: { regexUFlag: true },
+            ecmaVersion: 6,
             loc: true,
             range: true
         });
@@ -69,7 +69,7 @@ describe("tokenize()", function() {
 
     it("should produce tokens when using regular expression y flag", function() {
         var tokens = espree.tokenize("var foo = /foo/y;", {
-            ecmaFeatures: { regexYFlag: true },
+            ecmaVersion: 6,
             loc: true,
             range: true
         });
@@ -80,7 +80,7 @@ describe("tokenize()", function() {
     describe("templateStrings", function() {
         it("should produce tokens when tokenizing simple template string", function() {
             var tokens = espree.tokenize("var foo = `hi`;", {
-                ecmaFeatures: { templateStrings: true },
+                ecmaVersion: 6,
                 loc: true,
                 range: true
             });
@@ -89,7 +89,7 @@ describe("tokenize()", function() {
 
         it("should produce tokens when tokenizing template string with embedded variable", function() {
             var tokens = espree.tokenize("var foo = `hi${bar}`;", {
-                ecmaFeatures: { templateStrings: true },
+                ecmaVersion: 6,
                 loc: true,
                 range: true
             });
@@ -98,7 +98,7 @@ describe("tokenize()", function() {
 
         it("should produce tokens when tokenizing template string with embedded variable in function call", function() {
             var tokens = espree.tokenize("var a; console.log(`${a}`, \"a\");", {
-                ecmaFeatures: { templateStrings: true },
+                ecmaVersion: 6,
                 loc: true,
                 range: true
             });
@@ -108,7 +108,7 @@ describe("tokenize()", function() {
 
         it("should produce tokens when parsing template string with embedded variable in function call and with tokens options on", function() {
             var ast = espree.parse("var a; console.log(`${a}`, \"a\");", {
-                ecmaFeatures: { templateStrings: true },
+                ecmaVersion: 6,
                 tokens: true,
                 loc: true,
                 range: true
@@ -119,7 +119,7 @@ describe("tokenize()", function() {
 
         it("should produce tokens when tokenizing template string with embedded expressions", function() {
             var tokens = espree.tokenize("var foo = `Hello ${b}. a + 5 = ${a + 5}`;", {
-                ecmaFeatures: { templateStrings: true },
+                ecmaVersion: 6,
                 loc: true,
                 range: true
             });

@@ -74,10 +74,7 @@ describe("attachComment: true", function() {
                     range: true,
                     tokens: true,
                     attachComment: true,
-                    ecmaFeatures: {
-                        classes: true,
-                        modules: true
-                    }
+                    sourceType: "module"
                 });
             }
 

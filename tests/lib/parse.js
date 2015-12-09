@@ -45,7 +45,7 @@ describe("parse()", function() {
         it("should have correct column number when strict mode error occurs", function() {
 
             try {
-                espree.parse("function fn(a, a) {\n}", { ecmaFeatures: { modules: true } });
+                espree.parse("function fn(a, a) {\n}", { sourceType: "module" });
             } catch (err) {
                 assert.equal(err.column, 16);
             }
@@ -56,9 +56,7 @@ describe("parse()", function() {
     describe("general", function() {
         it("should output tokens, comments, locs, and ranges when called with those options", function() {
             var ast = espree.parse("let foo = bar;", {
-                ecmaFeatures: {
-                    blockBindings: true
-                },
+                ecmaVersion: 6,
                 comment: true,
                 tokens: true,
                 range: true,

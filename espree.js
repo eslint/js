@@ -87,7 +87,9 @@ function resetExtra() {
         tolerant: false,
         errors: [],
         strict: false,
-        ecmaFeatures: {}
+        ecmaFeatures: {},
+        ecmaVersion: 5,
+        isModule: false
     };
 }
 
@@ -112,72 +114,17 @@ function isValidNode(node) {
 
     switch (node.type) {
         case "Identifier":
-            return !ecma.modules || node.name !== "await";
-
-        case "VariableDeclaration":
-            return node.kind === "var" || ecma.blockBindings;
-
-        case "ObjectPattern":
-        case "ArrayPattern":
-            return ecma.destructuring;
-
-        case "AssignmentPattern":
-            // TODO: enhance analysis for separate options
-            return ecma.destructuring || ecma.defaultParams;
-
-        case "RestElement":
-            // TODO: enhance analysis for separate options
-            return ecma.destructuring || ecma.restParams;
-
-        case "ForOfStatement":
-            return ecma.forOf;
-
-        case "Property":
-            if (node.computed && !ecma.objectLiteralComputedProperties) {
-                return false;
-            }
-
-            if (node.method && !ecma.objectLiteralShorthandMethods) {
-                return false;
-            }
-
-            if (node.shorthand) {
-                return ecma.objectLiteralShorthandProperties || ecma.destructuring;
-            }
-            // TODO: analyse for objectLiteralDuplicateProperties: false in ES6
-            return true;
-
-        case "FunctionExpression":
-        case "FunctionDeclaration":
-            if (node.generator && !ecma.generators) {
-                return false;
-            }
-            return true;
-
-        case "YieldExpression":
-            return ecma.generators;
-
-        // TODO: only use ecma.spread. For now, experimentalObjectRestSpread
-        // starts out as SpreadElement before being converted.
-        case "SpreadElement":
-            return ecma.spread || ecma.experimentalObjectRestSpread;
+            return !extra.isModule || node.name !== "await";
 
         case "ExperimentalSpreadProperty":
         case "ExperimentalRestProperty":
             return ecma.experimentalObjectRestSpread;
 
-        case "ClassDeclaration":
-        case "ClassExpression":
-            return ecma.classes;
-
-        case "Super":
-            return ecma.classes;
-
         case "ImportDeclaration":
         case "ExportNamedDeclaration":
         case "ExportDefaultDeclaration":
         case "ExportAllDeclaration":
-            return ecma.modules;
+            return extra.isModule;
 
         default:
             return true;
@@ -256,40 +203,6 @@ function isValidToken(parser) {
     var type = parser.type;
 
     switch (type) {
-        case tt.arrow:
-            return ecma.arrowFunctions;
-
-        case tt.num:
-            switch (parser.input.substr(parser.start, 2).toLowerCase()) {
-                case "0b":
-                    return ecma.binaryLiterals;
-
-                case "0o":
-                    return ecma.octalLiterals;
-
-                default:
-                    return true;
-            }
-            break;
-
-        case tt.regexp:
-            var flags = parser.value.flags;
-            if (flags.indexOf("y") >= 0 && !ecma.regexYFlag) {
-                return false;
-            }
-            if (flags.indexOf("u") >= 0 && !ecma.regexUFlag) {
-                return false;
-            }
-            return true;
-
-        case tt.ellipsis:
-            return ecma.restParams || ecma.spread || ecma.experimentalObjectRestSpread;
-
-        case tt.backQuote:
-        case tt.template:
-        case tt.dollarBraceL:
-            return ecma.templateStrings;
-
         case tt.jsxName:
         case tt.jsxText:
         case tt.jsxTagStart:
@@ -326,46 +239,6 @@ pp.extend("next", function(next) {
         return next.call(this);
     };
 });
-
-pp.extend("checkPropClash", function(checkPropClash) {
-
-    return /** @this acorn.Parser */ function(prop, propHash) {
-        var ecmaVersion = this.options.ecmaVersion,
-            dupeProps = extra.ecmaFeatures.objectLiteralDuplicateProperties,
-            result;
-
-
-        /*
-         * If duplicate properties are not allowed, switch back to ES5 mode for
-         * validating object properties.
-         */
-        if (!dupeProps) {
-            this.options.ecmaVersion = 5;
-        }
-
-        result = checkPropClash.call(this, prop, propHash);
-        this.options.ecmaVersion = ecmaVersion;
-        return result;
-    };
-
-});
-
-pp.extend("toAssignableList", function(toAssignableList) {
-
-    return /** @this acorn.Parser */ function(exprList, isBinding) {
-        if (exprList.length) {
-            var last = exprList[exprList.length - 1];
-
-            if ((last.type === "SpreadElement" && !extra.ecmaFeatures.destructuring) ||
-                    (last.type === "RestElement" && !extra.ecmaFeatures.restParams)) {
-                this.unexpected(last.start);
-            }
-        }
-
-        return toAssignableList.call(this, exprList, isBinding);
-    };
-});
-
 
 // needed for experimental object rest/spread
 pp.extend("checkLVal", function(checkLVal) {
@@ -696,57 +569,38 @@ function parse(code, options) {
             commentAttachment.reset();
         }
 
+        if (typeof options.ecmaVersion === "number") {
+            switch (options.ecmaVersion) {
+                case 3:
+                case 5:
+                case 6:
+                    acornOptions.ecmaVersion = options.ecmaVersion;
+                    extra.ecmaVersion = options.ecmaVersion;
+                    break;
+
+                default:
+                    throw new Error("ecmaVersion must be 3, 5, or 6.");
+            }
+        }
+
         if (options.sourceType === "module") {
-            extra.ecmaFeatures = {
-                arrowFunctions: true,
-                binaryLiterals: true,
-                blockBindings: true,
-                classes: true,
-                destructuring: true,
-                forOf: true,
-                generators: true,
-                modules: true,
-                objectLiteralComputedProperties: true,
-                objectLiteralDuplicateProperties: true,
-                objectLiteralShorthandMethods: true,
-                objectLiteralShorthandProperties: true,
-                octalLiterals: true,
-                regexUFlag: true,
-                regexYFlag: true,
-                restParams: true,
-                spread: true,
-                templateStrings: true,
-                unicodeCodePointEscapes: true
-            };
-            acornOptions.ecmaVersion = 6;
+            extra.isModule = true;
+
+            // modules must be in 6 at least
+            if (acornOptions.ecmaVersion < 6) {
+                acornOptions.ecmaVersion = 6;
+                extra.ecmaVersion = 6;
+            }
+
             acornOptions.sourceType = "module";
         }
 
         // apply parsing flags after sourceType to allow overriding
         if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-
-            var flags = Object.keys(options.ecmaFeatures);
-
-            // if it's a module, augment the ecmaFeatures
-            flags.forEach(function(key) {
-                var value = extra.ecmaFeatures[key] = options.ecmaFeatures[key];
-
-                if (value) {
-                    switch (key) {
-                        case "globalReturn":
-                            acornOptions.allowReturnOutsideFunction = true;
-                            break;
-
-                        case "modules":
-                            acornOptions.sourceType = "module";
-                            // falls through
-
-                        default:
-                            acornOptions.ecmaVersion = 6;
-                    }
-                }
-            });
-
+            extra.ecmaFeatures = options.ecmaFeatures;
+            if (options.ecmaFeatures.globalReturn) {
+                acornOptions.allowReturnOutsideFunction = true;
+            }
         }
 
 
@@ -780,15 +634,12 @@ function parse(code, options) {
         }
 
         if (extra.ecmaFeatures.jsx) {
-            if (extra.ecmaFeatures.spread !== false) {
-                extra.ecmaFeatures.spread = true;
-            }
             acornOptions.plugins = { jsx: true };
         }
     }
 
     program = acorn.parse(code, acornOptions);
-    program.sourceType = extra.ecmaFeatures.modules ? "module" : "script";
+    program.sourceType = extra.isModule ? "module" : "script";
 
     if (extra.comment || extra.attachComment) {
         program.comments = extra.comments;
