@@ -1,3 +1,8 @@
+v3.0.0-alpha-3 - December 10, 2015
+
+* 3.0.0-alpha-3 (Nicholas C. Zakas)
+* Fix: Don't allow regex y flag in ES5 (Nicholas C. Zakas)
+
 v3.0.0-alpha-2 - December 9, 2015
 
 * 3.0.0-alpha-2 (Nicholas C. Zakas)
