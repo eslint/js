@@ -53,6 +53,24 @@ describe("parse()", function() {
 
     });
 
+    describe("ES5", function() {
+
+        it("should throw an error when using the y regex flag", function() {
+
+            assert.throws(function() {
+                espree.parse("/./y");
+            });
+        });
+
+        it("should throw an error when using the u regex flag", function() {
+
+            assert.throws(function() {
+                espree.parse("/./u");
+            });
+        });
+
+    });
+
     describe("general", function() {
         it("should output tokens, comments, locs, and ranges when called with those options", function() {
             var ast = espree.parse("let foo = bar;", {

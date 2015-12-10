@@ -209,6 +209,14 @@ function isValidToken(parser) {
         case tt.jsxTagEnd:
             return ecma.jsx;
 
+        // https://github.com/ternjs/acorn/issues/363
+        case tt.regexp:
+            if (extra.ecmaVersion < 6 && parser.value.flags && parser.value.flags.indexOf("y") > -1) {
+                return false;
+            }
+
+            return true;
+
         default:
             return true;
     }
@@ -427,7 +435,7 @@ function tokenize(code, options) {
     options = options || {};
 
     var acornOptions = {
-        ecmaVersion: 6
+        ecmaVersion: 5
     };
 
     resetExtra();
@@ -452,6 +460,20 @@ function tokenize(code, options) {
     }
 
     extra.tolerant = typeof options.tolerant === "boolean" && options.tolerant;
+
+    if (typeof options.ecmaVersion === "number") {
+        switch (options.ecmaVersion) {
+            case 3:
+            case 5:
+            case 6:
+                acornOptions.ecmaVersion = options.ecmaVersion;
+                extra.ecmaVersion = options.ecmaVersion;
+                break;
+
+            default:
+                throw new Error("ecmaVersion must be 3, 5, or 6.");
+        }
+    }
 
     // apply parsing flags
     if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
