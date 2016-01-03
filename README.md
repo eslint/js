@@ -60,6 +60,9 @@ var ast = espree.parse(code, {
         // enable return in global scope
         globalReturn: true,
 
+        // enable implied strict mode (if ecmaVersion >= 5)
+        impliedStrict: true,
+
         // allow experimental object rest/spread
         experimentalObjectRestSpread: true
     }
