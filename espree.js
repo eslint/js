@@ -266,6 +266,15 @@ pp.extend("checkLVal", function(checkLVal) {
     };
 });
 
+pp.extend("parseTopLevel", function(parseTopLevel) {
+    return /** @this acorn.Parser */ function(node) {
+        if (extra.ecmaFeatures.impliedStrict && this.options.ecmaVersion >= 5) {
+            this.strict = true;
+        }
+        return parseTopLevel.call(this, node);
+    };
+});
+
 /**
  * Method to parse an object rest or object spread.
  * @returns {ASTNode} The node representing object rest or object spread.
@@ -422,6 +431,7 @@ pp.extend("jsx_readString", function(jsxReadString) {
 function tokenize(code, options) {
     var toString,
         tokens,
+        impliedStrict,
         translator = new TokenTranslator(tt, code);
 
     toString = String;
@@ -478,6 +488,8 @@ function tokenize(code, options) {
     // apply parsing flags
     if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
         extra.ecmaFeatures = options.ecmaFeatures;
+        impliedStrict = extra.ecmaFeatures.impliedStrict;
+        extra.ecmaFeatures.impliedStrict = typeof impliedStrict === "boolean" && impliedStrict;
     }
 
     try {
@@ -554,6 +566,7 @@ function parse(code, options) {
     var program,
         toString = String,
         translator,
+        impliedStrict,
         acornOptions = {
             ecmaVersion: 5
         };
@@ -620,6 +633,8 @@ function parse(code, options) {
         // apply parsing flags after sourceType to allow overriding
         if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
             extra.ecmaFeatures = options.ecmaFeatures;
+            impliedStrict = extra.ecmaFeatures.impliedStrict;
+            extra.ecmaFeatures.impliedStrict = typeof impliedStrict === "boolean" && impliedStrict;
             if (options.ecmaFeatures.globalReturn) {
                 acornOptions.allowReturnOutsideFunction = true;
             }

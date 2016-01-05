@@ -57,6 +57,15 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
 // Tests
 //------------------------------------------------------------------------------
 
+/**
+ * Returns whether a feature should throw in its tests when it is enabled.
+ * @param {string} feature The name of the feature.
+ * @returns {boolean} Whether it should throw in its tests when it is enabled.
+ */
+function shouldThrowInTestsWhenEnabled(feature) {
+    return (feature === "impliedStrict");
+}
+
 describe("ecmaFeatures", function() {
 
     var config;
@@ -75,17 +84,18 @@ describe("ecmaFeatures", function() {
         // Uncomment and fill in filename to focus on a single file
         // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
         var feature = path.dirname(filename),
+            isPermissive = !shouldThrowInTestsWhenEnabled(feature),
             code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
-        it("should parse correctly when " + feature + " is true", function() {
-            config.ecmaFeatures[feature] = true;
+        it("should parse correctly when " + feature + " is " + isPermissive, function() {
+            config.ecmaFeatures[feature] = isPermissive;
             var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
 
             tester.assertMatches(code, config, expected);
         });
 
-        it("should throw an error when " + feature + " is false", function() {
-            config.ecmaFeatures[feature] = false;
+        it("should throw an error when " + feature + " is " + !isPermissive, function() {
+            config.ecmaFeatures[feature] = !isPermissive;
 
             assert.throws(function() {
                 espree.parse(code, config);
