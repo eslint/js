@@ -36,7 +36,6 @@
     }
   ],
   "devDependencies": {
-    "acorn-jsx": "^2.0.1",
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
     "complexity-report": "~0.6.1",
