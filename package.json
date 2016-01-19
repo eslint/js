@@ -29,12 +29,7 @@
   "bugs": {
     "url": "http://github.com/eslint/espree.git"
   },
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "http://github.com/nzakas/espree/raw/master/LICENSE"
-    }
-  ],
+  "license": "BSD-2-Clause",
   "devDependencies": {
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
