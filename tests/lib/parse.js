@@ -84,6 +84,19 @@ describe("parse()", function() {
             assert.deepEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
         });
 
+        it("should reset lastToken on each parse", function() {
+            espree.parse("var foo = bar;");
+            var ast = espree.parse("//foo", {
+                comment: true,
+                tokens: true,
+                range: true,
+                loc: true
+            });
+
+            assert.deepEqual(ast.range, [0, 5]);
+            assert.deepEqual([ast.loc.start.line, ast.loc.start.column], [1, 0]);
+            assert.deepEqual([ast.loc.end.line, ast.loc.end.column], [1, 5]);
+        });
 
     });
 });

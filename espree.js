@@ -494,7 +494,6 @@ function tokenize(code, options) {
 
     try {
         var tokenizer = acorn.tokenizer(code, acornOptions);
-
         while ((lookahead = tokenizer.getToken()).type !== tt.eof) {
             translator.onToken(lookahead, extra);
         }
@@ -562,7 +561,6 @@ function convertAcornCommentToEsprimaComment(block, text, start, end, startLoc, 
  * @private
  */
 function parse(code, options) {
-
     var program,
         toString = String,
         translator,
@@ -570,6 +568,8 @@ function parse(code, options) {
         acornOptions = {
             ecmaVersion: 5
         };
+
+    lastToken = null;
 
     if (typeof code !== "string" && !(code instanceof String)) {
         code = toString(code);
@@ -645,7 +645,6 @@ function parse(code, options) {
             if (extra.tokens) {
                 translator.onToken(token, extra);
             }
-
             if (token.type !== tt.eof) {
                 lastToken = token;
             }
@@ -695,12 +694,12 @@ function parse(code, options) {
      */
     if (program.range) {
         program.range[0] = program.body.length ? program.body[0].range[0] : program.range[0];
-        program.range[1] = lastToken.range[1];
+        program.range[1] = lastToken ? lastToken.range[1] : program.range[1];
     }
 
     if (program.loc) {
         program.loc.start = program.body.length ? program.body[0].loc.start : program.loc.start;
-        program.loc.end = lastToken.loc.end;
+        program.loc.end = lastToken ? lastToken.loc.end : program.loc.end;
     }
 
     return program;
