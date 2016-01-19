@@ -30,8 +30,11 @@
     "url": "http://github.com/eslint/espree.git"
   },
   "license": "BSD-2-Clause",
-  "devDependencies": {
+  "dependencies": {
     "acorn": "^2.7.0",
+    "acorn-jsx": "^2.0.1"
+  },
+  "devDependencies": {
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
     "complexity-report": "~0.6.1",
@@ -67,9 +70,5 @@
     "minor": "node Makefile.js minor",
     "major": "node Makefile.js major",
     "browserify": "node Makefile.js browserify"
-  },
-  "dependencies": {
-    "acorn": "^2.6.4",
-    "acorn-jsx": "^2.0.1"
   }
 }
