@@ -31,6 +31,7 @@
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
+    "acorn": "^2.7.0",
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
     "complexity-report": "~0.6.1",
