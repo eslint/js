@@ -1,22 +1,12 @@
 {
   "name": "espree",
-  "description": "An actively-maintained fork of Esprima, the ECMAScript parsing infrastructure for multipurpose analysis",
+  "description": "An Esprima-compatible JavaScript parser built on Acorn",
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
   "main": "espree.js",
-  "bin": {
-    "esparse": "./bin/esparse.js",
-    "esvalidate": "./bin/esvalidate.js"
-  },
   "version": "3.0.0-alpha-2",
   "files": [
-    "bin",
     "lib",
-    "test/run.js",
-    "test/runner.js",
-    "test/test.js",
-    "test/compat.js",
-    "test/reflect.js",
     "espree.js"
   ],
   "engines": {
@@ -60,7 +50,8 @@
     "ecmascript",
     "javascript",
     "parser",
-    "syntax"
+    "syntax",
+    "acorn"
   ],
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
