@@ -2,7 +2,7 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/* global cat, cp, echo, exec, exit, find, mkdir, mv, rm, target, test */
+/* global cp, echo, exit, find, mkdir, rm, target, test */
 
 "use strict";
 
@@ -13,18 +13,7 @@
 
 require("shelljs/make");
 
-var checker = require("npm-license"),
-    dateformat = require("dateformat"),
-    nodeCLI = require("shelljs-nodecli"),
-    semver = require("semver");
-
-//------------------------------------------------------------------------------
-// Settings
-//------------------------------------------------------------------------------
-
-var OPEN_SOURCE_LICENSES = [
-    /MIT/, /BSD/, /Apache/, /ISC/, /WTF/, /Public Domain/
-];
+var nodeCLI = require("shelljs-nodecli");
 
 //------------------------------------------------------------------------------
 // Data
@@ -58,64 +47,6 @@ function fileType(extension) {
     return function(filename) {
         return filename.substring(filename.lastIndexOf(".") + 1) === extension;
     };
-}
-
-/**
- * Executes a command and returns the output instead of printing it to stdout.
- * @param {string} cmd The command string to execute.
- * @returns {string} The result of the executed command.
- */
-function execSilent(cmd) {
-    return exec(cmd, { silent: true }).output;
-}
-
-/**
- * Creates a release version tag and pushes to origin.
- * @param {string} type The type of release to do (patch, minor, major)
- * @returns {void}
- */
-function release(type) {
-    var newVersion;
-
-    target.test();
-    newVersion = execSilent("npm version " + type).trim();
-    target.changelog();
-
-    // add changelog to commit
-    exec("git add CHANGELOG.md");
-    exec("git commit --amend --no-edit");
-
-    // replace existing tag
-    exec("git tag -f " + newVersion);
-
-    // push all the things
-    exec("git push origin master --tags");
-    exec("npm publish");
-}
-
-
-/**
- * Splits a command result to separate lines.
- * @param {string} result The command result string.
- * @returns {array} The separated lines.
- */
-function splitCommandResultToLines(result) {
-    return result.trim().split("\n");
-}
-
-/**
- * Gets an array of tags that represent versions.
- * @returns {string[]} The array of tags.
- */
-function getVersionTags() {
-    var tags = splitCommandResultToLines(exec("git tag", { silent: true }).output);
-
-    return tags.reduce(function(list, tag) {
-        if (semver.valid(tag)) {
-            list.push(tag);
-        }
-        return list;
-    }, []).sort(semver.compare);
 }
 
 //------------------------------------------------------------------------------
@@ -168,8 +99,6 @@ target.test = function() {
     if (errors) {
         exit(1);
     }
-
-    // target.checkLicenses();
 };
 
 target.docs = function() {
@@ -201,95 +130,4 @@ target.browserify = function() {
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);
-};
-
-target.changelog = function() {
-
-    // get most recent two tags
-    var tags = getVersionTags(),
-        rangeTags = tags.slice(tags.length - 2),
-        now = new Date(),
-        timestamp = dateformat(now, "mmmm d, yyyy");
-
-    // output header
-    (rangeTags[1] + " - " + timestamp + "\n").to("CHANGELOG.tmp");
-
-    // get log statements
-    var logs = exec("git log --pretty=format:\"* %s (%an)\" " + rangeTags.join(".."), {silent: true}).output.split(/\n/g);
-    logs = logs.filter(function(line) {
-        return line.indexOf("Merge pull request") === -1 && line.indexOf("Merge branch") === -1;
-    });
-    logs.push(""); // to create empty lines
-    logs.unshift("");
-
-    // output log statements
-    logs.join("\n").toEnd("CHANGELOG.tmp");
-
-    // switch-o change-o
-    cat("CHANGELOG.tmp", "CHANGELOG.md").to("CHANGELOG.md.tmp");
-    rm("CHANGELOG.tmp");
-    rm("CHANGELOG.md");
-    mv("CHANGELOG.md.tmp", "CHANGELOG.md");
-};
-
-target.checkLicenses = function() {
-
-    /**
-     * Determines if a given dependency is permissible based on its license.
-     * @param {Object} dependency The dependency to check
-     * @returns {boolean} True if the dependency is ok, false if not.
-     */
-    function isPermissible(dependency) {
-        var licenses = dependency.licenses;
-
-        if (Array.isArray(licenses)) {
-            return licenses.some(function(license) {
-                return isPermissible({
-                    name: dependency.name,
-                    licenses: license
-                });
-            });
-        }
-
-        return OPEN_SOURCE_LICENSES.some(function(license) {
-            return license.test(licenses);
-        });
-    }
-
-    echo("Validating licenses");
-
-    checker.init({
-        start: __dirname
-    }, function(deps) {
-        var impermissible = Object.keys(deps).map(function(dependency) {
-            return {
-                name: dependency,
-                licenses: deps[dependency].licenses
-            };
-        }).filter(function(dependency) {
-            return !isPermissible(dependency);
-        });
-
-        if (impermissible.length) {
-            impermissible.forEach(function(dependency) {
-                console.error("%s license for %s is impermissible.",
-                    dependency.licenses,
-                    dependency.name
-                );
-            });
-            exit(1);
-        }
-    });
-};
-
-target.patch = function() {
-    release("patch");
-};
-
-target.minor = function() {
-    release("minor");
-};
-
-target.major = function() {
-    release("major");
 };
