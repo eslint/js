@@ -30,7 +30,7 @@
     "eslint": "^2.0.0-beta.1",
     "eslint-config-eslint": "^2.0.0",
     "eslint-release": "^0.1.4",
-    "esprima": "git://github.com/jquery/esprima",
+    "esprima": "*",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "istanbul": "~0.2.6",
     "json-diff": "~0.3.1",
