@@ -41,10 +41,6 @@ var ast = espree.parse(code, {
     // create a top-level tokens array containing all tokens
     tokens: true,
 
-    // try to continue parsing if an error is encountered, store errors in a
-    // top-level errors array
-    tolerant: true,
-
     // specify the language version (3, 5, or 6, default is 5)
     ecmaVersion: 5,
 
@@ -87,12 +83,13 @@ Espree is licensed under a permissive BSD 2-clause license.
 * `npm run lint` - run all linting
 * `npm run browserify` - creates a version of Espree that is usable in a browser
 
-## Differences from Espree 1.x
+## Differences from Espree 2.x
 
 * The `tokenize()` method does not use `ecmaFeatures`. Any string will be tokenized completely based on ECMAScript 6 semantics.
 * Trailing whitespace no longer is counted as part of a node.
 * `let` and `const` declarations are no longer parsed by default. You must opt-in using `ecmaFeatures.blockBindings`.
-
+* The `esparse` and `esvalidate` binary scripts have been removed.
+* There is no `tolerant` option. We will investigate adding this back in the future.
 
 ## Known Incompatibilities
 
