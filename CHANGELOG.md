@@ -1,3 +1,18 @@
+v3.0.0 - January 20, 2016
+
+* 5ff65f6 Upgrade: Change Esprima version to latest (Nicholas C. Zakas)
+* a8badcc Upgrade: eslint-release to 0.1.4 (Nicholas C. Zakas)
+* 34d195b Build: Switch to eslint-release (Nicholas C. Zakas)
+* a0ddc30 Breaking: Remove binary scripts (Nicholas C. Zakas)
+* 02b5284 Build: Fix package.json dependencies (Nicholas C. Zakas)
+* b07696f Fix: tests for importing keywords (fixes #225) (Toru Nagashima)
+* 2e2808a Build: Add node@5 to CI (fixes #237) (alberto)
+* 445c685 Update: Unrecognized license format in package.json (fixes #234) (alberto)
+* 61cb5ee Update: Remove duplicated acorn-jsx dep (fixes #232) (alberto)
+* df5b71c Upgrade: eslint and eslint-config-eslint (fixes #231) (alberto)
+* ef7a06d Fix: lastToken not reset between calls to parse (fixes #229) (alberto)
+* cdf8407 New: ecmaFeatures.impliedStrict (fixes: #227) (Nick Evans)
+
 v3.0.0-alpha-2 - December 9, 2015
 
 * 3.0.0-alpha-2 (Nicholas C. Zakas)
