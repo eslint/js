@@ -81,12 +81,12 @@ function outputResult(result, testResultFilename) {
 //------------------------------------------------------------------------------
 
 var FIXTURES_DIR = "./tests/fixtures/ecma-features",
-    FIXTURES_MIX_DIR = "./tests/fixtures/ecma-features-mix",
+    VERSION_DIR = "./tests/fixtures/ecma-version",
     COMMENTS_DIR = "./tests/fixtures/attach-comments",
     LIBRARIES_DIR = "./tests/fixtures/libraries";
 
 var testFiles = getTestFilenames(FIXTURES_DIR),
-    mixFiles = getTestFilenames(FIXTURES_MIX_DIR),
+    mixFiles = getTestFilenames(VERSION_DIR),
     commentFiles = getTestFilenames(COMMENTS_DIR),
     libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
@@ -131,6 +131,7 @@ testFiles.forEach(function(filename) {
             loc: true,
             range: true,
             tokens: true,
+            ecmaVersion: 6,
             ecmaFeatures: {}
         };
 
@@ -141,21 +142,22 @@ testFiles.forEach(function(filename) {
     outputResult(result, testResultFilename);
 });
 
-// update all tests in ecma-features-mix
+// update all tests in ecma-version
 mixFiles.forEach(function(filename) {
 
     var feature = path.dirname(filename),
-        code = shelljs.cat(path.resolve(FIXTURES_MIX_DIR, filename) + ".src.js"),
+        code = shelljs.cat(path.resolve(VERSION_DIR, filename) + ".src.js"),
         config = {
             loc: true,
             range: true,
             tokens: true,
+            ecmaVersion: 6,
             ecmaFeatures: {}
         };
 
-    config.ecmaFeatures = require(path.resolve(__dirname, "../", FIXTURES_MIX_DIR, filename) + ".config.js");
+    // config.ecmaFeatures = require(path.resolve(__dirname, "../", VERSION_DIR, filename) + ".config.js");
 
-    var testResultFilename = path.resolve(__dirname, "..", FIXTURES_MIX_DIR, filename) + ".result.js",
+    var testResultFilename = path.resolve(__dirname, "..", VERSION_DIR, filename) + ".result.js",
         result = getExpectedResult(code, config);
 
     outputResult(result, testResultFilename);
