@@ -55,6 +55,7 @@
     "test": "npm run-script lint && node Makefile.js test",
     "lint": "node Makefile.js lint",
     "release": "eslint-release",
+    "prerelease": "eslint-release",
     "browserify": "node Makefile.js browserify"
   }
 }
