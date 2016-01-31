@@ -32,7 +32,7 @@ var ast = espree.parse(code, {
     loc: true,
 
     // create a top-level comments array containing all comments
-    comments: true,
+    comment: true,
 
     // attach comments to the closest relevant node as leadingComments and
     // trailingComments
