@@ -275,6 +275,35 @@ pp.extend("parseTopLevel", function(parseTopLevel) {
     };
 });
 
+pp.extend("toAssignable", function(toAssignable) {
+
+    return /** @this acorn.Parser */ function(node, isBinding) {
+
+        if (extra.ecmaFeatures.experimentalObjectRestSpread &&
+                node.type === "ObjectExpression"
+        ) {
+            node.type = "ObjectPattern";
+
+            for (var i = 0; i < node.properties.length; i++) {
+                var prop = node.properties[i];
+
+                if (prop.type === "ExperimentalSpreadProperty") {
+                    prop.type = "ExperimentalRestProperty";
+                } else if (prop.kind !== "init") {
+                    this.raise(prop.key.start, "Object pattern can't contain getter or setter");
+                } else {
+                    this.toAssignable(prop.value, isBinding);
+                }
+            }
+
+            return node;
+        } else {
+            return toAssignable.call(this, node, isBinding);
+        }
+    };
+
+});
+
 /**
  * Method to parse an object rest or object spread.
  * @returns {ASTNode} The node representing object rest or object spread.

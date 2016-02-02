@@ -78,6 +78,7 @@ module.exports = {
             }
 
         }
+
         assert.deepEqual(result, expected);
     }
 };
