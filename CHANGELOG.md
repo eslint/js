@@ -1,3 +1,11 @@
+v3.0.1 - February 2, 2016
+
+* ecfe4c8 Upgrade: eslint-config-eslint to 3.0.0 (Nicholas C. Zakas)
+* ea6261e Fix: Object rest/spread in assign (fixes #247) (Nicholas C. Zakas)
+* 7e57ee0 Docs: fix `options.comment` typo (xuezu)
+* dd5863e Build: Add prerelease script (Nicholas C. Zakas)
+* 0b409ee Upgrade: eslint-release to 0.2.0 (Nicholas C. Zakas)
+
 v3.0.0 - January 20, 2016
 
 * 5ff65f6 Upgrade: Change Esprima version to latest (Nicholas C. Zakas)
