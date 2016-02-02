@@ -28,7 +28,7 @@
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
     "eslint": "^2.0.0-beta.1",
-    "eslint-config-eslint": "^2.0.0",
+    "eslint-config-eslint": "^3.0.0",
     "eslint-release": "^0.2.0",
     "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
