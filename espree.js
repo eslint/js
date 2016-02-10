@@ -389,7 +389,7 @@ acorn.plugins.espree = function(instance) {
      * @throws {SyntaxError} A syntax error.
      * @returns {void}
      */
-    instance.raise = function(pos, message) {
+    instance.raise = instance.raiseRecoverable = function(pos, message) {
         var loc = getLineInfo(this.input, pos);
         var err = new SyntaxError(message);
         err.index = pos;
@@ -509,12 +509,13 @@ function tokenize(code, options) {
             case 3:
             case 5:
             case 6:
+            case 7:
                 acornOptions.ecmaVersion = options.ecmaVersion;
                 extra.ecmaVersion = options.ecmaVersion;
                 break;
 
             default:
-                throw new Error("ecmaVersion must be 3, 5, or 6.");
+                throw new Error("ecmaVersion must be 3, 5, 6, or 7.");
         }
     }
 
@@ -645,12 +646,13 @@ function parse(code, options) {
                 case 3:
                 case 5:
                 case 6:
+                case 7:
                     acornOptions.ecmaVersion = options.ecmaVersion;
                     extra.ecmaVersion = options.ecmaVersion;
                     break;
 
                 default:
-                    throw new Error("ecmaVersion must be 3, 5, or 6.");
+                    throw new Error("ecmaVersion must be 3, 5, 6, or 7.");
             }
         }
 
