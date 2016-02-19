@@ -29,7 +29,7 @@
     "chai": "^1.10.0",
     "eslint": "^2.0.0-beta.1",
     "eslint-config-eslint": "^3.0.0",
-    "eslint-release": "^0.2.0",
+    "eslint-release": "^0.3.0",
     "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "istanbul": "~0.2.6",
@@ -55,7 +55,8 @@
     "test": "npm run-script lint && node Makefile.js test",
     "lint": "node Makefile.js lint",
     "release": "eslint-release",
-    "prerelease": "eslint-release",
+    "alpharelease": "eslint-prelease alpha",
+    "betarelease": "eslint-prelease beta",
     "browserify": "node Makefile.js browserify"
   }
 }
