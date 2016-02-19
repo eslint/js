@@ -38,7 +38,7 @@
 //------------------------------------------------------------------------------
 
 var shelljs = require("shelljs"),
-    esprima = require("esprima-fb"),
+    esprima = require("../espree"),
     path = require("path");
 
 //------------------------------------------------------------------------------
@@ -94,8 +94,13 @@ code.forEach(function(source, index) {
 
     try {
         result = esprima.parse(sourceCode, {
+            ecmaVersion: 6,
+            ecmaFeatures: {
+                experimentalObjectRestSpread: true
+            },
             loc: true,
-            range: true
+            range: true,
+            tokens: true
         });
     } catch (ex) {
         result = ex;
