@@ -1,3 +1,9 @@
+v3.0.2 - February 19, 2016
+
+* 0973cda Build: Update release script (Nicholas C. Zakas)
+* 106000f Fix: use the plugins feature of acorn (fixes #250) (Toru Nagashima)
+* 36d84c7 Build: Add tests (fixes #243) (Nicholas C. Zakas)
+
 v3.0.1 - February 2, 2016
 
 * ecfe4c8 Upgrade: eslint-config-eslint to 3.0.0 (Nicholas C. Zakas)
