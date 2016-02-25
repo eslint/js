@@ -1,3 +1,7 @@
+v3.1.0 - February 25, 2016
+
+* da35d98 New: Support ecmaVersion 7 (fixes #246) (Nicholas C. Zakas)
+
 v3.0.2 - February 19, 2016
 
 * 0973cda Build: Update release script (Nicholas C. Zakas)
