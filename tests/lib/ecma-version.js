@@ -40,12 +40,12 @@ var leche = require("leche"),
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-version/6";
+var FIXTURES_DIR = "./tests/fixtures/ecma-version/";
 
 var allTestFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
 }).map(function(filename) {
-    return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
+    return filename.substring(FIXTURES_DIR.length - 2, filename.length - 7);  // strip off ".src.js"
 });
 
 var scriptOnlyTestFiles = allTestFiles.filter(function(filename) {
@@ -69,18 +69,22 @@ describe("ecmaVersion", function() {
             loc: true,
             range: true,
             tokens: true,
-            ecmaVersion: 6
+            ecmaVersion: 5
         };
     });
 
     describe("Scripts", function() {
 
         leche.withData(scriptOnlyTestFiles, function(filename) {
+
+            var version = filename.substring(0, filename.indexOf("/"));
+
             // Uncomment and fill in filename to focus on a single file
             // var filename = "newTarget/simple-new-target";
             var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
             it("should parse correctly when sourceType is script", function() {
+                config.ecmaVersion = Number(version);
                 var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
 
                 tester.assertMatches(code, config, expected);
@@ -94,11 +98,13 @@ describe("ecmaVersion", function() {
 
         leche.withData(moduleTestFiles, function(filename) {
 
+            var version = filename.substring(0, filename.indexOf("/"));
             var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
             it("should parse correctly when sourceType is module", function() {
                 var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
 
+                config.ecmaVersion = Number(version);
                 config.sourceType = "module";
 
                 // set sourceType of program node to module
