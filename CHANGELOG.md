@@ -1,3 +1,7 @@
+v3.1.1 - February 26, 2016
+
+* 3614e81 Fix: exponentiation operator token (fixes #254) (Nicholas C. Zakas)
+
 v3.1.0 - February 25, 2016
 
 * da35d98 New: Support ecmaVersion 7 (fixes #246) (Nicholas C. Zakas)
