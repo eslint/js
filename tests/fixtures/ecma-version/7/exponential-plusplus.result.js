@@ -128,16 +128,7 @@ module.exports = {
             ]
         },
         {
-            "type": {
-                "label": "++/--",
-                "beforeExpr": false,
-                "startsExpr": true,
-                "isLoop": false,
-                "isAssign": false,
-                "prefix": true,
-                "postfix": true,
-                "binop": null
-            },
+            "type": "Punctuator",
             "value": "++",
             "loc": {
                 "start": {
@@ -155,17 +146,7 @@ module.exports = {
             ]
         },
         {
-            "type": {
-                "label": "**",
-                "beforeExpr": true,
-                "startsExpr": false,
-                "isLoop": false,
-                "isAssign": false,
-                "prefix": false,
-                "postfix": false,
-                "binop": null,
-                "updateContext": null
-            },
+            "type": "Punctuator",
             "value": "**",
             "loc": {
                 "start": {
