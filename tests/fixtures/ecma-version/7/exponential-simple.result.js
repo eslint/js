@@ -110,17 +110,7 @@ module.exports = {
             ]
         },
         {
-            "type": {
-                "label": "**",
-                "beforeExpr": true,
-                "startsExpr": false,
-                "isLoop": false,
-                "isAssign": false,
-                "prefix": false,
-                "postfix": false,
-                "binop": null,
-                "updateContext": null
-            },
+            "type": "Punctuator",
             "value": "**",
             "loc": {
                 "start": {
