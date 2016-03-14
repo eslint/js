@@ -111,9 +111,6 @@ function isValidNode(node) {
     var ecma = extra.ecmaFeatures;
 
     switch (node.type) {
-        case "Identifier":
-            return !extra.isModule || node.name !== "await";
-
         case "ExperimentalSpreadProperty":
         case "ExperimentalRestProperty":
             return ecma.experimentalObjectRestSpread;
