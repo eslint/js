@@ -1,3 +1,9 @@
+v3.1.2 - March 14, 2016
+
+* a2b23ca Fix: Ensure 'var let' works (fixes #149) (Nicholas C. Zakas)
+* 5783282 Fix: Make obj.await work in modules (fixes #258) (Nicholas C. Zakas)
+* d1b4929 Fix: leading comments added from previous node (fixes #256) (Kai Cataldo)
+
 v3.1.1 - February 26, 2016
 
 * 3614e81 Fix: exponentiation operator token (fixes #254) (Nicholas C. Zakas)
