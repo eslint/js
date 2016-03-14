@@ -53,7 +53,7 @@ var scriptOnlyTestFiles = allTestFiles.filter(function(filename) {
 });
 
 var moduleTestFiles = allTestFiles.filter(function(filename) {
-    return filename.indexOf("not-strict") === -1;
+    return filename.indexOf("not-strict") === -1 && filename.indexOf("edge-cases") === -1;
 });
 
 //------------------------------------------------------------------------------
