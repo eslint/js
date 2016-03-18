@@ -1,3 +1,7 @@
+v3.1.3 - March 18, 2016
+
+* 98441cb Fix: Fix behavior of ignoring comments within previous nodes (refs #256) (Kai Cataldo)
+
 v3.1.2 - March 14, 2016
 
 * a2b23ca Fix: Ensure 'var let' works (fixes #149) (Nicholas C. Zakas)
