@@ -22,7 +22,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "acorn": "^3.0.4",
-    "acorn-jsx": "^2.0.1"
+    "acorn-jsx": "^3.0.0"
   },
   "devDependencies": {
     "browserify": "^7.0.0",
