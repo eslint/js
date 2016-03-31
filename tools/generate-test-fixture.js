@@ -30,7 +30,6 @@
 (function () {
     'use strict';
     var fs = require('fs'),
-        optimist = require('optimist'),
         path = require('path'),
         root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
         espree = require(path.join(root, 'espree')),
@@ -330,7 +329,7 @@
 
     console.log(stringify(
         espree.parse(content, options),
-        !!optimist.argv['strict-json']
+        process.argv.indexOf('strict-json') !== -1
     ));
 }());
 /* vim: set sw=4 ts=4 et tw=80 : */
