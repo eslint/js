@@ -106,24 +106,6 @@ module.exports = {
                         "raw": "777",
                         "leadingComments": [
                             {
-                                "type": "Line",
-                                "value": "foo",
-                                "range": [
-                                    0,
-                                    5
-                                ],
-                                "loc": {
-                                    "start": {
-                                        "line": 1,
-                                        "column": 0
-                                    },
-                                    "end": {
-                                        "line": 1,
-                                        "column": 5
-                                    }
-                                }
-                            },
-                            {
                                 "type": "Block",
                                 "value": "aaa",
                                 "range": [
