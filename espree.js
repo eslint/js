@@ -1,6 +1,7 @@
 /**
  * @fileoverview Main Espree file that converts Acorn into Esprima output.
- * Copyright 2015 Nicholas C. Zakas. All rights reserved.
+ * @copyright jQuery Foundation and other contributors, https://jquery.org/
+ * BSD 2-Clause License
  *
  * This file contains code from the following MIT-licensed projects:
  * 1. Acorn
