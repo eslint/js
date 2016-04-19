@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 5,
+    "index": 4,
     "lineNumber": 1,
-    "column": 6,
-    "message": "Trailing comma is not permitted in destructuring patterns"
+    "column": 5,
+    "message": "Comma is not permitted after the rest element"
 };
