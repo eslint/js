@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 1,
+    "index": 4,
     "lineNumber": 1,
-    "column": 2,
-    "message": "Assigning to rvalue"
+    "column": 5,
+    "message": "Comma is not permitted after the rest element"
 };
