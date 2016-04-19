@@ -1,8 +1,8 @@
 /**
  * @fileoverview Tests for checking acorn works after espree was loaded.
  * @author Toru Nagashima
- * @copyright 2016 Toru Nagashima. All rights reserved.
- * See LICENSE file in root directory for full license.
+ * @copyright jQuery Foundation and other contributors, https://jquery.org/
+ * BSD 2-Clause License
  */
 
 
