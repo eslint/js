@@ -649,27 +649,7 @@ module.exports = {
                                                 ],
                                                 "value": false,
                                                 "raw": "false"
-                                            },
-                                            "leadingComments": [
-                                                {
-                                                    "type": "Line",
-                                                    "value": " no default",
-                                                    "range": [
-                                                        232,
-                                                        245
-                                                    ],
-                                                    "loc": {
-                                                        "start": {
-                                                            "line": 7,
-                                                            "column": 12
-                                                        },
-                                                        "end": {
-                                                            "line": 7,
-                                                            "column": 25
-                                                        }
-                                                    }
-                                                }
-                                            ]
+                                            }
                                         }
                                     ]
                                 }
