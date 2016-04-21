@@ -1,8 +1,6 @@
 /**
  * @fileoverview A simple script to help generate test cases
  * @author Nicholas C. Zakas
- * @copyright jQuery Foundation and other contributors, https://jquery.org/
- * BSD 2-Clause License
  */
 
 "use strict";

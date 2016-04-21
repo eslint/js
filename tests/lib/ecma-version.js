@@ -1,8 +1,6 @@
 /**
  * @fileoverview Tests for ECMAScript version features.
  * @author Nicholas C. Zakas
- * @copyright jQuery Foundation and other contributors, https://jquery.org/
- * BSD 2-Clause License
  */
 
 "use strict";
