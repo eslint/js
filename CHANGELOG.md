@@ -1,3 +1,14 @@
+v3.1.4 - April 21, 2016
+
+* e044705 Fix: remove extra leading comments at node level (fixes #264) (Kai Cataldo)
+* 25c27fb Chore: Remove jQuery copyright from header of each file (Kai Cataldo)
+* 10709f0 Chore: Add jQuery Foundation copyright (Nicholas C. Zakas)
+* d754b32 Upgrade: Acorn 3.1.0 (fixes #270) (Toru Nagashima)
+* 3a90886 Docs: replace a dead link with the correct contributing guide URL (Shinnosuke Watanabe)
+* 55184a2 Build: replace optimist with a simple native method (Shinnosuke Watanabe)
+* c7e5a13 Fix: Disallow namespaces objects in JSX (fixes #261) (Kai Cataldo)
+* 22290b9 Fix: Add test for leading comments (fixes #136) (Kai Cataldo)
+
 v3.1.3 - March 18, 2016
 
 * 98441cb Fix: Fix behavior of ignoring comments within previous nodes (refs #256) (Kai Cataldo)
