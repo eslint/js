@@ -126,6 +126,24 @@ describe("tokenize()", function() {
         assert.deepEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/regex-in-parens-result.tokens.js"));
     });
 
+    it("should produce tokens when using not operator", function() {
+        var ast = espree.parse("!x", {
+            loc: true,
+            range: true,
+            tokens: true
+        });
+        assert.deepEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/not-operator.tokens.js"));
+    });
+
+    it("should produce tokens when using tilde operator", function() {
+        var ast = espree.parse("~x", {
+            loc: true,
+            range: true,
+            tokens: true
+        });
+        assert.deepEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/tilde-operator.tokens.js"));
+    });
+
     it("should produce tokens when using a single identifier", function() {
         var tokens = espree.tokenize("a");
         assert.deepEqual(tester.getRaw(tokens), [ { type: "Identifier", value: "a"}]);
