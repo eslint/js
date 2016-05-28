@@ -1,3 +1,7 @@
+v3.1.5 - May 27, 2016
+
+* 7df2e4a Fix: Convert ~ and ! prefix tokens to esprima (fixes #274) (#276) (Daniel Tschinder)
+
 v3.1.4 - April 21, 2016
 
 * e044705 Fix: remove extra leading comments at node level (fixes #264) (Kai Cataldo)
