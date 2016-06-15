@@ -1,3 +1,7 @@
+v3.1.6 - June 15, 2016
+
+* a90edc2 Upgrade: acorn 3.2.0 (fixes #279) (#280) (Toru Nagashima)
+
 v3.1.5 - May 27, 2016
 
 * 7df2e4a Fix: Convert ~ and ! prefix tokens to esprima (fixes #274) (#276) (Daniel Tschinder)
