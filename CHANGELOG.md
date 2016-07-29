@@ -1,3 +1,8 @@
+v3.1.7 - July 29, 2016
+
+* 8f6cfbd Build: Add CI release (Nicholas C. Zakas)
+* ff15922 Fix: Catch ES2016 invalid syntax (fixes #284) (#285) (Nicholas C. Zakas)
+
 v3.1.6 - June 15, 2016
 
 * a90edc2 Upgrade: acorn 3.2.0 (fixes #279) (#280) (Toru Nagashima)
