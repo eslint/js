@@ -18,7 +18,7 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "acorn": "^3.3.0",
+    "acorn": "^4.0.1",
     "acorn-jsx": "^3.0.0"
   },
   "devDependencies": {
