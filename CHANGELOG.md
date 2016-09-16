@@ -1,3 +1,9 @@
+v3.2.0 - September 16, 2016
+
+* 5a37f80 Build: Update release tool (Nicholas C. Zakas)
+* 9bbcad8 Update: Upgrade Acorn to support ES2017 (fixes #287) (#290) (Jamund Ferguson)
+* 8d9767d Build: Add CI release scripts (Nicholas C. Zakas)
+
 v3.1.7 - July 29, 2016
 
 * 8f6cfbd Build: Add CI release (Nicholas C. Zakas)
