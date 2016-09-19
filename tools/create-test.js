@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------
 
 var shelljs = require("shelljs"),
-    esprima = require("../espree"),
+    espree = require("../espree"),
     path = require("path");
 
 //------------------------------------------------------------------------------
@@ -72,19 +72,46 @@ code.forEach(function(source, index) {
     //------------------------------------------------------------------------------
 
     try {
-        result = esprima.parse(sourceCode, {
-            ecmaVersion: 6,
+        result = espree.parse(sourceCode, {
+            ecmaVersion: 8, // change as needed
             ecmaFeatures: {
                 experimentalObjectRestSpread: true
             },
+            sourceType: 'script', // change as needed
             loc: true,
             range: true,
             tokens: true
         });
     } catch (ex) {
-        result = ex;
+        result = {
+            message: ex.message,
+            column: ex.column,
+            index: ex.index,
+            lineNumber: ex.lineNumber
+        };
     }
+
+    recursivelyRemoveStartAndEnd(result)
 
     sourceCode.to(testSourceFilename);
     ("module.exports = " + JSON.stringify(result, null, "    ")).to(testResultFilename);
 });
+
+// acorn adds these "start" and "end" properties
+// which we don't officially support, we we remove
+// them before creating our test fixtures
+function recursivelyRemoveStartAndEnd(o) {
+    if (Array.isArray(o)) {
+        o.forEach(recursivelyRemoveStartAndEnd)
+        return
+    }
+    if (o && typeof o === 'object') {
+        delete o.start
+        delete o.end
+        Object.keys(o).filter(function(key) {
+            return key !== 'loc'
+        }).forEach(function(key) {
+            recursivelyRemoveStartAndEnd(o[key])
+        })
+    }
+}
