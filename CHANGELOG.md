@@ -1,3 +1,7 @@
+v3.3.0 - September 20, 2016
+
+* 92b04b1 Update: create-test script (fixes #291) (#292) (Jamund Ferguson)
+
 v3.2.0 - September 16, 2016
 
 * 5a37f80 Build: Update release tool (Nicholas C. Zakas)
