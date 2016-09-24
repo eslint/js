@@ -379,6 +379,7 @@ acorn.plugins.espree = function(instance) {
                 prop.key.type === "Identifier" &&
                 prop.key.name === "async" &&
                 this.type !== tt.parenL &&
+                this.type !== tt.colon &&
                 !this.canInsertSemicolon()
             ) {
                 this.parsePropertyName(prop/* , refDestructuringErrors */);
