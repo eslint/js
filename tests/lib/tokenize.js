@@ -149,4 +149,37 @@ describe("tokenize()", function() {
         assert.deepEqual(tester.getRaw(tokens), [ { type: "Identifier", value: "a"}]);
     });
 
+    it("should not remove } token followed by a template literal.", function() {
+        var tokens = espree.tokenize("const obj = {}\n`template${{}}!`", {ecmaVersion: 6});
+        assert.deepEqual(
+            tester.getRaw(tokens),
+            [
+                {type: "Keyword", value: "const"},
+                {type: "Identifier", value: "obj"},
+                {type: "Punctuator", value: "="},
+                {type: "Punctuator", value: "{"},
+                {type: "Punctuator", value: "}"},
+                {type: "Template", value: "`template${"},
+                {type: "Punctuator", value: "{"},
+                {type: "Punctuator", value: "}"},
+                {type: "Template", value: "}!`"}
+            ]
+        );
+
+        tokens = espree.tokenize("if (a) { b }\n`template`", {ecmaVersion: 6});
+        assert.deepEqual(
+            tester.getRaw(tokens),
+            [
+                {type: "Keyword", value: "if"},
+                {type: "Punctuator", value: "("},
+                {type: "Identifier", value: "a"},
+                {type: "Punctuator", value: ")"},
+                {type: "Punctuator", value: "{"},
+                {type: "Identifier", value: "b"},
+                {type: "Punctuator", value: "}"},
+                {type: "Template", value: "`template`"}
+            ]
+        );
+    });
+
 });
