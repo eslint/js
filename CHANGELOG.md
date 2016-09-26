@@ -1,3 +1,8 @@
+v3.3.1 - September 26, 2016
+
+* 80abdce Fix: `}` token followed by template had been lost (fixes #293) (#294) (Toru Nagashima)
+* 9810bab Fix: parsing error on `async` as property name. (#295) (Toru Nagashima)
+
 v3.3.0 - September 20, 2016
 
 * 92b04b1 Update: create-test script (fixes #291) (#292) (Jamund Ferguson)
