@@ -1,3 +1,7 @@
+v3.3.2 - September 29, 2016
+
+* 7d3e2fc Fix: reset `isAsync` flag for each property (fixes #298) (#299) (Toru Nagashima)
+
 v3.3.1 - September 26, 2016
 
 * 80abdce Fix: `}` token followed by template had been lost (fixes #293) (#294) (Toru Nagashima)
