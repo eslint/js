@@ -371,7 +371,7 @@ acorn.plugins.espree = function(instance) {
             }
 
             // grab the property name or "async"
-            this.parsePropertyName(prop/* , refDestructuringErrors */);
+            this.parsePropertyName(prop, refShorthandDefaultPos);
             if (this.options.ecmaVersion >= 8 &&
                 !isPattern &&
                 !isGenerator &&
@@ -382,8 +382,10 @@ acorn.plugins.espree = function(instance) {
                 this.type !== tt.colon &&
                 !this.canInsertSemicolon()
             ) {
-                this.parsePropertyName(prop/* , refDestructuringErrors */);
+                this.parsePropertyName(prop, refShorthandDefaultPos);
                 isAsync = true;
+            } else {
+                isAsync = false;
             }
 
             this.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refShorthandDefaultPos);
