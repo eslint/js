@@ -12,7 +12,9 @@
 var leche = require("leche"),
     path = require("path"),
     shelljs = require("shelljs"),
-    tester = require("./tester");
+    tester = require("./tester"),
+    espree = require("../../espree"),
+    assert = require("chai").assert;
 
 // var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
@@ -97,5 +99,45 @@ describe("ecmaVersion", function() {
         });
     });
 
+    describe("general", function() {
+        it("Should parse using 2015 instead of 6", function() {
+            var ast = espree.parse("let foo = bar;", {
+                ecmaVersion: 2015,
+                comment: true,
+                tokens: true,
+                range: true,
+                loc: true
+            });
+
+            assert.deepEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
+        });
+
+        it("Should throw error using invalid number", function() {
+            assert.throws(function() {
+                espree.parse(
+                    "let foo = bar;", {
+                        ecmaVersion: 32,
+                        comment: true,
+                        tokens: true,
+                        range: true,
+                        loc: true
+                    });
+            }, "ecmaVersion must be 3, 5, 6, 7, or 8.");
+        });
+
+        it("Should throw error using invalid year", function() {
+            assert.throws(function() {
+                espree.parse(
+                    "let foo = bar;", {
+                        ecmaVersion: 2050,
+                        comment: true,
+                        tokens: true,
+                        range: true,
+                        loc: true
+                    });
+            }, "ecmaVersion must be 2015, 2016, or 2017.");
+        });
+
+    });
 
 });

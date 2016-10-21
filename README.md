@@ -41,7 +41,8 @@ var ast = espree.parse(code, {
     // create a top-level tokens array containing all tokens
     tokens: true,
 
-    // specify the language version (3, 5, 6, 7, or 8, default is 5)
+    // set to 3, 5 (default), 6, 7, or 8 to specify the version of ECMAScript syntax you want to use. 
+    // You can also set to 2015 (same as 6), 2016 (same as 7), or 2017 (same as 8) to use the year-based naming.
     ecmaVersion: 5,
 
     // specify which type of script you're parsing (script or module, default is script)

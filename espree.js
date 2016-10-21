@@ -66,7 +66,7 @@ var astNodeTypes = require("./lib/ast-node-types"),
 
 
 var acorn = acornJSX(rawAcorn);
-
+var DEFAULT_ECMA_VERSION = 5;
 var lookahead,
     extra,
     lastToken;
@@ -87,7 +87,7 @@ function resetExtra() {
         errors: [],
         strict: false,
         ecmaFeatures: {},
-        ecmaVersion: 5,
+        ecmaVersion: DEFAULT_ECMA_VERSION,
         isModule: false
     };
 }
@@ -99,6 +99,41 @@ var tt = acorn.tokTypes,
 
 // custom type for JSX attribute values
 tt.jsxAttrValueToken = {};
+
+/**
+ * Normalize ECMAScript version from the initial config
+ * @param  {number} ecmaVersion ECMAScript version from the initial config
+ * @returns {number} normalized ECMAScript version
+ */
+function normalizeEcmaVersion(ecmaVersion) {
+    if (typeof ecmaVersion === "number") {
+        var version = ecmaVersion;
+
+        // Calculate ECMAScript edition number from official year version starting with
+        // ES2015, which corresponds with ES6 (or a difference of 2009).
+        if (version >= 2015) {
+            version -= 2009;
+        }
+
+        switch (version) {
+            case 3:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                return version;
+
+            default:
+                if (ecmaVersion > 1000) { // assuming user wanted to set year
+                    throw new Error("ecmaVersion must be 2015, 2016, or 2017.");
+                } else {
+                    throw new Error("ecmaVersion must be 3, 5, 6, 7, or 8.");
+                }
+        }
+    } else {
+        return DEFAULT_ECMA_VERSION;
+    }
+}
 
 /**
  * Determines if a node is valid given the set of ecmaFeatures.
@@ -489,7 +524,7 @@ function tokenize(code, options) {
     options = options || {};
 
     var acornOptions = {
-        ecmaVersion: 5,
+        ecmaVersion: DEFAULT_ECMA_VERSION,
         plugins: {
             espree: true
         }
@@ -518,21 +553,7 @@ function tokenize(code, options) {
 
     extra.tolerant = typeof options.tolerant === "boolean" && options.tolerant;
 
-    if (typeof options.ecmaVersion === "number") {
-        switch (options.ecmaVersion) {
-            case 3:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                acornOptions.ecmaVersion = options.ecmaVersion;
-                extra.ecmaVersion = options.ecmaVersion;
-                break;
-
-            default:
-                throw new Error("ecmaVersion must be 3, 5, 6, 7, or 8.");
-        }
-    }
+    acornOptions.ecmaVersion = extra.ecmaVersion = normalizeEcmaVersion(options.ecmaVersion);
 
     // apply parsing flags
     if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
@@ -615,7 +636,7 @@ function parse(code, options) {
         translator,
         impliedStrict,
         acornOptions = {
-            ecmaVersion: 5,
+            ecmaVersion: DEFAULT_ECMA_VERSION,
             plugins: {
                 espree: true
             }
@@ -656,21 +677,7 @@ function parse(code, options) {
             commentAttachment.reset();
         }
 
-        if (typeof options.ecmaVersion === "number") {
-            switch (options.ecmaVersion) {
-                case 3:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                    acornOptions.ecmaVersion = options.ecmaVersion;
-                    extra.ecmaVersion = options.ecmaVersion;
-                    break;
-
-                default:
-                    throw new Error("ecmaVersion must be 3, 5, 6, 7, or 8.");
-            }
-        }
+        acornOptions.ecmaVersion = extra.ecmaVersion = normalizeEcmaVersion(options.ecmaVersion);
 
         if (options.sourceType === "module") {
             extra.isModule = true;
