@@ -122,7 +122,7 @@ describe("ecmaVersion", function() {
                         range: true,
                         loc: true
                     });
-            }, "ecmaVersion must be 3, 5, 6, 7, or 8.");
+            }, "Invalid ecmaVersion.");
         });
 
         it("Should throw error using invalid year", function() {
@@ -135,7 +135,7 @@ describe("ecmaVersion", function() {
                         range: true,
                         loc: true
                     });
-            }, "ecmaVersion must be 2015, 2016, or 2017.");
+            }, "Invalid ecmaVersion.");
         });
 
     });
