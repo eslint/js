@@ -124,11 +124,7 @@ function normalizeEcmaVersion(ecmaVersion) {
                 return version;
 
             default:
-                if (ecmaVersion > 1000) { // assuming user wanted to set year
-                    throw new Error("ecmaVersion must be 2015, 2016, or 2017.");
-                } else {
-                    throw new Error("ecmaVersion must be 3, 5, 6, 7, or 8.");
-                }
+                throw new Error("Invalid ecmaVersion.");
         }
     } else {
         return DEFAULT_ECMA_VERSION;
