@@ -1,3 +1,10 @@
+v3.4.0 - February 2, 2017
+
+* f55fa51 Build: Lock acorn to v4.0.4 (#314) (Kai Cataldo)
+* 58f75be Fix:generic error for invalid ecmaVersion(fixes eslint#7405) (#303) (Scott Stern)
+* d6b383d Docs: Update license copyright (Nicholas C. Zakas)
+* e5df542 Update: To support year in ecmaVersion number (fixes #300) (#301) (Gyandeep Singh)
+
 v3.3.2 - September 29, 2016
 
 * 7d3e2fc Fix: reset `isAsync` flag for each property (fixes #298) (#299) (Toru Nagashima)
