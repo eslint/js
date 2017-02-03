@@ -58,6 +58,6 @@ module.exports = {
 
         }
 
-        assert.deepEqual(result, expected);
+        assert.deepEqual(result, getRaw(expected));
     }
 };
