@@ -24,12 +24,12 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 23
+                    "column": 24
                 }
             },
             "range": [
                 0,
-                23
+                24
             ],
             "declaration": {
                 "type": "ClassDeclaration",
@@ -68,23 +68,6 @@ module.exports = {
                     "body": []
                 }
             }
-        },
-        {
-            "type": "EmptyStatement",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 23
-                },
-                "end": {
-                    "line": 1,
-                    "column": 24
-                }
-            },
-            "range": [
-                23,
-                24
-            ]
         }
     ],
     "sourceType": "module",

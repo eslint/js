@@ -36,16 +36,16 @@ module.exports = {
                 "loc": {
                     "start": {
                         "line": 1,
-                        "column": 0
+                        "column": 1
                     },
                     "end": {
                         "line": 1,
-                        "column": 30
+                        "column": 29
                     }
                 },
                 "range": [
-                    0,
-                    30
+                    1,
+                    29
                 ],
                 "operator": "=",
                 "left": {
@@ -129,16 +129,16 @@ module.exports = {
                     "loc": {
                         "start": {
                             "line": 1,
-                            "column": 27
+                            "column": 26
                         },
                         "end": {
                             "line": 1,
-                            "column": 30
+                            "column": 29
                         }
                     },
                     "range": [
-                        27,
-                        30
+                        26,
+                        29
                     ],
                     "name": "res"
                 }
@@ -257,38 +257,20 @@ module.exports = {
         },
         {
             "type": "Punctuator",
-            "value": ")",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 23
-                },
-                "end": {
-                    "line": 1,
-                    "column": 24
-                }
-            },
-            "range": [
-                23,
-                24
-            ]
-        },
-        {
-            "type": "Punctuator",
             "value": "=",
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 25
+                    "column": 24
                 },
                 "end": {
                     "line": 1,
-                    "column": 26
+                    "column": 25
                 }
             },
             "range": [
-                25,
-                26
+                24,
+                25
             ]
         },
         {
@@ -297,7 +279,25 @@ module.exports = {
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 27
+                    "column": 26
+                },
+                "end": {
+                    "line": 1,
+                    "column": 29
+                }
+            },
+            "range": [
+                26,
+                29
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": ")",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 29
                 },
                 "end": {
                     "line": 1,
@@ -305,7 +305,7 @@ module.exports = {
                 }
             },
             "range": [
-                27,
+                29,
                 30
             ]
         },

@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 24,
-    "lineNumber": 2,
-    "column": 3,
+    "index": 0,
+    "lineNumber": 1,
+    "column": 1,
     "message": "Illegal 'use strict' directive in function with non-simple parameter list"
 };
