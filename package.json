@@ -4,6 +4,7 @@
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
   "main": "espree.js",
+  "typings": "espree.d.ts",
   "version": "3.4.0",
   "files": [
     "lib",
@@ -18,6 +19,7 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
+    "@types/estree": "0.0.34",
     "acorn": "4.0.4",
     "acorn-jsx": "^3.0.0"
   },
@@ -36,6 +38,7 @@
     "regenerate": "~0.5.4",
     "shelljs": "^0.3.0",
     "shelljs-nodecli": "^0.1.1",
+    "typescript": "^2.2.1",
     "unicode-6.3.0": "~0.1.0"
   },
   "keywords": [
@@ -48,7 +51,7 @@
   ],
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
-    "test": "npm run-script lint && node Makefile.js test",
+    "test": "npm run-script lint && node Makefile.js test && tsc",
     "lint": "node Makefile.js lint",
     "release": "eslint-release",
     "ci-release": "eslint-ci-release",
