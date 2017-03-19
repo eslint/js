@@ -353,6 +353,7 @@ acorn.plugins.espree = function(instance) {
     instance.parseObj = function(isPattern, refShorthandDefaultPos) {
         var node = this.startNode(),
             first = true,
+            hasRestProperty = false,
             propHash = {};
         node.properties = [];
         this.next();
@@ -362,6 +363,9 @@ acorn.plugins.espree = function(instance) {
                 this.expect(tt.comma);
 
                 if (this.afterTrailingComma(tt.braceR)) {
+                    if (hasRestProperty) {
+                        this.raise(node.properties[node.properties.length - 1].end, "Unexpected trailing comma after rest property");
+                    }
                     break;
                 }
 
@@ -378,6 +382,7 @@ acorn.plugins.espree = function(instance) {
             if (extra.ecmaFeatures.experimentalObjectRestSpread && this.type === tt.ellipsis) {
                 if (isPattern) {
                     prop = this.parseObjectRest();
+                    hasRestProperty = true;
                 } else {
                     prop = this.parseSpread();
                     prop.type = "ExperimentalSpreadProperty";
