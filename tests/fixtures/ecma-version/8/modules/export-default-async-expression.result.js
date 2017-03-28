@@ -32,7 +32,7 @@ module.exports = {
                 38
             ],
             "declaration": {
-                "type": "FunctionDeclaration",
+                "type": "FunctionExpression",
                 "loc": {
                     "start": {
                         "line": 1,
