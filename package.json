@@ -24,7 +24,7 @@
   "devDependencies": {
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
-    "eslint": "^2.0.0-beta.1",
+    "eslint": "^2.13.1",
     "eslint-config-eslint": "^3.0.0",
     "eslint-release": "^0.10.0",
     "esprima": "latest",
