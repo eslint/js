@@ -194,13 +194,6 @@ function esprimaFinishNode(result) {
         }
     }
 
-    // Acorn currently uses expressions instead of declarations in default exports
-    if (result.type === "ExportDefaultDeclaration") {
-        if (/^(Class|Function)Expression$/.test(result.declaration.type)) {
-            result.declaration.type = result.declaration.type.replace("Expression", "Declaration");
-        }
-    }
-
     // Acorn uses undefined instead of null, which affects serialization
     if (result.type === "Literal" && result.value === undefined) {
         result.value = null;
