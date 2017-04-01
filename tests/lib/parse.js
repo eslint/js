@@ -77,5 +77,9 @@ describe("parse()", function() {
             assert.deepEqual([ast.loc.end.line, ast.loc.end.column], [1, 5]);
         });
 
+        it("should not mutate config", function() {
+            espree.parse("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
+        });
+
     });
 });

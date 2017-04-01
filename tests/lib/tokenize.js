@@ -182,4 +182,8 @@ describe("tokenize()", function() {
         );
     });
 
+    it("should not mutate config", function() {
+        espree.tokenize("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
+    });
+
 });
