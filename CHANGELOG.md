@@ -1,3 +1,11 @@
+v3.4.1 - March 31, 2017
+
+* a3ae0bd Upgrade: acorn to 5.0.1 (#327) (Teddy Katz)
+* 15ef24f Docs: Add badges (#326) (Jan Pilzer)
+* 652990a Fix: raise error for trailing commas after rest properties (fixes #310) (#323) (Teddy Katz)
+* 9d86ba5 Upgrade: acorn to ^4.0.11 (#317) (Toru Nagashima)
+* a3442b5 Chore: fix tests for Node 6+ (#315) (Teddy Katz)
+
 v3.4.0 - February 2, 2017
 
 * f55fa51 Build: Lock acorn to v4.0.4 (#314) (Kai Cataldo)
