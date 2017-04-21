@@ -1,3 +1,8 @@
+v3.4.2 - April 21, 2017
+
+* c99e436 Upgrade: eslint to 2.13.1 (#328) (Teddy Katz)
+* 628cf3a Fix: don't mutate user-provided configs (fixes #329) (#330) (Teddy Katz)
+
 v3.4.1 - March 31, 2017
 
 * a3ae0bd Upgrade: acorn to 5.0.1 (#327) (Teddy Katz)
