@@ -4,7 +4,7 @@
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
   "main": "espree.js",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "files": [
     "lib",
     "espree.js"
