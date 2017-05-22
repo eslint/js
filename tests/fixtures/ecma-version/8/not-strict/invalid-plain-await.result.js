@@ -54,7 +54,7 @@ module.exports = {
     "sourceType": "script",
     "tokens": [
         {
-            "type": "Identifier",
+            "type": "Keyword",
             "value": "await",
             "loc": {
                 "start": {

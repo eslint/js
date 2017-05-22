@@ -366,7 +366,7 @@ module.exports = {
             ]
         },
         {
-            "type": "Identifier",
+            "type": "Keyword",
             "value": "await",
             "loc": {
                 "start": {
