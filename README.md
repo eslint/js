@@ -18,17 +18,17 @@ npm i espree --save
 And in your Node.js code:
 
 ```javascript
-var espree = require("espree");
+const espree = require("espree");
 
-var ast = espree.parse(code);
+const ast = espree.parse(code);
 ```
 
 There is a second argument to `parse()` that allows you to specify various options:
 
 ```javascript
-var espree = require("espree");
+const espree = require("espree");
 
-var ast = espree.parse(code, {
+const ast = espree.parse(code, {
 
     // attach range information to each node
     range: true,
