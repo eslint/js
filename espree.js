@@ -115,7 +115,8 @@ function resetExtra() {
 
 
 var tt = acorn.tokTypes,
-    getLineInfo = acorn.getLineInfo;
+    getLineInfo = acorn.getLineInfo,
+    lineBreak = acorn.lineBreak;
 
 // custom type for JSX attribute values
 tt.jsxAttrValueToken = {};
@@ -429,7 +430,9 @@ acorn.plugins.espree = function(instance) {
                 prop.key.name === "async" &&
                 this.type !== tt.parenL &&
                 this.type !== tt.colon &&
-                !this.canInsertSemicolon()
+                this.type !== tt.comma &&
+                this.type !== tt.braceR &&
+                !lineBreak.test(this.input.slice(this.lastTokEnd, this.start))
             ) {
                 this.parsePropertyName(prop, refShorthandDefaultPos);
                 isAsync = true;
