@@ -28,45 +28,45 @@ There is a second argument to `parse()` that allows you to specify various optio
 ```javascript
 var espree = require("espree");
 
+// Optional second options argument with the following default settings
 var ast = espree.parse(code, {
 
     // attach range information to each node
-    range: true,
+    range: false,
 
     // attach line/column location information to each node
-    loc: true,
+    loc: false,
 
     // create a top-level comments array containing all comments
-    comment: true,
+    comment: false,
 
-    // attach comments to the closest relevant node as leadingComments and
-    // trailingComments
-    attachComment: true,
+    // attach comments to the closest relevant node as leadingComments and trailingComments
+    attachComment: false,
 
     // create a top-level tokens array containing all tokens
-    tokens: true,
+    tokens: false,
 
-    // set to 3, 5 (default), 6, 7, or 8 to specify the version of ECMAScript syntax you want to use. 
-    // You can also set to 2015 (same as 6), 2016 (same as 7), or 2017 (same as 8) to use the year-based naming.
+    // set to 3, 5, 6, 7, or 8 to specify the version of ECMAScript syntax you want to use
+    // You can also set to 2015 (same as 6), 2016 (same as 7), or 2017 (same as 8) to use the year-based naming
     ecmaVersion: 5,
 
-    // specify which type of script you're parsing (script or module, default is script)
+    // specify which type of script you're parsing ("script" or "module")
     sourceType: "script",
 
     // specify additional language features
     ecmaFeatures: {
 
         // enable JSX parsing
-        jsx: true,
+        jsx: false,
 
         // enable return in global scope
-        globalReturn: true,
+        globalReturn: false,
 
         // enable implied strict mode (if ecmaVersion >= 5)
-        impliedStrict: true,
+        impliedStrict: false,
 
         // allow experimental object rest/spread
-        experimentalObjectRestSpread: true
+        experimentalObjectRestSpread: false
     }
 });
 ```
