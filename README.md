@@ -46,8 +46,8 @@ var ast = espree.parse(code, {
     // create a top-level tokens array containing all tokens
     tokens: false,
 
-    // Set to 3, 5, 6, 7, or 8 to specify the version of ECMAScript syntax you want to use.
-    // You can also set to 2015 (same as 6), 2016 (same as 7), or 2017 (same as 8) to use the year-based naming.
+    // Set to 3, 5 (default), 6, 7, 8, or 9 to specify the version of ECMAScript syntax you want to use.
+    // You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), or 2018 (same as 9) to use the year-based naming.
     ecmaVersion: 5,
 
     // specify which type of script you're parsing ("script" or "module")
@@ -138,14 +138,17 @@ All of them.
 
 ### What ECMAScript 7/2016 features do you support?
 
-There is only one ECMAScript 7 syntax change: the exponentiation operator. Espree supports this.
+There is only one ECMAScript 2016 syntax change: the exponentiation operator. Espree supports this.
 
 ### What ECMAScript 2017 features do you support?
 
-Because ECMAScript 2017 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
+There are two ECMAScript 2017 syntax changes: `async` functions, and trailing commas in function declarations and calls. Espree supports both of them.
 
-* `async` functions
-* Trailing commas in function declarations and calls (including arrow functions and concise methods)
+### What ECMAScript 2018 features do you support?
+
+Because ECMAScript 2018 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
+
+* Invalid escape sequences in tagged template literals
 
 ### How do you determine which experimental features to support?
 
