@@ -1,6 +1,6 @@
 module.exports = {
-    "message": "The keyword 'await' is reserved",
-    "column": 21,
     "index": 20,
-    "lineNumber": 1
+    "lineNumber": 1,
+    "column": 21,
+    "message": "Can not use 'await' as identifier inside an async function"
 }

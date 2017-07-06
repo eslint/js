@@ -51,6 +51,7 @@ module.exports = {
             },
             "generator": false,
             "expression": false,
+            "async": false,
             "params": [
                 {
                     "type": "ArrayPattern",
@@ -508,4 +509,4 @@ module.exports = {
             ]
         }
     ]
-};
+}
