@@ -1,3 +1,11 @@
+v3.5.0 - August 5, 2017
+
+* 4d442a1 Update: add initial support for ES2018 (#348) (Teddy Katz)
+* d4bdcb6 Fix: Make template token objects adhere to token object structure (#343) (Ian Christian Myers)
+* 9ac671a Upgrade: acorn to 5.1.1 (#347) (Teddy Katz)
+* 16e1fec Docs: Specify default values of options (fixes #325) (#342) (Jan Pilzer)
+* be85b8e Fix: async shorthand properties (fixes #340) (#341) (Toru Nagashima)
+
 v3.4.3 - May 5, 2017
 
 * 343590a Fix: add AwaitExpression to espree.Syntax (fixes #331) (#332) (Teddy Katz)
