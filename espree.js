@@ -433,7 +433,8 @@ acorn.plugins.espree = function(instance) {
                     this.type === tt.name ||
                     this.type === tt.num ||
                     this.type === tt.string ||
-                    this.type === tt.bracketL
+                    this.type === tt.bracketL ||
+                    this.type.keyword
                 ) &&
                 !lineBreak.test(this.input.slice(this.lastTokEnd, this.start))
             ) {
