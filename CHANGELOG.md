@@ -1,3 +1,7 @@
+v3.5.1 - September 15, 2017
+
+* 5eb1388 Fix: Fix parsing of async keyword-named object methods (#352) (#353) (Mark Banner)
+
 v3.5.0 - August 5, 2017
 
 * 4d442a1 Update: add initial support for ES2018 (#348) (Teddy Katz)
