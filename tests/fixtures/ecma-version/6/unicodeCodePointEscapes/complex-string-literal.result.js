@@ -31,6 +31,7 @@ module.exports = {
                 0,
                 27
             ],
+            "directive": "\\u{20BB7}\\u{10FFFF}\\u{1}",
             "expression": {
                 "type": "Literal",
                 "loc": {
