@@ -31,6 +31,7 @@ module.exports = {
                 0,
                 13
             ],
+            "directive": "use strict",
             "expression": {
                 "type": "Literal",
                 "loc": {
