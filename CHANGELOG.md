@@ -1,3 +1,10 @@
+v3.5.2 - November 10, 2017
+
+* 019b70a Fix: Remove blockBindings from docs (fixes #307, fixes #339) (#356) (Jan Pilzer)
+* b2016cb Chore: refactoring rest/spread properties (#361) (Toru Nagashima)
+* 59c9d06 Chore: upgrade acorn@5.2 (fixes #358) (#360) (Toru Nagashima)
+* 06c35c9 Chore: add .npmrc (#359) (Toru Nagashima)
+
 v3.5.1 - September 15, 2017
 
 * 5eb1388 Fix: Fix parsing of async keyword-named object methods (#352) (#353) (Mark Banner)
