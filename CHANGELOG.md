@@ -1,3 +1,9 @@
+v3.5.3 - February 2, 2018
+
+* 70f9859 Upgrade: acorn 5.4.0 (#367) (Toru Nagashima)
+* cea4823 Chore: Adding .gitattributes file (#366) (Kevin Partington)
+* 4160aee Upgrade: acorn v5.3.0 (#365) (Toru Nagashima)
+
 v3.5.2 - November 10, 2017
 
 * 019b70a Fix: Remove blockBindings from docs (fixes #307, fixes #339) (#356) (Jan Pilzer)
