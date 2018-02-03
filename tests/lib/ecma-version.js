@@ -83,7 +83,13 @@ describe("ecmaVersion", function() {
             var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
             it("should parse correctly when sourceType is module", function() {
-                var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+                var expected;
+
+                try {
+                    expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".module-result.js");
+                } catch (err) {
+                    expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+                }
 
                 config.ecmaVersion = Number(version);
                 config.sourceType = "module";

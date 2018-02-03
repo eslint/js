@@ -83,4 +83,15 @@ describe("ecmaFeatures", function() {
         });
     });
 
+    describe("combination with 'ecmaVersion:2018' and 'ecmaFeatures.experimentalObjectRestSpread:true'", function() {
+        it("should generate ExperimentalRestProperty/ExperimentalSpreadProperty.", function() {
+            config.ecmaVersion = 2018;
+            config.ecmaFeatures.experimentalObjectRestSpread = true;
+
+            var ast = espree.parse("({...rest} = {...spread})", config);
+
+            assert.strictEqual(ast.body[0].expression.left.properties[0].type, "ExperimentalRestProperty");
+            assert.strictEqual(ast.body[0].expression.right.properties[0].type, "ExperimentalSpreadProperty");
+        });
+    });
 });
