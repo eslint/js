@@ -1,3 +1,7 @@
+v3.5.4 - March 4, 2018
+
+* 706167b Upgrade: acorn 5.5.0 (#369) (Toru Nagashima)
+
 v3.5.3 - February 2, 2018
 
 * 70f9859 Upgrade: acorn 5.4.0 (#367) (Toru Nagashima)
