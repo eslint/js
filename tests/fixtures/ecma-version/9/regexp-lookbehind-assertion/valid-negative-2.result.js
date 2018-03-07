@@ -47,7 +47,7 @@ module.exports = {
                     0,
                     9
                 ],
-                "value": null,
+                "value": /(?<!a)/u,
                 "raw": "/(?<!a)/u",
                 "regex": {
                     "pattern": "(?<!a)",

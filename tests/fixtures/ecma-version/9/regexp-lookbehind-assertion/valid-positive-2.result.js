@@ -47,7 +47,7 @@ module.exports = {
                     0,
                     9
                 ],
-                "value": null,
+                "value": process.versions.node >= "9.0.0" ? /(?<=a)/u : null,
                 "raw": "/(?<=a)/u",
                 "regex": {
                     "pattern": "(?<=a)",
