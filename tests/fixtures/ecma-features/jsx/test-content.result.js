@@ -121,7 +121,7 @@ module.exports = {
                 },
                 "children": [
                     {
-                        "type": "Literal",
+                        "type": "JSXText",
                         "loc": {
                             "start": {
                                 "line": 1,

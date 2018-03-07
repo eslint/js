@@ -211,7 +211,7 @@ module.exports = {
                 },
                 "children": [
                     {
-                        "type": "Literal",
+                        "type": "JSXText",
                         "loc": {
                             "start": {
                                 "line": 1,
@@ -265,7 +265,7 @@ module.exports = {
                         }
                     },
                     {
-                        "type": "Literal",
+                        "type": "JSXText",
                         "loc": {
                             "start": {
                                 "line": 1,
