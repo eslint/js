@@ -47,7 +47,7 @@ module.exports = {
                     0,
                     8
                 ],
-                "value": process.versions.node >= "9.0.0" ? /(?<=a)/ : null,
+                "value": process.versions.node >= "9.0.0" ? new RegExp(String.raw`(?<=a)`) : null,
                 "raw": "/(?<=a)/",
                 "regex": {
                     "pattern": "(?<=a)",
