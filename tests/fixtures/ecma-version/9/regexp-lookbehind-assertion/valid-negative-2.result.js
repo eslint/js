@@ -1,3 +1,5 @@
+const condtionalRegex = require("../../../../lib/conditional-regex-value");
+
 module.exports = {
     "type": "Program",
     "loc": {
@@ -31,7 +33,7 @@ module.exports = {
                 0,
                 9
             ],
-            "expression": {
+            "expression": condtionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -47,13 +49,12 @@ module.exports = {
                     0,
                     9
                 ],
-                "value": process.versions.node >= "9.0.0" ? new RegExp(String.raw`(?<!a)`, "u") : null,
                 "raw": "/(?<!a)/u",
                 "regex": {
                     "pattern": "(?<!a)",
                     "flags": "u"
                 }
-            }
+            })
         }
     ],
     "sourceType": "script",
