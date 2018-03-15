@@ -1,4 +1,4 @@
-const condtionalRegex = require("../../../../lib/conditional-regex-value");
+const conditionalRegex = require("../../../../lib/conditional-regex-value");
 
 module.exports = {
     "type": "Program",
@@ -33,7 +33,7 @@ module.exports = {
                 0,
                 9
             ],
-            "expression": condtionalRegex({
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
