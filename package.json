@@ -10,7 +10,7 @@
     "espree.js"
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.0.0"
   },
   "repository": "eslint/espree",
   "bugs": {
@@ -19,7 +19,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "acorn": "^5.5.1",
-    "acorn-jsx": "^3.0.0"
+    "acorn-jsx": "^4.1.1"
   },
   "devDependencies": {
     "browserify": "^7.0.0",
