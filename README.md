@@ -63,10 +63,7 @@ var ast = espree.parse(code, {
         globalReturn: false,
 
         // enable implied strict mode (if ecmaVersion >= 5)
-        impliedStrict: false,
-
-        // allow experimental object rest/spread
-        experimentalObjectRestSpread: false
+        impliedStrict: false
     }
 });
 ```
