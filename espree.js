@@ -159,13 +159,7 @@ function normalizeEcmaVersion(ecmaVersion) {
  * @private
  */
 function isValidNode(node) {
-    var ecma = extra.ecmaFeatures;
-
     switch (node.type) {
-        case "ExperimentalSpreadProperty":
-        case "ExperimentalRestProperty":
-            return ecma.experimentalObjectRestSpread;
-
         case "ImportDeclaration":
         case "ExportNamedDeclaration":
         case "ExportDefaultDeclaration":
@@ -289,119 +283,12 @@ acorn.plugins.espree = function(instance) {
         };
     });
 
-    // needed for experimental object rest/spread
-    instance.extend("checkLVal", function(checkLVal) {
-
-        return /** @this acorn.Parser */ function(expr, isBinding, checkClashes) {
-
-            if (extra.ecmaFeatures.experimentalObjectRestSpread && expr.type === "ObjectPattern") {
-                for (var i = 0; i < expr.properties.length; i++) {
-                    if (expr.properties[i].type.indexOf("Experimental") === -1) {
-                        this.checkLVal(expr.properties[i].value, isBinding, checkClashes);
-                    }
-                }
-                return undefined;
-            }
-
-            return checkLVal.call(this, expr, isBinding, checkClashes);
-        };
-    });
-
     instance.extend("parseTopLevel", function(parseTopLevel) {
         return /** @this acorn.Parser */ function(node) {
             if (extra.ecmaFeatures.impliedStrict && this.options.ecmaVersion >= 5) {
                 this.strict = true;
             }
             return parseTopLevel.call(this, node);
-        };
-    });
-
-    instance.extend("toAssignable", function(toAssignable) {
-
-        return /** @this acorn.Parser */ function(node, isBinding, refDestructuringErrors) {
-
-            if (extra.ecmaFeatures.experimentalObjectRestSpread &&
-                    node.type === "ObjectExpression"
-            ) {
-                node.type = "ObjectPattern";
-
-                for (var i = 0; i < node.properties.length; i++) {
-                    var prop = node.properties[i];
-
-                    if (prop.type === "ExperimentalSpreadProperty") {
-                        prop.type = "ExperimentalRestProperty";
-                    } else if (prop.kind !== "init") {
-                        this.raise(prop.key.start, "Object pattern can't contain getter or setter");
-                    } else {
-                        this.toAssignable(prop.value, isBinding);
-                    }
-                }
-
-                return node;
-            } else {
-                return toAssignable.call(this, node, isBinding, refDestructuringErrors);
-            }
-        };
-
-    });
-
-    /**
-     * Method to parse an object rest or object spread.
-     * @returns {ASTNode} The node representing object rest or object spread.
-     * @this acorn.Parser
-     */
-    instance.parseObjectRest = function() {
-        var node = this.startNode();
-        this.next();
-        node.argument = this.parseIdent();
-
-        if (this.type === tt.comma) {
-            this.raise(this.start, "Unexpected trailing comma after rest property");
-        }
-
-        return this.finishNode(node, "ExperimentalRestProperty");
-    };
-
-    instance.extend("parseProperty", function(parseProperty) {
-        /**
-         * Override `parseProperty` method to parse rest/spread properties.
-         * @param {boolean} isPattern True if the object is a destructuring pattern.
-         * @param {Object} refDestructuringErrors ?
-         * @returns {ASTNode} The node representing a rest/spread property.
-         * @this acorn.Parser
-         */
-        return function(isPattern, refDestructuringErrors) {
-            if (extra.ecmaFeatures.experimentalObjectRestSpread && this.type === tt.ellipsis) {
-                var prop;
-
-                if (isPattern) {
-                    prop = this.parseObjectRest();
-                } else {
-                    prop = this.parseSpread();
-                    prop.type = "ExperimentalSpreadProperty";
-                }
-
-                return prop;
-            }
-
-            return parseProperty.call(this, isPattern, refDestructuringErrors);
-        };
-    });
-
-    instance.extend("checkPropClash", function(checkPropClash) {
-        /**
-         * Override `checkPropClash` method to avoid clash on rest/spread properties.
-         * @param {ASTNode} prop A property node to check.
-         * @param {Object} propHash Names map.
-         * @param {Object} refDestructuringErrors Destructuring error information.
-         * @returns {void}
-         * @this acorn.Parser
-         */
-        return function(prop, propHash, refDestructuringErrors) {
-            if (prop.type === "ExperimentalRestProperty" || prop.type === "ExperimentalSpreadProperty") {
-                return;
-            }
-            checkPropClash.call(this, prop, propHash, refDestructuringErrors);
         };
     });
 
