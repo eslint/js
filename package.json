@@ -53,8 +53,8 @@
     "release": "eslint-release",
     "ci-release": "eslint-ci-release",
     "gh-release": "eslint-gh-release",
-    "alpharelease": "eslint-prelease alpha",
-    "betarelease": "eslint-prelease beta",
+    "alpharelease": "eslint-prerelease alpha",
+    "betarelease": "eslint-prerelease beta",
     "browserify": "node Makefile.js browserify"
   }
 }
