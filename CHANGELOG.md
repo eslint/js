@@ -1,3 +1,10 @@
+v4.0.0-alpha.0 - March 30, 2018
+
+* 95fa890 Build: fix typos in package.json release scripts (#375) (Teddy Katz)
+* 6284e09 Breaking: remove experimentalObjectRestSpread option (#374) (Teddy Katz)
+* 0df063f Breaking: require Node.js 6+, upgrade acorn-jsx@4.1.1 (fixes #345) (#371) (薛定谔的猫)
+* 0252144 Upgrade: acorn 5.5.1 (#370) (Rouven Weßling)
+
 v3.5.4 - March 4, 2018
 
 * 706167b Upgrade: acorn 5.5.0 (#369) (Toru Nagashima)
