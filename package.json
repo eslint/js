@@ -26,7 +26,7 @@
     "chai": "^1.10.0",
     "eslint": "^2.13.1",
     "eslint-config-eslint": "^3.0.0",
-    "eslint-release": "^0.10.0",
+    "eslint-release": "^0.11.1",
     "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "istanbul": "~0.2.6",
