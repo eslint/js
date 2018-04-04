@@ -184,13 +184,6 @@ function esprimaFinishNode(result) {
         this.unexpected(result.start);
     }
 
-    // https://github.com/marijnh/acorn/issues/323
-    if (result.type === "TryStatement") {
-        delete result.guardedHandlers;
-    } else if (result.type === "CatchClause") {
-        delete result.guard;
-    }
-
     // Acorn doesn't count the opening and closing backticks as part of templates
     // so we have to adjust ranges/locations appropriately.
     if (result.type === "TemplateElement") {
@@ -207,11 +200,6 @@ function esprimaFinishNode(result) {
             result.loc.start.column--;
             result.loc.end.column += (terminalDollarBraceL ? 2 : 1);
         }
-    }
-
-    // Acorn uses undefined instead of null, which affects serialization
-    if (result.type === "Literal" && result.value === undefined) {
-        result.value = null;
     }
 
     if (extra.attachComment) {
