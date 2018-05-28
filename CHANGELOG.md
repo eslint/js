@@ -1,3 +1,8 @@
+v4.0.0-alpha.1 - May 28, 2018
+
+* 56c5a9c Fix: remove workarounds for acorn < 4 (#372) (Rouven Weßling)
+* fd305e5 Upgrade: eslint-release to v0.11.1 (#376) (Teddy Katz)
+
 v4.0.0-alpha.0 - March 30, 2018
 
 * 95fa890 Build: fix typos in package.json release scripts (#375) (Teddy Katz)
