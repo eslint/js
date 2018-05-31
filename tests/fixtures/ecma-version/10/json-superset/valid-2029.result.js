@@ -82,8 +82,8 @@ module.exports = {
                             8,
                             11
                         ],
-                        "value": " ",
-                        "raw": "\" \""
+                        "value": "\u2029",
+                        "raw": "\"\u2029\""
                     }
                 }
             ],
@@ -148,7 +148,7 @@ module.exports = {
         },
         {
             "type": "String",
-            "value": "\" \"",
+            "value": "\"\u2029\"",
             "loc": {
                 "start": {
                     "line": 1,
