@@ -143,7 +143,7 @@ There are two ECMAScript 2017 syntax changes: `async` functions, and trailing co
 
 ### What ECMAScript 2018 features do you support?
 
-There are seven ECMAScript 2017 syntax changes:
+There are seven ECMAScript 2018 syntax changes:
 
 * Invalid escape sequences in tagged template literals
 * Rest/spread properties
