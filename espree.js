@@ -70,7 +70,6 @@ var DEFAULT_ECMA_VERSION = 5;
 var lookahead,
     extra,
     lastToken;
-var assign = Object.assign;
 
 /**
  * Resets the extra object to its default.
@@ -351,7 +350,7 @@ function tokenize(code, options) {
     lookahead = null;
 
     // Options matching.
-    options = assign({}, options);
+    options = Object.assign({}, options);
 
     var acornOptions = {
         ecmaVersion: DEFAULT_ECMA_VERSION,
@@ -387,7 +386,7 @@ function tokenize(code, options) {
 
     // apply parsing flags
     if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-        extra.ecmaFeatures = assign({}, options.ecmaFeatures);
+        extra.ecmaFeatures = Object.assign({}, options.ecmaFeatures);
         impliedStrict = extra.ecmaFeatures.impliedStrict;
         extra.ecmaFeatures.impliedStrict = typeof impliedStrict === "boolean" && impliedStrict;
     }
@@ -523,7 +522,7 @@ function parse(code, options) {
 
         // apply parsing flags after sourceType to allow overriding
         if (options.ecmaFeatures && typeof options.ecmaFeatures === "object") {
-            extra.ecmaFeatures = assign({}, options.ecmaFeatures);
+            extra.ecmaFeatures = Object.assign({}, options.ecmaFeatures);
             impliedStrict = extra.ecmaFeatures.impliedStrict;
             extra.ecmaFeatures.impliedStrict = typeof impliedStrict === "boolean" && impliedStrict;
             if (options.ecmaFeatures.globalReturn) {
