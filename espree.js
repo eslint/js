@@ -70,26 +70,7 @@ var DEFAULT_ECMA_VERSION = 5;
 var lookahead,
     extra,
     lastToken;
-
-/**
- * Object.assign polyfill for Node < 4
- * @param {Object} target The target object
- * @param {...Object} sources Sources for the object
- * @returns {Object} `target` after being mutated
- */
-var assign = Object.assign || function assign(target) {
-    for (var argIndex = 1; argIndex < arguments.length; argIndex++) {
-        if (arguments[argIndex] !== null && typeof arguments[argIndex] === "object") {
-            var keys = Object.keys(arguments[argIndex]);
-
-            for (var keyIndex = 0; keyIndex < keys.length; keyIndex++) {
-                target[keys[keyIndex]] = arguments[argIndex][keys[keyIndex]];
-            }
-        }
-    }
-
-    return target;
-};
+var assign = Object.assign;
 
 /**
  * Resets the extra object to its default.
