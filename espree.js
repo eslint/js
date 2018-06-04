@@ -122,6 +122,7 @@ function normalizeEcmaVersion(ecmaVersion) {
             case 7:
             case 8:
             case 9:
+            case 10:
                 return version;
 
             default:
