@@ -55,6 +55,7 @@
     "gh-release": "eslint-gh-release",
     "alpharelease": "eslint-prerelease alpha",
     "betarelease": "eslint-prerelease beta",
+    "rcrelease": "eslint-prerelease rc",
     "browserify": "node Makefile.js browserify"
   }
 }
