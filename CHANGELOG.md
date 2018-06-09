@@ -1,3 +1,10 @@
+v4.0.0-rc.0 - June 9, 2018
+
+* d8224c4 Build: Adding rc release script to package.json (#383) (Kevin Partington)
+* 4207773 Build: add node 10 (#381) (薛定谔的猫)
+* cd9da7e Update: upgrade acorn to support two ES2019 syntax (#380) (Toru Nagashima)
+* 8cb3ceb Chore: remove Object.assign polyfill (#382) (薛定谔的猫)
+
 v4.0.0-alpha.1 - May 28, 2018
 
 * 56c5a9c Fix: remove workarounds for acorn < 4 (#372) (Rouven Weßling)
