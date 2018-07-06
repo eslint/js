@@ -1,6 +1,5 @@
 // simple script to convert the old Esprima giant file tests into small ones
 
-var shelljs = require("shelljs");
 var tests = require("../test/test");
 
 Object.keys(tests).forEach(function(key) {

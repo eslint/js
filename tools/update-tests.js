@@ -122,8 +122,7 @@ testFiles.forEach(function(filename) {
 
 versionFiles.forEach(function(filename) {
 
-    var feature = path.dirname(filename),
-        version = Number(filename.substring(0, filename.indexOf("/"))),
+    var version = Number(filename.substring(0, filename.indexOf("/"))),
         code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
         config = {
             loc: true,

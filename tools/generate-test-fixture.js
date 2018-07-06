@@ -232,7 +232,7 @@
         }
 
         function jo(object, key) {
-            var stepback, partial, fin, separator,
+            var stepback, partial, fin,
                 startStr = 'start', endStr = 'end', lineStr = 'line', colStr = 'column';
 
             if (printStrictJSON) {
