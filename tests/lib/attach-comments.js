@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var assert = require("chai").assert,
+const assert = require("chai").assert,
     leche = require("leche"),
     path = require("path"),
     espree = require("../../espree"),
@@ -20,25 +20,21 @@ var assert = require("chai").assert,
 // Setup
 //------------------------------------------------------------------------------
 
-var testFiles = shelljs.find("./tests/fixtures/attach-comments").filter(function(filename) {
-    return filename.indexOf(".src.js") > -1;
-}).map(function(filename) {
-    return filename.substring(0, filename.length - 7);  // strip off ".src.js"
-// }).filter(function(filename) {
-//     return /line-and-block/.test(filename);
-});
+const testFiles = shelljs.find("./tests/fixtures/attach-comments")
+    .filter(filename => filename.indexOf(".src.js") > -1)
+    .map(filename => filename.slice(0, filename.length - 7));
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-describe("attachComment: true", function() {
+describe("attachComment: true", () => {
 
-    leche.withData(testFiles, function(filename) {
-        it("should produce correct AST when parsed with attachComments", function() {
-            var output = require(path.resolve(__dirname, "../../", filename + ".result.js"));
-            var input = shelljs.cat(filename + ".src.js");
-            var result;
+    leche.withData(testFiles, filename => {
+        it("should produce correct AST when parsed with attachComments", () => {
+            const output = require(path.resolve(__dirname, "../../", `${filename}.result.js`));
+            const input = shelljs.cat(`${filename}.src.js`);
+            let result;
 
             if (output.sourceType === "script") {
                 result = espree.parse(input, {
@@ -57,7 +53,7 @@ describe("attachComment: true", function() {
                 });
             }
 
-            assert.deepEqual(tester.getRaw(result), output);
+            assert.deepStrictEqual(tester.getRaw(result), output);
         });
 
     });

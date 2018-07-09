@@ -13,23 +13,23 @@
 
 require("shelljs/make");
 
-var nodeCLI = require("shelljs-nodecli");
+const nodeCLI = require("shelljs-nodecli");
 
 //------------------------------------------------------------------------------
 // Data
 //------------------------------------------------------------------------------
 
-var NODE_MODULES = "./node_modules/",
+const NODE_MODULES = "./node_modules/",
     TEMP_DIR = "./tmp/",
     BUILD_DIR = "./build/",
 
     // Utilities - intentional extra space at the end of each string
-    MOCHA = NODE_MODULES + "mocha/bin/_mocha ",
+    MOCHA = `${NODE_MODULES}mocha/bin/_mocha `,
 
     // Files
     MAKEFILE = "./Makefile.js",
     /* eslint-disable no-use-before-define */
-    JS_FILES = find("lib/").filter(fileType("js")).join(" ") + " espree.js",
+    JS_FILES = `${find("lib/").filter(fileType("js")).join(" ")} espree.js`,
     TEST_FILES = find("tests/lib/").filter(fileType("js")).join(" ");
     /* eslint-enable no-use-before-define */
 
@@ -45,7 +45,7 @@ var NODE_MODULES = "./node_modules/",
  */
 function fileType(extension) {
     return function(filename) {
-        return filename.substring(filename.lastIndexOf(".") + 1) === extension;
+        return filename.slice(filename.lastIndexOf(".") + 1) === extension;
     };
 }
 
@@ -58,7 +58,7 @@ target.all = function() {
 };
 
 target.lint = function() {
-    var errors = 0,
+    let errors = 0,
         lastReturn;
 
     echo("Validating Makefile.js");
@@ -85,10 +85,10 @@ target.lint = function() {
 };
 
 target.test = function() {
+
     // target.lint();
 
-    var errors = 0,
-        lastReturn;
+    let errors = 0;
 
     lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
 
@@ -112,7 +112,7 @@ target.browserify = function() {
     // 1. create temp and build directory
     if (!test("-d", TEMP_DIR)) {
         mkdir(TEMP_DIR);
-        mkdir(TEMP_DIR + "/lib");
+        mkdir(`${TEMP_DIR}/lib`);
     }
 
     if (!test("-d", BUILD_DIR)) {
@@ -120,13 +120,13 @@ target.browserify = function() {
     }
 
     // 2. copy files into temp directory
-    cp("-r", "lib/*", TEMP_DIR + "/lib");
+    cp("-r", "lib/*", `${TEMP_DIR}/lib`);
     cp("espree.js", TEMP_DIR);
     cp("package.json", TEMP_DIR);
 
 
     // 3. browserify the temp directory
-    nodeCLI.exec("browserify", TEMP_DIR + "espree.js", "-o", BUILD_DIR + "espree.js", "-s espree");
+    nodeCLI.exec("browserify", `${TEMP_DIR}espree.js`, "-o", `${BUILD_DIR}espree.js`, "-s espree");
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);

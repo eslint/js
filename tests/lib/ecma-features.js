@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var assert = require("chai").assert,
+const assert = require("chai").assert,
     leche = require("leche"),
     path = require("path"),
     espree = require("../../espree"),
@@ -21,15 +21,11 @@ var assert = require("chai").assert,
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-features";
+const FIXTURES_DIR = "./tests/fixtures/ecma-features";
 
-var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
-    return filename.indexOf(".src.js") > -1;
-}).map(function(filename) {
-    return filename.substring(FIXTURES_DIR.length - 1, filename.length - 7);  // strip off ".src.js"
-// }).filter(function(filename) {
-//     return /experimental/.test(filename);
-});
+const testFiles = shelljs.find(FIXTURES_DIR)
+    .filter(filename => filename.indexOf(".src.js") > -1)
+    .map(filename => filename.slice(FIXTURES_DIR.length - 1, filename.length - 7));
 
 
 //------------------------------------------------------------------------------
@@ -45,11 +41,11 @@ function shouldThrowInTestsWhenEnabled(feature) {
     return (feature === "impliedStrict");
 }
 
-describe("ecmaFeatures", function() {
+describe("ecmaFeatures", () => {
 
-    var config;
+    let config;
 
-    beforeEach(function() {
+    beforeEach(() => {
         config = {
             loc: true,
             range: true,
@@ -59,24 +55,25 @@ describe("ecmaFeatures", function() {
         };
     });
 
-    leche.withData(testFiles, function(filename) {
+    leche.withData(testFiles, filename => {
+
         // Uncomment and fill in filename to focus on a single file
         // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
-        var feature = path.dirname(filename),
+        const feature = path.dirname(filename),
             isPermissive = !shouldThrowInTestsWhenEnabled(feature),
-            code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+            code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
 
-        it("should parse correctly when " + feature + " is " + isPermissive, function() {
+        it(`should parse correctly when ${feature} is ${isPermissive}`, () => {
             config.ecmaFeatures[feature] = isPermissive;
-            var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+            const expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
 
             tester.assertMatches(code, config, expected);
         });
 
-        it("should throw an error when " + feature + " is " + !isPermissive, function() {
+        it(`should throw an error when ${feature} is ${!isPermissive}`, () => {
             config.ecmaFeatures[feature] = !isPermissive;
 
-            assert.throws(function() {
+            assert.throws(() => {
                 espree.parse(code, config);
             });
 

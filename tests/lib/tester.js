@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var assert = require("chai").assert,
+const assert = require("chai").assert,
     espree = require("../../espree");
 
 //------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ var assert = require("chai").assert,
  * @private
  */
 function getRaw(ast) {
-    return JSON.parse(JSON.stringify(ast, function(key, value) {
+    return JSON.parse(JSON.stringify(ast, (key, value) => {
         if ((key === "start" || key === "end") && typeof value === "number") {
             return undefined; // eslint-disable-line no-undefined
         }
@@ -38,10 +38,10 @@ function getRaw(ast) {
 //------------------------------------------------------------------------------
 
 module.exports = {
-    getRaw: getRaw,
+    getRaw,
 
-    assertMatches: function(code, config, expected) {
-        var result;
+    assertMatches(code, config, expected) {
+        let result;
 
         try {
             result = espree.parse(code, config);
@@ -58,6 +58,6 @@ module.exports = {
 
         }
 
-        assert.deepEqual(result, getRaw(expected));
+        assert.deepStrictEqual(result, getRaw(expected));
     }
 };

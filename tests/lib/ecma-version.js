@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var leche = require("leche"),
+const leche = require("leche"),
     path = require("path"),
     shelljs = require("shelljs"),
     tester = require("./tester"),
@@ -21,31 +21,26 @@ var leche = require("leche"),
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-version/";
+const FIXTURES_DIR = "./tests/fixtures/ecma-version/";
 
-var allTestFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
-    return filename.indexOf(".src.js") > -1;
-}).map(function(filename) {
-    return filename.substring(FIXTURES_DIR.length - 2, filename.length - 7);  // strip off ".src.js"
-});
+const allTestFiles = shelljs.find(FIXTURES_DIR)
+    .filter(filename => filename.indexOf(".src.js") > -1)
+    .map(filename => filename.slice(FIXTURES_DIR.length - 2, filename.length - 7)); // strip off ".src.js"
 
-var scriptOnlyTestFiles = allTestFiles.filter(function(filename) {
-    return filename.indexOf("modules") === -1;
-});
 
-var moduleTestFiles = allTestFiles.filter(function(filename) {
-    return filename.indexOf("not-strict") === -1 && filename.indexOf("edge-cases") === -1;
-});
+const scriptOnlyTestFiles = allTestFiles.filter(filename => filename.indexOf("modules") === -1);
+
+const moduleTestFiles = allTestFiles.filter(filename => filename.indexOf("not-strict") === -1 && filename.indexOf("edge-cases") === -1);
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-describe("ecmaVersion", function() {
+describe("ecmaVersion", () => {
 
-    var config;
+    let config;
 
-    beforeEach(function() {
+    beforeEach(() => {
         config = {
             loc: true,
             range: true,
@@ -54,19 +49,19 @@ describe("ecmaVersion", function() {
         };
     });
 
-    describe("Scripts", function() {
+    describe("Scripts", () => {
 
-        leche.withData(scriptOnlyTestFiles, function(filename) {
+        leche.withData(scriptOnlyTestFiles, filename => {
 
-            var version = filename.substring(0, filename.indexOf("/"));
+            const version = filename.slice(0, filename.indexOf("/"));
 
             // Uncomment and fill in filename to focus on a single file
             // var filename = "newTarget/simple-new-target";
-            var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+            const code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
 
-            it("should parse correctly when sourceType is script", function() {
+            it("should parse correctly when sourceType is script", () => {
                 config.ecmaVersion = Number(version);
-                var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+                const expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
 
                 tester.assertMatches(code, config, expected);
             });
@@ -75,20 +70,20 @@ describe("ecmaVersion", function() {
 
     });
 
-    describe("Modules", function() {
+    describe("Modules", () => {
 
-        leche.withData(moduleTestFiles, function(filename) {
+        leche.withData(moduleTestFiles, filename => {
 
-            var version = filename.substring(0, filename.indexOf("/"));
-            var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
+            const version = filename.slice(0, filename.indexOf("/"));
+            const code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
 
-            it("should parse correctly when sourceType is module", function() {
-                var expected;
+            it("should parse correctly when sourceType is module", () => {
+                let expected;
 
                 try {
-                    expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".module-result.js");
+                    expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.module-result.js`);
                 } catch (err) {
-                    expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
+                    expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
                 }
 
                 config.ecmaVersion = Number(version);
@@ -105,9 +100,9 @@ describe("ecmaVersion", function() {
         });
     });
 
-    describe("general", function() {
-        it("Should parse using 2015 instead of 6", function() {
-            var ast = espree.parse("let foo = bar;", {
+    describe("general", () => {
+        it("Should parse using 2015 instead of 6", () => {
+            const ast = espree.parse("let foo = bar;", {
                 ecmaVersion: 2015,
                 comment: true,
                 tokens: true,
@@ -115,11 +110,11 @@ describe("ecmaVersion", function() {
                 loc: true
             });
 
-            assert.deepEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
+            assert.deepStrictEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
         });
 
-        it("Should throw error using invalid number", function() {
-            assert.throws(function() {
+        it("Should throw error using invalid number", () => {
+            assert.throws(() => {
                 espree.parse(
                     "let foo = bar;", {
                         ecmaVersion: 32,
@@ -127,12 +122,13 @@ describe("ecmaVersion", function() {
                         tokens: true,
                         range: true,
                         loc: true
-                    });
+                    }
+                );
             }, "Invalid ecmaVersion.");
         });
 
-        it("Should throw error using invalid year", function() {
-            assert.throws(function() {
+        it("Should throw error using invalid year", () => {
+            assert.throws(() => {
                 espree.parse(
                     "let foo = bar;", {
                         ecmaVersion: 2050,
@@ -140,7 +136,8 @@ describe("ecmaVersion", function() {
                         tokens: true,
                         range: true,
                         loc: true
-                    });
+                    }
+                );
             }, "Invalid ecmaVersion.");
         });
 
