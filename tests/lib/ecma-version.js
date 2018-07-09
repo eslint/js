@@ -14,7 +14,7 @@ const leche = require("leche"),
     shelljs = require("shelljs"),
     tester = require("./tester"),
     espree = require("../../espree"),
-    assert = require("chai").assert;
+    assert = require("assert");
 
 // var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, "Invalid ecmaVersion.");
+            }, new Error("Invalid ecmaVersion."));
         });
 
         it("Should throw error using invalid year", () => {
@@ -138,7 +138,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, "Invalid ecmaVersion.");
+            }, new Error("Invalid ecmaVersion."));
         });
 
     });

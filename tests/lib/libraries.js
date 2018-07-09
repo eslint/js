@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("chai").assert,
+const assert = require("assert"),
     leche = require("leche"),
     path = require("path"),
     espree = require("../../espree"),
