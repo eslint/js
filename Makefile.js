@@ -29,8 +29,8 @@ const NODE_MODULES = "./node_modules/",
     // Files
     MAKEFILE = "./Makefile.js",
     /* eslint-disable no-use-before-define */
-    JS_FILES = `${find("lib/").filter(fileType("js")).join(" ")} espree.js`,
-    TEST_FILES = find("tests/lib/").filter(fileType("js")).join(" ");
+    JS_FILES = `"lib/**/*.js" "tools/**/*.js" "espree.js"`;
+    TEST_FILES = `"test/lib/**/*.js"`;
     /* eslint-enable no-use-before-define */
 
 //------------------------------------------------------------------------------
