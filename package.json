@@ -25,9 +25,9 @@
   "devDependencies": {
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
-    "eslint": "^4.19.1",
+    "eslint": "^5.6.1",
     "eslint-config-eslint": "^5.0.0",
-    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-node": "^7.0.1",
     "eslint-release": "^1.0.0",
     "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",

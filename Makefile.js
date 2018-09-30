@@ -2,7 +2,7 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/* global cp, echo, exit, find, mkdir, rm, target, test */
+/* global cp, echo, exit, mkdir, rm, target, test */
 
 "use strict";
 
@@ -28,26 +28,8 @@ const NODE_MODULES = "./node_modules/",
 
     // Files
     MAKEFILE = "./Makefile.js",
-    /* eslint-disable no-use-before-define */
-    JS_FILES = `"lib/**/*.js" "tools/**/*.js" "espree.js"`;
-    TEST_FILES = `"test/lib/**/*.js"`;
-    /* eslint-enable no-use-before-define */
-
-//------------------------------------------------------------------------------
-// Helpers
-//------------------------------------------------------------------------------
-
-/**
- * Generates a function that matches files with a particular extension.
- * @param {string} extension The file extension (i.e. "js")
- * @returns {Function} The function to pass into a filter method.
- * @private
- */
-function fileType(extension) {
-    return function(filename) {
-        return filename.slice(filename.lastIndexOf(".") + 1) === extension;
-    };
-}
+    JS_FILES = "\"lib/**/*.js\" \"espree.js\"",
+    TEST_FILES = "tests/lib/**/*.js";
 
 //------------------------------------------------------------------------------
 // Tasks
