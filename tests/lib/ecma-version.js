@@ -124,7 +124,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, new Error("Invalid ecmaVersion."));
+            }, /Invalid ecmaVersion/);
         });
 
         it("Should throw error using invalid year", () => {
@@ -138,7 +138,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, new Error("Invalid ecmaVersion."));
+            }, /Invalid ecmaVersion/);
         });
 
     });
