@@ -4,3 +4,4 @@ node_modules
 npm-debug.log
 _test.js
 .idea
+.eslint-release-info.json
