@@ -1,3 +1,10 @@
+v4.1.0 - October 24, 2018
+
+* 8eadb88 Upgrade: acorn 6, acorn-jsx 5, and istanbul (#391) (Toru Nagashima)
+* 0f2edb8 Upgrade: eslint-release@1.0.0 (#392) (Teddy Katz)
+* 560b6f7 Update: VisitorKeys depend on eslint-visitor-keys (#389) (othree)
+* 6bf2ebf Docs: Fix some typos in the README (#386) (Hugo Locurcio)
+
 v4.0.0 - June 21, 2018
 
 
