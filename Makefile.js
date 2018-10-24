@@ -90,7 +90,7 @@ target.test = function() {
     var errors = 0,
         lastReturn;
 
-    lastReturn = nodeCLI.exec("istanbul", "cover", MOCHA, "-- -c", TEST_FILES);
+    lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
 
     if (lastReturn.code !== 0) {
         errors++;
