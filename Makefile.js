@@ -14,6 +14,7 @@
 require("shelljs/make");
 
 const nodeCLI = require("shelljs-nodecli");
+const path = require("path");
 
 //------------------------------------------------------------------------------
 // Data
@@ -94,7 +95,7 @@ target.browserify = function() {
     // 1. create temp and build directory
     if (!test("-d", TEMP_DIR)) {
         mkdir(TEMP_DIR);
-        mkdir(`${TEMP_DIR}/lib`);
+        mkdir(path.join(TEMP_DIR, "lib"));
     }
 
     if (!test("-d", BUILD_DIR)) {
@@ -102,13 +103,13 @@ target.browserify = function() {
     }
 
     // 2. copy files into temp directory
-    cp("-r", "lib/*", `${TEMP_DIR}/lib`);
+    cp("-r", "lib/*", path.join(TEMP_DIR, "lib"));
     cp("espree.js", TEMP_DIR);
     cp("package.json", TEMP_DIR);
 
 
     // 3. browserify the temp directory
-    nodeCLI.exec("browserify", `${TEMP_DIR}espree.js`, "-o", `${BUILD_DIR}espree.js`, "-s espree");
+    nodeCLI.exec("browserify", path.join(TEMP_DIR, "espree.js"), "-o", path.join(BUILD_DIR, "espree.js"), "-s espree");
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);
