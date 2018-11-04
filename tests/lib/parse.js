@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var assert = require("chai").assert,
+const assert = require("assert"),
     espree = require("../../espree"),
     tester = require("./tester");
 
@@ -17,42 +17,42 @@ var assert = require("chai").assert,
 // Tests
 //------------------------------------------------------------------------------
 
-describe("parse()", function() {
+describe("parse()", () => {
 
-    describe("modules", function() {
+    describe("modules", () => {
 
-        it("should have correct column number when strict mode error occurs", function() {
+        it("should have correct column number when strict mode error occurs", () => {
 
             try {
                 espree.parse("function fn(a, a) {\n}", { sourceType: "module" });
             } catch (err) {
-                assert.equal(err.column, 16);
+                assert.strictEqual(err.column, 16);
             }
         });
 
     });
 
-    describe("ES5", function() {
+    describe("ES5", () => {
 
-        it("should throw an error when using the y regex flag", function() {
+        it("should throw an error when using the y regex flag", () => {
 
-            assert.throws(function() {
+            assert.throws(() => {
                 espree.parse("/./y");
             });
         });
 
-        it("should throw an error when using the u regex flag", function() {
+        it("should throw an error when using the u regex flag", () => {
 
-            assert.throws(function() {
+            assert.throws(() => {
                 espree.parse("/./u");
             });
         });
 
     });
 
-    describe("general", function() {
-        it("should output tokens, comments, locs, and ranges when called with those options", function() {
-            var ast = espree.parse("let foo = bar;", {
+    describe("general", () => {
+        it("should output tokens, comments, locs, and ranges when called with those options", () => {
+            const ast = espree.parse("let foo = bar;", {
                 ecmaVersion: 6,
                 comment: true,
                 tokens: true,
@@ -60,24 +60,24 @@ describe("parse()", function() {
                 loc: true
             });
 
-            assert.deepEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
+            assert.deepStrictEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
         });
 
-        it("should reset lastToken on each parse", function() {
+        it("should reset lastToken on each parse", () => {
             espree.parse("var foo = bar;");
-            var ast = espree.parse("//foo", {
+            const ast = espree.parse("//foo", {
                 comment: true,
                 tokens: true,
                 range: true,
                 loc: true
             });
 
-            assert.deepEqual(ast.range, [0, 5]);
-            assert.deepEqual([ast.loc.start.line, ast.loc.start.column], [1, 0]);
-            assert.deepEqual([ast.loc.end.line, ast.loc.end.column], [1, 5]);
+            assert.deepStrictEqual(ast.range, [0, 5]);
+            assert.deepStrictEqual([ast.loc.start.line, ast.loc.start.column], [1, 0]);
+            assert.deepStrictEqual([ast.loc.end.line, ast.loc.end.column], [1, 5]);
         });
 
-        it("should not mutate config", function() {
+        it("should not mutate config", () => {
             espree.parse("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
         });
 

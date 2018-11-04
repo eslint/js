@@ -2,7 +2,7 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/* global cp, echo, exit, find, mkdir, rm, target, test */
+/* global cp, echo, exit, mkdir, rm, target, test */
 
 "use strict";
 
@@ -13,41 +13,24 @@
 
 require("shelljs/make");
 
-var nodeCLI = require("shelljs-nodecli");
+const nodeCLI = require("shelljs-nodecli");
+const path = require("path");
 
 //------------------------------------------------------------------------------
 // Data
 //------------------------------------------------------------------------------
 
-var NODE_MODULES = "./node_modules/",
+const NODE_MODULES = "./node_modules/",
     TEMP_DIR = "./tmp/",
     BUILD_DIR = "./build/",
 
     // Utilities - intentional extra space at the end of each string
-    MOCHA = NODE_MODULES + "mocha/bin/_mocha ",
+    MOCHA = `${NODE_MODULES}mocha/bin/_mocha `,
 
     // Files
     MAKEFILE = "./Makefile.js",
-    /* eslint-disable no-use-before-define */
-    JS_FILES = find("lib/").filter(fileType("js")).join(" ") + " espree.js",
-    TEST_FILES = find("tests/lib/").filter(fileType("js")).join(" ");
-    /* eslint-enable no-use-before-define */
-
-//------------------------------------------------------------------------------
-// Helpers
-//------------------------------------------------------------------------------
-
-/**
- * Generates a function that matches files with a particular extension.
- * @param {string} extension The file extension (i.e. "js")
- * @returns {Function} The function to pass into a filter method.
- * @private
- */
-function fileType(extension) {
-    return function(filename) {
-        return filename.substring(filename.lastIndexOf(".") + 1) === extension;
-    };
-}
+    JS_FILES = "\"lib/**/*.js\" \"espree.js\"",
+    TEST_FILES = "tests/lib/**/*.js";
 
 //------------------------------------------------------------------------------
 // Tasks
@@ -58,7 +41,7 @@ target.all = function() {
 };
 
 target.lint = function() {
-    var errors = 0,
+    let errors = 0,
         lastReturn;
 
     echo("Validating Makefile.js");
@@ -85,12 +68,12 @@ target.lint = function() {
 };
 
 target.test = function() {
+
     // target.lint();
 
-    var errors = 0,
-        lastReturn;
+    let errors = 0;
 
-    lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
+    const lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
 
     if (lastReturn.code !== 0) {
         errors++;
@@ -112,7 +95,7 @@ target.browserify = function() {
     // 1. create temp and build directory
     if (!test("-d", TEMP_DIR)) {
         mkdir(TEMP_DIR);
-        mkdir(TEMP_DIR + "/lib");
+        mkdir(path.join(TEMP_DIR, "lib"));
     }
 
     if (!test("-d", BUILD_DIR)) {
@@ -120,13 +103,13 @@ target.browserify = function() {
     }
 
     // 2. copy files into temp directory
-    cp("-r", "lib/*", TEMP_DIR + "/lib");
+    cp("-r", "lib/*", path.join(TEMP_DIR, "lib"));
     cp("espree.js", TEMP_DIR);
     cp("package.json", TEMP_DIR);
 
 
     // 3. browserify the temp directory
-    nodeCLI.exec("browserify", TEMP_DIR + "espree.js", "-o", BUILD_DIR + "espree.js", "-s espree");
+    nodeCLI.exec("browserify", path.join(TEMP_DIR, "espree.js"), "-o", path.join(BUILD_DIR, "espree.js"), "-s espree");
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);
