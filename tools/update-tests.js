@@ -93,8 +93,7 @@ libraryFiles.forEach(function(filename) {
         result = getExpectedResult(code, {
             loc: true,
             range: true,
-            tokens: true,
-            attachComment: true
+            tokens: true
         });
     JSON.stringify(result).to(testResultFilename);
     result = null;

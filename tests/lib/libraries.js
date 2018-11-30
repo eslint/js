@@ -42,8 +42,7 @@ describe("Libraries", () => {
             const result = JSON.stringify(tester.getRaw(espree.parse(input, {
                 loc: true,
                 range: true,
-                tokens: true,
-                attachComment: true
+                tokens: true
             })));
 
             assert.strictEqual(result, output);
