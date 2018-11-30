@@ -60,32 +60,11 @@ function outputResult(result, testResultFilename) {
 
 var FIXTURES_DIR = "./tests/fixtures/ecma-features",
     FIXTURES_VERSION_DIR = "./tests/fixtures/ecma-version",
-    COMMENTS_DIR = "./tests/fixtures/attach-comments",
     LIBRARIES_DIR = "./tests/fixtures/libraries";
 
 var testFiles = getTestFilenames(FIXTURES_DIR),
     versionFiles = getTestFilenames(FIXTURES_VERSION_DIR),
-    commentFiles = getTestFilenames(COMMENTS_DIR),
     libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
-
-
-commentFiles.forEach(function(filename) {
-    var testResultFilename = path.resolve(__dirname, "..", COMMENTS_DIR, filename) + ".result.js",
-        code = shelljs.cat(path.resolve(COMMENTS_DIR, filename) + ".src.js"),
-        result = getExpectedResult(code, {
-            loc: true,
-            range: true,
-            tokens: true,
-            attachComment: true,
-            ecmaFeatures: {
-                modules: true,
-                classes: true
-            }
-        });
-
-    outputResult(result, testResultFilename);
-    result = null;
-});
 
 libraryFiles.forEach(function(filename) {
     var testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
