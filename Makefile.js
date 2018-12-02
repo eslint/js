@@ -28,7 +28,8 @@ const NODE_MODULES = "./node_modules/",
     MOCHA = `${NODE_MODULES}mocha/bin/_mocha `,
 
     // Files
-    MAKEFILE = "./Makefile.js",
+    MAKEFILE = "Makefile.js",
+    CONFIG_FILES = ".eslintrc.js",
     JS_FILES = "\"lib/**/*.js\" \"espree.js\"",
     TEST_FILES = "tests/lib/**/*.js";
 
@@ -46,6 +47,12 @@ target.lint = function() {
 
     echo("Validating Makefile.js");
     lastReturn = nodeCLI.exec("eslint", MAKEFILE);
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    echo("Validating configuration files");
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES);
     if (lastReturn.code !== 0) {
         errors++;
     }
