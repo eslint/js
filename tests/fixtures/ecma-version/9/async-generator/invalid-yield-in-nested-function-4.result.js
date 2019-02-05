@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 35,
+    "index": 29,
     "lineNumber": 1,
-    "column": 36,
-    "message": "Unexpected token a"
+    "column": 30,
+    "message": "The keyword 'yield' is reserved"
 };
