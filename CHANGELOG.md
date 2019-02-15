@@ -1,3 +1,7 @@
+v5.0.1 - February 15, 2019
+
+* [`c40e2fc`](https://github.com/eslint/espree/commit/c40e2fcedf81ff06151e82bdf655d2d0d29e71b8) Upgrade: acorn@6.0.7 (#407) (Kai Cataldo)
+
 v5.0.0 - December 5, 2018
 
 * [`1bcd563`](https://github.com/eslint/espree/commit/1bcd563d4eb4b4032d2662cc5ccd3bfd841b39d7) Breaking: remove attachComment (#405) (Kai Cataldo)
