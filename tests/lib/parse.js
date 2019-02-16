@@ -81,5 +81,14 @@ describe("parse()", () => {
             espree.parse("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
         });
 
+        it("should pass sourceFile through", () => {
+            const ast = espree.parse("var foo = bar;", {
+                loc: true,
+                sourceFile: "the/source.js"
+            });
+
+            assert.strictEqual(ast.loc.source, "the/source.js");
+        });
+
     });
 });
