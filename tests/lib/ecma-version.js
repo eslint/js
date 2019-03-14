@@ -141,6 +141,30 @@ describe("ecmaVersion", () => {
             }, /Invalid ecmaVersion/);
         });
 
+        it("Should throw error using invalid year", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "let foo = bar;", {
+                        ecmaVersion: "2015",
+                        comment: true,
+                        tokens: true,
+                        range: true,
+                        loc: true
+                    }
+                );
+            }, /Invalid ecmaVersion/);
+        });
+
+        it("Should throw error when using module in pre-ES6", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "let foo = bar;", {
+                        ecmaVersion: 5,
+                        sourceType: "module"
+                    }
+                );
+            }, /sourceType 'module' is not supported when ecmaVersion < 6!/);
+        });
     });
 
 });
