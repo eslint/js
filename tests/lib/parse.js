@@ -24,7 +24,7 @@ describe("parse()", () => {
         it("should have correct column number when strict mode error occurs", () => {
 
             try {
-                espree.parse("function fn(a, a) {\n}", { sourceType: "module" });
+                espree.parse("function fn(a, a) {\n}", { ecmaVersion: 6, sourceType: "module" });
             } catch (err) {
                 assert.strictEqual(err.column, 16);
             }
