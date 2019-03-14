@@ -141,7 +141,7 @@ describe("ecmaVersion", () => {
             }, /Invalid ecmaVersion/);
         });
 
-        it("Should throw error using invalid year", () => {
+        it("Should throw error when non-numeric year is provided", () => {
             assert.throws(() => {
                 espree.parse(
                     "let foo = bar;", {
