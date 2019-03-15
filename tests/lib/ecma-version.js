@@ -163,7 +163,7 @@ describe("ecmaVersion", () => {
                         sourceType: "module"
                     }
                 );
-            }, /sourceType 'module' is not supported when ecmaVersion < 6/);
+            }, /sourceType 'module' is not supported when ecmaVersion < 2015/);
         });
     });
 
