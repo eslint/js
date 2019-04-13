@@ -1,3 +1,7 @@
+v6.0.0-alpha.0 - April 12, 2019
+
+* [`493d464`](https://github.com/eslint/espree/commit/493d464e1564aea0ea33000389771d42ddece2cb) Breaking: validate parser options (fixes #384) (#412) (薛定谔的猫)
+
 v5.0.1 - February 15, 2019
 
 * [`c40e2fc`](https://github.com/eslint/espree/commit/c40e2fcedf81ff06151e82bdf655d2d0d29e71b8) Upgrade: acorn@6.0.7 (#407) (Kai Cataldo)
