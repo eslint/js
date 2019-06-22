@@ -1,3 +1,7 @@
+v6.0.0 - June 21, 2019
+
+* [`a988a36`](https://github.com/eslint/espree/commit/a988a36e436a1ab6c84005ba0adb6cf9c262c1ec) Build: add node 12 (#414) (薛定谔的猫)
+
 v6.0.0-alpha.0 - April 12, 2019
 
 * [`493d464`](https://github.com/eslint/espree/commit/493d464e1564aea0ea33000389771d42ddece2cb) Breaking: validate parser options (fixes #384) (#412) (薛定谔的猫)
