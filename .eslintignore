@@ -1,1 +1,4 @@
 !.eslintrc.js
+/node_modules
+/tests/fixtures
+/tools
