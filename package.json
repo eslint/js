@@ -20,7 +20,7 @@
   "dependencies": {
     "acorn": "github:mysticatea/acorn#maybe-7.0.0",
     "acorn-jsx": "^5.0.0",
-    "eslint-visitor-keys": "^1.0.0"
+    "eslint-visitor-keys": "github:eslint/eslint-visitor-keys#add-import-expression"
   },
   "devDependencies": {
     "browserify": "^7.0.0",
