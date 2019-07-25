@@ -129,8 +129,11 @@ function tokenize(code, options) {
  */
 function parse(code, options) {
     const Parser = parsers.get(options);
+    const parser = new Parser(options, code);
+    const ast = parser.parse();
+    const recoverableErrors = parser.recoverableErrors;
 
-    return new Parser(options, code).parse();
+    return { ast, recoverableErrors };
 }
 
 //------------------------------------------------------------------------------
@@ -141,7 +144,9 @@ exports.version = require("./package.json").version;
 
 exports.tokenize = tokenize;
 
-exports.parse = parse;
+exports.parseForESLint = parse;
+
+exports.parse = (code, options) => parse(code, options).ast;
 
 // Deep copy.
 /* istanbul ignore next */
