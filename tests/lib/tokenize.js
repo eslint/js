@@ -199,4 +199,16 @@ describe("tokenize()", () => {
         espree.tokenize("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
     });
 
+    it("should produce tokens when } is the last token", () => {
+        const tokens = espree.tokenize("{}");
+
+        assert.deepStrictEqual(
+            tester.getRaw(tokens),
+            [
+                { type: "Punctuator", value: "{" },
+                { type: "Punctuator", value: "}" }
+            ]
+        );
+    });
+
 });
