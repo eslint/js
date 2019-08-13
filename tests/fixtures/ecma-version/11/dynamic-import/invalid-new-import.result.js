@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 10,
+    "index": 4,
     "lineNumber": 1,
-    "column": 11,
+    "column": 5,
     "message": "Cannot use new with import()"
 };
