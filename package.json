@@ -18,9 +18,9 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "acorn": "github:mysticatea/acorn#maybe-7.0.0",
+    "acorn": "^7.0.0",
     "acorn-jsx": "^5.0.0",
-    "eslint-visitor-keys": "github:eslint/eslint-visitor-keys#add-import-expression"
+    "eslint-visitor-keys": "^1.1.0"
   },
   "devDependencies": {
     "browserify": "^7.0.0",
