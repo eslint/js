@@ -29,6 +29,11 @@ function getRaw(ast) {
             return undefined; // eslint-disable-line no-undefined
         }
 
+        // JSON cannot handle BigInt.
+        if (typeof value === "bigint") {
+            return null;
+        }
+
         return value;
     }));
 }
