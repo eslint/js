@@ -199,6 +199,10 @@ describe("tokenize()", () => {
         espree.tokenize("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
     });
 
+    /**
+     * Make sure we tokenize closing curly brace in a block statement at end of file
+     * @see https://github.com/eslint/espree/issues/403 for more information
+     */
     it("should produce tokens when } is the last token", () => {
         const tokens = espree.tokenize("{}");
 
