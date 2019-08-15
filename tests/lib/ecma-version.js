@@ -152,7 +152,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, /ecmaVersion must be a number/);
+            }, /ecmaVersion must be a number. Received value of type string instead/);
         });
 
         it("Should throw error when using module in pre-ES6", () => {
