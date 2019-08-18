@@ -1,3 +1,9 @@
+v6.1.0 - August 18, 2019
+
+* [`9870c55`](https://github.com/eslint/espree/commit/9870c553efd3eb1bd22b4b3bb5220896c5cb6933) Update: improve error messaging when validating ecmaVersion (#421) (Kai Cataldo)
+* [`3f49224`](https://github.com/eslint/espree/commit/3f49224eb05f6b8cb1b996ce424a99c40978b389) Fix: tokenize the latest right curly brace (fixes #403) (#419) (finico)
+* [`f5e58cc`](https://github.com/eslint/espree/commit/f5e58cc5e9030793baca3426366b8d7286ef5b89) Update: support bigint and dynamic import (#415) (Toru Nagashima)
+
 v6.0.0 - June 21, 2019
 
 * [`a988a36`](https://github.com/eslint/espree/commit/a988a36e436a1ab6c84005ba0adb6cf9c262c1ec) Build: add node 12 (#414) (薛定谔的猫)
