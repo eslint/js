@@ -1,3 +1,9 @@
+v6.1.1 - August 23, 2019
+
+* [`ba81546`](https://github.com/eslint/espree/commit/ba81546e8552ec0f779aae7e03668c334630484e) Upgrade: dev deps to latest (#424) (薛定谔的猫)
+* [`bbe0119`](https://github.com/eslint/espree/commit/bbe01195fb57e24634d18825d39b820ed1767e95) Upgrade: acorn-jsx@5.0.2 (#423) (薛定谔的猫)
+* [`c0635ba`](https://github.com/eslint/espree/commit/c0635bac4cd891cb612fb81655012e2579f4e2b1) Docs: update readme to mention ES2020 (#422) (Kai Cataldo)
+
 v6.1.0 - August 18, 2019
 
 * [`9870c55`](https://github.com/eslint/espree/commit/9870c553efd3eb1bd22b4b3bb5220896c5cb6933) Update: improve error messaging when validating ecmaVersion (#421) (Kai Cataldo)
