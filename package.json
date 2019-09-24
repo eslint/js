@@ -18,8 +18,8 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "acorn": "^7.0.0",
-    "acorn-jsx": "^5.0.2",
+    "acorn": "^7.1.0",
+    "acorn-jsx": "github:mysticatea/acorn-jsx#use-parser-acorn",
     "eslint-visitor-keys": "^1.1.0"
   },
   "devDependencies": {
