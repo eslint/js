@@ -1,3 +1,7 @@
+v6.1.2 - October 20, 2019
+
+* [`70c4970`](https://github.com/eslint/espree/commit/70c4970e5eba6f060e1e32a22d231647f2d0e0f8) Fix: misuse token types (fixes #393, refs eslint/eslint#11018) (#426) (Toru Nagashima)
+
 v6.1.1 - August 23, 2019
 
 * [`ba81546`](https://github.com/eslint/espree/commit/ba81546e8552ec0f779aae7e03668c334630484e) Upgrade: dev deps to latest (#424) (薛定谔的猫)
