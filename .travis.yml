@@ -1,15 +1,11 @@
 language: node_js
 node_js:
-    - 6
-    - 7
-    - 8
-    - 9
     - 10
-    - 11
     - 12
+    - 13
 
 script:
-    - if [ $TRAVIS_NODE_VERSION -ge 8 ]; then node Makefile.js lint; fi
+    - node Makefile.js lint
     - node Makefile.js test
 
 after_success:
