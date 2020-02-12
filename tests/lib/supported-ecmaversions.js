@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for latestEcmaVersion() & supportedEcmaVersions().
+ * @fileoverview Tests for getLatestEcmaVersion() & getSupportedEcmaVersions().
  * @author Kai Cataldo
  */
 
@@ -16,25 +16,25 @@ const assert = require("assert"),
 // Tests
 //------------------------------------------------------------------------------
 
-describe("latestEcmaVersion()", () => {
+describe("getLatestEcmaVersion()", () => {
     it("should return the latest supported ecmaVersion", () => {
-        assert.strictEqual(espree.latestEcmaVersion(), 11);
+        assert.strictEqual(espree.getLatestEcmaVersion(), 11);
     });
 });
 
-describe("supportedEcmaVersions()", () => {
+describe("getSupportedEcmaVersions()", () => {
     it("should return an array of all supported versions", () => {
         assert.deepStrictEqual(
-            espree.supportedEcmaVersions(),
+            espree.getSupportedEcmaVersions(),
             [3, 5, 6, 7, 8, 9, 10, 11]
         );
     });
 
     it("the array of supported versions should not be mutable by reference", () => {
-        const supportedVersions = espree.supportedEcmaVersions();
+        const supportedVersions = espree.getSupportedEcmaVersions();
         const originalValue = [...supportedVersions];
 
         supportedVersions.push("a", "b", "c");
-        assert.deepStrictEqual(espree.supportedEcmaVersions(), originalValue);
+        assert.deepStrictEqual(espree.getSupportedEcmaVersions(), originalValue);
     });
 });
