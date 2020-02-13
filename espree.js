@@ -172,6 +172,6 @@ exports.VisitorKeys = (function() {
     return require("eslint-visitor-keys").KEYS;
 }());
 
-exports.getLatestEcmaVersion = getLatestEcmaVersion;
+exports.latestEcmaVersion = getLatestEcmaVersion();
 
-exports.getSupportedEcmaVersions = getSupportedEcmaVersions;
+exports.supportedEcmaVersions = getSupportedEcmaVersions();
