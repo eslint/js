@@ -66,21 +66,20 @@ var testFiles = getTestFilenames(FIXTURES_DIR),
     versionFiles = getTestFilenames(FIXTURES_VERSION_DIR),
     libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
-libraryFiles.forEach(function(filename) {
-    var testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
-        code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename)),
-        result = getExpectedResult(code, {
-            loc: true,
-            range: true,
-            tokens: true
-        });
-    JSON.stringify(result).to(testResultFilename);
-    result = null;
-});
+// libraryFiles.forEach(function(filename) {
+//     var testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
+//         code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename)),
+//         result = getExpectedResult(code, {
+//             loc: true,
+//             range: true,
+//             tokens: true
+//         });
+//     JSON.stringify(result).to(testResultFilename);
+//     result = null;
+// });
 
 // update all tests in ecma-features
 testFiles.forEach(function(filename) {
-
     var feature = path.dirname(filename),
         code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js"),
         config = {
@@ -98,19 +97,18 @@ testFiles.forEach(function(filename) {
     outputResult(result, testResultFilename);
 });
 
-versionFiles.forEach(function(filename) {
+// versionFiles.forEach(function(filename) {
+//     var version = Number(filename.substring(0, filename.indexOf("/"))),
+//         code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
+//         config = {
+//             loc: true,
+//             range: true,
+//             tokens: true,
+//             ecmaVersion: version
+//         };
 
-    var version = Number(filename.substring(0, filename.indexOf("/"))),
-        code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
-        config = {
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: version
-        };
+//     var testResultFilename = path.resolve(__dirname, "..", FIXTURES_VERSION_DIR, filename) + ".result.js",
+//         result = getExpectedResult(code, config);
 
-    var testResultFilename = path.resolve(__dirname, "..", FIXTURES_VERSION_DIR, filename) + ".result.js",
-        result = getExpectedResult(code, config);
-
-    outputResult(result, testResultFilename);
-});
+//     outputResult(result, testResultFilename);
+// });
