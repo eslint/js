@@ -50,7 +50,9 @@
   ],
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
+    "update-fixtures": "node tools/update-tests.js",
     "test": "npm run-script lint && node Makefile.js test",
+    "test:overwrite": "npm run update-fixtures && npm run test",
     "lint": "node Makefile.js lint",
     "browserify": "node Makefile.js browserify",
     "generate-release": "eslint-generate-release",
