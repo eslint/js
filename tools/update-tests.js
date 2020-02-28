@@ -15,7 +15,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var shelljs = require("shelljs"),
+const shelljs = require("shelljs"),
     espree = require("../espree"),
     tester = require("../tests/lib/tester"),
     path = require("path");
@@ -58,28 +58,27 @@ function outputResult(result, testResultFilename) {
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/ecma-features",
+const FIXTURES_DIR = "./tests/fixtures/ecma-features",
     FIXTURES_VERSION_DIR = "./tests/fixtures/ecma-version",
     LIBRARIES_DIR = "./tests/fixtures/libraries";
 
-var testFiles = getTestFilenames(FIXTURES_DIR),
+const testFiles = getTestFilenames(FIXTURES_DIR),
     versionFiles = getTestFilenames(FIXTURES_VERSION_DIR),
     libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
-// libraryFiles.forEach(function(filename) {
-//     var testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
-//         code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename)),
-//         result = getExpectedResult(code, {
-//             loc: true,
-//             range: true,
-//             tokens: true
-//         });
-//     JSON.stringify(result).to(testResultFilename);
-//     result = null;
-// });
+libraryFiles.forEach((filename) => {
+    const testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
+        code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename)),
+        result = getExpectedResult(code, {
+            loc: true,
+            range: true,
+            tokens: true
+        });
+    JSON.stringify(result).to(testResultFilename);
+});
 
 // update all tests in ecma-features
-testFiles.forEach(function(filename) {
+testFiles.forEach((filename) => {
     const feature = path.dirname(filename),
         code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js"),
         config = {
@@ -98,7 +97,7 @@ testFiles.forEach(function(filename) {
     outputResult(result, testResultFilename);
 });
 
-versionFiles.forEach(function(filename) {
+versionFiles.forEach((filename) => {
     const version = Number(filename.substring(0, filename.indexOf("/"))),
         code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
         config = {
