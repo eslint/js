@@ -138,8 +138,8 @@ module.exports = {
                                     42
                                 ],
                                 "id": null,
-                                "generator": false,
                                 "expression": false,
+                                "generator": false,
                                 "async": true,
                                 "params": [],
                                 "body": {

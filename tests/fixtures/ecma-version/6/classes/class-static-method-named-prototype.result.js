@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             33
                         ],
+                        "kind": "method",
+                        "static": true,
                         "computed": true,
                         "key": {
                             "type": "Literal",
@@ -103,8 +105,6 @@ module.exports = {
                             "value": "prototype",
                             "raw": "\"prototype\""
                         },
-                        "static": true,
-                        "kind": "method",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -122,8 +122,8 @@ module.exports = {
                                 33
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",

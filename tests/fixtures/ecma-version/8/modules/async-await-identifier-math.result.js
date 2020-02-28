@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "foo"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "async": true,
             "params": [],
             "body": {
@@ -163,7 +163,7 @@ module.exports = {
             ]
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Identifier",
@@ -364,4 +364,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

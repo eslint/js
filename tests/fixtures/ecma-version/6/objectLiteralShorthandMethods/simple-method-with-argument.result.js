@@ -138,8 +138,8 @@ module.exports = {
                                     31
                                 ],
                                 "id": null,
-                                "generator": false,
                                 "expression": false,
+                                "generator": false,
                                 "params": [
                                     {
                                         "type": "Identifier",

@@ -1,6 +1,6 @@
 module.exports = {
-    "message": "Cannot use keyword 'await' outside an async function",
-    "column": 1,
-    "index": 0,
-    "lineNumber": 1
+    "index": 6,
+    "lineNumber": 1,
+    "column": 7,
+    "message": "Unexpected token a"
 };

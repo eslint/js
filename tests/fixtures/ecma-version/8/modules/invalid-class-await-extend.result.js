@@ -1,6 +1,6 @@
 module.exports = {
-    "message": "Await expression cannot be a default value",
-    "column": 39,
     "index": 38,
-    "lineNumber": 1
-}
+    "lineNumber": 1,
+    "column": 39,
+    "message": "Await expression cannot be a default value"
+};

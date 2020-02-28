@@ -3,4 +3,4 @@ module.exports = {
     "lineNumber": 1,
     "column": 17,
     "message": "Cannot use 'await' as identifier inside an async function"
-}
+};

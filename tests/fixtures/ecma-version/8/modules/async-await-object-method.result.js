@@ -103,8 +103,8 @@ module.exports = {
                                 26
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": true,
                             "params": [
                                 {
@@ -203,7 +203,7 @@ module.exports = {
             }
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Punctuator",
@@ -458,4 +458,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

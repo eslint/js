@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "f"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "params": [
                 {
                     "type": "RestElement",

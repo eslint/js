@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "wrap"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "async": true,
             "params": [],
             "body": {
@@ -158,8 +158,8 @@ module.exports = {
                                             45
                                         ],
                                         "id": null,
-                                        "generator": false,
                                         "expression": false,
+                                        "generator": false,
                                         "async": true,
                                         "params": [],
                                         "body": {
@@ -533,4 +533,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

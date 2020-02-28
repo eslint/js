@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             26
                         ],
+                        "kind": "constructor",
+                        "static": false,
                         "computed": false,
                         "key": {
                             "type": "Literal",
@@ -103,8 +105,6 @@ module.exports = {
                             "value": "constructor",
                             "raw": "\"constructor\""
                         },
-                        "static": false,
-                        "kind": "constructor",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -122,8 +122,8 @@ module.exports = {
                                 26
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",
@@ -161,6 +161,8 @@ module.exports = {
                             27,
                             46
                         ],
+                        "kind": "method",
+                        "static": false,
                         "computed": true,
                         "key": {
                             "type": "Literal",
@@ -181,8 +183,6 @@ module.exports = {
                             "value": "constructor",
                             "raw": "\"constructor\""
                         },
-                        "static": false,
-                        "kind": "method",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -200,8 +200,8 @@ module.exports = {
                                 46
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",

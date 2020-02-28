@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 7,
+    "index": 0,
     "lineNumber": 1,
-    "column": 8,
-    "message": "Unexpected token default"
+    "column": 1,
+    "message": "'import' and 'export' may appear only with 'sourceType: module'"
 };

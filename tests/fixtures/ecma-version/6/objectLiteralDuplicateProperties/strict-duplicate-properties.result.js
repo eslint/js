@@ -31,7 +31,6 @@ module.exports = {
                 0,
                 13
             ],
-            "directive": "use strict",
             "expression": {
                 "type": "Literal",
                 "loc": {
@@ -50,7 +49,8 @@ module.exports = {
                 ],
                 "value": "use strict",
                 "raw": "\"use strict\""
-            }
+            },
+            "directive": "use strict"
         },
         {
             "type": "VariableDeclaration",

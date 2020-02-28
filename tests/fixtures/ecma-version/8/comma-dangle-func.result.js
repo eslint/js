@@ -253,4 +253,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

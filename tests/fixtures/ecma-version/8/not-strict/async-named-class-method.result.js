@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             20
                         ],
+                        "kind": "method",
+                        "static": false,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -102,8 +104,6 @@ module.exports = {
                             ],
                             "name": "async"
                         },
-                        "static": false,
-                        "kind": "method",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -121,8 +121,8 @@ module.exports = {
                                 20
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": false,
                             "params": [],
                             "body": {
@@ -349,4 +349,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

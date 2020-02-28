@@ -137,8 +137,8 @@ module.exports = {
                                     25
                                 ],
                                 "id": null,
-                                "generator": false,
                                 "expression": false,
+                                "generator": false,
                                 "params": [
                                     {
                                         "type": "AssignmentPattern",

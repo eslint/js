@@ -48,8 +48,8 @@ module.exports = {
                     17
                 ],
                 "id": null,
-                "generator": false,
                 "expression": true,
+                "generator": false,
                 "params": [
                     {
                         "type": "ObjectPattern",

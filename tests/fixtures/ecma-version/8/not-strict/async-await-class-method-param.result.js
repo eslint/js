@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "foo"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "async": true,
             "params": [
                 {
@@ -138,6 +138,8 @@ module.exports = {
                                         30,
                                         53
                                     ],
+                                    "kind": "method",
+                                    "static": false,
                                     "computed": false,
                                     "key": {
                                         "type": "Identifier",
@@ -157,8 +159,6 @@ module.exports = {
                                         ],
                                         "name": "bar"
                                     },
-                                    "static": false,
-                                    "kind": "method",
                                     "value": {
                                         "type": "FunctionExpression",
                                         "loc": {
@@ -176,8 +176,8 @@ module.exports = {
                                             53
                                         ],
                                         "id": null,
-                                        "generator": false,
                                         "expression": false,
+                                        "generator": false,
                                         "async": true,
                                         "params": [],
                                         "body": {
@@ -676,4 +676,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

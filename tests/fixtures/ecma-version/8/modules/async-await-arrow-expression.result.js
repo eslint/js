@@ -48,8 +48,8 @@ module.exports = {
                     21
                 ],
                 "id": null,
-                "generator": false,
                 "expression": true,
+                "generator": false,
                 "async": true,
                 "params": [
                     {
@@ -109,7 +109,7 @@ module.exports = {
             }
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Punctuator",
@@ -292,4 +292,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

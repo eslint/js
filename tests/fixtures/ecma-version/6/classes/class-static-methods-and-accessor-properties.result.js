@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             21
                         ],
+                        "kind": "method",
+                        "static": true,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -102,8 +104,6 @@ module.exports = {
                             ],
                             "name": "a"
                         },
-                        "static": true,
-                        "kind": "method",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -121,8 +121,8 @@ module.exports = {
                                 21
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",
@@ -160,6 +160,8 @@ module.exports = {
                             22,
                             38
                         ],
+                        "kind": "get",
+                        "static": true,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -179,8 +181,6 @@ module.exports = {
                             ],
                             "name": "a"
                         },
-                        "static": true,
-                        "kind": "get",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -198,8 +198,8 @@ module.exports = {
                                 38
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",
@@ -237,6 +237,8 @@ module.exports = {
                             39,
                             56
                         ],
+                        "kind": "set",
+                        "static": true,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -256,8 +258,6 @@ module.exports = {
                             ],
                             "name": "a"
                         },
-                        "static": true,
-                        "kind": "set",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -275,8 +275,8 @@ module.exports = {
                                 56
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [
                                 {
                                     "type": "Identifier",

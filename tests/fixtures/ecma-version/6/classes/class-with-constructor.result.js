@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             24
                         ],
+                        "kind": "constructor",
+                        "static": false,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -102,8 +104,6 @@ module.exports = {
                             ],
                             "name": "constructor"
                         },
-                        "static": false,
-                        "kind": "constructor",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -121,8 +121,8 @@ module.exports = {
                                 24
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",

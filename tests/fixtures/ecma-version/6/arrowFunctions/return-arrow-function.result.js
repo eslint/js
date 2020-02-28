@@ -48,8 +48,8 @@ module.exports = {
                     12
                 ],
                 "id": null,
-                "generator": false,
                 "expression": true,
+                "generator": false,
                 "params": [
                     {
                         "type": "Identifier",
@@ -87,8 +87,8 @@ module.exports = {
                         12
                     ],
                     "id": null,
-                    "generator": false,
                     "expression": true,
+                    "generator": false,
                     "params": [
                         {
                             "type": "Identifier",

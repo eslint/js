@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 19,
-    "lineNumber": 2,
+    "index": 0,
+    "lineNumber": 1,
     "column": 1,
-    "message": "Deleting local variable in strict mode"
+    "message": "'import' and 'export' may appear only with 'sourceType: module'"
 };

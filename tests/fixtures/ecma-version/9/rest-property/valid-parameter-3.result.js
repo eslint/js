@@ -48,8 +48,8 @@ module.exports = {
                     18
                 ],
                 "id": null,
-                "generator": false,
                 "expression": false,
+                "generator": false,
                 "async": false,
                 "params": [
                     {

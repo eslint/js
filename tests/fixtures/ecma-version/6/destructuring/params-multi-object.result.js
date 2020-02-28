@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "x"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "params": [
                 {
                     "type": "Identifier",

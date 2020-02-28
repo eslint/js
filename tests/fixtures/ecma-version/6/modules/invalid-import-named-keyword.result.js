@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 8,
+    "index": 0,
     "lineNumber": 1,
-    "column": 9,
-    "message": "Unexpected keyword 'var'"
-}
+    "column": 1,
+    "message": "'import' and 'export' may appear only with 'sourceType: module'"
+};

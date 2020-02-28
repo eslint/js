@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "a"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "params": [
                 {
                     "type": "ObjectPattern",

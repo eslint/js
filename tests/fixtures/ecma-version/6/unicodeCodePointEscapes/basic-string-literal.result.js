@@ -31,7 +31,6 @@ module.exports = {
                 0,
                 19
             ],
-            "directive": "\\u{714E}\\u{8336}",
             "expression": {
                 "type": "Literal",
                 "loc": {
@@ -50,7 +49,8 @@ module.exports = {
                 ],
                 "value": "煎茶",
                 "raw": "\"\\u{714E}\\u{8336}\""
-            }
+            },
+            "directive": "\\u{714E}\\u{8336}"
         }
     ],
     "sourceType": "script",

@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             27
                         ],
+                        "kind": "method",
+                        "static": true,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -102,8 +104,6 @@ module.exports = {
                             ],
                             "name": "async"
                         },
-                        "static": true,
-                        "kind": "method",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -121,8 +121,8 @@ module.exports = {
                                 27
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": false,
                             "params": [],
                             "body": {
@@ -166,7 +166,7 @@ module.exports = {
             ]
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Keyword",
@@ -367,4 +367,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

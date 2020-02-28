@@ -31,7 +31,6 @@ module.exports = {
                 0,
                 13
             ],
-            "directive": "use strict",
             "expression": {
                 "type": "Literal",
                 "loc": {
@@ -50,7 +49,8 @@ module.exports = {
                 ],
                 "value": "use strict",
                 "raw": "\"use strict\""
-            }
+            },
+            "directive": "use strict"
         },
         {
             "type": "VariableDeclaration",
@@ -175,8 +175,8 @@ module.exports = {
                                         40
                                     ],
                                     "id": null,
-                                    "generator": false,
                                     "expression": false,
+                                    "generator": false,
                                     "params": [
                                         {
                                             "type": "AssignmentPattern",
@@ -308,8 +308,8 @@ module.exports = {
                                         60
                                     ],
                                     "id": null,
-                                    "generator": false,
                                     "expression": false,
+                                    "generator": false,
                                     "params": [
                                         {
                                             "type": "Identifier",
@@ -459,8 +459,8 @@ module.exports = {
                                         85
                                     ],
                                     "id": null,
-                                    "generator": false,
                                     "expression": false,
+                                    "generator": false,
                                     "params": [
                                         {
                                             "type": "Identifier",

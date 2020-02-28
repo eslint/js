@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 11,
+    "index": 0,
     "lineNumber": 1,
-    "column": 12,
-    "message": "Cannot use keyword 'await' outside an async function"
+    "column": 1,
+    "message": "'import' and 'export' may appear only with 'sourceType: module'"
 };

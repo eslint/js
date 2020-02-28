@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "wrap"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "async": true,
             "params": [],
             "body": {
@@ -138,6 +138,8 @@ module.exports = {
                                         35,
                                         52
                                     ],
+                                    "kind": "method",
+                                    "static": false,
                                     "computed": false,
                                     "key": {
                                         "type": "Identifier",
@@ -157,8 +159,6 @@ module.exports = {
                                         ],
                                         "name": "await"
                                     },
-                                    "static": false,
-                                    "kind": "method",
                                     "value": {
                                         "type": "FunctionExpression",
                                         "loc": {
@@ -176,8 +176,8 @@ module.exports = {
                                             52
                                         ],
                                         "id": null,
-                                        "generator": false,
                                         "expression": false,
+                                        "generator": false,
                                         "async": true,
                                         "params": [],
                                         "body": {
@@ -551,4 +551,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

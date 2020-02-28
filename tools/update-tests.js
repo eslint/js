@@ -80,35 +80,36 @@ var testFiles = getTestFilenames(FIXTURES_DIR),
 
 // update all tests in ecma-features
 testFiles.forEach(function(filename) {
-    var feature = path.dirname(filename),
+    const feature = path.dirname(filename),
         code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js"),
         config = {
             loc: true,
             range: true,
             tokens: true,
             ecmaVersion: 6,
-            ecmaFeatures: {}
+            ecmaFeatures: {
+                [feature]: true
+            }
         };
 
-    config.ecmaFeatures[feature] = true;
-    var testResultFilename = path.resolve(__dirname, "..", FIXTURES_DIR, filename) + ".result.js";
-    var result = getExpectedResult(code, config);
+    const testResultFilename = path.resolve(__dirname, "..", FIXTURES_DIR, filename) + ".result.js";
+    const result = getExpectedResult(code, config);
 
     outputResult(result, testResultFilename);
 });
 
-// versionFiles.forEach(function(filename) {
-//     var version = Number(filename.substring(0, filename.indexOf("/"))),
-//         code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
-//         config = {
-//             loc: true,
-//             range: true,
-//             tokens: true,
-//             ecmaVersion: version
-//         };
+versionFiles.forEach(function(filename) {
+    const version = Number(filename.substring(0, filename.indexOf("/"))),
+        code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
+        config = {
+            loc: true,
+            range: true,
+            tokens: true,
+            ecmaVersion: version
+        };
 
-//     var testResultFilename = path.resolve(__dirname, "..", FIXTURES_VERSION_DIR, filename) + ".result.js",
-//         result = getExpectedResult(code, config);
+    const testResultFilename = path.resolve(__dirname, "..", FIXTURES_VERSION_DIR, filename) + ".result.js",
+        result = getExpectedResult(code, config);
 
-//     outputResult(result, testResultFilename);
-// });
+    outputResult(result, testResultFilename);
+});

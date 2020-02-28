@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "foo"
             },
-            "generator": false,
             "expression": false,
+            "generator": false,
             "async": true,
             "params": [
                 {
@@ -159,8 +159,8 @@ module.exports = {
                                         47
                                     ],
                                     "id": null,
-                                    "generator": false,
                                     "expression": false,
+                                    "generator": false,
                                     "async": true,
                                     "params": [],
                                     "body": {
@@ -640,4 +640,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

@@ -138,8 +138,8 @@ module.exports = {
                                     26
                                 ],
                                 "id": null,
-                                "generator": false,
                                 "expression": false,
+                                "generator": false,
                                 "params": [],
                                 "body": {
                                     "type": "BlockStatement",

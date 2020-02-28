@@ -138,8 +138,8 @@ module.exports = {
                                         23
                                     ],
                                     "id": null,
-                                    "generator": false,
                                     "expression": false,
+                                    "generator": false,
                                     "async": false,
                                     "params": [
                                         {
@@ -479,4 +479,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

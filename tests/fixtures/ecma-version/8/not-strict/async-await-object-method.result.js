@@ -103,8 +103,8 @@ module.exports = {
                                 26
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": true,
                             "params": [
                                 {
@@ -458,4 +458,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

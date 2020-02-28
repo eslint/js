@@ -103,8 +103,8 @@ module.exports = {
                                 16
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [
                                 {
                                     "type": "ArrayPattern",

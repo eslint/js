@@ -65,8 +65,8 @@ module.exports = {
                     ],
                     "name": "foo"
                 },
-                "generator": false,
                 "expression": false,
+                "generator": false,
                 "async": false,
                 "params": [],
                 "body": {
@@ -255,4 +255,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

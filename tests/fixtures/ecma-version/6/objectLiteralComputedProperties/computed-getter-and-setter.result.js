@@ -103,8 +103,8 @@ module.exports = {
                                 14
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",
@@ -181,8 +181,8 @@ module.exports = {
                                 29
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [
                                 {
                                     "type": "Identifier",

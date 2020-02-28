@@ -1,5 +1,3 @@
-const conditionalRegex = require("../../../../lib/conditional-regex-value");
-
 module.exports = {
     "type": "Program",
     "loc": {
@@ -33,7 +31,7 @@ module.exports = {
                 0,
                 20
             ],
-            "expression": conditionalRegex({
+            "expression": {
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -49,13 +47,13 @@ module.exports = {
                     0,
                     20
                 ],
-                "value": null,
+                "value": {},
                 "raw": "/(?<\\u0041\\u0042>a)/",
                 "regex": {
                     "pattern": "(?<\\u0041\\u0042>a)",
                     "flags": ""
                 }
-            })
+            }
         }
     ],
     "sourceType": "script",

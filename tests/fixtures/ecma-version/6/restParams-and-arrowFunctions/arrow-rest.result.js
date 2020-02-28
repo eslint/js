@@ -48,8 +48,8 @@ module.exports = {
                     12
                 ],
                 "id": null,
-                "generator": false,
                 "expression": false,
+                "generator": false,
                 "params": [
                     {
                         "type": "RestElement",

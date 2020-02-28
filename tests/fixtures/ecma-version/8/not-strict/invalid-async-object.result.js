@@ -1,6 +1,6 @@
 module.exports = {
-    "message": "Shorthand property assignments are valid only in destructuring patterns",
-    "column": 11,
     "index": 10,
-    "lineNumber": 1
-}
+    "lineNumber": 1,
+    "column": 11,
+    "message": "Shorthand property assignments are valid only in destructuring patterns"
+};

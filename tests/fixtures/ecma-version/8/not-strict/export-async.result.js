@@ -1,6 +1,6 @@
 module.exports = {
-    "message": "'import' and 'export' may appear only with 'sourceType: module'",
-    "column": 1,
     "index": 0,
-    "lineNumber": 1
-}
+    "lineNumber": 1,
+    "column": 1,
+    "message": "'import' and 'export' may appear only with 'sourceType: module'"
+};

@@ -49,8 +49,8 @@ module.exports = {
                 ],
                 "name": "wrap"
             },
-            "generator": true,
             "expression": false,
+            "generator": true,
             "async": false,
             "params": [],
             "body": {
@@ -217,7 +217,7 @@ module.exports = {
             ]
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Keyword",
@@ -490,4 +490,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

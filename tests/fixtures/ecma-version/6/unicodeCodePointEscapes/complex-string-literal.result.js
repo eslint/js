@@ -31,7 +31,6 @@ module.exports = {
                 0,
                 27
             ],
-            "directive": "\\u{20BB7}\\u{10FFFF}\\u{1}",
             "expression": {
                 "type": "Literal",
                 "loc": {
@@ -50,7 +49,8 @@ module.exports = {
                 ],
                 "value": "𠮷􏿿\u0001",
                 "raw": "\"\\u{20BB7}\\u{10FFFF}\\u{1}\""
-            }
+            },
+            "directive": "\\u{20BB7}\\u{10FFFF}\\u{1}"
         }
     ],
     "sourceType": "script",

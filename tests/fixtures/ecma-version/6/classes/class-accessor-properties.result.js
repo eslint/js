@@ -83,6 +83,8 @@ module.exports = {
                             9,
                             18
                         ],
+                        "kind": "get",
+                        "static": false,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -102,8 +104,6 @@ module.exports = {
                             ],
                             "name": "a"
                         },
-                        "static": false,
-                        "kind": "get",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -121,8 +121,8 @@ module.exports = {
                                 18
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [],
                             "body": {
                                 "type": "BlockStatement",
@@ -160,6 +160,8 @@ module.exports = {
                             19,
                             29
                         ],
+                        "kind": "set",
+                        "static": false,
                         "computed": false,
                         "key": {
                             "type": "Identifier",
@@ -179,8 +181,6 @@ module.exports = {
                             ],
                             "name": "b"
                         },
-                        "static": false,
-                        "kind": "set",
                         "value": {
                             "type": "FunctionExpression",
                             "loc": {
@@ -198,8 +198,8 @@ module.exports = {
                                 29
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "params": [
                                 {
                                     "type": "Identifier",

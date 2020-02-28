@@ -121,8 +121,8 @@ module.exports = {
                                 44
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": true,
                             "params": [],
                             "body": {

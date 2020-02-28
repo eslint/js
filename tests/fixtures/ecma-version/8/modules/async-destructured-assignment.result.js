@@ -182,7 +182,7 @@ module.exports = {
             }
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
             "type": "Identifier",
@@ -383,4 +383,4 @@ module.exports = {
             ]
         }
     ]
-}
+};

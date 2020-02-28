@@ -1,6 +1,6 @@
 module.exports = {
-    "message": "Yield expression cannot be a default value",
-    "column": 13,
     "index": 31,
-    "lineNumber": 2
-}
+    "lineNumber": 2,
+    "column": 13,
+    "message": "Yield expression cannot be a default value"
+};

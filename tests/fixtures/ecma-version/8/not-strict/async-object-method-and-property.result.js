@@ -1,5 +1,3 @@
-"use strict";
-
 module.exports = {
     "type": "Program",
     "loc": {
@@ -105,8 +103,8 @@ module.exports = {
                                 17
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": true,
                             "params": [],
                             "body": {
