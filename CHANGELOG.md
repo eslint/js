@@ -1,3 +1,8 @@
+v6.2.0 - March 2, 2020
+
+* [`ced1b68`](https://github.com/eslint/espree/commit/ced1b6810b991531e6d3788ebd5a322fc5c7d463) Update: update acorn-jsx and fix failing test (#432) (Kai Cataldo)
+* [`acb8776`](https://github.com/eslint/espree/commit/acb8776d369abf9e02f79142879e9b1a4774f938) Update: add latestEcmaVersion & supportedEcmaVersions (#430) (Kai Cataldo)
+
 v6.1.2 - October 20, 2019
 
 * [`70c4970`](https://github.com/eslint/espree/commit/70c4970e5eba6f060e1e32a22d231647f2d0e0f8) Fix: misuse token types (fixes #393, refs eslint/eslint#11018) (#426) (Toru Nagashima)
