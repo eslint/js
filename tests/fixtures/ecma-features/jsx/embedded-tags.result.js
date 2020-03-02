@@ -7,12 +7,12 @@ module.exports = {
         },
         "end": {
             "line": 1,
-            "column": 58
+            "column": 61
         }
     },
     "range": [
         0,
-        58
+        61
     ],
     "body": [
         {
@@ -24,12 +24,12 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 58
+                    "column": 61
                 }
             },
             "range": [
                 0,
-                58
+                61
             ],
             "expression": {
                 "type": "JSXElement",
@@ -40,12 +40,12 @@ module.exports = {
                     },
                     "end": {
                         "line": 1,
-                        "column": 57
+                        "column": 60
                     }
                 },
                 "range": [
                     0,
-                    57
+                    60
                 ],
                 "openingElement": {
                     "type": "JSXOpeningElement",
@@ -56,12 +56,12 @@ module.exports = {
                         },
                         "end": {
                             "line": 1,
-                            "column": 57
+                            "column": 60
                         }
                     },
                     "range": [
                         0,
-                        57
+                        60
                     ],
                     "attributes": [
                         {
@@ -164,12 +164,12 @@ module.exports = {
                                 },
                                 "end": {
                                     "line": 1,
-                                    "column": 54
+                                    "column": 57
                                 }
                             },
                             "range": [
                                 22,
-                                54
+                                57
                             ],
                             "name": {
                                 "type": "JSXIdentifier",
@@ -198,12 +198,12 @@ module.exports = {
                                     },
                                     "end": {
                                         "line": 1,
-                                        "column": 54
+                                        "column": 57
                                     }
                                 },
                                 "range": [
                                     28,
-                                    54
+                                    57
                                 ],
                                 "openingElement": {
                                     "type": "JSXOpeningElement",
@@ -247,32 +247,32 @@ module.exports = {
                                     "loc": {
                                         "start": {
                                             "line": 1,
-                                            "column": 50
+                                            "column": 53
                                         },
                                         "end": {
                                             "line": 1,
-                                            "column": 54
+                                            "column": 57
                                         }
                                     },
                                     "range": [
-                                        50,
-                                        54
+                                        53,
+                                        57
                                     ],
                                     "name": {
                                         "type": "JSXIdentifier",
                                         "loc": {
                                             "start": {
                                                 "line": 1,
-                                                "column": 52
+                                                "column": 55
                                             },
                                             "end": {
                                                 "line": 1,
-                                                "column": 53
+                                                "column": 56
                                             }
                                         },
                                         "range": [
-                                            52,
-                                            53
+                                            55,
+                                            56
                                         ],
                                         "name": "b"
                                     }
@@ -287,15 +287,15 @@ module.exports = {
                                             },
                                             "end": {
                                                 "line": 1,
-                                                "column": 50
+                                                "column": 53
                                             }
                                         },
                                         "range": [
                                             31,
-                                            50
+                                            53
                                         ],
                                         "value": "monkeys /> gorillas",
-                                        "raw": "monkeys /> gorillas"
+                                        "raw": "monkeys /&gt; gorillas"
                                     }
                                 ]
                             }
@@ -572,71 +572,17 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 50
-                }
-            },
-            "range": [
-                31,
-                50
-            ]
-        },
-        {
-            "type": "Punctuator",
-            "value": "<",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 50
-                },
-                "end": {
-                    "line": 1,
-                    "column": 51
-                }
-            },
-            "range": [
-                50,
-                51
-            ]
-        },
-        {
-            "type": "Punctuator",
-            "value": "/",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 51
-                },
-                "end": {
-                    "line": 1,
-                    "column": 52
-                }
-            },
-            "range": [
-                51,
-                52
-            ]
-        },
-        {
-            "type": "JSXIdentifier",
-            "value": "b",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 52
-                },
-                "end": {
-                    "line": 1,
                     "column": 53
                 }
             },
             "range": [
-                52,
+                31,
                 53
             ]
         },
         {
             "type": "Punctuator",
-            "value": ">",
+            "value": "<",
             "loc": {
                 "start": {
                     "line": 1,
@@ -655,6 +601,24 @@ module.exports = {
         {
             "type": "Punctuator",
             "value": "/",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 54
+                },
+                "end": {
+                    "line": 1,
+                    "column": 55
+                }
+            },
+            "range": [
+                54,
+                55
+            ]
+        },
+        {
+            "type": "JSXIdentifier",
+            "value": "b",
             "loc": {
                 "start": {
                     "line": 1,
@@ -690,20 +654,56 @@ module.exports = {
         },
         {
             "type": "Punctuator",
+            "value": "/",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 58
+                },
+                "end": {
+                    "line": 1,
+                    "column": 59
+                }
+            },
+            "range": [
+                58,
+                59
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": ">",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 59
+                },
+                "end": {
+                    "line": 1,
+                    "column": 60
+                }
+            },
+            "range": [
+                59,
+                60
+            ]
+        },
+        {
+            "type": "Punctuator",
             "value": ";",
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 57
+                    "column": 60
                 },
                 "end": {
                     "line": 1,
-                    "column": 58
+                    "column": 61
                 }
             },
             "range": [
-                57,
-                58
+                60,
+                61
             ]
         }
     ]
