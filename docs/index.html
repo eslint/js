@@ -113,6 +113,21 @@
 
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
+  <style>
+    #dark_mode > label:after {
+      background: var(--docsify_dark_mode_btn);
+      width: 30px;
+      height: 30px;
+      top: -6px;
+      left: 0;
+    }
+    #dark_mode > label {
+      border: 2px solid;
+      width: 55px;
+      height: 20px;
+      background-color: unset;
+    }
+  </style>
   <body>
     <div id="app"></div>
     <script>
@@ -123,7 +138,6 @@
         subMaxLevel: 2,
         maxLevel: 3,
         auto2top: true,
-        mergeNavbar: true,
         search: {
           paths: 'auto',
           placeholder: 'Search'
@@ -132,7 +146,7 @@
         darkMode: {
           dark: {
             background: '#1c2022',
-            toggleBtnBg: '#34495e',
+            toggleBtnBg: 'whitesmoke',
             textColor: '#bfbdc7'
           },
           light: {
@@ -153,7 +167,7 @@
                   'https://github.com/eslint/espree/blob/master/' +
                   vm.route.file
               }
-              var editHtml = '[:memo: Edit Document](' + url + ')\n'
+              var editHtml = '[:paperclip: Edit Document](' + url + ')\n'
 
               return editHtml + '\n' + html
             })
