@@ -74,7 +74,6 @@ CUSTOM THEME ON TOP OF DEFAULT DOCSIFY THEME
   -moz-letter-spacing: 0.1em;
   -ms-letter-spacing: 0.1em;
   letter-spacing: 0.1em;
-  /* text-transform: uppercase; */
   color: inherit;
 }
 .sidebar ul li.active > a {
