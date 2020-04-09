@@ -74,13 +74,53 @@ target.lint = function() {
     }
 };
 
+target.fixlint = function() {
+    let errors = 0,
+        lastReturn;
+
+    echo("Validating and fixing Makefile.js");
+    lastReturn = nodeCLI.exec("eslint", MAKEFILE, "--fix");
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    echo("Validating and fixing configuration files");
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, "--fix");
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    echo("Validating and fixing JavaScript files");
+    lastReturn = nodeCLI.exec("eslint", JS_FILES, "--fix");
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    echo("Validating and fixing JavaScript test files");
+    lastReturn = nodeCLI.exec("eslint", TEST_FILES, "--fix");
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    if (errors) {
+        exit(1);
+    }
+};
+
 target.test = function() {
 
     // target.lint();
 
     let errors = 0;
 
-    const lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
+    const lastReturn = nodeCLI.exec(
+        "nyc",
+        MOCHA,
+        "--color",
+        "--reporter progress",
+        "--timeout 30000",
+        TEST_FILES
+    );
 
     if (lastReturn.code !== 0) {
         errors++;
@@ -114,9 +154,14 @@ target.browserify = function() {
     cp("espree.js", TEMP_DIR);
     cp("package.json", TEMP_DIR);
 
-
     // 3. browserify the temp directory
-    nodeCLI.exec("browserify", path.join(TEMP_DIR, "espree.js"), "-o", path.join(BUILD_DIR, "espree.js"), "-s espree");
+    nodeCLI.exec(
+        "browserify",
+        path.join(TEMP_DIR, "espree.js"),
+        "-o",
+        path.join(BUILD_DIR, "espree.js"),
+        "-s espree"
+    );
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);
