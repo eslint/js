@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 16,
+    "index": 17,
     "lineNumber": 1,
-    "column": 17,
-    "message": "Unexpected token ."
+    "column": 18,
+    "message": "The only valid meta property for import is 'import.meta'"
 };
