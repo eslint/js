@@ -42,8 +42,7 @@ target.all = function() {
 };
 
 target.lint = function() {
-
-    const flag = process.argv[process.argv.length - 1];
+    const flag = process.argv[process.argv.length - 1] === "--fix" ? "--fix" : "";
     let errors = 0,
         lastReturn;
 
