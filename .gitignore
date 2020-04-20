@@ -6,3 +6,5 @@ _test.js
 .idea
 .nyc_output
 .eslint-release-info.json
+yarn.lock
+package-lock.json
