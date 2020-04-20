@@ -42,62 +42,31 @@ target.all = function() {
 };
 
 target.lint = function() {
+
+    const flag = process.argv[process.argv.length - 1];
     let errors = 0,
         lastReturn;
 
     echo("Validating Makefile.js");
-    lastReturn = nodeCLI.exec("eslint", MAKEFILE);
+    lastReturn = nodeCLI.exec("eslint", MAKEFILE, flag);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating configuration files");
-    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES);
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, flag);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript files");
-    lastReturn = nodeCLI.exec("eslint", JS_FILES);
+    lastReturn = nodeCLI.exec("eslint", JS_FILES, flag);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript test files");
-    lastReturn = nodeCLI.exec("eslint", TEST_FILES);
-    if (lastReturn.code !== 0) {
-        errors++;
-    }
-
-    if (errors) {
-        exit(1);
-    }
-};
-
-target.fixlint = function() {
-    let errors = 0,
-        lastReturn;
-
-    echo("Validating and fixing Makefile.js");
-    lastReturn = nodeCLI.exec("eslint", MAKEFILE, "--fix");
-    if (lastReturn.code !== 0) {
-        errors++;
-    }
-
-    echo("Validating and fixing configuration files");
-    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, "--fix");
-    if (lastReturn.code !== 0) {
-        errors++;
-    }
-
-    echo("Validating and fixing JavaScript files");
-    lastReturn = nodeCLI.exec("eslint", JS_FILES, "--fix");
-    if (lastReturn.code !== 0) {
-        errors++;
-    }
-
-    echo("Validating and fixing JavaScript test files");
-    lastReturn = nodeCLI.exec("eslint", TEST_FILES, "--fix");
+    lastReturn = nodeCLI.exec("eslint", TEST_FILES, flag);
     if (lastReturn.code !== 0) {
         errors++;
     }
