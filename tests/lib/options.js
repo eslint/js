@@ -16,7 +16,7 @@ const assert = require("assert"),
 // Tests
 //------------------------------------------------------------------------------
 
-describe("options unit testing", () => {
+describe("normalizeOptions", () => {
     it("should throw error for sourceType module and ecmaVersion < 6", () => {
         const option = {
             sourceType: "module",
