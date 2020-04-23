@@ -31,7 +31,10 @@ const NODE_MODULES = "./node_modules/",
     MAKEFILE = "Makefile.js",
     CONFIG_FILES = ".eslintrc.js",
     JS_FILES = "\"lib/**/*.js\" \"espree.js\"",
-    TEST_FILES = "tests/lib/**/*.js";
+    TEST_FILES = "tests/lib/**/*.js",
+
+    // FLAGS
+    CLIFLAGS = process.argv.slice(3);
 
 //------------------------------------------------------------------------------
 // Tasks
@@ -46,25 +49,25 @@ target.lint = function() {
         lastReturn;
 
     echo("Validating Makefile.js");
-    lastReturn = nodeCLI.exec("eslint", MAKEFILE, process.argv.slice(3));
+    lastReturn = nodeCLI.exec("eslint", MAKEFILE, CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating configuration files");
-    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, process.argv.slice(3));
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript files");
-    lastReturn = nodeCLI.exec("eslint", JS_FILES, process.argv.slice(3));
+    lastReturn = nodeCLI.exec("eslint", JS_FILES, CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript test files");
-    lastReturn = nodeCLI.exec("eslint", TEST_FILES, process.argv.slice(3));
+    lastReturn = nodeCLI.exec("eslint", TEST_FILES, CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
