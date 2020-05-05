@@ -52,6 +52,7 @@
     "generate-regex": "node tools/generate-identifier-regex.js",
     "test": "npm run-script lint && node Makefile.js test",
     "lint": "node Makefile.js lint",
+    "sync-docs": "node Makefile.js docs",
     "browserify": "node Makefile.js browserify",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
