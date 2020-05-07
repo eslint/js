@@ -32,7 +32,10 @@ const NODE_MODULES = "./node_modules/",
     MAKEFILE = "Makefile.js",
     CONFIG_FILES = ".eslintrc.js",
     JS_FILES = "\"lib/**/*.js\" \"espree.js\"",
-    TEST_FILES = "tests/lib/**/*.js";
+    TEST_FILES = "tests/lib/**/*.js",
+
+    // FLAGS
+    CLIFLAGS = process.argv.slice(3);
 
 //------------------------------------------------------------------------------
 // Tasks
@@ -47,25 +50,25 @@ target.lint = function() {
         lastReturn;
 
     echo("Validating Makefile.js");
-    lastReturn = nodeCLI.exec("eslint", MAKEFILE);
+    lastReturn = nodeCLI.exec("eslint", MAKEFILE, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating configuration files");
-    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES);
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript files");
-    lastReturn = nodeCLI.exec("eslint", JS_FILES);
+    lastReturn = nodeCLI.exec("eslint", JS_FILES, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript test files");
-    lastReturn = nodeCLI.exec("eslint", TEST_FILES);
+    lastReturn = nodeCLI.exec("eslint", TEST_FILES, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
@@ -81,7 +84,14 @@ target.test = function() {
 
     let errors = 0;
 
-    const lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
+    const lastReturn = nodeCLI.exec(
+        "nyc",
+        MOCHA,
+        "--color",
+        "--reporter progress",
+        "--timeout 30000",
+        TEST_FILES
+    );
 
     if (lastReturn.code !== 0) {
         errors++;
@@ -116,9 +126,14 @@ target.browserify = function() {
     cp("espree.js", TEMP_DIR);
     cp("package.json", TEMP_DIR);
 
-
     // 3. browserify the temp directory
-    nodeCLI.exec("browserify", path.join(TEMP_DIR, "espree.js"), "-o", path.join(BUILD_DIR, "espree.js"), "-s espree");
+    nodeCLI.exec(
+        "browserify",
+        path.join(TEMP_DIR, "espree.js"),
+        "-o",
+        path.join(BUILD_DIR, "espree.js"),
+        "-s espree"
+    );
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);
