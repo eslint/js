@@ -50,25 +50,25 @@ target.lint = function() {
         lastReturn;
 
     echo("Validating Makefile.js");
-    lastReturn = nodeCLI.exec("eslint", MAKEFILE, CLIFLAGS);
+    lastReturn = nodeCLI.exec("eslint", MAKEFILE, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating configuration files");
-    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, CLIFLAGS);
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript files");
-    lastReturn = nodeCLI.exec("eslint", JS_FILES, CLIFLAGS);
+    lastReturn = nodeCLI.exec("eslint", JS_FILES, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
 
     echo("Validating JavaScript test files");
-    lastReturn = nodeCLI.exec("eslint", TEST_FILES, CLIFLAGS);
+    lastReturn = nodeCLI.exec("eslint", TEST_FILES, ...CLIFLAGS);
     if (lastReturn.code !== 0) {
         errors++;
     }
