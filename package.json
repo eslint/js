@@ -53,6 +53,7 @@
     "test": "npm run-script lint && node Makefile.js test",
     "lint": "node Makefile.js lint",
     "fixlint": "node Makefile.js lint --fix",
+    "sync-docs": "node Makefile.js docs",
     "browserify": "node Makefile.js browserify",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",

@@ -23,6 +23,7 @@ const path = require("path");
 const NODE_MODULES = "./node_modules/",
     TEMP_DIR = "./tmp/",
     BUILD_DIR = "./build/",
+    DOCS_DIR = "./docs",
 
     // Utilities - intentional extra space at the end of each string
     MOCHA = `${NODE_MODULES}mocha/bin/_mocha `,
@@ -102,9 +103,10 @@ target.test = function() {
 };
 
 target.docs = function() {
-    echo("Generating documentation");
-    nodeCLI.exec("jsdoc", "-d jsdoc lib");
-    echo("Documentation has been output to /jsdoc");
+    echo("Syncing README.md from root with docs/README.md");
+    rm("-r", `${DOCS_DIR}/README.md`);
+    cp("README.md", DOCS_DIR);
+    echo("Done. ");
 };
 
 target.browserify = function() {
