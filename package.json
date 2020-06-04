@@ -20,7 +20,7 @@
   "dependencies": {
     "acorn": "^7.2.0",
     "acorn-jsx": "^5.2.0",
-    "eslint-visitor-keys": "github:eslint/eslint-visitor-keys"
+    "eslint-visitor-keys": "^1.2.0"
   },
   "devDependencies": {
     "browserify": "^16.5.0",
