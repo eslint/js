@@ -1,25 +1,7 @@
-//hashChain is the chain of 100,000,000 SHA256 hashes which are already generated.
-//get the last hash of the chain
-const gameHash = hashChain.pop();
-
-const crashpoint = gameResult(gameHash);
-
-//update the hash is used
-hashChain.update({
-  gameHash: gameHash,
-  used: true
-})
-
-function gameResult(seed) {
-  const nBits = 52; // number of most significant bits to use
-  // 1. r = 52 most significant bits
-  seed = seed.slice(0, nBits / 4);
-  const r = parseInt(seed, 16);
-  // 2. X = r / 2^52
-  let X = r / Math.pow(2, nBits); // uniformly distributed in [0; 1)
-  // 3. X = 99 / (1-X)
-  X = 99 / (1 - X);
-  // 4. return max(trunc(X), 100)
-  const result = Math.floor(X);
-  return Math.max(1, result / 100);
-};
+import sha256 from 'crypto-js/sha256';
+import hmacSHA512 from 'crypto-js/hmac-sha512';
+import Base64 from 'crypto-js/enc-base64';
+ 
+const message, nonce, path, privateKey; // ...
+const hashDigest = sha256(nonce + message);
+const hmacDigest = Base64.stringify(hmacSHA512(path + hashDigest, privateKey));
