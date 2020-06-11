@@ -7,16 +7,16 @@ module.exports = {
         },
         "end": {
             "line": 1,
-            "column": 27
+            "column": 15
         }
     },
     "range": [
         0,
-        27
+        15
     ],
     "body": [
         {
-            "type": "VariableDeclaration",
+            "type": "ExpressionStatement",
             "loc": {
                 "start": {
                     "line": 1,
@@ -24,36 +24,51 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 27
+                    "column": 15
                 }
             },
             "range": [
                 0,
-                27
+                15
             ],
-            "declarations": [
-                {
-                    "type": "VariableDeclarator",
+            "expression": {
+                "type": "ChainExpression",
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 15
+                    }
+                },
+                "range": [
+                    0,
+                    15
+                ],
+                "expression": {
+                    "type": "MemberExpression",
                     "loc": {
                         "start": {
                             "line": 1,
-                            "column": 6
+                            "column": 0
                         },
                         "end": {
                             "line": 1,
-                            "column": 27
+                            "column": 15
                         }
                     },
                     "range": [
-                        6,
-                        27
+                        0,
+                        15
                     ],
-                    "id": {
-                        "type": "Identifier",
+                    "object": {
+                        "type": "ChainExpression",
                         "loc": {
                             "start": {
                                 "line": 1,
-                                "column": 6
+                                "column": 1
                             },
                             "end": {
                                 "line": 1,
@@ -61,13 +76,67 @@ module.exports = {
                             }
                         },
                         "range": [
-                            6,
+                            1,
                             9
                         ],
-                        "name": "url"
+                        "expression": {
+                            "type": "MemberExpression",
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 1
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 9
+                                }
+                            },
+                            "range": [
+                                1,
+                                9
+                            ],
+                            "object": {
+                                "type": "Identifier",
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 1
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 4
+                                    }
+                                },
+                                "range": [
+                                    1,
+                                    4
+                                ],
+                                "name": "obj"
+                            },
+                            "property": {
+                                "type": "Identifier",
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 6
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 9
+                                    }
+                                },
+                                "range": [
+                                    6,
+                                    9
+                                ],
+                                "name": "aaa"
+                            },
+                            "computed": false,
+                            "optional": true
+                        }
                     },
-                    "init": {
-                        "type": "MemberExpression",
+                    "property": {
+                        "type": "Identifier",
                         "loc": {
                             "start": {
                                 "line": 1,
@@ -75,97 +144,26 @@ module.exports = {
                             },
                             "end": {
                                 "line": 1,
-                                "column": 27
+                                "column": 15
                             }
                         },
                         "range": [
                             12,
-                            27
+                            15
                         ],
-                        "object": {
-                            "type": "MetaProperty",
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 12
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 23
-                                }
-                            },
-                            "range": [
-                                12,
-                                23
-                            ],
-                            "meta": {
-                                "type": "Identifier",
-                                "loc": {
-                                    "start": {
-                                        "line": 1,
-                                        "column": 12
-                                    },
-                                    "end": {
-                                        "line": 1,
-                                        "column": 18
-                                    }
-                                },
-                                "range": [
-                                    12,
-                                    18
-                                ],
-                                "name": "import"
-                            },
-                            "property": {
-                                "type": "Identifier",
-                                "loc": {
-                                    "start": {
-                                        "line": 1,
-                                        "column": 19
-                                    },
-                                    "end": {
-                                        "line": 1,
-                                        "column": 23
-                                    }
-                                },
-                                "range": [
-                                    19,
-                                    23
-                                ],
-                                "name": "meta"
-                            }
-                        },
-                        "property": {
-                            "type": "Identifier",
-                            "loc": {
-                                "start": {
-                                    "line": 1,
-                                    "column": 24
-                                },
-                                "end": {
-                                    "line": 1,
-                                    "column": 27
-                                }
-                            },
-                            "range": [
-                                24,
-                                27
-                            ],
-                            "name": "url"
-                        },
-                        "computed": false,
-                        "optional": false
-                    }
+                        "name": "bbb"
+                    },
+                    "computed": false,
+                    "optional": true
                 }
-            ],
-            "kind": "const"
+            }
         }
     ],
-    "sourceType": "module",
+    "sourceType": "script",
     "tokens": [
         {
-            "type": "Keyword",
-            "value": "const",
+            "type": "Punctuator",
+            "value": "(",
             "loc": {
                 "start": {
                     "line": 1,
@@ -173,17 +171,53 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 5
+                    "column": 1
                 }
             },
             "range": [
                 0,
-                5
+                1
             ]
         },
         {
             "type": "Identifier",
-            "value": "url",
+            "value": "obj",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 1
+                },
+                "end": {
+                    "line": 1,
+                    "column": 4
+                }
+            },
+            "range": [
+                1,
+                4
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": "?.",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 4
+                },
+                "end": {
+                    "line": 1,
+                    "column": 6
+                }
+            },
+            "range": [
+                4,
+                6
+            ]
+        },
+        {
+            "type": "Identifier",
+            "value": "aaa",
             "loc": {
                 "start": {
                     "line": 1,
@@ -201,7 +235,25 @@ module.exports = {
         },
         {
             "type": "Punctuator",
-            "value": "=",
+            "value": ")",
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 9
+                },
+                "end": {
+                    "line": 1,
+                    "column": 10
+                }
+            },
+            "range": [
+                9,
+                10
+            ]
+        },
+        {
+            "type": "Punctuator",
+            "value": "?.",
             "loc": {
                 "start": {
                     "line": 1,
@@ -209,17 +261,17 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 11
+                    "column": 12
                 }
             },
             "range": [
                 10,
-                11
+                12
             ]
         },
         {
-            "type": "Keyword",
-            "value": "import",
+            "type": "Identifier",
+            "value": "bbb",
             "loc": {
                 "start": {
                     "line": 1,
@@ -227,84 +279,12 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 18
+                    "column": 15
                 }
             },
             "range": [
                 12,
-                18
-            ]
-        },
-        {
-            "type": "Punctuator",
-            "value": ".",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 18
-                },
-                "end": {
-                    "line": 1,
-                    "column": 19
-                }
-            },
-            "range": [
-                18,
-                19
-            ]
-        },
-        {
-            "type": "Identifier",
-            "value": "meta",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 19
-                },
-                "end": {
-                    "line": 1,
-                    "column": 23
-                }
-            },
-            "range": [
-                19,
-                23
-            ]
-        },
-        {
-            "type": "Punctuator",
-            "value": ".",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 23
-                },
-                "end": {
-                    "line": 1,
-                    "column": 24
-                }
-            },
-            "range": [
-                23,
-                24
-            ]
-        },
-        {
-            "type": "Identifier",
-            "value": "url",
-            "loc": {
-                "start": {
-                    "line": 1,
-                    "column": 24
-                },
-                "end": {
-                    "line": 1,
-                    "column": 27
-                }
-            },
-            "range": [
-                24,
-                27
+                15
             ]
         }
     ]
