@@ -1,3 +1,9 @@
+v7.2.0 - July 17, 2020
+
+* [`91c2d58`](https://github.com/eslint/espree/commit/91c2d5896889042058399cd64de4b218c5add0eb) Docs: Add security policy (#447) (Nicholas C. Zakas)
+* [`872645c`](https://github.com/eslint/espree/commit/872645cea0bee08960b93c097f84153d44b44d7f) Update: support optional chaining (#446) (Toru Nagashima)
+* [`0cc7800`](https://github.com/eslint/espree/commit/0cc78007c933564f32fd849bd8022992845c3ac1) Docs: Clean up LICENSE file (#445) (Nicholas C. Zakas)
+
 v7.1.0 - June 4, 2020
 
 * [`75e80bc`](https://github.com/eslint/espree/commit/75e80bc1b5a100f64b09b2c7bf47c5168417d890) Update: support `??` operator, `import.meta`, and `export * as ns` (#441) (Toru Nagashima)
