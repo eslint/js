@@ -47,7 +47,7 @@ module.exports = {
                     0,
                     7
                 ],
-                "value": null,
+                "value": 0b0101n,
                 "raw": "0b0101n",
                 "bigint": "0b0101"
             }

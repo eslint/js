@@ -24,18 +24,26 @@ const assert = require("assert"),
  * @private
  */
 function getRaw(ast) {
-    return JSON.parse(JSON.stringify(ast, (key, value) => {
-        if ((key === "start" || key === "end") && typeof value === "number") {
-            return undefined; // eslint-disable-line no-undefined
-        }
+    return JSON.parse(
+        JSON.stringify(ast, (key, value) => {
+            if ((key === "start" || key === "end") && typeof value === "number") {
+                return undefined; // eslint-disable-line no-undefined
+            }
 
-        // JSON cannot handle BigInt.
-        if (typeof value === "bigint") {
-            return null;
-        }
+            // JSON cannot handle BigInt.
+            if (typeof value === "bigint") {
+                return `$$BIGINT$$${value}`;
+            }
 
-        return value;
-    }));
+            return value;
+        }),
+        (_key, value) => {
+            if (typeof value === "string" && value.startsWith("$$BIGINT$$")) {
+                return BigInt(value.slice("$$BIGINT$$".length));
+            }
+            return value;
+        }
+    );
 }
 
 //------------------------------------------------------------------------------
