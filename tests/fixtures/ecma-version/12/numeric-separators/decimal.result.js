@@ -47,9 +47,8 @@ module.exports = {
                     0,
                     7
                 ],
-                "value": 0b0101n,
-                "raw": "0b0101n",
-                "bigint": "0b0101"
+                "value": 123456,
+                "raw": "123_456"
             }
         }
     ],
@@ -57,7 +56,7 @@ module.exports = {
     "tokens": [
         {
             "type": "Numeric",
-            "value": "0b0101n",
+            "value": "123_456",
             "loc": {
                 "start": {
                     "line": 1,

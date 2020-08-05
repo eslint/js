@@ -7,12 +7,12 @@ module.exports = {
         },
         "end": {
             "line": 1,
-            "column": 7
+            "column": 11
         }
     },
     "range": [
         0,
-        7
+        11
     ],
     "body": [
         {
@@ -24,12 +24,12 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 7
+                    "column": 11
                 }
             },
             "range": [
                 0,
-                7
+                11
             ],
             "expression": {
                 "type": "Literal",
@@ -40,16 +40,15 @@ module.exports = {
                     },
                     "end": {
                         "line": 1,
-                        "column": 7
+                        "column": 11
                     }
                 },
                 "range": [
                     0,
-                    7
+                    11
                 ],
-                "value": 0b0101n,
-                "raw": "0b0101n",
-                "bigint": "0b0101"
+                "value": 0xdeadbeaf,
+                "raw": "0xdead_beaf"
             }
         }
     ],
@@ -57,7 +56,7 @@ module.exports = {
     "tokens": [
         {
             "type": "Numeric",
-            "value": "0b0101n",
+            "value": "0xdead_beaf",
             "loc": {
                 "start": {
                     "line": 1,
@@ -65,12 +64,12 @@ module.exports = {
                 },
                 "end": {
                     "line": 1,
-                    "column": 7
+                    "column": 11
                 }
             },
             "range": [
                 0,
-                7
+                11
             ]
         }
     ]
