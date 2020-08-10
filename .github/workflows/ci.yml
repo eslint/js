@@ -40,5 +40,5 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Install dependencies
       run: npm install
-    - name: Test
+    - name: Run tests
       run: node Makefile.js test
