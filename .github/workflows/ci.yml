@@ -20,7 +20,6 @@ jobs:
         run: npm install
       - name: Lint Files
         run: node Makefile.js lint
-
   test:
     name: Test
     strategy:
