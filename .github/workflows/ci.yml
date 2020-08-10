@@ -38,7 +38,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node }}
-    - name: Install Packages
+    - name: Install dependencies
       run: npm install
     - name: Test
       run: node Makefile.js test
