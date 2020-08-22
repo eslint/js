@@ -1,3 +1,8 @@
+v7.3.0 - August 22, 2020
+
+* [`4ba3eef`](https://github.com/eslint/espree/commit/4ba3eefdc4b32784565822b34f11977e99ca1a19) Chore: move to GitHub Actions (#449) (Kai Cataldo)
+* [`bd0a405`](https://github.com/eslint/espree/commit/bd0a405ffbe4962bcf5aa225ed3861a6a15cb827) Update: support logical assignment and numeric separators (#448) (Toru Nagashima)
+
 v7.2.0 - July 17, 2020
 
 * [`91c2d58`](https://github.com/eslint/espree/commit/91c2d5896889042058399cd64de4b218c5add0eb) Docs: Add security policy (#447) (Nicholas C. Zakas)
