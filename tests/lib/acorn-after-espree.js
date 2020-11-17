@@ -19,10 +19,10 @@ const acorn = require("acorn"),
 
 describe("acorn", () => {
     it("acorn.parse() should work after espree was loaded.", () => {
-        const before = acorn.parse("var foo = bar /*world*/;", {ecmaVersion: 5});
+        const before = acorn.parse("var foo = bar /*world*/;", { ecmaVersion: 5 });
 
         require("../../espree");
-        const after = acorn.parse("var foo = bar /*world*/;", {ecmaVersion: 5});
+        const after = acorn.parse("var foo = bar /*world*/;", { ecmaVersion: 5 });
 
         assert.deepStrictEqual(after, before);
     });
