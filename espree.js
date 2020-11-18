@@ -56,13 +56,15 @@
  */
 /* eslint no-undefined:0, no-use-before-define: 0 */
 
-"use strict";
 
-const acorn = require("acorn");
-const jsx = require("acorn-jsx");
-const astNodeTypes = require("./lib/ast-node-types");
-const espree = require("./lib/espree");
-const { getLatestEcmaVersion, getSupportedEcmaVersions } = require("./lib/options");
+import * as acorn    from "acorn";
+import jsx           from "acorn-jsx";
+import astNodeTypes  from "./lib/ast-node-types.js";
+import espree        from "./lib/espree.js";
+import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
+import espreeVersion from './lib/version.js';
+import visitorKeys   from 'eslint-visitor-keys';
+
 
 // To initialize lazily.
 const parsers = {
@@ -106,7 +108,7 @@ const parsers = {
  * @throws {SyntaxError} If the input code is invalid.
  * @private
  */
-function tokenize(code, options) {
+export function tokenize(code, options) {
     const Parser = parsers.get(options);
 
     // Ensure to collect tokens.
@@ -128,7 +130,7 @@ function tokenize(code, options) {
  * @returns {ASTNode} The "Program" AST node.
  * @throws {SyntaxError} If the input code is invalid.
  */
-function parse(code, options) {
+export function parse(code, options) {
     const Parser = parsers.get(options);
 
     return new Parser(options, code).parse();
@@ -138,15 +140,12 @@ function parse(code, options) {
 // Public
 //------------------------------------------------------------------------------
 
-exports.version = require("./package.json").version;
+export const version = espreeVersion;
 
-exports.tokenize = tokenize;
-
-exports.parse = parse;
 
 // Deep copy.
 /* istanbul ignore next */
-exports.Syntax = (function() {
+export const Syntax = (function() {
     let name,
         types = {};
 
@@ -168,10 +167,11 @@ exports.Syntax = (function() {
 }());
 
 /* istanbul ignore next */
-exports.VisitorKeys = (function() {
-    return require("eslint-visitor-keys").KEYS;
+export const VisitorKeys = (function() {
+    //return require("eslint-visitor-keys").KEYS;
+    return visitorKeys.KEYS;
 }());
 
-exports.latestEcmaVersion = getLatestEcmaVersion();
+export const latestEcmaVersion = getLatestEcmaVersion();
 
-exports.supportedEcmaVersions = getSupportedEcmaVersions();
+export const supportedEcmaVersions = getSupportedEcmaVersions();

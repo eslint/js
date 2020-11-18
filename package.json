@@ -3,7 +3,12 @@
   "description": "An Esprima-compatible JavaScript parser built on Acorn",
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
-  "main": "espree.js",
+  "main": "dist/espree.cjs",
+  "module": "espree.js",
+  "exports": {
+    "import": "espree.js",
+    "require": "./dist/espree.cjs"
+  },
   "version": "7.3.0",
   "files": [
     "lib",
@@ -23,6 +28,9 @@
     "eslint-visitor-keys": "^1.3.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
     "browserify": "^16.5.0",
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
@@ -36,6 +44,7 @@
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "regenerate": "^1.4.0",
+    "rollup": "^2.33.3",
     "shelljs": "^0.3.0",
     "shelljs-nodecli": "^0.1.1",
     "unicode-6.3.0": "^0.7.5"
@@ -54,6 +63,7 @@
     "lint": "node Makefile.js lint",
     "fixlint": "node Makefile.js lint --fix",
     "sync-docs": "node Makefile.js docs",
+    "rollup": "rollup -c rollup.config.js",
     "browserify": "node Makefile.js browserify",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
