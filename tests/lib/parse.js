@@ -19,6 +19,21 @@ const assert = require("assert"),
 
 describe("parse()", () => {
 
+    describe("ecmaVersion", () => {
+
+        it("should be 5 if not specified", () => {
+
+            // `ecmaVersion: 3` would throw on getters/setters
+            espree.parse("var foo = { get bar() {} }");
+
+            // needs `ecmaVersion: 6` or higher
+            assert.throws(() => {
+                espree.parse("let foo");
+            });
+        });
+
+    });
+
     describe("modules", () => {
 
         it("should have correct column number when strict mode error occurs", () => {

@@ -17,6 +17,14 @@ const assert = require("assert"),
 //------------------------------------------------------------------------------
 
 describe("normalizeOptions", () => {
+    it("should set ecmaVersion to 5 if it wasn't specified", () => {
+        const option = {};
+
+        const output = normalizeOptions(option);
+
+        assert.strictEqual(output.ecmaVersion, 5);
+    });
+
     it("should throw error for sourceType module and ecmaVersion < 6", () => {
         const option = {
             sourceType: "module",

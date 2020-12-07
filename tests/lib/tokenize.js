@@ -19,6 +19,16 @@ const assert = require("assert"),
 
 describe("tokenize()", () => {
 
+    it("should have `ecmaVersion: 5` as default", () => {
+
+        // FIXME: is there a way to test that it isn't `ecmaVersion: 3`?
+
+        // needs `ecmaVersion: 6` or higher
+        assert.throws(() => {
+            espree.tokenize("`template`");
+        });
+    });
+
     it("should produce tokens when using let", () => {
         const tokens = espree.tokenize("let foo = bar;", {
             ecmaVersion: 6,
