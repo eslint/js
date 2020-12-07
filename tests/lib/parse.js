@@ -83,7 +83,7 @@ describe("parse()", () => {
 
     });
 
-    describe("acorn", () => {
+    describe("nodes", () => {
         it("acorn.parse() should not re-use the same identifier node in object patterns", () => {
             const code = "({x, y = 1} = {z})";
 
