@@ -97,9 +97,9 @@ describe("parse()", () => {
             const propertyY = objectPattern.properties[1];
             const propertyZ = objectExpression.properties[0];
 
-            assert.notStrictEqual(propertyX.key, propertyX.value); // true in v7, false in v8
-            assert.notStrictEqual(propertyY.key, propertyY.value.left); // true in v7, false in v8
-            assert.notStrictEqual(propertyZ.key, propertyZ.value); // true in v7, false in v8
+            assert.notStrictEqual(propertyX.key, propertyX.value);
+            assert.notStrictEqual(propertyY.key, propertyY.value.left);
+            assert.notStrictEqual(propertyZ.key, propertyZ.value);
         });
     });
 });
