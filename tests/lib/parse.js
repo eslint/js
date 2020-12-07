@@ -84,7 +84,7 @@ describe("parse()", () => {
     });
 
     describe("nodes", () => {
-        it("acorn.parse() should not re-use the same identifier node in object patterns", () => {
+        it("should not re-use the same identifier node in shorthand properties", () => {
             const code = "({x, y = 1} = {z})";
 
             const ast = espree.parse(code, { ecmaVersion: 2015 });
