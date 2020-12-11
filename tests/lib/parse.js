@@ -96,5 +96,14 @@ describe("parse()", () => {
             espree.parse("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
         });
 
+        it("Cast valid non-string input", () => {
+            const str = "var foo = bar;";
+
+            assert.deepStrictEqual(
+                espree.parse(Buffer.from(str)),
+                espree.parse(str)
+            );
+        });
+
     });
 });
