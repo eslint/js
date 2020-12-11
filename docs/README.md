@@ -148,7 +148,10 @@ const options = {
 
         // enable implied strict mode (if ecmaVersion >= 5)
         impliedStrict: false
-    }
+    },
+
+    // specify options for the internal Acorn parser
+    acornOptions: {}
 }
 ```
 
