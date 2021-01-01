@@ -154,6 +154,17 @@ describe("parse()", () => {
             assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].range[1]);
         });
 
+        it("should output the same value for loc, range and start and end in templateElement", () => {
+            const ast = espree.parse("`foo ${bar}`;", {
+                ecmaVersion: 6
+            });
+
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, 0);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, 7);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, 10);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, 12);
+        });
+
         it("should reset lastToken on each parse", () => {
             espree.parse("var foo = bar;");
             const ast = espree.parse("//foo", {
