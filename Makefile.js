@@ -2,7 +2,7 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/* global cp, echo, exit, mkdir, rm, target, test */
+/* global cp, echo, exit, rm, target */
 
 "use strict";
 
@@ -14,15 +14,12 @@
 require("shelljs/make");
 
 const nodeCLI = require("shelljs-nodecli");
-const path = require("path");
 
 //------------------------------------------------------------------------------
 // Data
 //------------------------------------------------------------------------------
 
 const NODE_MODULES = "./node_modules/",
-    TEMP_DIR = "./tmp/",
-    BUILD_DIR = "./build/",
     DOCS_DIR = "./docs",
 
     // Utilities - intentional extra space at the end of each string
@@ -107,34 +104,4 @@ target.docs = function() {
     rm("-r", `${DOCS_DIR}/README.md`);
     cp("README.md", DOCS_DIR);
     echo("Done. ");
-};
-
-target.browserify = function() {
-
-    // 1. create temp and build directory
-    if (!test("-d", TEMP_DIR)) {
-        mkdir(TEMP_DIR);
-        mkdir(path.join(TEMP_DIR, "lib"));
-    }
-
-    if (!test("-d", BUILD_DIR)) {
-        mkdir(BUILD_DIR);
-    }
-
-    // 2. copy files into temp directory
-    cp("-r", "lib/*", path.join(TEMP_DIR, "lib"));
-    cp("espree.js", TEMP_DIR);
-    cp("package.json", TEMP_DIR);
-
-    // 3. browserify the temp directory
-    nodeCLI.exec(
-        "browserify",
-        path.join(TEMP_DIR, "espree.js"),
-        "-o",
-        path.join(BUILD_DIR, "espree.js"),
-        "-s espree"
-    );
-
-    // 4. remove temp directory
-    rm("-r", TEMP_DIR);
 };
