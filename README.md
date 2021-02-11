@@ -172,7 +172,6 @@ We work hard to ensure that Espree is safe for everyone and that security issues
 
 * `npm test` - run all linting and tests
 * `npm run lint` - run all linting
-* `npm run browserify` - creates a version of Espree that is usable in a browser
 
 ## Differences from Espree 2.x
 
