@@ -24,9 +24,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^6.0.1",
-    "eslint-config-eslint": "^5.0.1",
-    "eslint-plugin-node": "^9.1.0",
+    "eslint": "^7.20.0",
+    "eslint-config-eslint": "^7.0.0",
+    "eslint-plugin-jsdoc": "^32.0.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-release": "^1.0.0",
     "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",

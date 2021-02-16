@@ -4,7 +4,7 @@ module.exports = function(literalNode) {
     if (literalNode.regex) {
         try {
             literalNode.value = new RegExp(literalNode.regex.pattern, literalNode.regex.flags);
-        } catch (e) {
+        } catch {
             literalNode.value = null;
         }
     }

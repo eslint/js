@@ -82,7 +82,7 @@ describe("ecmaVersion", () => {
 
                 try {
                     expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.module-result.js`);
-                } catch (err) {
+                } catch {
                     expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
                 }
 
@@ -124,7 +124,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, /Invalid ecmaVersion/);
+            }, /Invalid ecmaVersion/u);
         });
 
         it("Should throw error using invalid year", () => {
@@ -138,7 +138,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, /Invalid ecmaVersion/);
+            }, /Invalid ecmaVersion/u);
         });
 
         it("Should throw error when non-numeric year is provided", () => {
@@ -152,7 +152,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, /ecmaVersion must be a number. Received value of type string instead/);
+            }, /ecmaVersion must be a number. Received value of type string instead/u);
         });
 
         it("Should throw error when using module in pre-ES6", () => {
@@ -163,7 +163,7 @@ describe("ecmaVersion", () => {
                         sourceType: "module"
                     }
                 );
-            }, /sourceType 'module' is not supported when ecmaVersion < 2015/);
+            }, /sourceType 'module' is not supported when ecmaVersion < 2015/u);
         });
     });
 
