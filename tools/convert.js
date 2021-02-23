@@ -1,6 +1,6 @@
 // simple script to convert the old Esprima giant file tests into small ones
 
-var tests = require("../test/test");
+import tests from "../test/test";
 
 Object.keys(tests).forEach(function(key) {
     var value = tests[key];

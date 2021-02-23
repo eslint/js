@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "type": "Program",
     "start": 0,
     "end": 43,

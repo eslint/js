@@ -1,5 +1,5 @@
 // (/foo/).test(bar);
-module.exports = [
+export default [
     {
         "type": "Punctuator",
         "value": "(",

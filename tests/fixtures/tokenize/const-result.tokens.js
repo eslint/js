@@ -1,5 +1,5 @@
 // const foo = bar;
-module.exports = [
+export default [
     {
         "type": "Keyword",
         "value": "const",

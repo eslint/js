@@ -3,14 +3,16 @@
  * @author Aniketh Saha
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    { normalizeOptions } = require("../../lib/options");
+import assert from "assert";
+import tap from "tap";
+import { normalizeOptions } from "../../lib/options.js";
+
+
+tap.mochaGlobals();
 
 //------------------------------------------------------------------------------
 // Tests

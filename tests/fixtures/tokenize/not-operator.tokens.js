@@ -1,5 +1,5 @@
 // !x
-module.exports = [
+export default [
     {
         "type": "Punctuator",
         "value": "!",

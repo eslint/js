@@ -3,14 +3,16 @@
  * @author Kai Cataldo
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    espree = require("../../espree");
+import assert from "assert";
+import tap from "tap";
+import * as espree from "../../espree.js";
+
+
+tap.mochaGlobals();
 
 //------------------------------------------------------------------------------
 // Tests

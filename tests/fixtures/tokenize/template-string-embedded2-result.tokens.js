@@ -1,5 +1,5 @@
 // var a; console.log(`${a}`, "a");
-module.exports = [
+export default [
     {
         "type": "Keyword",
         "value": "var",

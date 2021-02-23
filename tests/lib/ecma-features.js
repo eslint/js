@@ -3,18 +3,24 @@
  * @author Nicholas C. Zakas
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    leche = require("leche"),
-    path = require("path"),
-    espree = require("../../espree"),
-    shelljs = require("shelljs"),
-    tester = require("./tester");
+import assert from "assert";
+import leche from "leche";
+import path from "path";
+import * as espree from "../../espree.js";
+import shelljs from "shelljs";
+import tap from "tap";
+import { fileURLToPath } from "url";
+import tester from "./tester.js";
+
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+tap.mochaGlobals();
+
 
 // var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
@@ -26,7 +32,6 @@ const FIXTURES_DIR = "./tests/fixtures/ecma-features";
 const testFiles = shelljs.find(FIXTURES_DIR)
     .filter(filename => filename.indexOf(".src.js") > -1)
     .map(filename => filename.slice(FIXTURES_DIR.length - 1, filename.length - 7));
-
 
 //------------------------------------------------------------------------------
 // Tests
@@ -63,11 +68,12 @@ describe("ecmaFeatures", () => {
             isPermissive = !shouldThrowInTestsWhenEnabled(feature),
             code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
 
-        it(`should parse correctly when ${feature} is ${isPermissive}`, () => {
+        it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
             config.ecmaFeatures[feature] = isPermissive;
-            const expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
 
-            tester.assertMatches(code, config, expected);
+            const expected = await import(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
+
+            tester.assertMatches(code, config, expected.default);
         });
 
         it(`should throw an error when ${feature} is ${!isPermissive}`, () => {

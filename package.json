@@ -3,10 +3,22 @@
   "description": "An Esprima-compatible JavaScript parser built on Acorn",
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
-  "main": "espree.js",
+  "main": "dist/espree.cjs",
+  "type": "module",
+  "exports": {
+    ".": [
+      {
+        "import": "espree.js",
+        "default": "./dist/espree.cjs"
+      },
+      "dist/espree.cjs"
+    ],
+    "./package.json": "./package.json"
+  },
   "version": "7.3.1",
   "files": [
     "lib",
+    "dist/espree.cjs",
     "espree.js"
   ],
   "engines": {
@@ -23,6 +35,9 @@
     "eslint-visitor-keys": "^2.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
     "chai": "^4.2.0",
     "eslint": "^7.20.0",
     "eslint-config-eslint": "^7.0.0",
@@ -34,10 +49,13 @@
     "json-diff": "^0.5.4",
     "leche": "^2.3.0",
     "mocha": "^6.2.0",
+    "npm-run-all": "^4.1.5",
     "nyc": "^14.1.1",
     "regenerate": "^1.4.0",
+    "rollup": "^2.39.0",
     "shelljs": "^0.3.0",
     "shelljs-nodecli": "^0.1.1",
+    "tap": "^14.11.0",
     "unicode-6.3.0": "^0.7.5"
   },
   "keywords": [
@@ -49,11 +67,13 @@
     "acorn"
   ],
   "scripts": {
+    "unit": "tap --no-esm tests/lib/",
     "generate-regex": "node tools/generate-identifier-regex.js",
-    "test": "npm run-script lint && node Makefile.js test",
-    "lint": "node Makefile.js lint",
-    "fixlint": "node Makefile.js lint --fix",
-    "sync-docs": "node Makefile.js docs",
+    "test": "npm-run-all -p unit lint",
+    "lint": "eslint lib/ espree.js .eslintrc.cjs tests/lib/",
+    "fixlint": "eslint --fix lib/ espree.js .eslintrc.cjs tests/lib/",
+    "rollup": "rollup -c rollup.config.js",
+    "sync-docs": "node sync-docs.js",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
     "generate-betarelease": "eslint-generate-prerelease beta",

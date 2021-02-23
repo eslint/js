@@ -1,5 +1,5 @@
 // let foo = bar;
-module.exports = [
+export default [
     {
         "type": "Keyword",
         "value": "let",

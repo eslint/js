@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "message": "Unexpected token ;",
     "column": 18,
     "index": 17,
