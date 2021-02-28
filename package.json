@@ -8,10 +8,10 @@
   "exports": {
     ".": [
       {
-        "import": "espree.js",
+        "import": "./espree.js",
         "default": "./dist/espree.cjs"
       },
-      "dist/espree.cjs"
+      "./dist/espree.cjs"
     ],
     "./package.json": "./package.json"
   },
