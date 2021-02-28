@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Lint files
-        run: node Makefile.js lint
+        run: npm run lint
   test:
     name: Test
     strategy:
@@ -40,4 +40,4 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Run tests
-      run: node Makefile.js test
+      run: npm run unit
