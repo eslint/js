@@ -67,7 +67,9 @@
     "acorn"
   ],
   "scripts": {
-    "unit": "tap --no-esm tests/lib/",
+    "unit": "npm-run-all -s unit:*",
+    "unit:esm": "tap --no-esm tests/lib/",
+    "unit:cjs": "tap tests/lib/commonjs.cjs",
     "generate-regex": "node tools/generate-identifier-regex.js",
     "test": "npm-run-all -p unit lint",
     "lint": "eslint lib/ espree.js .eslintrc.cjs tests/lib/",

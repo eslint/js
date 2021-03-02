@@ -18,6 +18,7 @@ import assert from "assert";
 import { fileURLToPath } from "url";
 
 
+// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 tap.mochaGlobals();
@@ -72,7 +73,9 @@ describe("ecmaVersion", () => {
 
             it("should parse correctly when sourceType is script", async () => {
                 config.ecmaVersion = Number(version);
+                // eslint-disable-next-line node/no-unsupported-features/es-syntax
                 const expected = await import(`${FIXTURES_DIR}/${filename}.result.js`);
+
                 tester.assertMatches(code, config, expected.default);
             });
 
@@ -80,7 +83,7 @@ describe("ecmaVersion", () => {
 
     });
 
-    
+
     describe("Modules", () => {
 
         leche.withData(moduleTestFiles, filename => {
@@ -91,13 +94,16 @@ describe("ecmaVersion", () => {
                 let expected;
 
                 try {
+                    // eslint-disable-next-line node/no-unsupported-features/es-syntax
                     expected = await import(`${FIXTURES_DIR}/${filename}.module-result.js`);
                 } catch {
+                    // eslint-disable-next-line node/no-unsupported-features/es-syntax
                     expected = await import(`${FIXTURES_DIR}/${filename}.result.js`);
                 }
 
-                if (expected)
+                if (expected) {
                     expected = expected.default;
+                }
 
                 config.ecmaVersion = Number(version);
                 config.sourceType = "module";
@@ -112,7 +118,7 @@ describe("ecmaVersion", () => {
 
         });
     });
-    
+
 
     describe("general", () => {
         it("Should parse using 2015 instead of 6", () => {

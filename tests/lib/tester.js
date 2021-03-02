@@ -1,5 +1,3 @@
-/* global BigInt */
-
 /**
  * @fileoverview Tests for parsing and attaching comments.
  * @author Nicholas C. Zakas

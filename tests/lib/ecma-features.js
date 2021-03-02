@@ -17,6 +17,7 @@ import { fileURLToPath } from "url";
 import tester from "./tester.js";
 
 
+// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 tap.mochaGlobals();
@@ -71,6 +72,7 @@ describe("ecmaFeatures", () => {
         it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
             config.ecmaFeatures[feature] = isPermissive;
 
+            // eslint-disable-next-line node/no-unsupported-features/es-syntax
             const expected = await import(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
 
             tester.assertMatches(code, config, expected.default);

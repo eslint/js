@@ -1,3 +1,6 @@
+/**
+ * @param literalNode
+ */
 export default function(literalNode) {
     if (literalNode.regex) {
         try {

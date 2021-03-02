@@ -16,6 +16,7 @@ import * as espree from "../../espree.js";
 import assert from "assert";
 import { fileURLToPath } from "url";
 
+// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 tap.mochaGlobals();
