@@ -18,6 +18,8 @@ jobs:
           node-version: '12.x'
       - name: Install dependencies
         run: npm install
+      - name: Build commonjs
+        run: npm run rollup
       - name: Lint files
         run: npm run lint
   test:
@@ -39,5 +41,7 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Install dependencies
       run: npm install
+    - name: Build commonjs
+      run: npm run rollup
     - name: Run tests
       run: npm run unit
