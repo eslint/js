@@ -1,6 +1,4 @@
-/**
- * @param literalNode
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export default function(literalNode) {
     if (literalNode.regex) {
         try {

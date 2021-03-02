@@ -10,7 +10,6 @@
 import * as acorn from "acorn";
 import assert from "assert";
 import tap from "tap";
-import "../../espree.js";
 
 
 tap.mochaGlobals();
@@ -20,8 +19,11 @@ tap.mochaGlobals();
 //------------------------------------------------------------------------------
 
 describe("acorn", () => {
-    it("acorn.parse() should work after espree was loaded.", () => {
+    it("acorn.parse() should work after espree was loaded.", async () => {
         const before = acorn.parse("var foo = bar /*world*/;");
+
+        // eslint-disable-next-line node/no-unsupported-features/es-syntax
+        await import("../../espree.js");
 
         const after = acorn.parse("var foo = bar /*world*/;");
 
