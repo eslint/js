@@ -30,7 +30,7 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "acorn": "^7.4.0",
+    "acorn": "^8.0.5",
     "acorn-jsx": "^5.3.1",
     "eslint-visitor-keys": "^2.0.0"
   },

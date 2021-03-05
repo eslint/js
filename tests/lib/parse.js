@@ -110,4 +110,24 @@ describe("parse()", () => {
         });
 
     });
+
+    describe("nodes", () => {
+        it("should not re-use the same identifier node in shorthand properties", () => {
+            const code = "({x, y = 1} = {z})";
+
+            const ast = espree.parse(code, { ecmaVersion: 2015 });
+
+            const assignment = ast.body[0].expression;
+            const objectPattern = assignment.left;
+            const objectExpression = assignment.right;
+
+            const propertyX = objectPattern.properties[0];
+            const propertyY = objectPattern.properties[1];
+            const propertyZ = objectExpression.properties[0];
+
+            assert.notStrictEqual(propertyX.key, propertyX.value);
+            assert.notStrictEqual(propertyY.key, propertyY.value.left);
+            assert.notStrictEqual(propertyZ.key, propertyZ.value);
+        });
+    });
 });
