@@ -31,7 +31,7 @@ tap.mochaGlobals();
 const FIXTURES_DIR = "./tests/fixtures/ecma-features";
 
 const testFiles = shelljs.find(FIXTURES_DIR)
-    .filter(filename => filename.indexOf(".src.js") > -1)
+    .filter(filename => filename.includes(".src.js"))
     .map(filename => filename.slice(FIXTURES_DIR.length - 1, filename.length - 7));
 
 //------------------------------------------------------------------------------

@@ -35,14 +35,14 @@ const FIXTURES_DIR = path.resolve(__dirname, "..", "fixtures/ecma-version");
 
 
 const allTestFiles = shelljs.find(FIXTURES_DIR)
-    .filter(filename => filename.indexOf(".src.js") > -1)
+    .filter(filename => filename.includes(".src.js"))
     .map(filename => filename.slice(FIXTURES_DIR.length, filename.length - 7)); // strip off ".src.js"
 
 
-const scriptOnlyTestFiles = allTestFiles.filter(filename => filename.indexOf("modules") === -1);
+const scriptOnlyTestFiles = allTestFiles.filter(filename => !filename.includes("modules"));
 
 
-const moduleTestFiles = allTestFiles.filter(filename => filename.indexOf("not-strict") === -1 && filename.indexOf("edge-cases") === -1);
+const moduleTestFiles = allTestFiles.filter(filename => !filename.includes("not-strict") && !filename.includes("edge-cases"));
 
 //------------------------------------------------------------------------------
 // Tests
