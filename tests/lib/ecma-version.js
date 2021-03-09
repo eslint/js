@@ -15,14 +15,13 @@ import tap from "tap";
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
 import assert from "assert";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 tap.mochaGlobals();
-
 
 const allPiecesJson = JSON.parse(fs.readFileSync(`${__dirname}/../fixtures/parse/all-pieces.json`, "utf8"));
 
@@ -66,15 +65,16 @@ describe("ecmaVersion", () => {
         leche.withData(scriptOnlyTestFiles, filename => {
             const version = filename.slice(1, filename.indexOf("/", 1));
 
-
             // Uncomment and fill in filename to focus on a single file
             // var filename = "newTarget/simple-new-target";
             const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
 
             it("should parse correctly when sourceType is script", async () => {
                 config.ecmaVersion = Number(version);
+
+                const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
                 // eslint-disable-next-line node/no-unsupported-features/es-syntax
-                const expected = await import(`${FIXTURES_DIR}/${filename}.result.js`);
+                const expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
 
                 tester.assertMatches(code, config, expected.default);
             });
