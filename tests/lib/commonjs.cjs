@@ -48,7 +48,7 @@ describe("commonjs", () => {
         assert.strictEqual(typeof espree.Syntax, "object");
     });
 
-    it("jas VisitorKeys", () => {
+    it("has VisitorKeys", () => {
         assert.strictEqual(typeof espree.VisitorKeys, "object");
     });
 
