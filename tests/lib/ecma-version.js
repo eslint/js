@@ -91,14 +91,16 @@ describe("ecmaVersion", () => {
             const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
 
             it("should parse correctly when sourceType is module", async () => {
+                const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
+
                 let expected;
 
                 try {
                     // eslint-disable-next-line node/no-unsupported-features/es-syntax
-                    expected = await import(`${FIXTURES_DIR}/${filename}.module-result.js`);
+                    expected = await import(`${pathToFileURL(absolutePath).href}.module-result.js`);
                 } catch {
                     // eslint-disable-next-line node/no-unsupported-features/es-syntax
-                    expected = await import(`${FIXTURES_DIR}/${filename}.result.js`);
+                    expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
                 }
 
                 if (expected) {
