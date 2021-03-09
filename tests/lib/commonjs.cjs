@@ -44,7 +44,7 @@ describe("commonjs", () => {
         assert.strictEqual(typeof espree.version, "string");
     });
 
-    it("jas syntax", () => {
+    it("has Syntax", () => {
         assert.strictEqual(typeof espree.Syntax, "object");
     });
 
