@@ -1,19 +1,16 @@
+"use strict";
+
 module.exports = {
     root: true,
     extends: "eslint",
-    parserOptions: {
-        sourceType: "module"
-    },
     env: {
-        es6: true,
-        node: true
+        es6: true
     },
     overrides: [
         {
-            files: ["tests/lib/*"],
+            files: ["tests/lib/**"],
             parserOptions: {
-                ecmaVersion: 2020,
-                sourceType: "module"
+                ecmaVersion: 2020
             },
             env: {
                 mocha: true
