@@ -13,7 +13,7 @@ import path from "path";
 import * as espree from "../../espree.js";
 import shelljs from "shelljs";
 import tap from "tap";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 import tester from "./tester.js";
 
 
@@ -73,7 +73,7 @@ describe("ecmaFeatures", () => {
             config.ecmaFeatures[feature] = isPermissive;
 
             // eslint-disable-next-line node/no-unsupported-features/es-syntax
-            const expected = await import(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
+            const expected = await import(`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`);
 
             tester.assertMatches(code, config, expected.default);
         });
