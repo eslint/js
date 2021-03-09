@@ -13,6 +13,7 @@ fs.writeFileSync("lib/version.js", `const version = "${pkg.version}";\n\nexport 
 export default {
   input: "espree.js",
   external: ["acorn", "acorn-jsx", "eslint-visitor-keys"],
+  treeshake: false,
   output: {
     file: "dist/espree.cjs",
     format: "cjs",
