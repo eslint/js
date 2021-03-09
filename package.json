@@ -9,6 +9,7 @@
     ".": [
       {
         "import": "./espree.js",
+        "require": "./dist/espree.cjs",        
         "default": "./dist/espree.cjs"
       },
       "./dist/espree.cjs"
