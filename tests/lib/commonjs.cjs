@@ -41,7 +41,7 @@ describe("commonjs", () => {
         assert.strictEqual(typeof espree.tokenize, "function");
     });
 
-    it("has versions", () => {
+    it("has version", () => {
         assert.strictEqual(typeof espree.version, "string");
     });
 
