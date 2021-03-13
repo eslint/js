@@ -41,6 +41,10 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Install dependencies
       run: npm install
+      if: ${{ !startswith(matrix.node, '15') }}
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps
+      if: ${{ startswith(matrix.node, '15') }}  
     - name: Build commonjs
       run: npm run rollup
     - name: Run tests
