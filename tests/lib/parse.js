@@ -11,10 +11,8 @@ import fs from "fs";
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
 import assert from "assert";
-import tap from "tap";
 
 
-tap.mochaGlobals();
 const allPiecesJson = JSON.parse(fs.readFileSync("./tests/fixtures/parse/all-pieces.json", "utf8"));
 
 //------------------------------------------------------------------------------

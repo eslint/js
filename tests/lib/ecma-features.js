@@ -12,15 +12,12 @@ import leche from "leche";
 import path from "path";
 import * as espree from "../../espree.js";
 import shelljs from "shelljs";
-import tap from "tap";
 import { fileURLToPath, pathToFileURL } from "url";
 import tester from "./tester.js";
 
 
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-tap.mochaGlobals();
 
 
 // var espree = require("esprima-fb");

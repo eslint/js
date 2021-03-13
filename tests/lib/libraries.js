@@ -10,7 +10,6 @@
 import leche from "leche";
 import path from "path";
 import shelljs from "shelljs";
-import tap from "tap";
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
 import assert from "assert";
@@ -19,7 +18,6 @@ import { fileURLToPath } from "url";
 // eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-tap.mochaGlobals();
 
 //------------------------------------------------------------------------------
 // Setup
