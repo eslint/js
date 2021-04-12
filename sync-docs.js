@@ -2,7 +2,7 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/* global cp, echo, exit, rm, target */
+/* global cp, echo, rm */
 
 /* eslint no-console: 0*/
 //------------------------------------------------------------------------------
