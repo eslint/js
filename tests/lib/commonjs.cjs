@@ -34,6 +34,25 @@ describe("commonjs", () => {
         assert.strictEqual(typeof ast, "object");
     });
 
+    it("parses jsx", () => {
+
+        const config = {
+            loc: true,
+            range: true,
+            tokens: true,
+            ecmaVersion: 6,
+            ecmaFeatures: { jsx: true }
+        };
+
+        const code = "<foo bar={`${baz}`} />";
+
+        const result = espree.parse(code, config);
+
+        assert.strictEqual(typeof result, "object");
+        assert.strictEqual(result.tokens.length, 11);
+    });
+
+
     it("has tokenize", () => {
         assert.strictEqual(typeof espree.tokenize, "function");
     });
