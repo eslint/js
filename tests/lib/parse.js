@@ -108,14 +108,14 @@ describe("parse()", () => {
         // https://github.com/eslint/espree/issues/470
         it("Should throw on invalid `(a = 1) = t`", () => {
             assert.throws(() => {
-                espree.parse("(a = 1) = t");
+                espree.parse("(a = 1) = t", { ecmaVersion: 6 });
             });
         });
 
         // https://github.com/eslint/espree/issues/472
-        it("Should throw on invaid `async () => await 5 ** 6;`", () => {
+        it("Should throw on invalid `async () => await 5 ** 6;`", () => {
             assert.throws(() => {
-                espree.parse("async () => await 5 ** 6;");
+                espree.parse("async () => await 5 ** 6;", { ecmaVersion: 10 });
             });
         });
 
