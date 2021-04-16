@@ -2,10 +2,7 @@
  * @fileoverview A simple script to update existing tests to reflect new
  *      parser changes.
  * @author Nicholas C. Zakas
-
-"use strict";
-
-/*
+ *
  * Usage:
  *      node tools/update-tests.js
  *
@@ -14,6 +11,8 @@
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
+
+"use strict";
 
 var shelljs = require("shelljs"),
     espree = require("../espree"),

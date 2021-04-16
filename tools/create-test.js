@@ -3,8 +3,6 @@
  * @author Nicholas C. Zakas
  */
 
-"use strict";
-
 /*
  * Usage:
  *      node tools/create-test.js ecma-features/binaryLiterals/ file_with_code.js
@@ -16,9 +14,9 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var shelljs = require("shelljs"),
-    espree = require("../espree"),
-    path = require("path");
+import shelljs from "shelljs";
+import { parse } from "../espree.js"
+import path from "path";
 
 //------------------------------------------------------------------------------
 // Initialization
@@ -72,7 +70,7 @@ code.forEach(function(source, index) {
     //------------------------------------------------------------------------------
 
     try {
-        result = espree.parse(sourceCode, {
+        result = parse(sourceCode, {
             ecmaVersion: 8, // change as needed
             ecmaFeatures: {
                 experimentalObjectRestSpread: true
