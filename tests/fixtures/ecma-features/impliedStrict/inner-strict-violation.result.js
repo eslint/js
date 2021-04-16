@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "type": "Program",
     "sourceType": "script",
     "body": [

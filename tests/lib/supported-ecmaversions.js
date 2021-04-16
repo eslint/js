@@ -3,14 +3,13 @@
  * @author Kai Cataldo
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    espree = require("../../espree");
+import assert from "assert";
+import * as espree from "../../espree.js";
+
 
 //------------------------------------------------------------------------------
 // Tests

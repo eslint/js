@@ -1,6 +1,8 @@
 build
 coverage
 node_modules
+.DS_Store
+dist
 npm-debug.log
 _test.js
 .idea

@@ -3,15 +3,26 @@
  * @author Nicholas C. Zakas
  */
 
-"use strict";
 
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    espree = require("../../espree"),
-    tester = require("./tester");
+import tester from "./tester.js";
+import * as espree from "../../espree.js";
+import assert from "assert";
+import letResult from "../fixtures/tokenize/let-result.tokens.js";
+import constResultTokens from "../fixtures/tokenize/const-result.tokens.js";
+import regexpUResultTokens from "../fixtures/tokenize/regexp-u-result.tokens.js";
+import regexpYResultTokens from "../fixtures/tokenize/regexp-y-result.tokens.js";
+import templateStringSimpleResultTokens from "../fixtures/tokenize/template-string-simple-result.tokens.js";
+import templateStringEmbeddedResultTokens from "../fixtures/tokenize/template-string-embedded-result.tokens.js";
+import templateStringEmbedded2ResultTokens from "../fixtures/tokenize/template-string-embedded2-result.tokens.js";
+import templateStringExpressionsResultTokens from "../fixtures/tokenize/template-string-expressions-result.tokens.js";
+import regexInParensResultTokens from "../fixtures/tokenize/regex-in-parens-result.tokens.js";
+import notOperatorTokens from "../fixtures/tokenize/not-operator.tokens.js";
+import tildeOperatorTokens from "../fixtures/tokenize/tilde-operator.tokens.js";
+
 
 //------------------------------------------------------------------------------
 // Tests
@@ -36,7 +47,7 @@ describe("tokenize()", () => {
             range: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/let-result.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(tokens), letResult);
     });
 
     it("should produce tokens when using const", () => {
@@ -46,7 +57,7 @@ describe("tokenize()", () => {
             range: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/const-result.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(tokens), constResultTokens);
     });
 
     it("should produce tokens when using regular expression u flag", () => {
@@ -56,7 +67,7 @@ describe("tokenize()", () => {
             range: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/regexp-u-result.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(tokens), regexpUResultTokens);
     });
 
     it("should produce tokens when using regular expression y flag", () => {
@@ -66,7 +77,7 @@ describe("tokenize()", () => {
             range: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/regexp-y-result.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(tokens), regexpYResultTokens);
     });
 
 
@@ -78,7 +89,7 @@ describe("tokenize()", () => {
                 range: true
             });
 
-            assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/template-string-simple-result.tokens.js"));
+            assert.deepStrictEqual(tester.getRaw(tokens), templateStringSimpleResultTokens);
         });
 
         it("should produce tokens when tokenizing template string with embedded variable", () => {
@@ -88,7 +99,7 @@ describe("tokenize()", () => {
                 range: true
             });
 
-            assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/template-string-embedded-result.tokens.js"));
+            assert.deepStrictEqual(tester.getRaw(tokens), templateStringEmbeddedResultTokens);
         });
 
         it("should produce tokens when tokenizing template string with embedded variable in function call", () => {
@@ -98,7 +109,7 @@ describe("tokenize()", () => {
                 range: true
             });
 
-            assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/template-string-embedded2-result.tokens.js"));
+            assert.deepStrictEqual(tester.getRaw(tokens), templateStringEmbedded2ResultTokens);
         });
 
         it("should produce tokens when parsing template string with embedded variable in function call and with tokens options on", () => {
@@ -109,7 +120,7 @@ describe("tokenize()", () => {
                 range: true
             });
 
-            assert.deepStrictEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/template-string-embedded2-result.tokens.js"));
+            assert.deepStrictEqual(tester.getRaw(ast.tokens), templateStringEmbedded2ResultTokens);
         });
 
         it("should produce tokens when tokenizing template string with embedded expressions", () => {
@@ -119,7 +130,7 @@ describe("tokenize()", () => {
                 range: true
             });
 
-            assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/template-string-expressions-result.tokens.js"));
+            assert.deepStrictEqual(tester.getRaw(tokens), templateStringExpressionsResultTokens);
         });
 
 
@@ -132,7 +143,7 @@ describe("tokenize()", () => {
             range: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(tokens), require("../fixtures/tokenize/regex-in-parens-result.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(tokens), regexInParensResultTokens);
     });
 
     it("should produce tokens when using regular expression wrapped in parens using parse()", () => {
@@ -142,7 +153,7 @@ describe("tokenize()", () => {
             tokens: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/regex-in-parens-result.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(ast.tokens), regexInParensResultTokens);
     });
 
     it("should produce tokens when using not operator", () => {
@@ -152,7 +163,7 @@ describe("tokenize()", () => {
             tokens: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/not-operator.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(ast.tokens), notOperatorTokens);
     });
 
     it("should produce tokens when using tilde operator", () => {
@@ -162,7 +173,7 @@ describe("tokenize()", () => {
             tokens: true
         });
 
-        assert.deepStrictEqual(tester.getRaw(ast.tokens), require("../fixtures/tokenize/tilde-operator.tokens.js"));
+        assert.deepStrictEqual(tester.getRaw(ast.tokens), tildeOperatorTokens);
     });
 
     it("should produce tokens when using a single identifier", () => {

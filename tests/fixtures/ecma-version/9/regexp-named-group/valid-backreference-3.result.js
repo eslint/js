@@ -1,6 +1,6 @@
-const conditionalRegex = require("../../../../lib/conditional-regex-value");
+import conditionalRegex from "../../../../lib/conditional-regex-value.js";
 
-module.exports = {
+export default {
     "type": "Program",
     "loc": {
         "start": {

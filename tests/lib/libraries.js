@@ -3,24 +3,27 @@
  * @author Nicholas C. Zakas
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    leche = require("leche"),
-    path = require("path"),
-    espree = require("../../espree"),
-    shelljs = require("shelljs"),
-    tester = require("./tester");
+import leche from "leche";
+import path from "path";
+import shelljs from "shelljs";
+import tester from "./tester.js";
+import * as espree from "../../espree.js";
+import assert from "assert";
+import { fileURLToPath } from "url";
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------
 
-const testFiles = shelljs.find("./tests/fixtures/libraries").filter(filename => path.extname(filename) === ".js");
+const testFiles = shelljs.find(`${__dirname}/../fixtures/libraries`).filter(filename => path.extname(filename) === ".js");
 
 //------------------------------------------------------------------------------
 // Tests
@@ -32,11 +35,8 @@ describe("Libraries", () => {
 
         // var filename = "angular-1.2.5.js";
 
-        it("should produce correct AST when parsed", function() {
-
-            this.timeout(10000); // eslint-disable-line no-invalid-this
-
-            const output = shelljs.cat(path.resolve(__dirname, "../../", `${filename}.result.json`));
+        it("should produce correct AST when parsed", () => {
+            const output = shelljs.cat(`${filename}.result.json`);
             const input = shelljs.cat(filename);
 
             const result = JSON.stringify(tester.getRaw(espree.parse(input, {
@@ -47,7 +47,6 @@ describe("Libraries", () => {
 
             assert.strictEqual(result, output);
         });
-
     });
 
 

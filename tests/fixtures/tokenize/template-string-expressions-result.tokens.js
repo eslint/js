@@ -1,5 +1,5 @@
 // var foo = `Hello ${b}. a + 5 = ${a + 5}`;
-module.exports = [
+export default [
     {
         "type": "Keyword",
         "value": "var",

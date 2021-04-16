@@ -3,26 +3,26 @@
  * @author Toru Nagashima
  */
 
-
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const acorn = require("acorn"),
-    assert = require("assert");
+import * as acorn from "acorn";
+import assert from "assert";
+
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 describe("acorn", () => {
-    it("acorn.parse() should work after espree was loaded.", () => {
-        const before = acorn.parse("var foo = bar /*world*/;");
+    it("acorn.parse() should work after espree was loaded.", async () => {
+        const before = acorn.parse("var foo = bar /*world*/;", { ecmaVersion: 5 });
 
-        require("../../espree");
-        const after = acorn.parse("var foo = bar /*world*/;");
+        // eslint-disable-next-line node/no-unsupported-features/es-syntax
+        await import("../../espree.js");
+
+        const after = acorn.parse("var foo = bar /*world*/;", { ecmaVersion: 5 });
 
         assert.deepStrictEqual(after, before);
     });

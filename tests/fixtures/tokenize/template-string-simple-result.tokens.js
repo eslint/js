@@ -1,5 +1,5 @@
 // var foo = `hi`;
-module.exports = [
+export default [
     {
         "type": "Keyword",
         "value": "var",

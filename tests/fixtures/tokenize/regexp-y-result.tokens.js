@@ -1,5 +1,5 @@
 // var foo = /foo/y;
-module.exports = [
+export default [
     {
         "type": "Keyword",
         "value": "var",

@@ -3,14 +3,13 @@
  * @author Aniketh Saha
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    { normalizeOptions } = require("../../lib/options");
+import assert from "assert";
+import { normalizeOptions } from "../../lib/options.js";
+
 
 //------------------------------------------------------------------------------
 // Tests

@@ -3,14 +3,13 @@
  * @author Nicholas C. Zakas
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    espree = require("../../espree");
+import assert from "assert";
+import * as espree from "../../espree.js";
+
 
 //------------------------------------------------------------------------------
 // Private
@@ -50,7 +49,7 @@ function getRaw(ast) {
 // Public
 //------------------------------------------------------------------------------
 
-module.exports = {
+export default {
     getRaw,
 
     assertMatches(code, config, expected) {

@@ -1,4 +1,4 @@
-module.exports = [{
+export default [{
             type: 'Keyword',
             value: 'var',
             range: [0, 3],

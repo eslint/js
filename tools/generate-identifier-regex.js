@@ -1,6 +1,6 @@
 // Based on https://gist.github.com/mathiasbynens/6334847 by @mathias
 
-var regenerate = require('regenerate');
+import regenerate from 'regenerate';
 
 // Which Unicode version should be used?
 var version = '6.3.0'; // note: also update `package.json` when this changes

@@ -3,18 +3,22 @@
  * @author Nicholas C. Zakas
  */
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert"),
-    leche = require("leche"),
-    path = require("path"),
-    espree = require("../../espree"),
-    shelljs = require("shelljs"),
-    tester = require("./tester");
+import assert from "assert";
+import leche from "leche";
+import path from "path";
+import * as espree from "../../espree.js";
+import shelljs from "shelljs";
+import { fileURLToPath, pathToFileURL } from "url";
+import tester from "./tester.js";
+
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 
 // var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
@@ -24,9 +28,8 @@ const assert = require("assert"),
 const FIXTURES_DIR = "./tests/fixtures/ecma-features";
 
 const testFiles = shelljs.find(FIXTURES_DIR)
-    .filter(filename => filename.indexOf(".src.js") > -1)
+    .filter(filename => filename.includes(".src.js"))
     .map(filename => filename.slice(FIXTURES_DIR.length - 1, filename.length - 7));
-
 
 //------------------------------------------------------------------------------
 // Tests
@@ -63,11 +66,13 @@ describe("ecmaFeatures", () => {
             isPermissive = !shouldThrowInTestsWhenEnabled(feature),
             code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
 
-        it(`should parse correctly when ${feature} is ${isPermissive}`, () => {
+        it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
             config.ecmaFeatures[feature] = isPermissive;
-            const expected = require(`${path.resolve(__dirname, "../../", FIXTURES_DIR, filename)}.result.js`);
 
-            tester.assertMatches(code, config, expected);
+            // eslint-disable-next-line node/no-unsupported-features/es-syntax
+            const expected = await import(`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`);
+
+            tester.assertMatches(code, config, expected.default);
         });
 
         it(`should throw an error when ${feature} is ${!isPermissive}`, () => {

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "index": 17,
     "lineNumber": 1,
     "column": 18,
