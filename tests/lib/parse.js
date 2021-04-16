@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for tokenize().
+ * @fileoverview Tests for parse().
  * @author Nicholas C. Zakas
  */
 
@@ -107,6 +107,12 @@ describe("parse()", () => {
             );
         });
 
+        // https://github.com/eslint/espree/issues/470
+        it("Should throw on invalid `(a = 1) = t`", () => {
+            assert.throws(() => {
+                espree.parse("(a = 1) = t", { ecmaVersion: 6 });
+            });
+        });
     });
 
     describe("nodes", () => {
