@@ -17,11 +17,13 @@
 import shelljs from "shelljs";
 import { parse } from "../espree.js"
 import path from "path";
+import { fileURLToPath } from "url";
 
 //------------------------------------------------------------------------------
 // Initialization
 //------------------------------------------------------------------------------
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 var PATTERN = /\/\*!espree\-section:\s*[a-z\d\-]+\*\//gi;
 
 var filename = process.argv[2],
@@ -54,8 +56,8 @@ if (!sections || sections.length !== code.length) {
 code.forEach(function(source, index) {
 
     var fullFilename = filename + "/" + (sections[index].substring(18, sections[index].length - 2).trim()),
-        testSourceFilename = path.resolve("__dirname", "../tests/fixtures/" + fullFilename + ".src.js"),
-        testResultFilename = path.resolve("__dirname", "../tests/fixtures/" + fullFilename + ".result.js");
+        testSourceFilename = path.resolve(__dirname, "../tests/fixtures/" + fullFilename + ".src.js"),
+        testResultFilename = path.resolve(__dirname, "../tests/fixtures/" + fullFilename + ".result.js");
 
     var result,
         sourceCode = source.trim();
@@ -92,7 +94,12 @@ code.forEach(function(source, index) {
     recursivelyRemoveStartAndEnd(result)
 
     sourceCode.to(testSourceFilename);
-    ("module.exports = " + JSON.stringify(result, null, "    ")).to(testResultFilename);
+
+    let resultCode = `export default ${JSON.stringify(result, (key, value) => {
+        return (typeof value === "bigint") ? `bigint<${value}n>` : value;
+    }, 4)};`;
+    resultCode = resultCode.replace(/"bigint<(\d+n)>"/g, "$1");
+    resultCode.to(testResultFilename);
 });
 
 // acorn adds these "start" and "end" properties
