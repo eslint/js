@@ -89,7 +89,7 @@ Even if `options` is empty or undefined or `options.tokens` is `false`, it assig
 **Example :**
 
 ```js
-import espree from "espree";
+import * as espree from "espree";
 
 const tokens = espree.tokenize('let foo = "bar"', { ecmaVersion: 6 });
 console.log(tokens);
