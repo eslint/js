@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build commonjs
-        run: npm run rollup
+        run: npm run build
       - name: Lint files
         run: npm run lint
   test:
@@ -46,7 +46,7 @@ jobs:
       run: npm install --legacy-peer-deps
       if: ${{ startswith(matrix.node, '15') }}  
     - name: Build commonjs
-      run: npm run rollup
+      run: npm run build
     - name: Run tests
       run: npm run unit
   testNode10:
@@ -64,6 +64,6 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Build commonjs
-      run: npm run rollup
+      run: npm run build
     - name: Run tests
       run: npm run unit:cjs
