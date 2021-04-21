@@ -2,27 +2,27 @@
  * @fileoverview A simple script to update existing tests to reflect new
  *      parser changes.
  * @author Nicholas C. Zakas
-
-"use strict";
-
-/*
+ *
  * Usage:
  *      node tools/update-tests.js
  *
  */
 
 //------------------------------------------------------------------------------
-// Requirements
+// Imports
 //------------------------------------------------------------------------------
 
-var shelljs = require("shelljs"),
-    espree = require("../espree"),
-    tester = require("../tests/lib/tester"),
-    path = require("path");
+import shelljs from "shelljs";
+import * as espree from "../espree.js";
+import tester from "../tests/lib/tester.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 //------------------------------------------------------------------------------
 // Helpers
 //------------------------------------------------------------------------------
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function getExpectedResult(code, config) {
     try {
@@ -51,7 +51,13 @@ function getLibraryFilenames(directory) {
 }
 
 function outputResult(result, testResultFilename) {
-    ("module.exports = " + JSON.stringify(result, null, "    ") + ";").to(testResultFilename);
+    let code = `export default ${JSON.stringify(result, (key, value) => {
+        return (typeof value === "bigint") ? `bigint<${value}n>` : value;
+    }, 4)};`;
+    
+    code = code.replace(/"bigint<(\d+n)>"/g, "$1");
+    
+    code.to(testResultFilename);
 }
 
 //------------------------------------------------------------------------------

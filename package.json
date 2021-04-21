@@ -70,7 +70,6 @@
     "unit": "npm-run-all -s unit:*",
     "unit:esm": "nyc mocha --color --reporter progress --timeout 30000 'tests/lib/**/*.js'",
     "unit:cjs": "mocha --color --reporter progress --timeout 30000 tests/lib/commonjs.cjs",
-    "generate-regex": "node tools/generate-identifier-regex.js",
     "test": "npm-run-all -p unit lint",
     "lint": "eslint \"*.?(c)js\" lib/ tests/lib/",
     "fixlint": "npm run lint -- --fix",
