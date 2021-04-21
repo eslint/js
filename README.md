@@ -15,9 +15,17 @@ Install:
 npm i espree
 ```
 
-And in your Node.js code:
+To use in an ESM file:
 
-```javascript
+```js
+import * as espree from "espree";
+
+const ast = espree.parse(code);
+```
+
+To use in a Common JS file:
+
+```js
 const espree = require("espree");
 
 const ast = espree.parse(code);
@@ -32,10 +40,10 @@ const ast = espree.parse(code);
 - `code` [string]() - the code which needs to be parsed. 
 - `options (Optional)` [Object]() - read more about this [here](#options).
 
-```javascript
-const espree = require("espree");
+```js
+import * as espree from "espree";
 
-const ast = espree.parse(code, options);
+const ast = espree.parse(code);
 ```
 
 **Example :**
@@ -81,6 +89,8 @@ Even if `options` is empty or undefined or `options.tokens` is `false`, it assig
 **Example :**
 
 ```js
+import * as espree from "espree";
+
 const tokens = espree.tokenize('let foo = "bar"', { ecmaVersion: 6 });
 console.log(tokens);
 ```
