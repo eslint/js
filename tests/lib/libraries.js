@@ -7,7 +7,6 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import leche from "leche";
 import path from "path";
 import shelljs from "shelljs";
 import tester from "./tester.js";
@@ -30,8 +29,7 @@ const testFiles = shelljs.find(`${__dirname}/../fixtures/libraries`).filter(file
 //------------------------------------------------------------------------------
 
 describe("Libraries", () => {
-
-    leche.withData(testFiles, filename => {
+    testFiles.forEach(filename => {
 
         // var filename = "angular-1.2.5.js";
 
@@ -48,6 +46,4 @@ describe("Libraries", () => {
             assert.strictEqual(result, output);
         });
     });
-
-
 });

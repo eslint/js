@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import assert from "assert";
-import leche from "leche";
 import path from "path";
 import * as espree from "../../espree.js";
 import shelljs from "shelljs";
@@ -57,8 +56,7 @@ describe("ecmaFeatures", () => {
             ecmaFeatures: {}
         };
     });
-
-    leche.withData(testFiles, filename => {
+    testFiles.forEach(filename => {
 
         // Uncomment and fill in filename to focus on a single file
         // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
@@ -83,5 +81,6 @@ describe("ecmaFeatures", () => {
             });
 
         });
+
     });
 });

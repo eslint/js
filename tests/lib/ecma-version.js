@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import fs from "fs";
-import leche from "leche";
 import path from "path";
 import shelljs from "shelljs";
 import tester from "./tester.js";
@@ -59,8 +58,7 @@ describe("ecmaVersion", () => {
     });
 
     describe("Scripts", () => {
-
-        leche.withData(scriptOnlyTestFiles, filename => {
+        scriptOnlyTestFiles.forEach(filename => {
             const version = filename.slice(1, filename.indexOf("/", 1));
 
             // Uncomment and fill in filename to focus on a single file
@@ -76,15 +74,13 @@ describe("ecmaVersion", () => {
 
                 tester.assertMatches(code, config, expected.default);
             });
-
         });
 
     });
 
 
     describe("Modules", () => {
-
-        leche.withData(moduleTestFiles, filename => {
+        moduleTestFiles.forEach(filename => {
             const version = filename.slice(1, filename.indexOf("/", 1));
             const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
 
@@ -115,7 +111,6 @@ describe("ecmaVersion", () => {
 
                 tester.assertMatches(code, config, expected);
             });
-
         });
     });
 
