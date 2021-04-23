@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [15.x, 14.x, 13.x, 12.x]
+        node: [16.x, 15.x, 14.x, 13.x, 12.x]
         include:
         - os: windows-latest
           node: "12.x"
