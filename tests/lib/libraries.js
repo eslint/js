@@ -30,20 +30,23 @@ const testFiles = shelljs.find(`${__dirname}/../fixtures/libraries`).filter(file
 
 describe("Libraries", () => {
     testFiles.forEach(filename => {
+        describe(filename, () => {
 
-        // var filename = "angular-1.2.5.js";
+            // var filename = "angular-1.2.5.js";
 
-        it("should produce correct AST when parsed", () => {
-            const output = shelljs.cat(`${filename}.result.json`);
-            const input = shelljs.cat(filename);
+            it("should produce correct AST when parsed", () => {
+                const output = shelljs.cat(`${filename}.result.json`);
+                const input = shelljs.cat(filename);
 
-            const result = JSON.stringify(tester.getRaw(espree.parse(input, {
-                loc: true,
-                range: true,
-                tokens: true
-            })));
+                const result = JSON.stringify(tester.getRaw(espree.parse(input, {
+                    loc: true,
+                    range: true,
+                    tokens: true
+                })));
 
-            assert.strictEqual(result, output);
+                assert.strictEqual(result, output);
+            });
         });
+
     });
 });
