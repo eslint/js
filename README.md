@@ -137,6 +137,9 @@ const options = {
     // create a top-level comments array containing all comments
     comment: false,
 
+    // attach comments to the closest relevant node as leadingComments and trailingComments
+    attachComment: false,
+
     // create a top-level tokens array containing all tokens
     tokens: false,
 
