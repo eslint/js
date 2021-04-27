@@ -48,7 +48,6 @@
     "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "json-diff": "^0.5.4",
-    "leche": "^2.3.0",
     "mocha": "^8.3.1",
     "npm-run-all": "^4.1.5",
     "nyc": "^14.1.1",
