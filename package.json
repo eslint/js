@@ -31,9 +31,9 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "acorn": "^8.1.0",
+    "acorn": "^8.2.1",
     "acorn-jsx": "^5.3.1",
-    "eslint-visitor-keys": "^2.0.0"
+    "eslint-visitor-keys": "github:eslint/eslint-visitor-keys#908fdf8c0d9a352c696c8c1f4901280d1a0795f7"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
