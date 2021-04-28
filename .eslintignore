@@ -1,3 +1,5 @@
 /node_modules
 /tests/fixtures
-/tools
+/tools/*
+!/tools/update-ecma-version-tests.js
+/dist

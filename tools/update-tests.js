@@ -65,11 +65,9 @@ function outputResult(result, testResultFilename) {
 //------------------------------------------------------------------------------
 
 var FIXTURES_DIR = "./tests/fixtures/ecma-features",
-    FIXTURES_VERSION_DIR = "./tests/fixtures/ecma-version",
     LIBRARIES_DIR = "./tests/fixtures/libraries";
 
 var testFiles = getTestFilenames(FIXTURES_DIR),
-    versionFiles = getTestFilenames(FIXTURES_VERSION_DIR),
     libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
 libraryFiles.forEach(function(filename) {
@@ -100,23 +98,6 @@ testFiles.forEach(function(filename) {
     config.ecmaFeatures[feature] = true;
     var testResultFilename = path.resolve(__dirname, "..", FIXTURES_DIR, filename) + ".result.js";
     var result = getExpectedResult(code, config);
-
-    outputResult(result, testResultFilename);
-});
-
-versionFiles.forEach(function(filename) {
-
-    var version = Number(filename.substring(0, filename.indexOf("/"))),
-        code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
-        config = {
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: version
-        };
-
-    var testResultFilename = path.resolve(__dirname, "..", FIXTURES_VERSION_DIR, filename) + ".result.js",
-        result = getExpectedResult(code, config);
 
     outputResult(result, testResultFilename);
 });
