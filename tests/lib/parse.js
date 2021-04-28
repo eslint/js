@@ -89,6 +89,13 @@ describe("parse()", () => {
             assert.strictEqual(ast.end, ast.range[1]);
         });
 
+        it("should output the same value for program.start, end as when ranges are returned and there is a leading/trailing comments using default options", () => {
+            const ast = espree.parse("/* foo */ bar /* baz */");
+
+            assert.strictEqual(ast.start, 10);
+            assert.strictEqual(ast.end, 13);
+        });
+
         it("should output the same value for program.start, end and range and loc when there is a leading comments with range and loc true", () => {
             const ast = espree.parse("/* foo */ bar", {
                 range: true,
@@ -152,11 +159,15 @@ describe("parse()", () => {
 
             assert.strictEqual(ast.body[0].expression.quasis[0].start, ast.body[0].expression.quasis[0].loc.start.column);
             assert.strictEqual(ast.body[0].expression.quasis[0].end, ast.body[0].expression.quasis[0].loc.end.column);
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, ast.body[0].expression.quasis[0].range[0]);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, ast.body[0].expression.quasis[0].range[1]);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, ast.body[0].expression.quasis[1].loc.start.column);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].loc.end.column);
             assert.strictEqual(ast.body[0].expression.quasis[1].start, ast.body[0].expression.quasis[1].range[0]);
             assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].range[1]);
         });
 
-        it("should output the same value for loc, range and start and end in templateElement", () => {
+        it("should output the same value for start and end in templateElement as when ranges are present", () => {
             const ast = espree.parse("`foo ${bar}`;", {
                 ecmaVersion: 6
             });
