@@ -82,6 +82,7 @@
     "generate-alpharelease": "eslint-generate-prerelease alpha",
     "generate-betarelease": "eslint-generate-prerelease beta",
     "generate-rcrelease": "eslint-generate-prerelease rc",
-    "publish-release": "eslint-publish-release"
+    "publish-release": "eslint-publish-release",
+    "prepare": "npm run -s build"
   }
 }
