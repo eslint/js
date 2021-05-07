@@ -7,9 +7,8 @@ Please sign the [jQuery Foundation Contributor License Agreement](https://contri
 Our full contribution guidelines can be found at:
 <http://eslint.org/docs/developer-guide/contributing/>
 
-# How to update espree to support new syntax
+# How to upgrade `acorn` to support new syntax
 
-1. Update `acorn` package the upstream.
 1. `npm install acorn@latest`
 1. If a new `ecmaVersion` value is added, update `SUPPORTED_VERSIONS` constant in `lib/options.js` and tests in `tests/lib/supported-ecmaversions.js`.
 1. If new token types are added, update `lib/token-translator.js` file to translate the tokens.
