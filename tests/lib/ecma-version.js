@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import fs from "fs";
-import leche from "leche";
 import path from "path";
 import shelljs from "shelljs";
 import tester from "./tester.js";
@@ -59,22 +58,23 @@ describe("ecmaVersion", () => {
     });
 
     describe("Scripts", () => {
+        scriptOnlyTestFiles.forEach(filename => {
+            describe(filename, () => {
+                const version = filename.slice(1, filename.indexOf("/", 1));
 
-        leche.withData(scriptOnlyTestFiles, filename => {
-            const version = filename.slice(1, filename.indexOf("/", 1));
+                // Uncomment and fill in filename to focus on a single file
+                // var filename = "newTarget/simple-new-target";
+                const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
 
-            // Uncomment and fill in filename to focus on a single file
-            // var filename = "newTarget/simple-new-target";
-            const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
+                it("should parse correctly when sourceType is script", async () => {
+                    config.ecmaVersion = Number(version);
 
-            it("should parse correctly when sourceType is script", async () => {
-                config.ecmaVersion = Number(version);
+                    const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
+                    // eslint-disable-next-line node/no-unsupported-features/es-syntax
+                    const expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
 
-                const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
-                // eslint-disable-next-line node/no-unsupported-features/es-syntax
-                const expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
-
-                tester.assertMatches(code, config, expected.default);
+                    tester.assertMatches(code, config, expected.default);
+                });
             });
 
         });
@@ -83,37 +83,38 @@ describe("ecmaVersion", () => {
 
 
     describe("Modules", () => {
+        moduleTestFiles.forEach(filename => {
+            describe(filename, () => {
+                const version = filename.slice(1, filename.indexOf("/", 1));
+                const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
 
-        leche.withData(moduleTestFiles, filename => {
-            const version = filename.slice(1, filename.indexOf("/", 1));
-            const code = shelljs.cat(`${FIXTURES_DIR}/${filename}.src.js`);
+                it("should parse correctly when sourceType is module", async () => {
+                    const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
 
-            it("should parse correctly when sourceType is module", async () => {
-                const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
+                    let expected;
 
-                let expected;
+                    try {
+                        // eslint-disable-next-line node/no-unsupported-features/es-syntax
+                        expected = await import(`${pathToFileURL(absolutePath).href}.module-result.js`);
+                    } catch {
+                        // eslint-disable-next-line node/no-unsupported-features/es-syntax
+                        expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
+                    }
 
-                try {
-                    // eslint-disable-next-line node/no-unsupported-features/es-syntax
-                    expected = await import(`${pathToFileURL(absolutePath).href}.module-result.js`);
-                } catch {
-                    // eslint-disable-next-line node/no-unsupported-features/es-syntax
-                    expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
-                }
+                    if (expected) {
+                        expected = expected.default;
+                    }
 
-                if (expected) {
-                    expected = expected.default;
-                }
+                    config.ecmaVersion = Number(version);
+                    config.sourceType = "module";
 
-                config.ecmaVersion = Number(version);
-                config.sourceType = "module";
+                    // set sourceType of program node to module
+                    if (expected.type === "Program") {
+                        expected.sourceType = "module";
+                    }
 
-                // set sourceType of program node to module
-                if (expected.type === "Program") {
-                    expected.sourceType = "module";
-                }
-
-                tester.assertMatches(code, config, expected);
+                    tester.assertMatches(code, config, expected);
+                });
             });
 
         });

@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import assert from "assert";
-import leche from "leche";
 import path from "path";
 import * as espree from "../../espree.js";
 import shelljs from "shelljs";
@@ -57,31 +56,32 @@ describe("ecmaFeatures", () => {
             ecmaFeatures: {}
         };
     });
+    testFiles.forEach(filename => {
+        describe(filename, () => {
 
-    leche.withData(testFiles, filename => {
+            // Uncomment and fill in filename to focus on a single file
+            // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
+            const feature = path.dirname(filename),
+                isPermissive = !shouldThrowInTestsWhenEnabled(feature),
+                code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
 
-        // Uncomment and fill in filename to focus on a single file
-        // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
-        const feature = path.dirname(filename),
-            isPermissive = !shouldThrowInTestsWhenEnabled(feature),
-            code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
+            it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
+                config.ecmaFeatures[feature] = isPermissive;
 
-        it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
-            config.ecmaFeatures[feature] = isPermissive;
+                // eslint-disable-next-line node/no-unsupported-features/es-syntax
+                const expected = await import(`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`);
 
-            // eslint-disable-next-line node/no-unsupported-features/es-syntax
-            const expected = await import(`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`);
-
-            tester.assertMatches(code, config, expected.default);
-        });
-
-        it(`should throw an error when ${feature} is ${!isPermissive}`, () => {
-            config.ecmaFeatures[feature] = !isPermissive;
-
-            assert.throws(() => {
-                espree.parse(code, config);
+                tester.assertMatches(code, config, expected.default);
             });
 
+            it(`should throw an error when ${feature} is ${!isPermissive}`, () => {
+                config.ecmaFeatures[feature] = !isPermissive;
+
+                assert.throws(() => {
+                    espree.parse(code, config);
+                });
+
+            });
         });
     });
 });

@@ -80,6 +80,104 @@ describe("parse()", () => {
             assert.deepStrictEqual(tester.getRaw(ast), allPiecesJson);
         });
 
+        it("should output the same value for program.start, end and range when there is a leading/trailing comments", () => {
+            const ast = espree.parse("/* foo */ bar /* baz */", {
+                range: true
+            });
+
+            assert.strictEqual(ast.start, ast.range[0]);
+            assert.strictEqual(ast.end, ast.range[1]);
+        });
+
+        it("should output the same value for program.start, end as when ranges are returned and there is a leading/trailing comments using default options", () => {
+            const ast = espree.parse("/* foo */ bar /* baz */");
+
+            assert.strictEqual(ast.start, 10);
+            assert.strictEqual(ast.end, 13);
+        });
+
+        it("should output the same value for program.start, end and range and loc when there is a leading comments with range and loc true", () => {
+            const ast = espree.parse("/* foo */ bar", {
+                range: true,
+                loc: true
+            });
+
+            assert.strictEqual(ast.start, ast.range[0]);
+            assert.strictEqual(ast.end, ast.range[1]);
+            assert.strictEqual(ast.start, ast.loc.start.column);
+            assert.strictEqual(ast.end, ast.loc.end.column);
+        });
+
+        it("should output the same value for program.start, end and loc when there is a leading comments with loc", () => {
+            const ast = espree.parse("/* foo */ bar", {
+                loc: true
+            });
+
+            assert.strictEqual(ast.start, ast.loc.start.column);
+            assert.strictEqual(ast.end, ast.loc.end.column);
+        });
+
+        it("should output the same value for program.start, end and range when there is a trailing comments", () => {
+            const ast = espree.parse(" bar /* foo */", {
+                range: true
+            });
+
+            assert.strictEqual(ast.start, ast.range[0]);
+            assert.strictEqual(ast.end, ast.range[1]);
+        });
+
+        it("should output the same value for range and start and end in templateElement with range", () => {
+            const ast = espree.parse("`foo ${bar}`;", {
+                ecmaVersion: 6,
+                range: true
+            });
+
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, ast.body[0].expression.quasis[0].range[0]);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, ast.body[0].expression.quasis[0].range[1]);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, ast.body[0].expression.quasis[1].range[0]);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].range[1]);
+        });
+
+        it("should output the same value for loc and start and end in templateElement with loc", () => {
+            const ast = espree.parse("`foo ${bar}`;", {
+                ecmaVersion: 6,
+                loc: true
+            });
+
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, ast.body[0].expression.quasis[0].loc.start.column);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, ast.body[0].expression.quasis[0].loc.end.column);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, ast.body[0].expression.quasis[1].loc.start.column);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].loc.end.column);
+        });
+
+        it("should output the same value for loc, range and start and end in templateElement with loc and range", () => {
+            const ast = espree.parse("`foo ${bar}`;", {
+                ecmaVersion: 6,
+                loc: true,
+                range: true
+            });
+
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, ast.body[0].expression.quasis[0].loc.start.column);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, ast.body[0].expression.quasis[0].loc.end.column);
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, ast.body[0].expression.quasis[0].range[0]);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, ast.body[0].expression.quasis[0].range[1]);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, ast.body[0].expression.quasis[1].loc.start.column);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].loc.end.column);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, ast.body[0].expression.quasis[1].range[0]);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, ast.body[0].expression.quasis[1].range[1]);
+        });
+
+        it("should output the same value for start and end in templateElement as when ranges are present", () => {
+            const ast = espree.parse("`foo ${bar}`;", {
+                ecmaVersion: 6
+            });
+
+            assert.strictEqual(ast.body[0].expression.quasis[0].start, 0);
+            assert.strictEqual(ast.body[0].expression.quasis[0].end, 7);
+            assert.strictEqual(ast.body[0].expression.quasis[1].start, 10);
+            assert.strictEqual(ast.body[0].expression.quasis[1].end, 12);
+        });
+
         it("should reset lastToken on each parse", () => {
             espree.parse("var foo = bar;");
             const ast = espree.parse("//foo", {
@@ -111,6 +209,13 @@ describe("parse()", () => {
         it("Should throw on invalid `(a = 1) = t`", () => {
             assert.throws(() => {
                 espree.parse("(a = 1) = t", { ecmaVersion: 6 });
+            });
+        });
+
+        // https://github.com/eslint/espree/issues/472
+        it("Should throw on invalid `async () => await 5 ** 6;`", () => {
+            assert.throws(() => {
+                espree.parse("async () => await 5 ** 6;", { ecmaVersion: 10 });
             });
         });
     });

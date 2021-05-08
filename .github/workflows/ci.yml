@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [15.x, 14.x, 13.x, 12.x]
+        node: [16.x, 15.x, 14.x, 13.x, 12.x]
         include:
         - os: windows-latest
           node: "12.x"
@@ -41,10 +41,6 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Install dependencies
       run: npm install
-      if: ${{ !startswith(matrix.node, '15') }}
-    - name: Install dependencies
-      run: npm install --legacy-peer-deps
-      if: ${{ startswith(matrix.node, '15') }}  
     - name: Build commonjs
       run: npm run build
     - name: Run tests
