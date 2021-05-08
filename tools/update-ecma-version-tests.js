@@ -17,29 +17,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import util from "util";
 import shelljs from "shelljs";
-import * as espree from "../espree.js";
 import tester from "../tests/lib/tester.js";
 
 //------------------------------------------------------------------------------
 // Helpers
 //------------------------------------------------------------------------------
-
-/**
- * Get the parse result.
- * @param {string} code The source code to get.
- * @param {Object} config The espree options.
- * @returns {string} The parse result.
- */
-function getExpectedResult(code, config) {
-    try {
-        return tester.getRaw(espree.parse(code, config));
-    } catch (ex) {
-        const raw = tester.getRaw(ex);
-
-        raw.message = ex.message;
-        return raw;
-    }
-}
 
 /**
  * Find the test cases from a given directory.
@@ -60,11 +42,7 @@ function findTests(directory) {
  * @returns {void}
  */
 function outputResult(result, testResultFilename) {
-    let code = `export default ${JSON.stringify(result, (key, value) => ((typeof value === "bigint") ? `bigint<${value}n>` : value), 4)};`;
-
-    code = code.replace(/"bigint<(\d+n)>"/gu, "$1");
-
-    code.to(testResultFilename);
+    `export default ${tester.getAstCode(result)};`.to(testResultFilename);
 }
 
 /**
@@ -111,10 +89,10 @@ function main() {
         };
         const scriptResult = moduleOnly
             ? null
-            : getExpectedResult(code, { ...parserOptions, sourceType: "script" });
+            : tester.getExpectedResult(code, { ...parserOptions, sourceType: "script" });
         const moduleResult = scriptOnly
             ? null
-            : getExpectedResult(code, { ...parserOptions, sourceType: "module" });
+            : tester.getExpectedResult(code, { ...parserOptions, sourceType: "module" });
         const resultsAreSame = util.isDeepStrictEqual(
             { ...scriptResult, sourceType: null },
             { ...moduleResult, sourceType: null }
