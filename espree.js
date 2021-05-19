@@ -1,5 +1,5 @@
 /**
- * @fileoverview Main Espree file that converts Acorn into Esprima output.
+ * Main Espree file that converts Acorn into Esprima output.
  *
  * This file contains code from the following MIT-licensed projects:
  * 1. Acorn
