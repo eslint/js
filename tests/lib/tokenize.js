@@ -30,14 +30,10 @@ import tildeOperatorTokens from "../fixtures/tokenize/tilde-operator.tokens.js";
 
 describe("tokenize()", () => {
 
-    it("should have `ecmaVersion: 5` as default", () => {
-
-        // FIXME: is there a way to test that it isn't `ecmaVersion: 3`?
+    it("should have latestEcmaVersion as default", () => {
 
         // needs `ecmaVersion: 6` or higher
-        assert.throws(() => {
-            espree.tokenize("`template`");
-        });
+        espree.tokenize("`template`");
     });
 
     it("should produce tokens when using let", () => {

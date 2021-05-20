@@ -37,8 +37,8 @@ describe("Libraries", () => {
             it("should produce correct AST when parsed", () => {
                 const output = shelljs.cat(`${filename}.result.json`);
                 const input = shelljs.cat(filename);
-
                 const result = JSON.stringify(tester.getRaw(espree.parse(input, {
+                    ecmaVersion: 5,
                     loc: true,
                     range: true,
                     tokens: true
