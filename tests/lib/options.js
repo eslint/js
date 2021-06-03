@@ -24,6 +24,14 @@ describe("normalizeOptions", () => {
         assert.strictEqual(output.ecmaVersion, getLatestEcmaVersion());
     });
 
+    it("should set ecmaVersion to latestEcmaVersion if ecmaVersion: latest is passed", () => {
+        const output = normalizeOptions({
+            ecmaVersion: "latest"
+        });
+
+        assert.strictEqual(output.ecmaVersion, getLatestEcmaVersion());
+    });
+
     it("should throw error for sourceType module and ecmaVersion < 6", () => {
         const option = {
             sourceType: "module",
