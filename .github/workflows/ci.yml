@@ -45,21 +45,3 @@ jobs:
       run: npm run build
     - name: Run tests
       run: npm run unit
-  testNode10:
-    name: Test Node 10.x
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [10.x, "10.12.0"]
-    runs-on: ${{ matrix.os }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node }}
-    - name: Install dependencies
-      run: npm install
-    - name: Build commonjs
-      run: npm run build
-    - name: Run tests
-      run: npm run unit:cjs
