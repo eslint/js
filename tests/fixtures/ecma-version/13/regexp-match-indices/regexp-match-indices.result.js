@@ -7,12 +7,12 @@ export default {
         },
         "end": {
             "line": 1,
-            "column": 26
+            "column": 25
         }
     },
     "range": [
         0,
-        26
+        25
     ],
     "body": [
         {
@@ -24,12 +24,12 @@ export default {
                 },
                 "end": {
                     "line": 1,
-                    "column": 26
+                    "column": 25
                 }
             },
             "range": [
                 0,
-                26
+                25
             ],
             "declarations": [
                 {
@@ -41,12 +41,12 @@ export default {
                         },
                         "end": {
                             "line": 1,
-                            "column": 25
+                            "column": 24
                         }
                     },
                     "range": [
                         6,
-                        25
+                        24
                     ],
                     "id": {
                         "type": "Identifier",
@@ -75,18 +75,19 @@ export default {
                             },
                             "end": {
                                 "line": 1,
-                                "column": 25
+                                "column": 24
                             }
                         },
                         "range": [
                             12,
-                            25
+                            24
                         ],
-                        // Only supported in Node.js 16+
-                        "value": /^(12|14)\./.test(process.versions.node) ? null : eval("a+(?<Z>z)?/d"),
-                        "raw": "/a+(?<Z>z)?/d",
+
+                        // /d flag no supported in Node.js 12 or 14 yet
+                        "value": /^(12|14)\./.test(process.versions.node) ? null : eval("/a+(<Z>z)?/d"),
+                        "raw": "/a+(<Z>z)?/d",
                         "regex": {
-                            "pattern": "a+(?<Z>z)?",
+                            "pattern": "a+(<Z>z)?",
                             "flags": "d"
                         }
                     }
@@ -153,7 +154,7 @@ export default {
         },
         {
             "type": "RegularExpression",
-            "value": "/a+(?<Z>z)?/d",
+            "value": "/a+(<Z>z)?/d",
             "loc": {
                 "start": {
                     "line": 1,
@@ -161,16 +162,16 @@ export default {
                 },
                 "end": {
                     "line": 1,
-                    "column": 25
+                    "column": 24
                 }
             },
             "range": [
                 12,
-                25
+                24
             ],
             "regex": {
                 "flags": "d",
-                "pattern": "a+(?<Z>z)?"
+                "pattern": "a+(<Z>z)?"
             }
         },
         {
@@ -179,16 +180,16 @@ export default {
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 25
+                    "column": 24
                 },
                 "end": {
                     "line": 1,
-                    "column": 26
+                    "column": 25
                 }
             },
             "range": [
-                25,
-                26
+                24,
+                25
             ]
         }
     ]
