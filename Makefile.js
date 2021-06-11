@@ -2,7 +2,7 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/*global cat, cp, echo, exec, exit, find, mkdir, mv, rm, target, test*/
+/* global cp, echo, exit, mkdir, rm, target, test */
 
 "use strict";
 
@@ -13,106 +13,25 @@
 
 require("shelljs/make");
 
-var checker = require("npm-license"),
-    dateformat = require("dateformat"),
-    nodeCLI = require("shelljs-nodecli"),
-    semver = require("semver");
-
-//------------------------------------------------------------------------------
-// Settings
-//------------------------------------------------------------------------------
-
-var OPEN_SOURCE_LICENSES = [
-    /MIT/, /BSD/, /Apache/, /ISC/, /WTF/, /Public Domain/
-];
+const nodeCLI = require("shelljs-nodecli");
+const path = require("path");
 
 //------------------------------------------------------------------------------
 // Data
 //------------------------------------------------------------------------------
 
-var NODE_MODULES = "./node_modules/",
+const NODE_MODULES = "./node_modules/",
     TEMP_DIR = "./tmp/",
     BUILD_DIR = "./build/",
 
     // Utilities - intentional extra space at the end of each string
-    MOCHA = NODE_MODULES + "mocha/bin/_mocha ",
+    MOCHA = `${NODE_MODULES}mocha/bin/_mocha `,
 
     // Files
-    MAKEFILE = "./Makefile.js",
-    /*eslint-disable no-use-before-define */
-    JS_FILES = find("lib/").filter(fileType("js")).join(" ") + " espree.js",
-    TEST_FILES = find("tests/lib/").filter(fileType("js")).join(" ");
-    /*eslint-enable no-use-before-define */
-
-//------------------------------------------------------------------------------
-// Helpers
-//------------------------------------------------------------------------------
-
-/**
- * Generates a function that matches files with a particular extension.
- * @param {string} extension The file extension (i.e. "js")
- * @returns {Function} The function to pass into a filter method.
- * @private
- */
-function fileType(extension) {
-    return function(filename) {
-        return filename.substring(filename.lastIndexOf(".") + 1) === extension;
-    };
-}
-
-/**
- * Executes a command and returns the output instead of printing it to stdout.
- * @param {string} cmd The command string to execute.
- * @returns {string} The result of the executed command.
- */
-function execSilent(cmd) {
-    return exec(cmd, { silent: true }).output;
-}
-
-/**
- * Creates a release version tag and pushes to origin.
- * @param {string} type The type of release to do (patch, minor, major)
- * @returns {void}
- */
-function release(type) {
-    var newVersion;
-
-    target.test();
-    newVersion = execSilent("npm version " + type).trim();
-    target.changelog();
-
-    // add changelog to commit
-    exec("git add CHANGELOG.md");
-    exec("git commit --amend --no-edit");
-
-    // replace existing tag
-    exec("git tag -f " + newVersion);
-
-    // push all the things
-    exec("git push origin master --tags");
-    exec("npm publish");
-}
-
-
-/**
- * Splits a command result to separate lines.
- * @param {string} result The command result string.
- * @returns {array} The separated lines.
- */
-function splitCommandResultToLines(result) {
-    return result.trim().split("\n");
-}
-
-function getVersionTags() {
-    var tags = splitCommandResultToLines(exec("git tag", { silent: true }).output);
-
-    return tags.reduce(function(list, tag) {
-        if (semver.valid(tag)) {
-            list.push(tag);
-        }
-        return list;
-    }, []).sort(semver.compare);
-}
+    MAKEFILE = "Makefile.js",
+    CONFIG_FILES = ".eslintrc.js",
+    JS_FILES = "\"lib/**/*.js\" \"espree.js\"",
+    TEST_FILES = "tests/lib/**/*.js";
 
 //------------------------------------------------------------------------------
 // Tasks
@@ -123,11 +42,17 @@ target.all = function() {
 };
 
 target.lint = function() {
-    var errors = 0,
+    let errors = 0,
         lastReturn;
 
     echo("Validating Makefile.js");
     lastReturn = nodeCLI.exec("eslint", MAKEFILE);
+    if (lastReturn.code !== 0) {
+        errors++;
+    }
+
+    echo("Validating configuration files");
+    lastReturn = nodeCLI.exec("eslint", CONFIG_FILES);
     if (lastReturn.code !== 0) {
         errors++;
     }
@@ -150,12 +75,12 @@ target.lint = function() {
 };
 
 target.test = function() {
+
     // target.lint();
 
-    var errors = 0,
-        lastReturn;
+    let errors = 0;
 
-    lastReturn = nodeCLI.exec("istanbul", "cover", MOCHA, "-- -c", TEST_FILES);
+    const lastReturn = nodeCLI.exec("nyc", MOCHA, "--color", "--reporter progress", "--timeout 30000", TEST_FILES);
 
     if (lastReturn.code !== 0) {
         errors++;
@@ -164,8 +89,6 @@ target.test = function() {
     if (errors) {
         exit(1);
     }
-
-    // target.checkLicenses();
 };
 
 target.docs = function() {
@@ -179,7 +102,7 @@ target.browserify = function() {
     // 1. create temp and build directory
     if (!test("-d", TEMP_DIR)) {
         mkdir(TEMP_DIR);
-        mkdir(TEMP_DIR + "/lib");
+        mkdir(path.join(TEMP_DIR, "lib"));
     }
 
     if (!test("-d", BUILD_DIR)) {
@@ -187,100 +110,14 @@ target.browserify = function() {
     }
 
     // 2. copy files into temp directory
-    cp("-r", "lib/*", TEMP_DIR + "/lib");
+    cp("-r", "lib/*", path.join(TEMP_DIR, "lib"));
     cp("espree.js", TEMP_DIR);
     cp("package.json", TEMP_DIR);
 
 
     // 3. browserify the temp directory
-    nodeCLI.exec("browserify", TEMP_DIR + "espree.js", "-o", BUILD_DIR + "espree.js", "-s espree");
+    nodeCLI.exec("browserify", path.join(TEMP_DIR, "espree.js"), "-o", path.join(BUILD_DIR, "espree.js"), "-s espree");
 
     // 4. remove temp directory
     rm("-r", TEMP_DIR);
-};
-
-target.changelog = function() {
-
-    // get most recent two tags
-    var tags = getVersionTags(),
-        rangeTags = tags.slice(tags.length - 2),
-        now = new Date(),
-        timestamp = dateformat(now, "mmmm d, yyyy");
-
-    // output header
-    (rangeTags[1] + " - " + timestamp + "\n").to("CHANGELOG.tmp");
-
-    // get log statements
-    var logs = exec("git log --pretty=format:\"* %s (%an)\" " + rangeTags.join(".."), {silent: true}).output.split(/\n/g);
-    logs = logs.filter(function(line) {
-        return line.indexOf("Merge pull request") === -1 && line.indexOf("Merge branch") === -1;
-    });
-    logs.push(""); // to create empty lines
-    logs.unshift("");
-
-    // output log statements
-    logs.join("\n").toEnd("CHANGELOG.tmp");
-
-    // switch-o change-o
-    cat("CHANGELOG.tmp", "CHANGELOG.md").to("CHANGELOG.md.tmp");
-    rm("CHANGELOG.tmp");
-    rm("CHANGELOG.md");
-    mv("CHANGELOG.md.tmp", "CHANGELOG.md");
-};
-
-target.checkLicenses = function() {
-
-    function isPermissible(dependency) {
-        var licenses = dependency.licenses;
-
-        if (Array.isArray(licenses)) {
-            return licenses.some(function(license) {
-                return isPermissible({
-                    name: dependency.name,
-                    licenses: license
-                });
-            });
-        }
-
-        return OPEN_SOURCE_LICENSES.some(function(license) {
-            return license.test(licenses);
-        });
-    }
-
-    echo("Validating licenses");
-
-    checker.init({
-        start: __dirname
-    }, function(deps) {
-        var impermissible = Object.keys(deps).map(function(dependency) {
-            return {
-                name: dependency,
-                licenses: deps[dependency].licenses
-            };
-        }).filter(function(dependency) {
-            return !isPermissible(dependency);
-        });
-
-        if (impermissible.length) {
-            impermissible.forEach(function (dependency) {
-                console.error("%s license for %s is impermissible.",
-                    dependency.licenses,
-                    dependency.name
-                );
-            });
-            exit(1);
-        }
-    });
-};
-
-target.patch = function() {
-    release("patch");
-};
-
-target.minor = function() {
-    release("minor");
-};
-
-target.major = function() {
-    release("major");
 };

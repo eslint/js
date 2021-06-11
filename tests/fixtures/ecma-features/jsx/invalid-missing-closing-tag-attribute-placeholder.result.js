@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 7,
+    "index": 5,
     "lineNumber": 1,
-    "column": 8,
-    "description": "JSX attributes must only be assigned a non-empty expression"
+    "column": 6,
+    "message": "JSX attributes must only be assigned a non-empty expression"
 };

@@ -2,3 +2,7 @@ build
 coverage
 node_modules
 npm-debug.log
+_test.js
+.idea
+.nyc_output
+.eslint-release-info.json

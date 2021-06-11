@@ -1,27 +1,6 @@
 /**
  * @fileoverview Tests for tokenize().
  * @author Nicholas C. Zakas
- * @copyright 2014 Nicholas C. Zakas. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 "use strict";
@@ -30,26 +9,77 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var assert = require("chai").assert,
-    espree = require("../../espree");
+const assert = require("assert"),
+    espree = require("../../espree"),
+    tester = require("./tester");
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-describe("parse()", function() {
+describe("parse()", () => {
 
-    describe("modules", function() {
+    describe("modules", () => {
 
-        it("should have correct column number when strict mode error occurs", function() {
+        it("should have correct column number when strict mode error occurs", () => {
 
             try {
-                espree.parse("function fn(a, a) {\n}", { ecmaFeatures: { modules: true } });
+                espree.parse("function fn(a, a) {\n}", { ecmaVersion: 6, sourceType: "module" });
             } catch (err) {
-                assert.equal(err.column, 16);
+                assert.strictEqual(err.column, 16);
             }
         });
 
     });
 
+    describe("ES5", () => {
+
+        it("should throw an error when using the y regex flag", () => {
+
+            assert.throws(() => {
+                espree.parse("/./y");
+            });
+        });
+
+        it("should throw an error when using the u regex flag", () => {
+
+            assert.throws(() => {
+                espree.parse("/./u");
+            });
+        });
+
+    });
+
+    describe("general", () => {
+        it("should output tokens, comments, locs, and ranges when called with those options", () => {
+            const ast = espree.parse("let foo = bar;", {
+                ecmaVersion: 6,
+                comment: true,
+                tokens: true,
+                range: true,
+                loc: true
+            });
+
+            assert.deepStrictEqual(tester.getRaw(ast), require("../fixtures/parse/all-pieces.json"));
+        });
+
+        it("should reset lastToken on each parse", () => {
+            espree.parse("var foo = bar;");
+            const ast = espree.parse("//foo", {
+                comment: true,
+                tokens: true,
+                range: true,
+                loc: true
+            });
+
+            assert.deepStrictEqual(ast.range, [0, 5]);
+            assert.deepStrictEqual([ast.loc.start.line, ast.loc.start.column], [1, 0]);
+            assert.deepStrictEqual([ast.loc.end.line, ast.loc.end.column], [1, 5]);
+        });
+
+        it("should not mutate config", () => {
+            espree.parse("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
+        });
+
+    });
 });

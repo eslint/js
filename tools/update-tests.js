@@ -2,28 +2,6 @@
  * @fileoverview A simple script to update existing tests to reflect new
  *      parser changes.
  * @author Nicholas C. Zakas
- * @copyright 2014 Nicholas C. Zakas. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
 "use strict";
 
@@ -39,6 +17,7 @@
 
 var shelljs = require("shelljs"),
     espree = require("../espree"),
+    tester = require("../tests/lib/tester"),
     path = require("path");
 
 //------------------------------------------------------------------------------
@@ -47,9 +26,11 @@ var shelljs = require("shelljs"),
 
 function getExpectedResult(code, config) {
     try {
-        return espree.parse(code, config);
+        return tester.getRaw(espree.parse(code, config));
     } catch (ex) {
-        return ex;    // if an error is thrown, match the error
+        var raw = tester.getRaw(ex);
+        raw.message = ex.message;
+        return raw;
     }
 }
 
@@ -58,6 +39,14 @@ function getTestFilenames(directory) {
         return filename.indexOf(".src.js") > -1;
     }).map(function(filename) {
         return filename.substring(directory.length - 1, filename.length - 7);  // strip off ".src.js"
+    });
+}
+
+function getLibraryFilenames(directory) {
+    return shelljs.find(directory).filter(function(filename) {
+        return filename.indexOf(".js") > -1 && filename.indexOf(".result.js") === -1;
+    }).map(function(filename) {
+        return filename.substring(directory.length - 1);  // strip off directory
     });
 }
 
@@ -70,25 +59,23 @@ function outputResult(result, testResultFilename) {
 //------------------------------------------------------------------------------
 
 var FIXTURES_DIR = "./tests/fixtures/ecma-features",
-    FIXTURES_MIX_DIR = "./tests/fixtures/ecma-features-mix",
-    COMMENTS_DIR = "./tests/fixtures/attach-comments";
+    FIXTURES_VERSION_DIR = "./tests/fixtures/ecma-version",
+    LIBRARIES_DIR = "./tests/fixtures/libraries";
 
 var testFiles = getTestFilenames(FIXTURES_DIR),
-    mixFiles = getTestFilenames(FIXTURES_MIX_DIR),
-    commentFiles = getTestFilenames(COMMENTS_DIR);
+    versionFiles = getTestFilenames(FIXTURES_VERSION_DIR),
+    libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
-
-commentFiles.forEach(function(filename) {
-    var testResultFilename = path.resolve(__dirname, "..", COMMENTS_DIR, filename) + ".result.js",
-        code = shelljs.cat(path.resolve(COMMENTS_DIR, filename) + ".src.js"),
+libraryFiles.forEach(function(filename) {
+    var testResultFilename = path.resolve(__dirname, "..", LIBRARIES_DIR, filename) + ".result.json",
+        code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename)),
         result = getExpectedResult(code, {
             loc: true,
             range: true,
-            tokens: true,
-            attachComment: true
+            tokens: true
         });
-
-    outputResult(result, testResultFilename);
+    JSON.stringify(result).to(testResultFilename);
+    result = null;
 });
 
 // update all tests in ecma-features
@@ -100,6 +87,7 @@ testFiles.forEach(function(filename) {
             loc: true,
             range: true,
             tokens: true,
+            ecmaVersion: 6,
             ecmaFeatures: {}
         };
 
@@ -110,21 +98,18 @@ testFiles.forEach(function(filename) {
     outputResult(result, testResultFilename);
 });
 
-// update all tests in ecma-features-mix
-mixFiles.forEach(function(filename) {
+versionFiles.forEach(function(filename) {
 
-    var feature = path.dirname(filename),
-        code = shelljs.cat(path.resolve(FIXTURES_MIX_DIR, filename) + ".src.js"),
+    var version = Number(filename.substring(0, filename.indexOf("/"))),
+        code = shelljs.cat(path.resolve(FIXTURES_VERSION_DIR, filename) + ".src.js"),
         config = {
             loc: true,
             range: true,
             tokens: true,
-            ecmaFeatures: {}
+            ecmaVersion: version
         };
 
-    config.ecmaFeatures = require(path.resolve(__dirname, "../", FIXTURES_MIX_DIR, filename) + ".config.js");
-
-    var testResultFilename = path.resolve(__dirname, "..", FIXTURES_MIX_DIR, filename) + ".result.js",
+    var testResultFilename = path.resolve(__dirname, "..", FIXTURES_VERSION_DIR, filename) + ".result.js",
         result = getExpectedResult(code, config);
 
     outputResult(result, testResultFilename);

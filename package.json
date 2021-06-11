@@ -1,56 +1,41 @@
 {
   "name": "espree",
-  "description": "An actively-maintained fork of Esprima, the ECMAScript parsing infrastructure for multipurpose analysis",
+  "description": "An Esprima-compatible JavaScript parser built on Acorn",
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
   "main": "espree.js",
-  "bin": {
-    "esparse": "./bin/esparse.js",
-    "esvalidate": "./bin/esvalidate.js"
-  },
-  "version": "2.2.5",
+  "version": "6.0.0",
   "files": [
-    "bin",
     "lib",
-    "test/run.js",
-    "test/runner.js",
-    "test/test.js",
-    "test/compat.js",
-    "test/reflect.js",
     "espree.js"
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/eslint/espree.git"
-  },
+  "repository": "eslint/espree",
   "bugs": {
     "url": "http://github.com/eslint/espree.git"
   },
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "http://github.com/nzakas/espree/raw/master/LICENSE"
-    }
-  ],
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "acorn": "^6.0.7",
+    "acorn-jsx": "^5.0.0",
+    "eslint-visitor-keys": "^1.0.0"
+  },
   "devDependencies": {
     "browserify": "^7.0.0",
     "chai": "^1.10.0",
-    "complexity-report": "~0.6.1",
-    "dateformat": "^1.0.11",
-    "eslint": "^0.9.2",
-    "esprima": "git://github.com/jquery/esprima",
+    "eslint": "^5.7.0",
+    "eslint-config-eslint": "^5.0.1",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-release": "^1.0.0",
+    "esprima": "latest",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
-    "istanbul": "~0.2.6",
     "json-diff": "~0.3.1",
     "leche": "^1.0.1",
     "mocha": "^2.0.1",
-    "npm-license": "^0.2.3",
-    "optimist": "~0.6.0",
+    "nyc": "^13.0.1",
     "regenerate": "~0.5.4",
-    "semver": "^4.1.1",
     "shelljs": "^0.3.0",
     "shelljs-nodecli": "^0.1.1",
     "unicode-6.3.0": "~0.1.0"
@@ -60,24 +45,18 @@
     "ecmascript",
     "javascript",
     "parser",
-    "syntax"
+    "syntax",
+    "acorn"
   ],
   "scripts": {
     "generate-regex": "node tools/generate-identifier-regex.js",
-    "test": "npm run-script lint && node Makefile.js test && node test/run.js",
+    "test": "npm run-script lint && node Makefile.js test",
     "lint": "node Makefile.js lint",
-    "patch": "node Makefile.js patch",
-    "minor": "node Makefile.js minor",
-    "major": "node Makefile.js major",
     "browserify": "node Makefile.js browserify",
-    "coverage": "npm run-script analyze-coverage && npm run-script check-coverage",
-    "analyze-coverage": "node node_modules/istanbul/lib/cli.js cover test/runner.js",
-    "check-coverage": "node node_modules/istanbul/lib/cli.js check-coverage --statement 99 --branch 99 --function 99",
-    "complexity": "npm run-script analyze-complexity && npm run-script check-complexity",
-    "analyze-complexity": "node tools/list-complexity.js",
-    "check-complexity": "node node_modules/complexity-report/src/cli.js --maxcc 14 --silent -l -w espree.js",
-    "benchmark": "node test/benchmarks.js",
-    "benchmark-quick": "node test/benchmarks.js quick"
-  },
-  "dependencies": {}
+    "generate-release": "eslint-generate-release",
+    "generate-alpharelease": "eslint-generate-prerelease alpha",
+    "generate-betarelease": "eslint-generate-prerelease beta",
+    "generate-rcrelease": "eslint-generate-prerelease rc",
+    "publish-release": "eslint-publish-release"
+  }
 }

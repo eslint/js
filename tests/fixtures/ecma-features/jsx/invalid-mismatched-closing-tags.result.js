@@ -1,6 +1,6 @@
 module.exports = {
-    "index": 9,
+    "index": 8,
     "lineNumber": 1,
-    "column": 10,
-    "description": "Unexpected end of input"
+    "column": 9,
+    "message": "Unterminated JSX contents"
 };

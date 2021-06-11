@@ -1,3 +1,211 @@
+v6.0.0 - June 21, 2019
+
+* [`a988a36`](https://github.com/eslint/espree/commit/a988a36e436a1ab6c84005ba0adb6cf9c262c1ec) Build: add node 12 (#414) (薛定谔的猫)
+
+v6.0.0-alpha.0 - April 12, 2019
+
+* [`493d464`](https://github.com/eslint/espree/commit/493d464e1564aea0ea33000389771d42ddece2cb) Breaking: validate parser options (fixes #384) (#412) (薛定谔的猫)
+
+v5.0.1 - February 15, 2019
+
+* [`c40e2fc`](https://github.com/eslint/espree/commit/c40e2fcedf81ff06151e82bdf655d2d0d29e71b8) Upgrade: acorn@6.0.7 (#407) (Kai Cataldo)
+
+v5.0.0 - December 5, 2018
+
+* [`1bcd563`](https://github.com/eslint/espree/commit/1bcd563d4eb4b4032d2662cc5ccd3bfd841b39d7) Breaking: remove attachComment (#405) (Kai Cataldo)
+* [`35623ee`](https://github.com/eslint/espree/commit/35623ee07289c9199eef8b735c97cb3d3d08d5b8) Chore: update linting config (#406) (Kai Cataldo)
+* [`4b86a7d`](https://github.com/eslint/espree/commit/4b86a7dc7c447c11bb6530e46dc43428ce2bd372) Build: add node 11 (#400) (薛定谔的猫)
+* [`7c278d6`](https://github.com/eslint/espree/commit/7c278d6acc6b5db86b803d0cd21b830deb6f569e) Fix: build failing due to incorrectly super() call (fixes #398) (#399) (薛定谔的猫)
+* [`6ebc219`](https://github.com/eslint/espree/commit/6ebc21947166399a0b4918d4a1beb9d610650336) Upgrade: eslint & eslint-config-eslint (#387) (薛定谔的猫)
+
+v4.1.0 - October 24, 2018
+
+* 8eadb88 Upgrade: acorn 6, acorn-jsx 5, and istanbul (#391) (Toru Nagashima)
+* 0f2edb8 Upgrade: eslint-release@1.0.0 (#392) (Teddy Katz)
+* 560b6f7 Update: VisitorKeys depend on eslint-visitor-keys (#389) (othree)
+* 6bf2ebf Docs: Fix some typos in the README (#386) (Hugo Locurcio)
+
+v4.0.0 - June 21, 2018
+
+
+
+v4.0.0-rc.0 - June 9, 2018
+
+* d8224c4 Build: Adding rc release script to package.json (#383) (Kevin Partington)
+* 4207773 Build: add node 10 (#381) (薛定谔的猫)
+* cd9da7e Update: upgrade acorn to support two ES2019 syntax (#380) (Toru Nagashima)
+* 8cb3ceb Chore: remove Object.assign polyfill (#382) (薛定谔的猫)
+
+v4.0.0-alpha.1 - May 28, 2018
+
+* 56c5a9c Fix: remove workarounds for acorn < 4 (#372) (Rouven Weßling)
+* fd305e5 Upgrade: eslint-release to v0.11.1 (#376) (Teddy Katz)
+
+v4.0.0-alpha.0 - March 30, 2018
+
+* 95fa890 Build: fix typos in package.json release scripts (#375) (Teddy Katz)
+* 6284e09 Breaking: remove experimentalObjectRestSpread option (#374) (Teddy Katz)
+* 0df063f Breaking: require Node.js 6+, upgrade acorn-jsx@4.1.1 (fixes #345) (#371) (薛定谔的猫)
+* 0252144 Upgrade: acorn 5.5.1 (#370) (Rouven Weßling)
+
+v3.5.4 - March 4, 2018
+
+* 706167b Upgrade: acorn 5.5.0 (#369) (Toru Nagashima)
+
+v3.5.3 - February 2, 2018
+
+* 70f9859 Upgrade: acorn 5.4.0 (#367) (Toru Nagashima)
+* cea4823 Chore: Adding .gitattributes file (#366) (Kevin Partington)
+* 4160aee Upgrade: acorn v5.3.0 (#365) (Toru Nagashima)
+
+v3.5.2 - November 10, 2017
+
+* 019b70a Fix: Remove blockBindings from docs (fixes #307, fixes #339) (#356) (Jan Pilzer)
+* b2016cb Chore: refactoring rest/spread properties (#361) (Toru Nagashima)
+* 59c9d06 Chore: upgrade acorn@5.2 (fixes #358) (#360) (Toru Nagashima)
+* 06c35c9 Chore: add .npmrc (#359) (Toru Nagashima)
+
+v3.5.1 - September 15, 2017
+
+* 5eb1388 Fix: Fix parsing of async keyword-named object methods (#352) (#353) (Mark Banner)
+
+v3.5.0 - August 5, 2017
+
+* 4d442a1 Update: add initial support for ES2018 (#348) (Teddy Katz)
+* d4bdcb6 Fix: Make template token objects adhere to token object structure (#343) (Ian Christian Myers)
+* 9ac671a Upgrade: acorn to 5.1.1 (#347) (Teddy Katz)
+* 16e1fec Docs: Specify default values of options (fixes #325) (#342) (Jan Pilzer)
+* be85b8e Fix: async shorthand properties (fixes #340) (#341) (Toru Nagashima)
+
+v3.4.3 - May 5, 2017
+
+* 343590a Fix: add AwaitExpression to espree.Syntax (fixes #331) (#332) (Teddy Katz)
+
+v3.4.2 - April 21, 2017
+
+* c99e436 Upgrade: eslint to 2.13.1 (#328) (Teddy Katz)
+* 628cf3a Fix: don't mutate user-provided configs (fixes #329) (#330) (Teddy Katz)
+
+v3.4.1 - March 31, 2017
+
+* a3ae0bd Upgrade: acorn to 5.0.1 (#327) (Teddy Katz)
+* 15ef24f Docs: Add badges (#326) (Jan Pilzer)
+* 652990a Fix: raise error for trailing commas after rest properties (fixes #310) (#323) (Teddy Katz)
+* 9d86ba5 Upgrade: acorn to ^4.0.11 (#317) (Toru Nagashima)
+* a3442b5 Chore: fix tests for Node 6+ (#315) (Teddy Katz)
+
+v3.4.0 - February 2, 2017
+
+* f55fa51 Build: Lock acorn to v4.0.4 (#314) (Kai Cataldo)
+* 58f75be Fix:generic error for invalid ecmaVersion(fixes eslint#7405) (#303) (Scott Stern)
+* d6b383d Docs: Update license copyright (Nicholas C. Zakas)
+* e5df542 Update: To support year in ecmaVersion number (fixes #300) (#301) (Gyandeep Singh)
+
+v3.3.2 - September 29, 2016
+
+* 7d3e2fc Fix: reset `isAsync` flag for each property (fixes #298) (#299) (Toru Nagashima)
+
+v3.3.1 - September 26, 2016
+
+* 80abdce Fix: `}` token followed by template had been lost (fixes #293) (#294) (Toru Nagashima)
+* 9810bab Fix: parsing error on `async` as property name. (#295) (Toru Nagashima)
+
+v3.3.0 - September 20, 2016
+
+* 92b04b1 Update: create-test script (fixes #291) (#292) (Jamund Ferguson)
+
+v3.2.0 - September 16, 2016
+
+* 5a37f80 Build: Update release tool (Nicholas C. Zakas)
+* 9bbcad8 Update: Upgrade Acorn to support ES2017 (fixes #287) (#290) (Jamund Ferguson)
+* 8d9767d Build: Add CI release scripts (Nicholas C. Zakas)
+
+v3.1.7 - July 29, 2016
+
+* 8f6cfbd Build: Add CI release (Nicholas C. Zakas)
+* ff15922 Fix: Catch ES2016 invalid syntax (fixes #284) (#285) (Nicholas C. Zakas)
+
+v3.1.6 - June 15, 2016
+
+* a90edc2 Upgrade: acorn 3.2.0 (fixes #279) (#280) (Toru Nagashima)
+
+v3.1.5 - May 27, 2016
+
+* 7df2e4a Fix: Convert ~ and ! prefix tokens to esprima (fixes #274) (#276) (Daniel Tschinder)
+
+v3.1.4 - April 21, 2016
+
+* e044705 Fix: remove extra leading comments at node level (fixes #264) (Kai Cataldo)
+* 25c27fb Chore: Remove jQuery copyright from header of each file (Kai Cataldo)
+* 10709f0 Chore: Add jQuery Foundation copyright (Nicholas C. Zakas)
+* d754b32 Upgrade: Acorn 3.1.0 (fixes #270) (Toru Nagashima)
+* 3a90886 Docs: replace a dead link with the correct contributing guide URL (Shinnosuke Watanabe)
+* 55184a2 Build: replace optimist with a simple native method (Shinnosuke Watanabe)
+* c7e5a13 Fix: Disallow namespaces objects in JSX (fixes #261) (Kai Cataldo)
+* 22290b9 Fix: Add test for leading comments (fixes #136) (Kai Cataldo)
+
+v3.1.3 - March 18, 2016
+
+* 98441cb Fix: Fix behavior of ignoring comments within previous nodes (refs #256) (Kai Cataldo)
+
+v3.1.2 - March 14, 2016
+
+* a2b23ca Fix: Ensure 'var let' works (fixes #149) (Nicholas C. Zakas)
+* 5783282 Fix: Make obj.await work in modules (fixes #258) (Nicholas C. Zakas)
+* d1b4929 Fix: leading comments added from previous node (fixes #256) (Kai Cataldo)
+
+v3.1.1 - February 26, 2016
+
+* 3614e81 Fix: exponentiation operator token (fixes #254) (Nicholas C. Zakas)
+
+v3.1.0 - February 25, 2016
+
+* da35d98 New: Support ecmaVersion 7 (fixes #246) (Nicholas C. Zakas)
+
+v3.0.2 - February 19, 2016
+
+* 0973cda Build: Update release script (Nicholas C. Zakas)
+* 106000f Fix: use the plugins feature of acorn (fixes #250) (Toru Nagashima)
+* 36d84c7 Build: Add tests (fixes #243) (Nicholas C. Zakas)
+
+v3.0.1 - February 2, 2016
+
+* ecfe4c8 Upgrade: eslint-config-eslint to 3.0.0 (Nicholas C. Zakas)
+* ea6261e Fix: Object rest/spread in assign (fixes #247) (Nicholas C. Zakas)
+* 7e57ee0 Docs: fix `options.comment` typo (xuezu)
+* dd5863e Build: Add prerelease script (Nicholas C. Zakas)
+* 0b409ee Upgrade: eslint-release to 0.2.0 (Nicholas C. Zakas)
+
+v3.0.0 - January 20, 2016
+
+* 5ff65f6 Upgrade: Change Esprima version to latest (Nicholas C. Zakas)
+* a8badcc Upgrade: eslint-release to 0.1.4 (Nicholas C. Zakas)
+* 34d195b Build: Switch to eslint-release (Nicholas C. Zakas)
+* a0ddc30 Breaking: Remove binary scripts (Nicholas C. Zakas)
+* 02b5284 Build: Fix package.json dependencies (Nicholas C. Zakas)
+* b07696f Fix: tests for importing keywords (fixes #225) (Toru Nagashima)
+* 2e2808a Build: Add node@5 to CI (fixes #237) (alberto)
+* 445c685 Update: Unrecognized license format in package.json (fixes #234) (alberto)
+* 61cb5ee Update: Remove duplicated acorn-jsx dep (fixes #232) (alberto)
+* df5b71c Upgrade: eslint and eslint-config-eslint (fixes #231) (alberto)
+* ef7a06d Fix: lastToken not reset between calls to parse (fixes #229) (alberto)
+* cdf8407 New: ecmaFeatures.impliedStrict (fixes: #227) (Nick Evans)
+
+v3.0.0-alpha-2 - December 9, 2015
+
+* 3.0.0-alpha-2 (Nicholas C. Zakas)
+* Breaking: move ecmaFeatures into ecmaVersion (fixes #222) (Nicholas C. Zakas)
+* New: Export VisitorKeys (fixes #220) (Nicholas C. Zakas)
+
+v3.0.0-alpha-1 - December 1, 2015
+
+* 3.0.0-alpha-1 (Nicholas C. Zakas)
+* Fix: parse unicode escapes in identifiers (fixes #181) (Nicholas C. Zakas)
+* Fix: Ensur object rest works in destructed arg (fixes #213) (Nicholas C. Zakas)
+* Breaking: Switch to Acorn (fixes #200) (Nicholas C. Zakas)
+* Update: Add tokens to tests (fixes #203) (Nicholas C. Zakas)
+* Docs: Update README (Nicholas C. Zakas)
+
 v2.2.5 - September 15, 2015
 
 * 2.2.5 (Nicholas C. Zakas)
