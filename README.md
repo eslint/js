@@ -141,7 +141,7 @@ const options = {
     tokens: false,
 
     // Set to 3, 5, 6, 7, 8, 9, 10, 11, or 12 to specify the version of ECMAScript syntax you want to use.
-    // You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), 2018 (same as 9), 2019 (same as 10), 2020 (same as 11), or 2021 (same as 12) to use the year-based naming.
+    // You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), 2018 (same as 9), 2019 (same as 10), 2020 (same as 11), 2021 (same as 12), or 2022 (same as 13) to use the year-based naming.
     // You can also set "latest" (the default) to use the most recently supported version.
     ecmaVersion: 5,
 
@@ -229,12 +229,13 @@ We are building on top of Acorn, however, so that we can contribute back and hel
 
 ### What ECMAScript features do you support?
 
-Espree supports all ECMAScript 2020 features and partially supports ECMAScript 2021 features.
+Espree supports all ECMAScript 2021 features and partially supports ECMAScript 2022 features.
 
-Because ECMAScript 2021 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
+Because ECMAScript 2022 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
 
-* [Logical Assignment Operators](https://github.com/tc39/proposal-logical-assignment)
-* [Numeric Separators](https://github.com/tc39/proposal-numeric-separator)
+* [Class instance fields](https://github.com/tc39/proposal-class-fields)
+* [Class private instance methods and accessors](https://github.com/tc39/proposal-private-methods)
+* [Class static fields, static private methods and accessors](https://github.com/tc39/proposal-static-class-features)
 
 See [finished-proposals.md](https://github.com/tc39/proposals/blob/master/finished-proposals.md) to know what features are finalized.
 
