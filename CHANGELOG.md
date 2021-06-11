@@ -1,3 +1,30 @@
+v8.0.0-beta.0 - June 11, 2021
+
+* [`d017d38`](https://github.com/eslint/espree/commit/d017d38fc3a113a0a816aa9d21a60ea1850dbb4a) Breaking: drop node v10/13/v15 (fixes #501) (#502) (薛定谔的猫)
+* [`e71162c`](https://github.com/eslint/espree/commit/e71162c0842f683ca71bc34b70142496681b3674) Update: add class fields (refs eslint/eslint#14343) (#486) (Toru Nagashima)
+* [`b068cea`](https://github.com/eslint/espree/commit/b068cea907ef59fe5681f6acedd30b932d496e0a) Breaking: Implement 'ecmaVersion: latest' (fixes #495) (#499) (Nicholas C. Zakas)
+* [`8294427`](https://github.com/eslint/espree/commit/82944270100e3108884f0fa96e691aa1eb82e5dd) Upgrade: eslint-release@3.1.2 (#494) (Milos Djermanovic)
+* [`4c1f17d`](https://github.com/eslint/espree/commit/4c1f17ddb49dc2100fdb449462be11c3d03ba6c7) Chore: Refactor `TemplateElement` range fix (#489) (fisker Cheung)
+* [`6ffd604`](https://github.com/eslint/espree/commit/6ffd604e1cf5874327dc628181c2394429d88d3c) Chore: Improve readability of `Program` position fix part (#493) (fisker Cheung)
+* [`94508b7`](https://github.com/eslint/espree/commit/94508b75f140eafd1a978c48bcfae488907a53e1) Upgrade: acorn to 8.2.2 (fixes #472) (#492) (薛定谔的猫)
+* [`864a73e`](https://github.com/eslint/espree/commit/864a73e05c00c90d517aa58d777713db643b7335) Chore: fix incorrect comment (#491) (薛定谔的猫)
+* [`34e1ab9`](https://github.com/eslint/espree/commit/34e1ab92abb5685aad859daac8d1edff816b7784) Chore: Add tests and comments (refs #349) (#487) (Nicholas C. Zakas)
+* [`dffb7aa`](https://github.com/eslint/espree/commit/dffb7aa72f2cd23d99e36e6c7c1a76c73ff08f16) Breaking: syncing start/end with range (fixes #349) (#461) (Anix)
+* [`e86f386`](https://github.com/eslint/espree/commit/e86f386a8ac959f13123d0f02d3f65a2b6f5f42c) Chore: remove --legacy-peer-deps for Node 15 (#485) (Milos Djermanovic)
+* [`ecaf510`](https://github.com/eslint/espree/commit/ecaf510e03f5864e546eb7f60728fbc488fc8543) Build: add node v16 (#481) (薛定谔的猫)
+* [`b8d35ed`](https://github.com/eslint/espree/commit/b8d35ed9f00bf403670ed7544b40ac7207649101) Chore: rm devdep leche (fixes #480) (#482) (薛定谔的猫)
+* [`651e204`](https://github.com/eslint/espree/commit/651e204f5dcbf67b31c3af2bac60d9aed53a1fc7) Chore: Fix/remove tools (fixes #471) (#476) (Nicholas C. Zakas)
+* [`671c3aa`](https://github.com/eslint/espree/commit/671c3aa55bd9ece231f2f28417d557d264994107) Docs: Update README with ESM instructions (fixes #474) (#477) (Nicholas C. Zakas)
+* [`8209e4e`](https://github.com/eslint/espree/commit/8209e4e4a3302c1b205b248fc3efc264f1411769) Build: Update scripts for release (fixes #475) (#478) (Nicholas C. Zakas)
+* [`5dd3dee`](https://github.com/eslint/espree/commit/5dd3dee83616838451adad7183dd3dd8499a7335) Build: Update branch reference in CI (#479) (Nicholas C. Zakas)
+* [`995d2a8`](https://github.com/eslint/espree/commit/995d2a87d44461754b691f820abb08c8f525087a) Breaking: acorn to 8.1.0 (fixes #470) (#473) (薛定谔的猫)
+* [`8234c48`](https://github.com/eslint/espree/commit/8234c48496dd851ed2a39ce169e517e5927dbfe0) Breaking: provide ESM export (refs eslint/rfcs#72) (#469) (Mike Reinstein)
+* [`2080ce6`](https://github.com/eslint/espree/commit/2080ce6cc8bef3057696967e518c87f749da6533) Chore: Test on Node 15.x (#468) (Milos Djermanovic)
+* [`fc384a4`](https://github.com/eslint/espree/commit/fc384a4daf4e81c2c389a5cefb6062cbb0937ae4) Upgrade: eslint devDependencies (#467) (Milos Djermanovic)
+* [`1a8ec00`](https://github.com/eslint/espree/commit/1a8ec00df416f08381152a9427378bd4bc1bec56) Build: remove browserify script (#466) (Milos Djermanovic)
+* [`3b4ca9e`](https://github.com/eslint/espree/commit/3b4ca9e3141514ffac93bb7fef6c1329370df310) Chore: Add test for valid non-string input (#463) (stonegray)
+* [`1b99259`](https://github.com/eslint/espree/commit/1b992595340fa28939d291cf2e7cf7571015b155) Upgrade: eslint-visitor-keys@2.0.0 (#462) (Milos Djermanovic)
+
 v7.3.1 - December 5, 2020
 
 * [`fef6f4a`](https://github.com/eslint/espree/commit/fef6f4a2803d959304c6961527044bd9da39ac92) Upgrade: acorn-jsx@5.3.1 (#459) (Milos Djermanovic)
