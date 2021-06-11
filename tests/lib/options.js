@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 import assert from "assert";
-import { normalizeOptions } from "../../lib/options.js";
+import { normalizeOptions, getLatestEcmaVersion } from "../../lib/options.js";
 
 
 //------------------------------------------------------------------------------
@@ -16,12 +16,20 @@ import { normalizeOptions } from "../../lib/options.js";
 //------------------------------------------------------------------------------
 
 describe("normalizeOptions", () => {
-    it("should set ecmaVersion to 5 if it wasn't specified", () => {
+    it("should set ecmaVersion to latestEcmaVersion if it wasn't specified", () => {
         const option = {};
 
         const output = normalizeOptions(option);
 
-        assert.strictEqual(output.ecmaVersion, 5);
+        assert.strictEqual(output.ecmaVersion, getLatestEcmaVersion());
+    });
+
+    it("should set ecmaVersion to latestEcmaVersion if ecmaVersion: latest is passed", () => {
+        const output = normalizeOptions({
+            ecmaVersion: "latest"
+        });
+
+        assert.strictEqual(output.ecmaVersion, getLatestEcmaVersion());
     });
 
     it("should throw error for sourceType module and ecmaVersion < 6", () => {

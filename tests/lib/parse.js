@@ -23,15 +23,10 @@ describe("parse()", () => {
 
     describe("ecmaVersion", () => {
 
-        it("should be 5 if not specified", () => {
+        it("should be latestEcmaVersion if not specified", () => {
 
-            // `ecmaVersion: 3` would throw on getters/setters
-            espree.parse("var foo = { get bar() {} }");
-
-            // needs `ecmaVersion: 6` or higher
-            assert.throws(() => {
-                espree.parse("let foo");
-            });
+            // `ecmaVersion: 5` would throw on async
+            espree.parse("let foo = { async bar() {} }");
         });
 
     });
@@ -54,14 +49,14 @@ describe("parse()", () => {
         it("should throw an error when using the y regex flag", () => {
 
             assert.throws(() => {
-                espree.parse("/./y");
+                espree.parse("/./y", { ecmaVersion: 5 });
             });
         });
 
         it("should throw an error when using the u regex flag", () => {
 
             assert.throws(() => {
-                espree.parse("/./u");
+                espree.parse("/./u", { ecmaVersion: 5 });
             });
         });
 

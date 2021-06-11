@@ -173,7 +173,7 @@ describe("ecmaVersion", () => {
                         loc: true
                     }
                 );
-            }, /ecmaVersion must be a number. Received value of type string instead/u);
+            }, /ecmaVersion must be a number or "latest". Received value of type string instead/u);
         });
 
         it("Should throw error when using module in pre-ES6", () => {
@@ -185,6 +185,41 @@ describe("ecmaVersion", () => {
                     }
                 );
             }, /sourceType 'module' is not supported when ecmaVersion < 2015/u);
+        });
+
+        it("Should allow 'latest' as value", () => {
+            const expected = espree.parse(
+                "let foo = bar;", {
+                    ecmaVersion: espree.latestEcmaVersion,
+                    sourceType: "module"
+                }
+            );
+
+            const actual = espree.parse(
+                "let foo = bar;", {
+                    ecmaVersion: "latest",
+                    sourceType: "module"
+                }
+            );
+
+            assert.deepStrictEqual(actual, expected);
+        });
+
+        it("Should use the latestEcmaVersion as the default for ecmaVersion", () => {
+            const expected = espree.parse(
+                "let foo = bar;", {
+                    ecmaVersion: espree.latestEcmaVersion,
+                    sourceType: "module"
+                }
+            );
+
+            const actual = espree.parse(
+                "let foo = bar;", {
+                    sourceType: "module"
+                }
+            );
+
+            assert.deepStrictEqual(actual, expected);
         });
     });
 
