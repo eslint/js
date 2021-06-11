@@ -82,7 +82,8 @@ export default {
                             12,
                             25
                         ],
-                        "value": null,
+                        // Only supported in Node.js 16+
+                        "value": /^(12|14)\./.test(process.versions.node) ? null : eval("a+(?<Z>z)?/d"),
                         "raw": "/a+(?<Z>z)?/d",
                         "regex": {
                             "pattern": "a+(?<Z>z)?",
