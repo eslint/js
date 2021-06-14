@@ -1,3 +1,6 @@
+import conditionalRegexValue from "../../../../lib/conditional-regex-value.js";
+import conditionalRegex from "../../../../lib/conditional-regex-value.js";
+
 export default {
     "type": "Program",
     "loc": {
@@ -66,7 +69,7 @@ export default {
                         ],
                         "name": "re1"
                     },
-                    "init": {
+                    "init": conditionalRegexValue({
                         "type": "Literal",
                         "loc": {
                             "start": {
@@ -84,13 +87,13 @@ export default {
                         ],
 
                         // /d flag no supported in Node.js 12 or 14 yet
-                        "value": /^(12|14)\./.test(process.versions.node) ? null : eval("/a+(<Z>z)?/d"),
+                        "value": null,
                         "raw": "/a+(<Z>z)?/d",
                         "regex": {
                             "pattern": "a+(<Z>z)?",
                             "flags": "d"
                         }
-                    }
+                    })
                 }
             ],
             "kind": "const"
