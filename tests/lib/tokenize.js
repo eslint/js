@@ -30,10 +30,14 @@ import tildeOperatorTokens from "../fixtures/tokenize/tilde-operator.tokens.js";
 
 describe("tokenize()", () => {
 
-    it("should have latestEcmaVersion as default", () => {
+    it("should have 5 as default", () => {
 
-        // needs `ecmaVersion: 6` or higher
-        espree.tokenize("`template`");
+        assert.throws(() => {
+
+            // needs `ecmaVersion: 6` or higher
+            espree.tokenize("`template`");
+
+        }, /Unexpected character '`'/u);
     });
 
     it("should produce tokens when using let", () => {

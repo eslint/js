@@ -23,10 +23,14 @@ describe("parse()", () => {
 
     describe("ecmaVersion", () => {
 
-        it("should be latestEcmaVersion if not specified", () => {
+        it("should be 5 if not specified", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "let foo = bar;"
+                );
 
-            // `ecmaVersion: 5` would throw on async
-            espree.parse("let foo = { async bar() {} }");
+            }, /Unexpected token foo/u);
+
         });
 
     });

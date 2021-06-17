@@ -16,12 +16,12 @@ import { normalizeOptions, getLatestEcmaVersion } from "../../lib/options.js";
 //------------------------------------------------------------------------------
 
 describe("normalizeOptions", () => {
-    it("should set ecmaVersion to latestEcmaVersion if it wasn't specified", () => {
+    it("should set ecmaVersion to 5 if it wasn't specified", () => {
         const option = {};
 
         const output = normalizeOptions(option);
 
-        assert.strictEqual(output.ecmaVersion, getLatestEcmaVersion());
+        assert.strictEqual(output.ecmaVersion, 5);
     });
 
     it("should set ecmaVersion to latestEcmaVersion if ecmaVersion: latest is passed", () => {
