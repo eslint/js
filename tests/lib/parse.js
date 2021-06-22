@@ -24,8 +24,14 @@ describe("parse()", () => {
     describe("ecmaVersion", () => {
 
         it("should be 5 if not specified", () => {
+
+            // needs `ecmaVersion: 5` or higher (`ecmaVersion: 3` would throw on getters/setters)
+            espree.parse("var foo = { get bar() {} }");
+
             assert.throws(() => {
                 espree.parse(
+
+                    // needs `ecmaVersion: 6` or higher
                     "let foo = bar;"
                 );
 
