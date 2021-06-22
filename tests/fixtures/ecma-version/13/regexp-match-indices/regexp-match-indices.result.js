@@ -68,7 +68,7 @@ export default {
                         ],
                         "name": "re1"
                     },
-                    "init": conditionalRegexValue({
+                    "init": conditionalRegex({
                         "type": "Literal",
                         "loc": {
                             "start": {
