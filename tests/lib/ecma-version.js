@@ -205,21 +205,15 @@ describe("ecmaVersion", () => {
             assert.deepStrictEqual(actual, expected);
         });
 
-        it("Should use the latestEcmaVersion as the default for ecmaVersion", () => {
-            const expected = espree.parse(
-                "let foo = bar;", {
-                    ecmaVersion: espree.latestEcmaVersion,
-                    sourceType: "module"
-                }
-            );
+        it("Should use the 5 as the default for ecmaVersion", () => {
 
-            const actual = espree.parse(
-                "let foo = bar;", {
-                    sourceType: "module"
-                }
-            );
+            assert.throws(() => {
+                espree.parse(
+                    "let foo = bar;"
+                );
 
-            assert.deepStrictEqual(actual, expected);
+            }, /Unexpected token foo/u);
+
         });
     });
 
