@@ -1,3 +1,8 @@
+v8.0.0-beta.1 - June 24, 2021
+
+* [`e207bd7`](https://github.com/eslint/espree/commit/e207bd703e761d5565ee59d15253260ae8e90a79) Update: Support top-level await and regexp match indices (#505) (Nicholas C. Zakas)
+* [`9eff2c7`](https://github.com/eslint/espree/commit/9eff2c7b8cb18f19504afd8a97cad51d6905dfcf) Update: reset default ecmaVersion to 5 (#506) (Nicholas C. Zakas)
+
 v8.0.0-beta.0 - June 11, 2021
 
 * [`d017d38`](https://github.com/eslint/espree/commit/d017d38fc3a113a0a816aa9d21a60ea1850dbb4a) Breaking: drop node v10/13/v15 (fixes #501) (#502) (薛定谔的猫)
