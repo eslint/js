@@ -61,7 +61,7 @@ import jsx from "acorn-jsx";
 import astNodeTypes from "./lib/ast-node-types.js";
 import espree from "./lib/espree.js";
 import espreeVersion from "./lib/version.js";
-import visitorKeys from "eslint-visitor-keys";
+import * as visitorKeys from "eslint-visitor-keys";
 import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
 
 
