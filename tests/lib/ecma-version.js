@@ -176,6 +176,26 @@ describe("ecmaVersion", () => {
             }, /ecmaVersion must be a number or "latest". Received value of type string instead/u);
         });
 
+        it("Should throw error when using ES3 and reserved words", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "var char = 'c'", {
+                        ecmaVersion: 3
+                    }
+                );
+            }, /'char' is reserved/u);
+        });
+
+        it("Should throw error when using ES3 and reserved words in object literals", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "var x = { char: 'c' }", {
+                        ecmaVersion: 3
+                    }
+                );
+            }, /'char' is reserved/u);
+        });
+
         it("Should throw error when using module in pre-ES6", () => {
             assert.throws(() => {
                 espree.parse(
