@@ -1,3 +1,10 @@
+v9.0.0 - September 10, 2021
+
+* [`7952c6f`](https://github.com/eslint/espree/commit/7952c6fd4155ce88ec726eac69cadd3bc5b3f3a5) Breaking: Disallow reserved words in ES3 (#513) (Nicholas C. Zakas)
+* [`ee1d3ec`](https://github.com/eslint/espree/commit/ee1d3eca310cab1b1cf1563294434977d26358d4) Fix: 0x2028 and 0x2029 in string literals should increment line number (#514) (Milos Djermanovic)
+* [`63bd0bc`](https://github.com/eslint/espree/commit/63bd0bc46adfbcd3a71d4cc222aa3923b76ebcf2) Chore: use actions/setup-node@v2 (#510) (薛定谔的猫)
+* [`bf57077`](https://github.com/eslint/espree/commit/bf57077e02dd61f82ab533d6bb0c160e2dfe40b8) Chore: Remove obsolete lib/visitor-keys.js (#509) (Matthias Oßwald)
+
 v8.0.0 - June 29, 2021
 
 * [`c335413`](https://github.com/eslint/espree/commit/c33541363e1cf82346c9b59b253a11fd204d7116) Upgrade: eslint-visitor-keys@3.0.0 (#507) (Milos Djermanovic)
