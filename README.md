@@ -145,7 +145,7 @@ const options = {
     // You can also set "latest" to use the most recently supported version.
     ecmaVersion: 5,
 
-    // specify which type of script you're parsing ("script" or "module")
+    // specify which type of script you're parsing ("script", "module", or "commonjs")
     sourceType: "script",
 
     // specify additional language features
@@ -154,7 +154,7 @@ const options = {
         // enable JSX parsing
         jsx: false,
 
-        // enable return in global scope
+        // enable return in global scope (set to true automatically when sourceType is "commonjs")
         globalReturn: false,
 
         // enable implied strict mode (if ecmaVersion >= 5)
