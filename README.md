@@ -238,6 +238,7 @@ Because ECMAScript 2022 is still under development, we are implementing features
 * [Class static fields, static private methods and accessors](https://github.com/tc39/proposal-static-class-features)
 * [RegExp match indices](https://github.com/tc39/proposal-regexp-match-indices)
 * [Top-level await](https://github.com/tc39/proposal-top-level-await)
+* [Class static initialization blocks](https://github.com/tc39/proposal-class-static-block)
 
 See [finished-proposals.md](https://github.com/tc39/proposals/blob/master/finished-proposals.md) to know what features are finalized.
 
