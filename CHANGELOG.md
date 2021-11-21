@@ -1,3 +1,12 @@
+v9.1.0 - November 20, 2021
+
+* [`27713ac`](https://github.com/eslint/espree/commit/27713aca32c73347750f9033841f176f5cb83951) feat: Add sourceType:commonjs support (#520) (Nicholas C. Zakas)
+* [`6839389`](https://github.com/eslint/espree/commit/6839389b9c67f0e6cbda00802867e7cf0ccd75eb) feat: support for private-in syntax (#521) (Yosuke Ota)
+* [`fe07aae`](https://github.com/eslint/espree/commit/fe07aae683f3c09fe1cd0165a98e11339c22ab7c) feat: support class static blocks (#518) (Milos Djermanovic)
+* [`c0a8aa2`](https://github.com/eslint/espree/commit/c0a8aa2cbe5e683dfb416d2cfb3522906b15ba44) build: upgrade eslint-release to v3.2.0 to support conventional commits (#517) (Milos Djermanovic)
+* [`6be7bcb`](https://github.com/eslint/espree/commit/6be7bcb43f7bc10cc1f04f53ace3eb1e2d3f11bb) Build: add node v17 (#516) (唯然)
+* [`93b24dd`](https://github.com/eslint/espree/commit/93b24dd1817e0678012a8841f70ad8370f64baae) Chore: add class static blocks tests (#515) (薛定谔的猫)
+
 v9.0.0 - September 10, 2021
 
 * [`7952c6f`](https://github.com/eslint/espree/commit/7952c6fd4155ce88ec726eac69cadd3bc5b3f3a5) Breaking: Disallow reserved words in ES3 (#513) (Nicholas C. Zakas)
