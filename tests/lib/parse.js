@@ -41,15 +41,32 @@ describe("parse()", () => {
 
     });
 
-    describe("modules", () => {
+    describe("sourceType", () => {
 
-        it("should have correct column number when strict mode error occurs", () => {
+        describe("module", () => {
 
-            try {
-                espree.parse("function fn(a, a) {\n}", { ecmaVersion: 6, sourceType: "module" });
-            } catch (err) {
-                assert.strictEqual(err.column, 16);
-            }
+            it("should have correct column number when strict mode error occurs", () => {
+
+                try {
+                    espree.parse("function fn(a, a) {\n}", { ecmaVersion: 6, sourceType: "module" });
+                } catch (err) {
+                    assert.strictEqual(err.column, 16);
+                }
+            });
+
+        });
+
+        describe("commonjs", () => {
+
+            it("should parse top-level return", () => {
+                espree.parse("return;", { sourceType: "commonjs" });
+            });
+
+            it("should have sourceType:commonjs on Program node", () => {
+                const result = espree.parse("return;", { sourceType: "commonjs" });
+
+                assert.strictEqual(result.sourceType, "commonjs");
+            });
         });
 
     });
