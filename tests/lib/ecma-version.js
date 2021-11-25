@@ -196,6 +196,72 @@ describe("ecmaVersion", () => {
             }, /'char' is reserved/u);
         });
 
+        it("Should throw error when using ES3, allowReserved: false, and reserved words", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "var char = 'c'", {
+                        ecmaVersion: 3,
+                        allowReserved: false
+                    }
+                );
+            }, /'char' is reserved/u);
+        });
+
+        it("Should not throw error when using ES3, allowReserved: true, and reserved words", () => {
+            assert.doesNotThrow(() => {
+                espree.parse(
+                    "var char = 'c'", {
+                        ecmaVersion: 3,
+                        allowReserved: true
+                    }
+                );
+            });
+        });
+
+        it("Should not throw error when using ES3, allowReserved: true, and reserved words in object literals", () => {
+            assert.doesNotThrow(() => {
+                espree.parse(
+                    "var x = { char: 'c' }", {
+                        ecmaVersion: 3,
+                        allowReserved: true
+                    }
+                );
+            });
+        });
+
+        it("Should throw error when using ES5, allowReserved: true", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "var x = { char: 'c' }", {
+                        ecmaVersion: 5,
+                        allowReserved: true
+                    }
+                );
+            }, /`allowReserved` is only supported when ecmaVersion is 3/u);
+        });
+
+        it("Should throw error when using ES3, allowReserved: non-boolean", () => {
+            assert.throws(() => {
+                espree.parse(
+                    "var x = { char: 'c' }", {
+                        ecmaVersion: 3,
+                        allowReserved: "true"
+                    }
+                );
+            }, /`allowReserved`, when present, must be `true` or `false`/u);
+        });
+
+        it("Should not throw error when using ES5, allowReserved: false, and ES3 reserved words in object literals", () => {
+            assert.doesNotThrow(() => {
+                espree.parse(
+                    "var x = { char: 'c' }", {
+                        ecmaVersion: 5,
+                        allowReserved: false
+                    }
+                );
+            });
+        });
+
         it("Should throw error when using module in pre-ES6", () => {
             assert.throws(() => {
                 espree.parse(
