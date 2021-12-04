@@ -1,3 +1,9 @@
+v9.2.0 - December 3, 2021
+
+* [`1c4a04d`](https://github.com/eslint/espree/commit/1c4a04daededd8402723cfd092f77e510fcf5b57) ci: use node `v16` (#524) (Nitin Kumar)
+* [`e807c20`](https://github.com/eslint/espree/commit/e807c2061f97fb0f8c8db3d2c5981731f9bf4a22) feat: add `allowReserved` for ES3 (#522) (Jordan Harband)
+* [`34b9a6a`](https://github.com/eslint/espree/commit/34b9a6a08efe6089748c1a330c0e30b18eaf6785) docs: add private-in syntax (#523) (Milos Djermanovic)
+
 v9.1.0 - November 20, 2021
 
 * [`27713ac`](https://github.com/eslint/espree/commit/27713aca32c73347750f9033841f176f5cb83951) feat: Add sourceType:commonjs support (#520) (Nicholas C. Zakas)
