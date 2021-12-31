@@ -1,3 +1,8 @@
+v9.3.0 - December 31, 2021
+
+* [`8655f3d`](https://github.com/eslint/espree/commit/8655f3d4d442da3b170ddbf2a84d29dfc41ba072) feat: support arbitrary module namespace names (#528) (Milos Djermanovic)
+* [`1b72d7a`](https://github.com/eslint/espree/commit/1b72d7a7e774356dd7119f2239319651d91c37ef) ci: use node v16 for `macOS` and `windows` jobs (#527) (Nitin Kumar)
+
 v9.2.0 - December 3, 2021
 
 * [`1c4a04d`](https://github.com/eslint/espree/commit/1c4a04daededd8402723cfd092f77e510fcf5b57) ci: use node `v16` (#524) (Nitin Kumar)
