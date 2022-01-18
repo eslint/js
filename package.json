@@ -20,8 +20,10 @@
   "files": [
     "lib",
     "dist/espree.cjs",
+    "dist/espree.d.ts",
     "espree.js"
   ],
+  "types": "dist/espree.d.ts",
   "engines": {
     "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
   },
@@ -52,7 +54,9 @@
     "mocha": "^8.3.1",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.41.2",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.3.0",
+    "typescript": "^4.5.4",
+    "unicode-6.3.0": "^0.7.5"
   },
   "keywords": [
     "ast",
@@ -69,7 +73,7 @@
     "test": "npm-run-all -p unit lint",
     "lint": "eslint \"*.?(c)js\" lib/ tests/lib/",
     "fixlint": "npm run lint -- --fix",
-    "build": "rollup -c rollup.config.js",
+    "build": "rollup -c rollup.config.js && tsc --build",
     "update-version": "node tools/update-version.js",
     "pretest": "npm run build",
     "prepublishOnly": "npm run update-version && npm run build",

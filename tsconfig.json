@@ -1,0 +1,11 @@
+{
+  "include": ["lib/**/*", "espree.js"],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "declarationMap": true,
+    "strict": true
+  }
+}
