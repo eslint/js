@@ -1,3 +1,10 @@
+v9.3.1 - February 11, 2022
+
+* [`37f2184`](https://github.com/eslint/espree/commit/37f2184f1d7b0097ee7af1a011c0e61500c0d669) chore: Upgrade to eslint-visitor-keys@3.3.0 (#535) (Milos Djermanovic)
+* [`64010de`](https://github.com/eslint/espree/commit/64010de254892c89376f56bd88aa07ef9382dda8) fix: Derive espree.Syntax from espree.VisitorKeys (#532) (Frank Weigel)
+* [`ea0cf6a`](https://github.com/eslint/espree/commit/ea0cf6a7f0ab68ff1ff70bcfad8a10c6bd740da5) chore: switch from nyc to c8 for ESM coverage (#534) (Brett Zamir)
+* [`9fbe22a`](https://github.com/eslint/espree/commit/9fbe22a1297e42dc654520c23acd167810686c41) chore: upgrade eslint-visitor-keys@3.2.0 (#533) (Milos Djermanovic)
+
 v9.3.0 - December 31, 2021
 
 * [`8655f3d`](https://github.com/eslint/espree/commit/8655f3d4d442da3b170ddbf2a84d29dfc41ba072) feat: support arbitrary module namespace names (#528) (Milos Djermanovic)
