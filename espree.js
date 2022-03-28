@@ -64,6 +64,9 @@ import * as visitorKeys from "eslint-visitor-keys";
 import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
 
 
+export { default as TokenTranslator } from './lib/token-translator.js'
+
+
 // To initialize lazily.
 const parsers = {
     _regular: null,
