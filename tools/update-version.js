@@ -14,4 +14,5 @@ import fs from "fs";
  */
 
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+
 fs.writeFileSync("lib/version.js", `const version = "${pkg.version}";\n\nexport default version;\n`);
