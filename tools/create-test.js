@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-properties, node/no-process-exit */
+/* eslint-disable node/no-process-exit */
 /**
  * @fileoverview A simple script to help generate test cases
  * @author Nicholas C. Zakas
@@ -82,7 +82,7 @@ if (!sections || sections.length !== code.length) {
 
 code.forEach((source, index) => {
 
-    const fullFilename = `${filename}/${sections[index].substring(18, sections[index].length - 2).trim()}`,
+    const fullFilename = `${filename}/${sections[index].slice(18, sections[index].length - 2).trim()}`,
         testSourceFilename = path.resolve(__dirname, `../tests/fixtures/${fullFilename}.src.js`),
         testResultFilename = path.resolve(__dirname, `../tests/fixtures/${fullFilename}.result.js`);
 

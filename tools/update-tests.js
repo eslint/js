@@ -1,5 +1,3 @@
-/* globals getExpectedResult */
-/* eslint-disable no-restricted-properties */
 /**
  * @fileoverview A simple script to update existing tests to reflect new
  *      parser changes.
@@ -34,7 +32,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function getTestFilenames(directory) {
     return shelljs.find(directory).filter(filename =>
         filename.indexOf(".src.js") > -1).map(filename =>
-        filename.substring(directory.length - 1, filename.length - 7)); // strip off ".src.js"
+        filename.slice(directory.length - 1, filename.length - 7)); // strip off ".src.js"
 }
 
 /**
@@ -46,7 +44,7 @@ function getLibraryFilenames(directory) {
     return shelljs.find(directory).filter(filename =>
         filename.indexOf(".js") > -1 &&
             filename.indexOf(".result.js") === -1).map(filename =>
-        filename.substring(directory.length - 1)); // strip off directory
+        filename.slice(directory.length - 1)); // strip off directory
 }
 
 /**
@@ -72,7 +70,7 @@ const testFiles = getTestFilenames(FIXTURES_DIR),
 libraryFiles.forEach(filename => {
     const testResultFilename = `${path.resolve(__dirname, "..", LIBRARIES_DIR, filename)}.result.json`,
         code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename));
-    let result = getExpectedResult(code, {
+    let result = tester.getExpectedResult(code, {
         loc: true,
         range: true,
         tokens: true
@@ -97,7 +95,7 @@ testFiles.forEach(filename => {
 
     config.ecmaFeatures[feature] = true;
     const testResultFilename = `${path.resolve(__dirname, "..", FIXTURES_DIR, filename)}.result.js`;
-    const result = getExpectedResult(code, config);
+    const result = tester.getExpectedResult(code, config);
 
     outputResult(result, testResultFilename);
 });
