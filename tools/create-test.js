@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-exit */
 /**
  * @fileoverview A simple script to help generate test cases
  * @author Nicholas C. Zakas
@@ -15,7 +16,7 @@
 //------------------------------------------------------------------------------
 
 import shelljs from "shelljs";
-import { parse } from "../espree.js"
+import { parse } from "../espree.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -23,11 +24,37 @@ import { fileURLToPath } from "url";
 // Initialization
 //------------------------------------------------------------------------------
 
+// eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-var PATTERN = /\/\*!espree\-section:\s*[a-z\d\-]+\*\//gi;
+const PATTERN = /\/\*!espree-section:\s*[a-z\d-]+\*\//giu;
 
-var filename = process.argv[2],
+const filename = process.argv[2],
     codeFilename = process.argv[3];
+
+/**
+ * @typedef {{start: number, end: number}} StartEnd
+ */
+
+/**
+ * acorn adds these "start" and "end" properties
+ * which we don't officially support, we remove
+ * them before creating our test fixtures
+ * @param {StartEnd[]} o The array or object to modify
+ * @returns {void}
+ */
+function recursivelyRemoveStartAndEnd(o) {
+    if (Array.isArray(o)) {
+        o.forEach(recursivelyRemoveStartAndEnd);
+        return;
+    }
+    if (o && typeof o === "object") {
+        delete o.start;
+        delete o.end;
+        Object.keys(o).filter(key => key !== "loc").forEach(key => {
+            recursivelyRemoveStartAndEnd(o[key]);
+        });
+    }
+}
 
 if (!codeFilename) {
     console.error("Missing code to generate tests for");
@@ -41,7 +68,7 @@ if (!filename) {
     process.exit(1);
 }
 
-var rawCode = shelljs.cat(codeFilename),
+const rawCode = shelljs.cat(codeFilename),
     code = rawCode.split(PATTERN),
     sections = rawCode.match(PATTERN);
 
@@ -53,13 +80,13 @@ if (!sections || sections.length !== code.length) {
     process.exit(1);
 }
 
-code.forEach(function(source, index) {
+code.forEach((source, index) => {
 
-    var fullFilename = filename + "/" + (sections[index].substring(18, sections[index].length - 2).trim()),
-        testSourceFilename = path.resolve(__dirname, "../tests/fixtures/" + fullFilename + ".src.js"),
-        testResultFilename = path.resolve(__dirname, "../tests/fixtures/" + fullFilename + ".result.js");
+    const fullFilename = `${filename}/${sections[index].slice(18, sections[index].length - 2).trim()}`,
+        testSourceFilename = path.resolve(__dirname, `../tests/fixtures/${fullFilename}.src.js`),
+        testResultFilename = path.resolve(__dirname, `../tests/fixtures/${fullFilename}.result.js`);
 
-    var result,
+    let result,
         sourceCode = source.trim();
 
     // add an extra semicolon if there's not already one at the end - helps normalize empty lines at end of input
@@ -77,7 +104,7 @@ code.forEach(function(source, index) {
             ecmaFeatures: {
                 experimentalObjectRestSpread: true
             },
-            sourceType: 'script', // change as needed
+            sourceType: "script", // change as needed
             loc: true,
             range: true,
             tokens: true
@@ -91,32 +118,13 @@ code.forEach(function(source, index) {
         };
     }
 
-    recursivelyRemoveStartAndEnd(result)
+    recursivelyRemoveStartAndEnd(result);
 
     sourceCode.to(testSourceFilename);
 
-    let resultCode = `export default ${JSON.stringify(result, (key, value) => {
-        return (typeof value === "bigint") ? `bigint<${value}n>` : value;
-    }, 4)};`;
-    resultCode = resultCode.replace(/"bigint<(\d+n)>"/g, "$1");
+    let resultCode = `export default ${JSON.stringify(result, (key, value) =>
+        ((typeof value === "bigint") ? `bigint<${value}n>` : value), 4)};`;
+
+    resultCode = resultCode.replace(/"bigint<(\d+n)>"/gu, "$1");
     resultCode.to(testResultFilename);
 });
-
-// acorn adds these "start" and "end" properties
-// which we don't officially support, we we remove
-// them before creating our test fixtures
-function recursivelyRemoveStartAndEnd(o) {
-    if (Array.isArray(o)) {
-        o.forEach(recursivelyRemoveStartAndEnd)
-        return
-    }
-    if (o && typeof o === 'object') {
-        delete o.start
-        delete o.end
-        Object.keys(o).filter(function(key) {
-            return key !== 'loc'
-        }).forEach(function(key) {
-            recursivelyRemoveStartAndEnd(o[key])
-        })
-    }
-}

@@ -6,6 +6,11 @@ module.exports = {
     env: {
         es2020: true
     },
+    settings: {
+        jsdoc: {
+            mode: "typescript"
+        }
+    },
     parserOptions: {
         ecmaVersion: 2020,
         sourceType: "module"
