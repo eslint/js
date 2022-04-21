@@ -56,6 +56,57 @@
  */
 /* eslint no-undefined:0, no-use-before-define: 0 */
 
+// ----------------------------------------------------------------------------
+// Types exported from file
+// ----------------------------------------------------------------------------
+/**
+ * `jsx.Options` gives us 2 optional properties, so extend it
+ *
+ * `allowReserved`, `ranges`, `locations`, `allowReturnOutsideFunction`,
+ * `onToken`, and `onComment` are as in `acorn.Options`
+ *
+ * `ecmaVersion` as in `acorn.Options` though optional
+ *
+ * `sourceType` as in `acorn.Options` but also allows `commonjs`
+ *
+ * `ecmaFeatures`, `range`, `loc`, `tokens` are not in `acorn.Options`
+ *
+ * `comment` is not in `acorn.Options` and doesn't err without it, but is used
+ * @typedef {{
+ *   allowReserved?: boolean | "never",
+ *   ranges?: boolean,
+ *   locations?: boolean,
+ *   allowReturnOutsideFunction?: boolean,
+ *   onToken?: ((token: acorn.Token) => any) | acorn.Token[],
+ *   onComment?: ((
+ *     isBlock: boolean, text: string, start: number, end: number, startLoc?: acorn.Position,
+ *     endLoc?: acorn.Position
+ *   ) => void) | acorn.Comment[],
+ *   ecmaVersion?: acorn.ecmaVersion,
+ *   sourceType?: "script"|"module"|"commonjs",
+ *   ecmaFeatures?: {
+ *     jsx?: boolean,
+ *     globalReturn?: boolean,
+ *     impliedStrict?: boolean
+ *   },
+ *   range?: boolean,
+ *   loc?: boolean,
+ *   tokens?: boolean | null,
+ *   comment?: boolean,
+ * } & jsx.Options} ParserOptions
+ */
+
+// ----------------------------------------------------------------------------
+// Local type imports
+// ----------------------------------------------------------------------------
+/**
+ * @local
+ * @typedef {import('acorn')} acorn
+ * @typedef {typeof import('acorn-jsx').AcornJsxParser} AcornJsxParser
+ * @typedef {import('./lib/espree').EnhancedSyntaxError} EnhancedSyntaxError
+ * @typedef {typeof import('./lib/espree').EspreeParser} IEspreeParser
+ */
+
 import * as acorn from "acorn";
 import jsx from "acorn-jsx";
 import espree from "./lib/espree.js";
@@ -66,23 +117,43 @@ import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js
 
 // To initialize lazily.
 const parsers = {
-    _regular: null,
-    _jsx: null,
+    _regular: /** @type {IEspreeParser|null} */ (null),
+    _jsx: /** @type {IEspreeParser|null} */ (null),
 
+    /**
+     * Returns regular Parser
+     * @returns {IEspreeParser} Regular Acorn parser
+     */
     get regular() {
         if (this._regular === null) {
-            this._regular = acorn.Parser.extend(espree());
+            const espreeParserFactory = espree();
+
+            // Cast the `acorn.Parser` to our own for required properties not specified in *.d.ts
+            this._regular = espreeParserFactory(/** @type {AcornJsxParser} */ (acorn.Parser));
         }
         return this._regular;
     },
 
+    /**
+     * Returns JSX Parser
+     * @returns {IEspreeParser} JSX Acorn parser
+     */
     get jsx() {
         if (this._jsx === null) {
-            this._jsx = acorn.Parser.extend(jsx(), espree());
+            const espreeParserFactory = espree();
+            const jsxFactory = jsx();
+
+            // Cast the `acorn.Parser` to our own for required properties not specified in *.d.ts
+            this._jsx = espreeParserFactory(jsxFactory(acorn.Parser));
         }
         return this._jsx;
     },
 
+    /**
+     * Returns Regular or JSX Parser
+     * @param {ParserOptions} options Parser options
+     * @returns {IEspreeParser} Regular or JSX Acorn parser
+     */
     get(options) {
         const useJsx = Boolean(
             options &&
@@ -101,9 +172,9 @@ const parsers = {
 /**
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
- * @param {Object} options Options defining how to tokenize.
- * @returns {Token[]} An array of tokens.
- * @throws {SyntaxError} If the input code is invalid.
+ * @param {ParserOptions} options Options defining how to tokenize.
+ * @returns {acorn.Token[]|null} An array of tokens.
+ * @throws {EnhancedSyntaxError} If the input code is invalid.
  * @private
  */
 export function tokenize(code, options) {
@@ -124,9 +195,9 @@ export function tokenize(code, options) {
 /**
  * Parses the given code.
  * @param {string} code The code to tokenize.
- * @param {Object} options Options defining how to tokenize.
- * @returns {ASTNode} The "Program" AST node.
- * @throws {SyntaxError} If the input code is invalid.
+ * @param {ParserOptions} options Options defining how to tokenize.
+ * @returns {acorn.Node} The "Program" AST node.
+ * @throws {EnhancedSyntaxError} If the input code is invalid.
  */
 export function parse(code, options) {
     const Parser = parsers.get(options);
@@ -148,17 +219,15 @@ export const VisitorKeys = (function() {
 // Derive node types from VisitorKeys
 /* istanbul ignore next */
 export const Syntax = (function() {
-    let name,
+    let /** @type {Object<string,string>} */
         types = {};
 
     if (typeof Object.create === "function") {
         types = Object.create(null);
     }
 
-    for (name in VisitorKeys) {
-        if (Object.hasOwnProperty.call(VisitorKeys, name)) {
-            types[name] = name;
-        }
+    for (const name of Object.keys(VisitorKeys)) {
+        types[name] = name;
     }
 
     if (typeof Object.freeze === "function") {

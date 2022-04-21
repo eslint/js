@@ -10,3 +10,4 @@ _test.js
 .eslint-release-info.json
 yarn.lock
 package-lock.json
+tmp

@@ -5,6 +5,7 @@
   "homepage": "https://github.com/eslint/espree",
   "main": "dist/espree.cjs",
   "type": "module",
+  "types": "dist/espree.d.ts",
   "exports": {
     ".": [
       {
@@ -20,6 +21,7 @@
   "files": [
     "lib",
     "dist/espree.cjs",
+    "dist/espree.d.ts",
     "espree.js"
   ],
   "engines": {
@@ -36,21 +38,28 @@
     "eslint-visitor-keys": "^3.3.0"
   },
   "devDependencies": {
+    "@es-joy/escodegen": "^3.5.1",
+    "@es-joy/jsdoc-eslint-parser": "^0.16.0",
+    "@es-joy/jsdoccomment": "^0.29.0",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
-    "c8": "^7.11.0",
+    "ast-types": "^0.14.2",
+    "c8": "^7.11.2",
     "chai": "^4.3.6",
-    "eslint": "^8.13.0",
+    "eslint": "^8.14.0",
     "eslint-config-eslint": "^7.0.0",
-    "eslint-plugin-jsdoc": "^39.2.4",
+    "eslint-plugin-jsdoc": "^39.2.9",
     "eslint-plugin-node": "^11.1.0",
     "eslint-release": "^3.2.0",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
+    "esquery": "^1.4.0",
+    "globby": "^13.1.1",
     "mocha": "^9.2.2",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.41.2",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.3.0",
+    "typescript": "^4.6.3"
   },
   "keywords": [
     "ast",
@@ -65,6 +74,7 @@
     "unit:esm": "c8 mocha --color --reporter progress --timeout 30000 'tests/lib/**/*.js'",
     "unit:cjs": "mocha --color --reporter progress --timeout 30000 tests/lib/commonjs.cjs",
     "test": "npm-run-all -p unit lint",
+    "tsc": "tsc",
     "lint": "eslint .",
     "fixlint": "npm run lint -- --fix",
     "build": "rollup -c rollup.config.js",
@@ -72,6 +82,7 @@
     "pretest": "npm run build",
     "prepublishOnly": "npm run update-version && npm run build",
     "sync-docs": "node sync-docs.js",
+    "js-for-ts": "node tools/intermediate-js-for-ts.js",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
     "generate-betarelease": "eslint-generate-prerelease beta",

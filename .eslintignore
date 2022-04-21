@@ -2,3 +2,4 @@
 /tests/fixtures
 /dist
 tools/create-test-example.js
+tmp

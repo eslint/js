@@ -12,7 +12,7 @@ module.exports = {
         }
     },
     parserOptions: {
-        ecmaVersion: 2020,
+        ecmaVersion: 2022,
         sourceType: "module"
     },
     overrides: [
@@ -34,5 +34,10 @@ module.exports = {
                 "no-console": "off"
             }
         }
-    ]
+    ],
+    rules: {
+        "jsdoc/check-tag-names": ["error", {
+            definedTags: ["local", "export"]
+        }]
+    }
 };
