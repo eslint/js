@@ -11,7 +11,7 @@
     "emitDeclarationOnly": true,
     "strict": true,
     "target": "es5",
-    "outDir": "dist"
+    "outFile": "dist/espree.d.ts"
   },
   "_preprocess_include": ["espree.js", "lib/**/*.js"],
   "_preprocess_exclude": ["node_modules"],
