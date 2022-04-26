@@ -74,14 +74,6 @@
  * `comment` is not in `acorn.Options` and doesn't err without it, but is used
  * @typedef {{
  *   allowReserved?: boolean,
- *   ranges?: boolean,
- *   locations?: boolean,
- *   allowReturnOutsideFunction?: boolean,
- *   onToken?: ((token: acorn.Token) => any) | acorn.Token[],
- *   onComment?: ((
- *     isBlock: boolean, text: string, start: number, end: number, startLoc?: acorn.Position,
- *     endLoc?: acorn.Position
- *   ) => void) | acorn.Comment[],
  *   ecmaVersion?: acorn.ecmaVersion,
  *   sourceType?: "script"|"module"|"commonjs",
  *   ecmaFeatures?: {
@@ -93,7 +85,7 @@
  *   loc?: boolean,
  *   tokens?: boolean | null,
  *   comment?: boolean,
- * } & jsx.Options} ParserOptions
+ * }} ParserOptions
  */
 
 // ----------------------------------------------------------------------------
