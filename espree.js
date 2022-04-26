@@ -73,7 +73,7 @@
  *
  * `comment` is not in `acorn.Options` and doesn't err without it, but is used
  * @typedef {{
- *   allowReserved?: boolean | "never",
+ *   allowReserved?: boolean,
  *   ranges?: boolean,
  *   locations?: boolean,
  *   allowReturnOutsideFunction?: boolean,
