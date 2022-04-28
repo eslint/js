@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@es-joy/escodegen": "^3.5.1",
+    "@es-joy/js2ts-assistant": "^0.2.0",
     "@es-joy/jsdoc-eslint-parser": "^0.16.0",
     "@es-joy/jsdoccomment": "^0.29.0",
     "@rollup/plugin-commonjs": "^17.1.0",
@@ -82,7 +83,7 @@
     "pretest": "npm run build",
     "prepublishOnly": "npm run update-version && npm run build",
     "sync-docs": "node sync-docs.js",
-    "js-for-ts": "node tools/intermediate-js-for-ts.js",
+    "js-for-ts": "node tools/js-for-ts.js",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
     "generate-betarelease": "eslint-generate-prerelease beta",
