@@ -1,4 +1,19 @@
+/**
+ * @fileoverview Tool to prepare JavaScript (+JSDoc) for TypeScript, inlining
+ * `@local`-marked `@typedef`'s, and building a faux class for `@export`-marked
+ * classes so the type can be exported out of a given file.
+ * @author Brett Zamir
+ */
+
+//------------------------------------------------------------------------------
+// Requirements
+//------------------------------------------------------------------------------
+
 import js2tsAssistant from "@es-joy/js2ts-assistant";
+
+// ----------------------------------------------------------------------------
+// Modify output
+// ----------------------------------------------------------------------------
 
 await js2tsAssistant({
     customClassHandling({
