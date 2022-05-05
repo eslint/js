@@ -72,6 +72,8 @@
  * `ecmaFeatures`, `range`, `loc`, `tokens` are not in `acorn.Options`
  *
  * `comment` is not in `acorn.Options` and doesn't err without it, but is used
+ */
+/**
  * @typedef {{
  *   allowReserved?: boolean,
  *   ecmaVersion?: acorn.ecmaVersion,
