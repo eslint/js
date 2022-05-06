@@ -67,7 +67,8 @@ import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js
  * @typedef {import("acorn")} acorn
  * @typedef {import("./lib/options").ParserOptions} ParserOptions
  * @typedef {import("./lib/token-translator").EsprimaToken} EsprimaToken
- * @typedef {import("./lib/token-translator").TokenRange} TokenRange
+ * @typedef {import("./lib/token-translator").Range} TokenRange
+ * @typedef {import("@types/estree").Program} Program
  */
 
 
@@ -131,8 +132,8 @@ export function tokenize(code, options) {
 /**
  * Parses the given code.
  * @param {string} code The code to tokenize.
- * @param {ParserOptions} options Options defining how to tokenize.
- * @returns {acorn.Node} The "Program" AST node.
+ * @param {ParserOptions} options Options defining how to parse.
+ * @returns {Program} The "Program" AST node.
  * @throws {SyntaxError} If the input code is invalid.
  */
 export function parse(code, options) {
