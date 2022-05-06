@@ -1,3 +1,12 @@
+v9.3.2 - May 6, 2022
+
+* [`6c718af`](https://github.com/eslint/espree/commit/6c718af090c1b5dd25d74a2ecfc65fbee0c00716) fix: "use strict" should not trigger strict mode in es3. (#547) (唯然)
+* [`e5982ef`](https://github.com/eslint/espree/commit/e5982ef11cc546826fc76467c93dbb33e981550c) chore: lint tool files, add editorconfig, update devDeps. (#545) (Brett Zamir)
+* [`75f65eb`](https://github.com/eslint/espree/commit/75f65eb2915438abd3ebd91dd62431456502e1db) build: add node v18 (#546) (唯然)
+* [`b578a66`](https://github.com/eslint/espree/commit/b578a66991985d96d5e6ee4f388c4356ad0b3594) chore: remove unused `devDependencies` (#540) (Nitin Kumar)
+* [`770b577`](https://github.com/eslint/espree/commit/770b5778a94676fed65b545299d4ace0512859af) chore: add LICENSE file for tests (#539) (Nitin Kumar)
+* [`c915190`](https://github.com/eslint/espree/commit/c9151901be91b21a027478d2603862460fccf78f) docs: update Build Status badge (#536) (Milos Djermanovic)
+
 v9.3.1 - February 11, 2022
 
 * [`37f2184`](https://github.com/eslint/espree/commit/37f2184f1d7b0097ee7af1a011c0e61500c0d669) chore: Upgrade to eslint-visitor-keys@3.3.0 (#535) (Milos Djermanovic)
