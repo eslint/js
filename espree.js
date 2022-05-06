@@ -68,7 +68,7 @@ import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js
  * @typedef {import("./lib/options").ParserOptions} ParserOptions
  * @typedef {import("./lib/token-translator").EsprimaToken} EsprimaToken
  * @typedef {import("./lib/token-translator").Range} TokenRange
- * @typedef {import("@types/estree").Program} Program
+ * @typedef {import("estree").Program} Program
  */
 
 

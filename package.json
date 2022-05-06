@@ -12,13 +12,15 @@
         "require": "./dist/espree.cjs",
         "default": "./dist/espree.cjs"
       },
-      "./dist/espree.cjs"
+      "./dist/espree.cjs",
+      "./dist/lib"
     ],
     "./package.json": "./package.json"
   },
   "version": "9.3.1",
   "files": [
     "lib",
+    "dist/lib",
     "dist/espree.cjs",
     "dist/espree.d.ts",
     "espree.js"
