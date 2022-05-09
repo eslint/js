@@ -96,7 +96,7 @@
 /**
  * @local
  * @typedef {import('acorn')} acorn
- * @typedef {typeof import('acorn-jsx').AcornJsxParser} AcornJsxParser
+ * @typedef {import('acorn-jsx').AcornJsxParser} AcornJsxParser
  * @typedef {import('./lib/espree').EnhancedSyntaxError} EnhancedSyntaxError
  * @typedef {typeof import('./lib/espree').EspreeParser} IEspreeParser
  */

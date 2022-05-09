@@ -1,4 +1,4 @@
-declare function _default(): (Parser: typeof import('acorn-jsx').AcornJsxParser) => typeof EspreeParser;
+declare function _default(): (Parser: import('acorn-jsx').AcornJsxParser) => typeof EspreeParser;
 export default _default;
 export class EspreeParser extends acorn.Parser {
     /**
