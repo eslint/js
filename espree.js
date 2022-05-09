@@ -85,7 +85,7 @@
  *   },
  *   range?: boolean,
  *   loc?: boolean,
- *   tokens?: boolean | null,
+ *   tokens?: boolean,
  *   comment?: boolean,
  * }} ParserOptions
  */

@@ -33,7 +33,7 @@ export type ParserOptions = {
     };
     range?: boolean;
     loc?: boolean;
-    tokens?: boolean | null;
+    tokens?: boolean;
     comment?: boolean;
 };
 import * as visitorKeys from "eslint-visitor-keys";
