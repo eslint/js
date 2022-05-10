@@ -60,12 +60,16 @@
 // Types exported from file
 // ----------------------------------------------------------------------------
 /**
+ * @typedef {3|5|6|7|8|9|10|11|12|13|2015|2016|2017|2018|2019|2020|2021|2022|'latest'} ecmaVersion
+ */
+
+/**
  * `jsx.Options` gives us 2 optional properties, so extend it
  *
  * `allowReserved`, `ranges`, `locations`, `allowReturnOutsideFunction`,
  * `onToken`, and `onComment` are as in `acorn.Options`
  *
- * `ecmaVersion` as in `acorn.Options` though optional
+ * `ecmaVersion` currently as in `acorn.Options` though optional
  *
  * `sourceType` as in `acorn.Options` but also allows `commonjs`
  *
@@ -76,7 +80,7 @@
 /**
  * @typedef {{
  *   allowReserved?: boolean,
- *   ecmaVersion?: acorn.ecmaVersion,
+ *   ecmaVersion?: ecmaVersion,
  *   sourceType?: "script"|"module"|"commonjs",
  *   ecmaFeatures?: {
  *     jsx?: boolean,

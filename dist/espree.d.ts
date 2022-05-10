@@ -22,9 +22,10 @@ export const Syntax: {
 };
 export const latestEcmaVersion: number;
 export const supportedEcmaVersions: number[];
+export type ecmaVersion = 3 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 'latest';
 export type ParserOptions = {
     allowReserved?: boolean;
-    ecmaVersion?: import('acorn').ecmaVersion;
+    ecmaVersion?: ecmaVersion;
     sourceType?: "script" | "module" | "commonjs";
     ecmaFeatures?: {
         jsx?: boolean;
