@@ -120,10 +120,15 @@ const parsers = {
      */
     get regular() {
         if (this._regular === null) {
-            const espreeParserFactory = espree();
+            const espreeParserFactory = /** @type {unknown} */ (espree());
 
-            // Cast the `acorn.Parser` to our own for required properties not specified in *.d.ts
-            this._regular = espreeParserFactory(/** @type {AcornJsxParser} */ (acorn.Parser));
+            this._regular = /** @type {IEspreeParser} */ (
+                acorn.Parser.extend(
+
+                    /** @type {(BaseParser: typeof acorn.Parser) => typeof acorn.Parser} */
+                    (espreeParserFactory)
+                )
+            );
         }
         return this._regular;
     },
@@ -134,11 +139,17 @@ const parsers = {
      */
     get jsx() {
         if (this._jsx === null) {
-            const espreeParserFactory = espree();
+            const espreeParserFactory = /** @type {unknown} */ (espree());
             const jsxFactory = jsx();
 
-            // Cast the `acorn.Parser` to our own for required properties not specified in *.d.ts
-            this._jsx = espreeParserFactory(jsxFactory(acorn.Parser));
+            this._jsx = /** @type {IEspreeParser} */ (
+                acorn.Parser.extend(
+                    jsxFactory,
+
+                    /** @type {(BaseParser: typeof acorn.Parser) => typeof acorn.Parser} */
+                    (espreeParserFactory)
+                )
+            );
         }
         return this._jsx;
     },
