@@ -2,11 +2,11 @@
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
  * @param {ParserOptions} options Options defining how to tokenize.
- * @returns {import('acorn').Token[] | null} An array of tokens.
+ * @returns {import('acorn').Token[]} An array of tokens.
  * @throws {import('./lib/espree').EnhancedSyntaxError} If the input code is invalid.
  * @private
  */
-export function tokenize(code: string, options: ParserOptions): import('acorn').Token[] | null;
+export function tokenize(code: string, options: ParserOptions): import('acorn').Token[];
 /**
  * Parses the given code.
  * @param {string} code The code to tokenize.

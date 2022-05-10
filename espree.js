@@ -182,7 +182,7 @@ const parsers = {
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
  * @param {ParserOptions} options Options defining how to tokenize.
- * @returns {acorn.Token[]|null} An array of tokens.
+ * @returns {acorn.Token[]} An array of tokens.
  * @throws {EnhancedSyntaxError} If the input code is invalid.
  * @private
  */
@@ -194,7 +194,7 @@ export function tokenize(code, options) {
         options = Object.assign({}, options, { tokens: true }); // eslint-disable-line no-param-reassign
     }
 
-    return new Parser(options, code).tokenize();
+    return /** @type {acorn.Token[]} */ (new Parser(options, code).tokenize());
 }
 
 //------------------------------------------------------------------------------
