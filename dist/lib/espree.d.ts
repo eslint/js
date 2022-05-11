@@ -9,39 +9,17 @@ export class EspreeParser extends acorn.Parser {
     constructor(opts: import('../espree').ParserOptions | null, code: string | object);
     /**
      * Returns Espree tokens.
-     * @returns {{comments?: {type: string; value: string; range?: [number, number]; start?: number; end?: number; loc?: {start: import('acorn').Position | undefined; end: import('acorn').Position | undefined}}[]} & import('acorn').Token[] | null} Espree tokens
+     * @returns {import('../espree').EspreeTokens | null} Espree tokens
      */
-    tokenize(): {
-        comments?: {
-            type: string;
-            value: string;
-            range?: [number, number];
-            start?: number;
-            end?: number;
-            loc?: {
-                start: import('acorn').Position | undefined;
-                end: import('acorn').Position | undefined;
-            };
-        }[];
-    } & import('acorn').Token[] | null;
+    tokenize(): import('../espree').EspreeTokens | null;
     /**
      * Parses.
-     * @returns {{sourceType?: "script" | "module" | "commonjs"; comments?: {type: string; value: string; range?: [number, number]; start?: number; end?: number; loc?: {start: import('acorn').Position | undefined; end: import('acorn').Position | undefined}}[]; tokens?: import('acorn').Token[]; body: import('acorn').Node[]} & import('acorn').Node} The program Node
+     * @returns {{sourceType?: "script" | "module" | "commonjs"; comments?: EsprimaComment[]; tokens?: import('../espree').EspreeTokens; body: import('acorn').Node[]} & import('acorn').Node} The program Node
      */
     parse(): {
         sourceType?: "script" | "module" | "commonjs";
-        comments?: {
-            type: string;
-            value: string;
-            range?: [number, number];
-            start?: number;
-            end?: number;
-            loc?: {
-                start: import('acorn').Position | undefined;
-                end: import('acorn').Position | undefined;
-            };
-        }[];
-        tokens?: import('acorn').Token[];
+        comments?: EsprimaComment[];
+        tokens?: import('../espree').EspreeTokens;
         body: import('acorn').Node[];
     } & import('acorn').Node;
     /**
@@ -71,5 +49,16 @@ export type EnhancedSyntaxError = {
 export type EnhancedTokTypes = {
     jsxAttrValueToken?: import('acorn').TokenType;
 } & typeof import('acorn-jsx').tokTypes;
+export type EsprimaComment = {
+    type: string;
+    value: string;
+    range?: [number, number];
+    start?: number;
+    end?: number;
+    loc?: {
+        start: import('acorn').Position | undefined;
+        end: import('acorn').Position | undefined;
+    };
+};
 import * as acorn from "acorn";
 //# sourceMappingURL=espree.d.ts.map

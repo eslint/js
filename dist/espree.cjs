@@ -42,7 +42,8 @@ var visitorKeys__namespace = /*#__PURE__*/_interopNamespace(visitorKeys);
 /**
  * @local
  * @typedef {import('acorn')} acorn
- * @typedef {import('../lib/espree').EnhancedTokTypes} EnhancedTokTypes
+ * @typedef {import('./espree').EnhancedTokTypes} EnhancedTokTypes
+ * @typedef {import('../espree').ecmaVersion} ecmaVersion
  */
 
 // ----------------------------------------------------------------------------
@@ -75,21 +76,19 @@ var visitorKeys__namespace = /*#__PURE__*/_interopNamespace(visitorKeys);
  * }} BaseEsprimaToken
  *
  * @typedef {{
- *   type: string;
- * } & BaseEsprimaToken} EsprimaToken
- *
- * @typedef {{
- *   type: string | acorn.TokenType;
- * } & BaseEsprimaToken} EsprimaTokenFlexible
- *
- * @typedef {{
  *   jsxAttrValueToken: boolean;
- *   ecmaVersion: acorn.ecmaVersion;
+ *   ecmaVersion: ecmaVersion;
  * }} ExtraNoTokens
  *
  * @typedef {{
- *   tokens: EsprimaTokenFlexible[]
+ *   tokens: EsprimaToken[]
  * } & ExtraNoTokens} Extra
+ */
+
+/**
+ * @typedef {{
+ *   type: string;
+ * } & BaseEsprimaToken} EsprimaToken
  */
 
 //------------------------------------------------------------------------------
@@ -179,7 +178,7 @@ class TokenTranslator {
     }
 
     /**
-     * Translates a single Esprima token to a single Acorn token. This may be
+     * Translates a single Acorn token to a single Esprima token. This may be
      * inaccurate due to how templates are handled differently in Esprima and
      * Acorn, but should be accurate for all other tokens.
      * @param {acorn.Token} token The Acorn token to translate.
@@ -364,6 +363,7 @@ class TokenTranslator {
 /**
  * @local
  * @typedef {import('../espree').ParserOptions} ParserOptions
+ * @typedef {import('../espree').ecmaVersion} ecmaVersion
  */
 
 // ----------------------------------------------------------------------------
@@ -372,7 +372,7 @@ class TokenTranslator {
 /**
  * @local
  * @typedef {{
- *   ecmaVersion: 10 | 9 | 8 | 7 | 6 | 5 | 3 | 11 | 12 | 13 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | "latest",
+ *   ecmaVersion: ecmaVersion,
  *   sourceType: "script"|"module",
  *   range?: boolean,
  *   loc?: boolean,
@@ -385,7 +385,7 @@ class TokenTranslator {
  *   ranges: boolean,
  *   locations: boolean,
  *   allowReturnOutsideFunction: boolean,
- *   tokens?: boolean | null,
+ *   tokens?: boolean,
  *   comment?: boolean
  * }} NormalizedParserOptions
  */
@@ -541,8 +541,9 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  * @local
  * @typedef {import('acorn')} acorn
  * @typedef {typeof import('acorn-jsx').tokTypes} tokTypesType
- * @typedef {typeof import('acorn-jsx').AcornJsxParser} AcornJsxParser
+ * @typedef {import('acorn-jsx').AcornJsxParser} AcornJsxParser
  * @typedef {import('../espree').ParserOptions} ParserOptions
+ * @typedef {import('../espree').ecmaVersion} ecmaVersion
  */
 
 // ----------------------------------------------------------------------------
@@ -550,9 +551,6 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
 // ----------------------------------------------------------------------------
 /**
  * @local
- *
- * @typedef {acorn.ecmaVersion} ecmaVersion
- *
  * @typedef {{
  *   generator?: boolean
  * } & acorn.Node} EsprimaNode
@@ -564,12 +562,6 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  */
 
 /**
- *  First three properties as in `acorn.Comment`; next two as in `acorn.Comment`
- *  but optional. Last is different as has to allow `undefined`
- */
-/**
- * @local
- *
  * @typedef {{
  *   type: string,
  *   value: string,
@@ -581,10 +573,16 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  *     end: acorn.Position | undefined
  *   }
  * }} EsprimaComment
+ */
+
+/**
+ *  First two properties as in `acorn.Comment`; next two as in `acorn.Comment`
+ *  but optional. Last is different as has to allow `undefined`
+ */
+/**
+ * @local
  *
- * @typedef {{
- *   comments?: EsprimaComment[]
- * } & acorn.Token[]} EspreeTokens
+ * @typedef {import('../espree').EspreeTokens} EspreeTokens
  *
  * @typedef {{
  *   tail?: boolean
@@ -611,7 +609,7 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  * @typedef {{
  *   sourceType?: "script"|"module"|"commonjs";
  *   comments?: EsprimaComment[];
- *   tokens?: acorn.Token[];
+ *   tokens?: EspreeTokens;
  *   body: acorn.Node[];
  * } & acorn.Node} EsprimaProgramNode
  */
@@ -1112,10 +1110,15 @@ const parsers = {
      */
     get regular() {
         if (this._regular === null) {
-            const espreeParserFactory = espree();
+            const espreeParserFactory = /** @type {unknown} */ (espree());
 
-            // Cast the `acorn.Parser` to our own for required properties not specified in *.d.ts
-            this._regular = espreeParserFactory(/** @type {AcornJsxParser} */ (acorn__namespace.Parser));
+            this._regular = /** @type {IEspreeParser} */ (
+                acorn__namespace.Parser.extend(
+
+                    /** @type {(BaseParser: typeof acorn.Parser) => typeof acorn.Parser} */
+                    (espreeParserFactory)
+                )
+            );
         }
         return this._regular;
     },
@@ -1126,11 +1129,17 @@ const parsers = {
      */
     get jsx() {
         if (this._jsx === null) {
-            const espreeParserFactory = espree();
+            const espreeParserFactory = /** @type {unknown} */ (espree());
             const jsxFactory = jsx__default["default"]();
 
-            // Cast the `acorn.Parser` to our own for required properties not specified in *.d.ts
-            this._jsx = espreeParserFactory(jsxFactory(acorn__namespace.Parser));
+            this._jsx = /** @type {IEspreeParser} */ (
+                acorn__namespace.Parser.extend(
+                    jsxFactory,
+
+                    /** @type {(BaseParser: typeof acorn.Parser) => typeof acorn.Parser} */
+                    (espreeParserFactory)
+                )
+            );
         }
         return this._jsx;
     },
@@ -1159,7 +1168,7 @@ const parsers = {
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
  * @param {ParserOptions} options Options defining how to tokenize.
- * @returns {acorn.Token[]|null} An array of tokens.
+ * @returns {EspreeTokens} An array of tokens.
  * @throws {EnhancedSyntaxError} If the input code is invalid.
  * @private
  */
@@ -1171,7 +1180,7 @@ function tokenize(code, options) {
         options = Object.assign({}, options, { tokens: true }); // eslint-disable-line no-param-reassign
     }
 
-    return new Parser(options, code).tokenize();
+    return /** @type {EspreeTokens} */ (new Parser(options, code).tokenize());
 }
 
 //------------------------------------------------------------------------------

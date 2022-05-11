@@ -64,6 +64,20 @@
  */
 
 /**
+ * @typedef {import('./lib/token-translator').EsprimaToken} EspreeToken
+ */
+
+/**
+ * @typedef {import('./lib/espree').EsprimaComment} EspreeComment
+ */
+
+/**
+ * @typedef {{
+ *   comments?: EspreeComment[]
+ * } & EspreeToken[]} EspreeTokens
+ */
+
+/**
  * `jsx.Options` gives us 2 optional properties, so extend it
  *
  * `allowReserved`, `ranges`, `locations`, `allowReturnOutsideFunction`,
@@ -182,7 +196,7 @@ const parsers = {
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
  * @param {ParserOptions} options Options defining how to tokenize.
- * @returns {acorn.Token[]} An array of tokens.
+ * @returns {EspreeTokens} An array of tokens.
  * @throws {EnhancedSyntaxError} If the input code is invalid.
  * @private
  */
@@ -194,7 +208,7 @@ export function tokenize(code, options) {
         options = Object.assign({}, options, { tokens: true }); // eslint-disable-line no-param-reassign
     }
 
-    return /** @type {acorn.Token[]} */ (new Parser(options, code).tokenize());
+    return /** @type {EspreeTokens} */ (new Parser(options, code).tokenize());
 }
 
 //------------------------------------------------------------------------------
