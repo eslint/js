@@ -14,12 +14,12 @@ export class EspreeParser extends acorn.Parser {
     tokenize(): import('../espree').EspreeTokens | null;
     /**
      * Parses.
-     * @returns {{sourceType?: "script" | "module" | "commonjs"; comments?: EsprimaComment[]; tokens?: import('../espree').EspreeTokens; body: import('acorn').Node[]} & import('acorn').Node} The program Node
+     * @returns {{sourceType?: "script" | "module" | "commonjs"; comments?: EsprimaComment[]; tokens?: import('./token-translator').EsprimaToken[]; body: import('acorn').Node[]} & import('acorn').Node} The program Node
      */
     parse(): {
         sourceType?: "script" | "module" | "commonjs";
         comments?: EsprimaComment[];
-        tokens?: import('../espree').EspreeTokens;
+        tokens?: import('./token-translator').EsprimaToken[];
         body: import('acorn').Node[];
     } & import('acorn').Node;
     /**

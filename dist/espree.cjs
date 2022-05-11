@@ -166,7 +166,7 @@ class TokenTranslator {
         this._acornTokTypes = acornTokTypes;
 
         // token buffer for templates
-        /** @type {(acorn.Token)[]} */
+        /** @type {acorn.Token[]} */
         this._tokens = [];
 
         // track the last curly brace
@@ -477,7 +477,6 @@ function normalizeSourceType(sourceType = "script") {
 function normalizeOptions(options) {
     const ecmaVersion = normalizeEcmaVersion(options.ecmaVersion);
 
-    /** @type {"script"|"module"} */
     const sourceType = normalizeSourceType(options.sourceType);
     const ranges = options.range === true;
     const locations = options.loc === true;
@@ -609,7 +608,7 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  * @typedef {{
  *   sourceType?: "script"|"module"|"commonjs";
  *   comments?: EsprimaComment[];
- *   tokens?: EspreeTokens;
+ *   tokens?: import('./token-translator').EsprimaToken[];
  *   body: acorn.Node[];
  * } & acorn.Node} EsprimaProgramNode
  */
@@ -697,13 +696,12 @@ var espree = () => {
             constructor(opts, code) {
                 /* eslint-enable jsdoc/check-types -- Allows generic object */
 
-                /** @type {ParserOptions} */
                 const newOpts = (typeof opts !== "object" || opts === null)
                     ? {}
                     : opts;
 
                 const codeString = typeof code === "string"
-                    ? /** @type {string} */ (code)
+                    ? code
                     : String(code);
 
                 // save original source type in case of commonjs
@@ -785,7 +783,7 @@ var espree = () => {
                     /** @type {acorn.Token|null} */
                     lastToken: null,
 
-                    /** @type {(AcornTemplateNode)[]} */
+                    /** @type {AcornTemplateNode[]} */
                     templateElements: []
                 };
             }
