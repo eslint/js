@@ -539,7 +539,7 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
 /**
  * @local
  * @typedef {import('acorn')} acorn
- * @typedef {typeof import('acorn-jsx').tokTypes} tokTypesType
+ * @typedef {import('acorn-jsx').TokTypes} tokTypesType
  * @typedef {import('acorn-jsx').AcornJsxParser} AcornJsxParser
  * @typedef {import('../espree').ParserOptions} ParserOptions
  * @typedef {import('../espree').ecmaVersion} ecmaVersion

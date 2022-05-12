@@ -48,7 +48,7 @@ export type EnhancedSyntaxError = {
 } & SyntaxError;
 export type EnhancedTokTypes = {
     jsxAttrValueToken?: import('acorn').TokenType;
-} & typeof import('acorn-jsx').tokTypes;
+} & import('acorn-jsx').TokTypes;
 export type EsprimaComment = {
     type: string;
     value: string;
