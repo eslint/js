@@ -8,6 +8,7 @@
     "noEmit": false,
     "declaration": true,
     "declarationMap": true,
+    "allowSyntheticDefaultImports": true,
     "emitDeclarationOnly": true,
     "strict": true,
     "target": "es5",
