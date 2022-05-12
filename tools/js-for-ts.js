@@ -5,9 +5,9 @@
  * @author Brett Zamir
  */
 
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // Requirements
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 import js2tsAssistant from "@es-joy/js2ts-assistant";
 
@@ -20,9 +20,12 @@ await js2tsAssistant({
         ast, builders, superClassName
     }) {
 
-        // Since we're not tracking types as in using a
-        //  proper TS transformer (like `ttypescript`?),
-        //  we hack this one for now
+        // Since we're not tracking types as in using a proper TS transformer
+        //  (like `ttypescript`?), we hack this one for now; for generating
+        //  our dummy version of the private
+        //  `class EspreeParser extends Parser`, we ensure `acorn` exists to be
+        //  imported and that we extend from a reference accessible at the root
+        //  level of the module
         if (superClassName === "Parser") {
 
             // Make import available
@@ -45,7 +48,8 @@ await js2tsAssistant({
         tag, identifier, typeCast
     }) {
 
-        // Hack in some needed type casts
+        // Since the super class is more restrictive, we hack in some type
+        //   casts which would be difficult for `js2tsAssistant` to auto-detect
         if (tag.name === "opts") {
             identifier.jsdoc = typeCast({
                 typeLines: [
