@@ -39,17 +39,17 @@
   "devDependencies": {
     "@es-joy/escodegen": "^3.5.1",
     "@es-joy/js2ts-assistant": "^0.2.0",
-    "@es-joy/jsdoc-eslint-parser": "^0.16.0",
-    "@es-joy/jsdoccomment": "^0.29.0",
+    "@es-joy/jsdoc-eslint-parser": "^0.17.0",
+    "@es-joy/jsdoccomment": "^0.30.0",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "ast-types": "^0.14.2",
-    "c8": "^7.11.2",
+    "c8": "^7.11.3",
     "chai": "^4.3.6",
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "eslint-config-eslint": "^7.0.0",
-    "eslint-plugin-jsdoc": "^39.2.9",
+    "eslint-plugin-jsdoc": "^39.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-release": "^3.2.0",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
@@ -59,7 +59,7 @@
     "npm-run-all": "^4.1.5",
     "rollup": "^2.41.2",
     "shelljs": "^0.3.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   },
   "keywords": [
     "ast",
