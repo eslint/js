@@ -49,8 +49,7 @@ export default {
                 ],
                 "value": "use strict",
                 "raw": "\"use strict\""
-            },
-            "directive": "use strict"
+            }
         },
         {
             "type": "VariableDeclaration",
