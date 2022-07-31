@@ -1,3 +1,9 @@
+v9.3.3 - July 31, 2022
+
+* [`b1eac6d`](https://github.com/eslint/espree/commit/b1eac6d9687b2cb48dd28e8c11626afde22fa6cf) fix: don't recognize directives in ES3, allow parenthesized rest target (#554) (Milos Djermanovic)
+* [`bd3b5c6`](https://github.com/eslint/espree/commit/bd3b5c66db5569efdf1446ecf1dfd396e4b5689c) ci: update github actions (#552) (Amaresh  S M)
+* [`45fec88`](https://github.com/eslint/espree/commit/45fec887c310538ea03b4f758db5fdddd0a4687f) chore: update package.json (#550) (Deepshika S)
+
 v9.3.2 - May 6, 2022
 
 * [`6c718af`](https://github.com/eslint/espree/commit/6c718af090c1b5dd25d74a2ecfc65fbee0c00716) fix: "use strict" should not trigger strict mode in es3. (#547) (唯然)
