@@ -231,17 +231,11 @@ We are building on top of Acorn, however, so that we can contribute back and hel
 
 ### What ECMAScript features do you support?
 
-Espree supports all ECMAScript 2021 features and partially supports ECMAScript 2022 features.
+Espree supports all ECMAScript 2022 features and partially supports ECMAScript 2023 features.
 
-Because ECMAScript 2022 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
+Because ECMAScript 2023 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
 
-* [Class instance fields](https://github.com/tc39/proposal-class-fields)
-* [Class private instance methods and accessors](https://github.com/tc39/proposal-private-methods)
-* [Class static fields, static private methods and accessors](https://github.com/tc39/proposal-static-class-features)
-* [RegExp match indices](https://github.com/tc39/proposal-regexp-match-indices)
-* [Top-level await](https://github.com/tc39/proposal-top-level-await)
-* [Class static initialization blocks](https://github.com/tc39/proposal-class-static-block)
-* [Ergonomic brand checks for Private Fields](https://github.com/tc39/proposal-private-fields-in-in)
+* [Hashbang grammar](https://github.com/tc39/proposal-hashbang)
 
 See [finished-proposals.md](https://github.com/tc39/proposals/blob/master/finished-proposals.md) to know what features are finalized.
 
