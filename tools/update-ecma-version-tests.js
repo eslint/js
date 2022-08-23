@@ -76,12 +76,14 @@ function main() {
         const moduleOnly = !scriptOnly && name.includes("modules");
         const expectedToBeError = name.includes("/invalid-");
         const expectedToBeOK = name.includes("/valid-");
+        const comment = name.includes("comment");
         const sourceFilePath = `${path.resolve(rootDir, name)}.src.js`;
         const resultFilePath = `${path.resolve(rootDir, name)}.result.js`;
         const moduleResultFilePath = `${path.resolve(rootDir, name)}.module-result.js`;
         const relSourceFilePath = path.relative(process.cwd(), sourceFilePath);
         const code = shelljs.cat(sourceFilePath);
         const parserOptions = {
+            comment,
             loc: true,
             range: true,
             tokens: true,
