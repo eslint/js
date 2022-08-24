@@ -68,6 +68,9 @@ describe("ecmaVersion", () => {
 
                 it("should parse correctly when sourceType is script", async () => {
                     config.ecmaVersion = Number(version);
+                    if (filename.includes("comment")) {
+                        config.comment = true;
+                    }
 
                     const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
                     // eslint-disable-next-line node/no-unsupported-features/es-syntax
@@ -107,6 +110,9 @@ describe("ecmaVersion", () => {
 
                     config.ecmaVersion = Number(version);
                     config.sourceType = "module";
+                    if (filename.includes("comment")) {
+                        config.comment = true;
+                    }
 
                     // set sourceType of program node to module
                     if (expected.type === "Program") {
