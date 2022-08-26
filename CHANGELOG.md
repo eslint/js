@@ -1,3 +1,7 @@
+v9.4.0 - August 26, 2022
+
+* [`411d697`](https://github.com/eslint/espree/commit/411d697af3e65c92c13921bfb7baa7aad60242eb) feat: Support ES2023 and hashbangs (#556) (Brandon Mills)
+
 v9.3.3 - July 31, 2022
 
 * [`b1eac6d`](https://github.com/eslint/espree/commit/b1eac6d9687b2cb48dd28e8c11626afde22fa6cf) fix: don't recognize directives in ES3, allow parenthesized rest target (#554) (Milos Djermanovic)
