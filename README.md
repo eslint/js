@@ -140,8 +140,8 @@ const options = {
     // create a top-level tokens array containing all tokens
     tokens: false,
 
-    // Set to 3, 5 (the default), 6, 7, 8, 9, 10, 11, 12, or 13 to specify the version of ECMAScript syntax you want to use.
-    // You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), 2018 (same as 9), 2019 (same as 10), 2020 (same as 11), 2021 (same as 12), or 2022 (same as 13) to use the year-based naming.
+    // Set to 3, 5 (the default), 6, 7, 8, 9, 10, 11, 12, 13 or 14 to specify the version of ECMAScript syntax you want to use.
+    // You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), 2018 (same as 9), 2019 (same as 10), 2020 (same as 11), 2021 (same as 12), 2022 (same as 13) or 2023 (same as 14) to use the year-based naming.
     // You can also set "latest" to use the most recently supported version.
     ecmaVersion: 3,
 
