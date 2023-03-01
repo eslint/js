@@ -138,6 +138,13 @@ export function parse(code, options) {
 // Public
 //------------------------------------------------------------------------------
 
+// this is used to help flat config serialize these objects for use with caching.
+export const meta = {
+    name: "espree",
+    version: espreeVersion
+};
+
+// TODO: it can be removed in v10.
 export const version = espreeVersion;
 
 /* istanbul ignore next */

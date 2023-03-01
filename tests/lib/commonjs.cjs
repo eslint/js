@@ -52,13 +52,8 @@ describe("commonjs", () => {
         assert.strictEqual(result.tokens.length, 11);
     });
 
-
     it("has tokenize", () => {
         assert.strictEqual(typeof espree.tokenize, "function");
-    });
-
-    it("has version", () => {
-        assert.strictEqual(typeof espree.version, "string");
     });
 
     it("has Syntax", () => {
@@ -75,5 +70,15 @@ describe("commonjs", () => {
 
     it("has supportedEcmaVersions", () => {
         assert.strictEqual(typeof espree.supportedEcmaVersions, "object");
+    });
+
+    it("has meta", () => {
+        assert.strictEqual(typeof espree.meta, "object");
+        assert.strictEqual(espree.meta.name, "espree");
+        assert.strictEqual(typeof espree.meta.version, "string");
+    });
+
+    it("has version", () => {
+        assert.strictEqual(typeof espree.version, "string");
     });
 });
