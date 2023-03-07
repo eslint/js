@@ -139,6 +139,7 @@ export function parse(code, options) {
 //------------------------------------------------------------------------------
 
 export const version = espreeVersion;
+export const name = "espree";
 
 /* istanbul ignore next */
 export const VisitorKeys = (function() {
