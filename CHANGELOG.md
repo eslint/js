@@ -1,3 +1,9 @@
+v9.5.0 - March 10, 2023
+
+* [`4368788`](https://github.com/eslint/espree/commit/43687882d30855033ec4db0a11514aa85c0dd8d0) feat: Add parser name (#562) (Nicholas C. Zakas)
+* [`fe89a66`](https://github.com/eslint/espree/commit/fe89a6677dbf3c7ce4df3b58c1156eac73b792a4) ci: use LTS node version in lint job (#561) (Nitin Kumar)
+* [`5a70a0b`](https://github.com/eslint/espree/commit/5a70a0b361af7b8f04371a5b134c610c2fd9dc0f) chore: Add triage action (#560) (Nicholas C. Zakas)
+
 v9.4.1 - November 6, 2022
 
 * [`ecb6cde`](https://github.com/eslint/espree/commit/ecb6cded6619cf57ce9945793b179323cfdc61f0) ci: add node v19 (#558) (Koichi ITO)
