@@ -48,6 +48,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-release": "^3.2.0",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "mocha": "^9.2.2",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.41.2",
@@ -77,6 +79,7 @@
     "generate-alpharelease": "eslint-generate-prerelease alpha",
     "generate-betarelease": "eslint-generate-prerelease beta",
     "generate-rcrelease": "eslint-generate-prerelease rc",
-    "publish-release": "eslint-publish-release"
+    "publish-release": "eslint-publish-release",
+    "prepare": "husky install"
   }
 }
