@@ -64,7 +64,7 @@
     "acorn"
   ],
   "gitHooks": {
-    "pre-commit": " lint-staged"
+    "pre-commit": "lint-staged"
   },
   "scripts": {
     "unit": "npm-run-all -s unit:*",
