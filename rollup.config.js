@@ -8,8 +8,7 @@ export default {
     treeshake: false,
     output: {
         file: "dist/espree.cjs",
-        format: "cjs",
-        sourcemap: true
+        format: "cjs"
     },
     plugins: [commonjs(), resolve(), json()]
 };
