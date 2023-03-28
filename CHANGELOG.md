@@ -1,3 +1,9 @@
+v9.5.1 - March 28, 2023
+
+* [`91d48e9`](https://github.com/eslint/espree/commit/91d48e96a5f1173e7df4c3df15b565598aab7b41) chore: upgrade eslint-visitor-keys@3.4.0 (#568) (Milos Djermanovic)
+* [`37f6b17`](https://github.com/eslint/espree/commit/37f6b17376efc2e93441ef3dc28d347918c475f0) fix: remove useless sourcemap url (fixes #566) (#567) (余腾靖)
+* [`5c85ea8`](https://github.com/eslint/espree/commit/5c85ea8a20d505342e48af456108e96edd8e20da) chore: Add `lint-staged` (#565) (coderaiser)
+
 v9.5.0 - March 10, 2023
 
 * [`4368788`](https://github.com/eslint/espree/commit/43687882d30855033ec4db0a11514aa85c0dd8d0) feat: Add parser name (#562) (Nicholas C. Zakas)
