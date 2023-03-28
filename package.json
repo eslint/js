@@ -34,7 +34,7 @@
   "dependencies": {
     "acorn": "^8.8.0",
     "acorn-jsx": "^5.3.2",
-    "eslint-visitor-keys": "^3.3.0"
+    "eslint-visitor-keys": "^3.4.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
