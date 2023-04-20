@@ -16,6 +16,18 @@ jobs:
           release-type: node
           package-name: 'espree'
           pull-request-title-pattern: 'chore: release${component} ${version}'
+          changelog-types: >
+            [
+              { "type": "feat", "section": "Features", "hidden": false },
+              { "type": "fix", "section": "Bug Fixes", "hidden": false },
+              { "type": "docs", "section": "Documentation", "hidden": false },
+              { "type": "build", "section": "Build Related", "hidden": false },
+              { "type": "chore", "section": "Chores", "hidden": false },
+              { "type": "perf", "section": "Chores", "hidden": false },
+              { "type": "ci", "section": "Chores", "hidden": false },
+              { "type": "refactor", "section": "Chores", "hidden": false },
+              { "type": "test", "section": "Chores", "hidden": false }
+            ]
       - uses: actions/checkout@v3
         if: ${{ steps.release.outputs.release_created }}
       - uses: actions/setup-node@v3
