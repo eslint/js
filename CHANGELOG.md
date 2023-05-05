@@ -1,3 +1,15 @@
+# Changelog
+
+## [9.5.2](https://github.com/eslint/espree/compare/v9.5.1...v9.5.2) (2023-05-05)
+
+
+### Chores
+
+* add `npm install` step to release-please workflow ([#573](https://github.com/eslint/espree/issues/573)) ([d8900c1](https://github.com/eslint/espree/commit/d8900c1598358dec85708ef5373fce4eafa5af1c))
+* run tests on Node.js v20 ([#571](https://github.com/eslint/espree/issues/571)) ([adf478e](https://github.com/eslint/espree/commit/adf478e20d5db2b4607bc11ceef3363b7c7dfffb))
+* set up release-please ([#569](https://github.com/eslint/espree/issues/569)) ([abda10f](https://github.com/eslint/espree/commit/abda10f71c9486e84c9a06923b57801eaa839516))
+* upgrade eslint-visitor-keys@3.4.1 ([#574](https://github.com/eslint/espree/issues/574)) ([8e73f11](https://github.com/eslint/espree/commit/8e73f113e019e9a62fd6076c565e9fd4f7f4ff52))
+
 v9.5.1 - March 28, 2023
 
 * [`91d48e9`](https://github.com/eslint/espree/commit/91d48e96a5f1173e7df4c3df15b565598aab7b41) chore: upgrade eslint-visitor-keys@3.4.0 (#568) (Milos Djermanovic)
