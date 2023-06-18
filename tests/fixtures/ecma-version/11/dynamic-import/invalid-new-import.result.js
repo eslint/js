@@ -1,6 +1,6 @@
 export default {
-    "index": 4,
+    "index": 10,
     "lineNumber": 1,
-    "column": 5,
-    "message": "Cannot use new with import()"
+    "column": 11,
+    "message": "Unexpected token ("
 };
