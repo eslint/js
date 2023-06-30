@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.6.0](https://github.com/eslint/espree/compare/v9.5.2...v9.6.0) (2023-06-19)
+
+
+### Features
+
+* Support ES2024 and regexp v flag ([#575](https://github.com/eslint/espree/issues/575)) ([4cfc062](https://github.com/eslint/espree/commit/4cfc0626c534377601d48e8cad38976da6b85964))
+
 ## [9.5.2](https://github.com/eslint/espree/compare/v9.5.1...v9.5.2) (2023-05-05)
 
 
