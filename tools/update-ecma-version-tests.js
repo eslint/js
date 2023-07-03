@@ -1,12 +1,12 @@
 /**
  * @fileoverview Generate `<test-name>.result.js` from `<test-name>.src.js` in
  *               `tests/fixtures/ecma-version/<number>/**` directory.
- * @author Nicholas C. Zakas
- * @author Toru Nagashima
  *
  * Usage:
  *      node tools/update-ecma-version-tests.js <number>
  *
+ * @author Nicholas C. Zakas
+ * @author Toru Nagashima
  */
 
 //------------------------------------------------------------------------------

@@ -36,13 +36,14 @@ const ReplacedStringLiteralPattern = new RegExp(
  * @returns {any} If `value` parameter is a value JSON cannot handle, this
  * function returns a string value. If `key` parameter is `"start"` or `"end"`,
  * returns `undefined`. Otherwise, returns `value` parameter as is.
+ * @throws {Error} If `value` is undefined
  * @private
  */
 function replaceToSaveNonJSONValues(key, value) {
 
     // Remove `start` and `end` properties because of non-standard.
     if ((key === "start" || key === "end") && typeof value === "number") {
-        return undefined; // eslint-disable-line no-undefined
+        return void 0;
     }
 
     // Save the values JSON cannot handle.
@@ -155,6 +156,7 @@ function getAstCode(ast) {
  * @param {Object} parserOptions The parser options to parse.
  * @param {Object} [options] The options.
  * @param {boolean} [options.rethrowSyntaxError = false] The flag to rethrow syntax errors.
+ * @throws {Error} If options.rethrowSyntaxError = true, rethrows syntax errors
  * @returns {Object} The normalized AST.
  */
 function getExpectedResult(jsCodeText, parserOptions, { rethrowSyntaxError = false } = {}) {

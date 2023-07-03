@@ -1,11 +1,11 @@
 /**
  * @fileoverview A simple script to update existing tests to reflect new
  *      parser changes.
- * @author Nicholas C. Zakas
  *
  * Usage:
  *      node tools/update-tests.js
  *
+ * @author Nicholas C. Zakas
  */
 
 //------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 function getTestFilenames(directory) {
     return shelljs.find(directory).filter(filename =>
-        filename.indexOf(".src.js") > -1).map(filename =>
+        filename.includes(".src.js")).map(filename =>
         filename.slice(directory.length - 1, filename.length - 7)); // strip off ".src.js"
 }
 
@@ -42,8 +42,8 @@ function getTestFilenames(directory) {
  */
 function getLibraryFilenames(directory) {
     return shelljs.find(directory).filter(filename =>
-        filename.indexOf(".js") > -1 &&
-            filename.indexOf(".result.js") === -1).map(filename =>
+        filename.includes(".js") &&
+            !filename.includes(".result.js")).map(filename =>
         filename.slice(directory.length - 1)); // strip off directory
 }
 

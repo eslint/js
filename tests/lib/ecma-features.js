@@ -15,7 +15,7 @@ import { fileURLToPath, pathToFileURL } from "url";
 import tester from "./tester.js";
 
 
-// eslint-disable-next-line no-underscore-dangle
+// eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
@@ -68,7 +68,6 @@ describe("ecmaFeatures", () => {
             it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
                 config.ecmaFeatures[feature] = isPermissive;
 
-                // eslint-disable-next-line node/no-unsupported-features/es-syntax
                 const expected = await import(`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`);
 
                 tester.assertMatches(code, config, expected.default);

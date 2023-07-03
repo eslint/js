@@ -16,8 +16,7 @@ export default function(literalNode) {
     if (literalNode.regex) {
         try {
             literalNode.value = new RegExp(literalNode.regex.pattern, literalNode.regex.flags);
-            /* eslint-disable no-unused-vars */
-        } catch (e) {
+        } catch {
             literalNode.value = null;
         }
     }
