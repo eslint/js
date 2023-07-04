@@ -14,7 +14,7 @@ import * as espree from "../../espree.js";
 import assert from "assert";
 import { fileURLToPath } from "url";
 
-// eslint-disable-next-line no-underscore-dangle
+// eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 

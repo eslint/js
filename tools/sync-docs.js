@@ -2,14 +2,14 @@
  * @fileoverview Build file
  * @author nzakas
  */
-/* global cp, echo, rm */
 
-/* eslint no-console: 0*/
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
 import "shelljs/make.js";
+
+/* global cp, echo, rm -- declared in `shelljs/make.js` */
 
 
 //------------------------------------------------------------------------------

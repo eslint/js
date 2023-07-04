@@ -42,9 +42,9 @@ describe("Tester", () => {
 
         it("should keep RegExp objects", () => {
             assert.deepStrictEqual(
-                // eslint-disable-next-line require-unicode-regexp
+                // eslint-disable-next-line require-unicode-regexp -- non-unicode regexp is needed for the test
                 getRaw({ value: /foo/ }),
-                // eslint-disable-next-line require-unicode-regexp
+                // eslint-disable-next-line require-unicode-regexp -- non-unicode regexp is needed for the test
                 { value: /foo/ }
             );
             assert.deepStrictEqual(
@@ -74,7 +74,7 @@ describe("Tester", () => {
         function test(ast) {
             const code = getAstCode(ast);
 
-            // eslint-disable-next-line no-new-func
+            // eslint-disable-next-line no-new-func -- it's okay to eval code in tests
             return Function(`return ${code};`)();
         }
 
@@ -115,9 +115,9 @@ describe("Tester", () => {
 
         it("should keep RegExp objects", () => {
             assert.deepStrictEqual(
-                // eslint-disable-next-line require-unicode-regexp
+                // eslint-disable-next-line require-unicode-regexp -- non-unicode regexp is needed for the test
                 test({ value: /foo/ }),
-                // eslint-disable-next-line require-unicode-regexp
+                // eslint-disable-next-line require-unicode-regexp -- non-unicode regexp is needed for the test
                 { value: /foo/ }
             );
             assert.deepStrictEqual(

@@ -1,4 +1,3 @@
-/* eslint-disable node/no-process-exit */
 /**
  * @fileoverview A simple script to help generate test cases
  * @author Nicholas C. Zakas

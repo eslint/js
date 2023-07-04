@@ -16,7 +16,7 @@ import assert from "assert";
 import { fileURLToPath, pathToFileURL } from "url";
 
 
-// eslint-disable-next-line no-underscore-dangle
+// eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
@@ -73,7 +73,6 @@ describe("ecmaVersion", () => {
                     }
 
                     const absolutePath = path.resolve(__dirname, FIXTURES_DIR, filename.slice(1));
-                    // eslint-disable-next-line node/no-unsupported-features/es-syntax
                     const expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
 
                     tester.assertMatches(code, config, expected.default);
@@ -97,10 +96,8 @@ describe("ecmaVersion", () => {
                     let expected;
 
                     try {
-                        // eslint-disable-next-line node/no-unsupported-features/es-syntax
                         expected = await import(`${pathToFileURL(absolutePath).href}.module-result.js`);
                     } catch {
-                        // eslint-disable-next-line node/no-unsupported-features/es-syntax
                         expected = await import(`${pathToFileURL(absolutePath).href}.result.js`);
                     }
 
