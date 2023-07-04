@@ -1,4 +1,4 @@
-import eslintConfigEslint from "eslint-config-eslint";
+import eslintConfigESLint from "eslint-config-eslint";
 import nodeRecommendedModule from "eslint-plugin-n/configs/recommended-module.js";
 import nodeRecommendedScript from "eslint-plugin-n/configs/recommended-script.js";
 import globals from "globals";
@@ -13,8 +13,8 @@ export default [
         ]
     },
 
-    // eslintConfigEslint[3] is eslint-plugin-n's recommended-script config
-    ...eslintConfigEslint.slice(0, 3),
+    // eslintConfigESLint[3] is eslint-plugin-n's recommended-script config
+    ...eslintConfigESLint.slice(0, 3),
     {
         files: ["**/*.js"],
         ...nodeRecommendedModule
@@ -23,7 +23,7 @@ export default [
         files: ["**/*.cjs"],
         ...nodeRecommendedScript
     },
-    ...eslintConfigEslint.slice(4),
+    ...eslintConfigESLint.slice(4),
 
     {
         settings: {
