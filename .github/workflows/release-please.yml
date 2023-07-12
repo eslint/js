@@ -9,6 +9,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
@@ -37,7 +38,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: |
           npm install
-          npm publish
+          npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
