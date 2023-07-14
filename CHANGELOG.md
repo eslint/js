@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.6.1](https://github.com/eslint/espree/compare/v9.6.0...v9.6.1) (2023-07-14)
+
+
+### Chores
+
+* generate provenance statements when release ([#579](https://github.com/eslint/espree/issues/579)) ([c1ef82c](https://github.com/eslint/espree/commit/c1ef82c8671bca18f13911ff5c6ae40b40b72c87))
+* switch to eslint flat config ([#577](https://github.com/eslint/espree/issues/577)) ([408eabd](https://github.com/eslint/espree/commit/408eabd6eeae0dbcf5aa1791499fc82e391d8797))
+
 ## [9.6.0](https://github.com/eslint/espree/compare/v9.5.2...v9.6.0) (2023-06-19)
 
 
