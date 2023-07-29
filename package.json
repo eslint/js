@@ -67,22 +67,21 @@
     "pre-commit": "lint-staged"
   },
   "scripts": {
-    "unit": "npm-run-all -s unit:*",
-    "unit:esm": "c8 mocha --color --reporter progress --timeout 30000 'tests/lib/**/*.js'",
-    "unit:cjs": "mocha --color --reporter progress --timeout 30000 tests/lib/commonjs.cjs",
-    "test": "npm-run-all -p unit lint",
-    "lint": "eslint .  --report-unused-disable-directives",
-    "fixlint": "npm run lint -- --fix",
     "build": "rollup -c rollup.config.js",
     "build:debug": "npm run build -- -m",
-    "update-version": "node tools/update-version.js",
-    "pretest": "npm run build",
+    "lint": "eslint .  --report-unused-disable-directives",
+    "lint:fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run update-version && npm run build",
-    "sync-docs": "node sync-docs.js",
-    "generate-release": "eslint-generate-release",
-    "generate-alpharelease": "eslint-generate-prerelease alpha",
-    "generate-betarelease": "eslint-generate-prerelease beta",
-    "generate-rcrelease": "eslint-generate-prerelease rc",
-    "publish-release": "eslint-publish-release"
+    "pretest": "npm run build",
+    "sync:docs": "node sync-docs.js",
+    "test": "npm-run-all -s test:*",
+    "test:esm": "c8 mocha --color --reporter progress --timeout 30000 'tests/lib/**/*.js'",
+    "test:cjs": "mocha --color --reporter progress --timeout 30000 tests/lib/commonjs.cjs",
+    "update-version": "node tools/update-version.js",
+    "release:generate:latest": "eslint-generate-release",
+    "release:generate:alpha": "eslint-generate-prerelease alpha",
+    "release:generate:beta": "eslint-generate-prerelease beta",
+    "release:generate:rc": "eslint-generate-prerelease rc",
+    "release:publish": "eslint-publish-release"
   }
 }
