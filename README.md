@@ -183,7 +183,7 @@ We work hard to ensure that Espree is safe for everyone and that security issues
 
 ## Build Commands
 
-* `npm test` - run all linting and tests
+* `npm test` - run all tests
 * `npm run lint` - run all linting
 
 ## Differences from Espree 2.x
