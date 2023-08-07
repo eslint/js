@@ -41,7 +41,5 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Install dependencies
       run: npm install
-    - name: Build commonjs
-      run: npm run build
     - name: Run tests
-      run: npm run unit
+      run: npm run test
