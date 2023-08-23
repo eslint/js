@@ -1,6 +1,4 @@
 import eslintConfigESLint from "eslint-config-eslint";
-import nodeRecommendedModule from "eslint-plugin-n/configs/recommended-module.js";
-import nodeRecommendedScript from "eslint-plugin-n/configs/recommended-script.js";
 import globals from "globals";
 
 export default [
@@ -12,26 +10,7 @@ export default [
             "tools/create-test-example.js"
         ]
     },
-
-    // eslintConfigESLint[3] is eslint-plugin-n's recommended-script config
-    ...eslintConfigESLint.slice(0, 3),
-    {
-        files: ["**/*.js"],
-        ...nodeRecommendedModule
-    },
-    {
-        files: ["**/*.cjs"],
-        ...nodeRecommendedScript
-    },
-    ...eslintConfigESLint.slice(4),
-
-    {
-        settings: {
-            jsdoc: {
-                mode: "typescript"
-            }
-        }
-    },
+    ...eslintConfigESLint,
     {
         files: ["tests/lib/**"],
         languageOptions: {
