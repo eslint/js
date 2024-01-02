@@ -87,7 +87,7 @@ export default {
             }
         }
     ],
-    "sourceType": "script",
+    "sourceType": "module",
     "tokens": [
         {
             "type": "Identifier",

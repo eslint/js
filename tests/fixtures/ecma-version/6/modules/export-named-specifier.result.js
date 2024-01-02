@@ -1,7 +1,5 @@
 export default {
     "type": "Program",
-    "start": 0,
-    "end": 32,
     "loc": {
         "start": {
             "line": 1,
@@ -19,8 +17,6 @@ export default {
     "body": [
         {
             "type": "VariableDeclaration",
-            "start": 0,
-            "end": 18,
             "loc": {
                 "start": {
                     "line": 1,
@@ -38,8 +34,6 @@ export default {
             "declarations": [
                 {
                     "type": "VariableDeclarator",
-                    "start": 6,
-                    "end": 17,
                     "loc": {
                         "start": {
                             "line": 1,
@@ -56,8 +50,6 @@ export default {
                     ],
                     "id": {
                         "type": "Identifier",
-                        "start": 6,
-                        "end": 9,
                         "loc": {
                             "start": {
                                 "line": 1,
@@ -76,8 +68,6 @@ export default {
                     },
                     "init": {
                         "type": "Literal",
-                        "start": 12,
-                        "end": 17,
                         "loc": {
                             "start": {
                                 "line": 1,
@@ -101,8 +91,6 @@ export default {
         },
         {
             "type": "ExportNamedDeclaration",
-            "start": 19,
-            "end": 32,
             "loc": {
                 "start": {
                     "line": 2,
@@ -121,8 +109,6 @@ export default {
             "specifiers": [
                 {
                     "type": "ExportSpecifier",
-                    "start": 27,
-                    "end": 30,
                     "loc": {
                         "start": {
                             "line": 2,
@@ -139,8 +125,6 @@ export default {
                     ],
                     "local": {
                         "type": "Identifier",
-                        "start": 27,
-                        "end": 30,
                         "loc": {
                             "start": {
                                 "line": 2,
@@ -159,8 +143,6 @@ export default {
                     },
                     "exported": {
                         "type": "Identifier",
-                        "start": 27,
-                        "end": 30,
                         "loc": {
                             "start": {
                                 "line": 2,
@@ -187,8 +169,6 @@ export default {
         {
             "type": "Keyword",
             "value": "const",
-            "start": 0,
-            "end": 5,
             "loc": {
                 "start": {
                     "line": 1,
@@ -207,8 +187,6 @@ export default {
         {
             "type": "Identifier",
             "value": "foo",
-            "start": 6,
-            "end": 9,
             "loc": {
                 "start": {
                     "line": 1,
@@ -227,8 +205,6 @@ export default {
         {
             "type": "Punctuator",
             "value": "=",
-            "start": 10,
-            "end": 11,
             "loc": {
                 "start": {
                     "line": 1,
@@ -247,8 +223,6 @@ export default {
         {
             "type": "String",
             "value": "\"foo\"",
-            "start": 12,
-            "end": 17,
             "loc": {
                 "start": {
                     "line": 1,
@@ -267,8 +241,6 @@ export default {
         {
             "type": "Punctuator",
             "value": ";",
-            "start": 17,
-            "end": 18,
             "loc": {
                 "start": {
                     "line": 1,
@@ -287,8 +259,6 @@ export default {
         {
             "type": "Keyword",
             "value": "export",
-            "start": 19,
-            "end": 25,
             "loc": {
                 "start": {
                     "line": 2,
@@ -307,8 +277,6 @@ export default {
         {
             "type": "Punctuator",
             "value": "{",
-            "start": 26,
-            "end": 27,
             "loc": {
                 "start": {
                     "line": 2,
@@ -327,8 +295,6 @@ export default {
         {
             "type": "Identifier",
             "value": "foo",
-            "start": 27,
-            "end": 30,
             "loc": {
                 "start": {
                     "line": 2,
@@ -347,8 +313,6 @@ export default {
         {
             "type": "Punctuator",
             "value": "}",
-            "start": 30,
-            "end": 31,
             "loc": {
                 "start": {
                     "line": 2,
@@ -367,8 +331,6 @@ export default {
         {
             "type": "Punctuator",
             "value": ";",
-            "start": 31,
-            "end": 32,
             "loc": {
                 "start": {
                     "line": 2,

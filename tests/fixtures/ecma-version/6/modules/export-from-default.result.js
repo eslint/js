@@ -147,7 +147,7 @@ export default {
             ]
         },
         {
-            "type": "Keyword",
+            "type": "Identifier",
             "value": "default",
             "loc": {
                 "start": {
