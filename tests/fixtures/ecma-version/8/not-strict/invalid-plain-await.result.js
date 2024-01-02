@@ -90,4 +90,4 @@ export default {
             ]
         }
     ]
-}
+};
