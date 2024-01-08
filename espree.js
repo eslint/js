@@ -175,3 +175,5 @@ export const Syntax = (function() {
 export const latestEcmaVersion = getLatestEcmaVersion();
 
 export const supportedEcmaVersions = getSupportedEcmaVersions();
+
+export { espree as espreeAcornPlugin };
