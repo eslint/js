@@ -146,7 +146,7 @@ export default {
             ]
         },
         {
-            "type": "Null",
+            "type": "Identifier",
             "value": "null",
             "loc": {
                 "start": {

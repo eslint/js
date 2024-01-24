@@ -1,7 +1,5 @@
 export default {
     "type": "Program",
-    "start": 0,
-    "end": 26,
     "loc": {
         "start": {
             "line": 1,
@@ -19,8 +17,6 @@ export default {
     "body": [
         {
             "type": "ExportDefaultDeclaration",
-            "start": 0,
-            "end": 26,
             "loc": {
                 "start": {
                     "line": 1,
@@ -37,8 +33,6 @@ export default {
             ],
             "declaration": {
                 "type": "ClassExpression",
-                "start": 16,
-                "end": 24,
                 "loc": {
                     "start": {
                         "line": 1,
@@ -57,8 +51,6 @@ export default {
                 "superClass": null,
                 "body": {
                     "type": "ClassBody",
-                    "start": 22,
-                    "end": 24,
                     "loc": {
                         "start": {
                             "line": 1,
@@ -83,8 +75,6 @@ export default {
         {
             "type": "Keyword",
             "value": "export",
-            "start": 0,
-            "end": 6,
             "loc": {
                 "start": {
                     "line": 1,
@@ -103,8 +93,6 @@ export default {
         {
             "type": "Keyword",
             "value": "default",
-            "start": 7,
-            "end": 14,
             "loc": {
                 "start": {
                     "line": 1,
@@ -123,8 +111,6 @@ export default {
         {
             "type": "Punctuator",
             "value": "(",
-            "start": 15,
-            "end": 16,
             "loc": {
                 "start": {
                     "line": 1,
@@ -143,8 +129,6 @@ export default {
         {
             "type": "Keyword",
             "value": "class",
-            "start": 16,
-            "end": 21,
             "loc": {
                 "start": {
                     "line": 1,
@@ -163,8 +147,6 @@ export default {
         {
             "type": "Punctuator",
             "value": "{",
-            "start": 22,
-            "end": 23,
             "loc": {
                 "start": {
                     "line": 1,
@@ -183,8 +165,6 @@ export default {
         {
             "type": "Punctuator",
             "value": "}",
-            "start": 23,
-            "end": 24,
             "loc": {
                 "start": {
                     "line": 1,
@@ -203,8 +183,6 @@ export default {
         {
             "type": "Punctuator",
             "value": ")",
-            "start": 24,
-            "end": 25,
             "loc": {
                 "start": {
                     "line": 1,
@@ -223,8 +201,6 @@ export default {
         {
             "type": "Punctuator",
             "value": ";",
-            "start": 25,
-            "end": 26,
             "loc": {
                 "start": {
                     "line": 1,

@@ -1,5 +1,3 @@
-import conditionalRegex from "../../../../lib/conditional-regex-value.js";
-
 export default {
     "type": "Program",
     "loc": {
@@ -68,7 +66,7 @@ export default {
                         ],
                         "name": "x"
                     },
-                    "init": conditionalRegex({
+                    "init": {
                         "type": "Literal",
                         "loc": {
                             "start": {
@@ -84,13 +82,13 @@ export default {
                             8,
                             40
                         ],
-                        "value": null,
+                        "value": /[\u{0000000000000061}-\u{7A}]/u,
                         "raw": "/[\\u{0000000000000061}-\\u{7A}]/u",
                         "regex": {
                             "pattern": "[\\u{0000000000000061}-\\u{7A}]",
                             "flags": "u"
                         }
-                    })
+                    }
                 }
             ],
             "kind": "var"

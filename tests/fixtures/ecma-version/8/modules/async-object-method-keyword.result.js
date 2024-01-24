@@ -103,8 +103,8 @@ export default {
                                 20
                             ],
                             "id": null,
-                            "generator": false,
                             "expression": false,
+                            "generator": false,
                             "async": true,
                             "params": [],
                             "body": {
@@ -188,7 +188,7 @@ export default {
             ]
         },
         {
-            "type": "Keyword",
+            "type": "Identifier",
             "value": "delete",
             "loc": {
                 "start": {
@@ -332,4 +332,4 @@ export default {
             ]
         }
     ]
-}
+};
