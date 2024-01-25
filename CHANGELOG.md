@@ -1,5 +1,30 @@
 # Changelog
 
+## [10.0.0](https://github.com/eslint/espree/compare/v9.6.1...v10.0.0) (2024-01-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* Require Node.js ^18.18.0 || ^20.9.0 || >=21.1.0 ([#589](https://github.com/eslint/espree/issues/589))
+
+### Features
+
+* Require Node.js ^18.18.0 || ^20.9.0 || &gt;=21.1.0 ([#589](https://github.com/eslint/espree/issues/589)) ([e79cfa4](https://github.com/eslint/espree/commit/e79cfa490aa2d23c7d4deda0e99f2190e508a638))
+
+
+### Bug Fixes
+
+* upgrade acorn v8.11.3 ([#590](https://github.com/eslint/espree/issues/590)) ([6d30382](https://github.com/eslint/espree/commit/6d303829686dd1e3a425438e816025d7193ec915))
+
+
+### Chores
+
+* Add PRs to triage project ([#580](https://github.com/eslint/espree/issues/580)) ([086555e](https://github.com/eslint/espree/commit/086555ed960bd9cdbe9818cf962eaa1f5f32b737))
+* Remove add-to-triage ([#583](https://github.com/eslint/espree/issues/583)) ([3907385](https://github.com/eslint/espree/commit/39073850d82db9f66af5c21017fdf2c250f9b419))
+* run tests in Node.js 21 ([#585](https://github.com/eslint/espree/issues/585)) ([1584ddb](https://github.com/eslint/espree/commit/1584ddb00f0b4e3ada764ac86ae20e1480003de3))
+* standardize npm script names ([#582](https://github.com/eslint/espree/issues/582)) ([b0767ef](https://github.com/eslint/espree/commit/b0767ef7ba6979a1005c93c49c41aff1af483e07))
+* use eslint-config-eslint@9.0.0 ([#584](https://github.com/eslint/espree/issues/584)) ([ec949bc](https://github.com/eslint/espree/commit/ec949bcf381d33377d0b05cecd080e8a3a01b5f3))
+
 ## [9.6.1](https://github.com/eslint/espree/compare/v9.6.0...v9.6.1) (2023-07-14)
 
 
