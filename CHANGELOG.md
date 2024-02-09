@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.0.1](https://github.com/eslint/espree/compare/v10.0.0...v10.0.1) (2024-02-09)
+
+
+### Chores
+
+* upgrade eslint-visitor-keys@4.0.0 ([#595](https://github.com/eslint/espree/issues/595)) ([6254a91](https://github.com/eslint/espree/commit/6254a915ac1025e8371a340067d6aba771fe4b11))
+
 ## [10.0.0](https://github.com/eslint/espree/compare/v9.6.1...v10.0.0) (2024-01-25)
 
 
