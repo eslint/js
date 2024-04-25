@@ -13,6 +13,7 @@ import tester from "./tester.js";
 import * as espree from "../../espree.js";
 import assert from "assert";
 import { fileURLToPath } from "url";
+import { readFile } from "fs/promises";
 
 // eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -34,9 +35,9 @@ describe("Libraries", () => {
 
             // var filename = "angular-1.2.5.js";
 
-            it("should produce correct AST when parsed", () => {
-                const output = shelljs.cat(`${filename}.result.json`);
-                const input = shelljs.cat(filename);
+            it("should produce correct AST when parsed", async () => {
+                const output = await readFile(`${filename}.result.json`, "utf-8");
+                const input = await readFile(filename, "utf-8");
                 const result = JSON.stringify(tester.getRaw(espree.parse(input, {
                     ecmaVersion: 5,
                     loc: true,
