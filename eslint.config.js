@@ -23,11 +23,7 @@ export default [
         files: ["tools/**"],
         rules: {
             "no-console": "off",
-            "n/no-process-exit": "off",
-            "n/no-unsupported-features/es-syntax": ["error", {
-                version: ">=16.0.0",
-                ignores: ["modules"]
-            }]
+            "n/no-process-exit": "off"
         }
     }
 ];

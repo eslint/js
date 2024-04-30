@@ -89,7 +89,7 @@ code.forEach((source, index) => {
         sourceCode = source.trim();
 
     // add an extra semicolon if there's not already one at the end - helps normalize empty lines at end of input
-    if (sourceCode[sourceCode.length - 1] !== ";") {
+    if (sourceCode.at(-1) !== ";") {
         sourceCode += ";";
     }
 
