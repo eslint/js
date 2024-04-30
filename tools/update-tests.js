@@ -70,14 +70,13 @@ const testFiles = getTestFilenames(FIXTURES_DIR),
 libraryFiles.forEach(filename => {
     const testResultFilename = `${path.resolve(__dirname, "..", LIBRARIES_DIR, filename)}.result.json`,
         code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename));
-    let result = tester.getExpectedResult(code, {
+    const result = tester.getExpectedResult(code, {
         loc: true,
         range: true,
         tokens: true
     });
 
     JSON.stringify(result).to(testResultFilename);
-    result = null;
 });
 
 // update all tests in ecma-features
