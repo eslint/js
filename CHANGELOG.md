@@ -1,5 +1,15 @@
 # Changelog
 
+## [10.0.2](https://github.com/eslint/espree/compare/v10.0.1...v10.0.2) (2024-04-30)
+
+
+### Chores
+
+* run tests in Node.js 22 ([#598](https://github.com/eslint/espree/issues/598)) ([bf2ea85](https://github.com/eslint/espree/commit/bf2ea854daf786a64d16c5855df57a25ff89cada))
+* switch to eslint v9, eslint-config-eslint v10 ([#604](https://github.com/eslint/espree/issues/604)) ([c8de71e](https://github.com/eslint/espree/commit/c8de71e7f7cbfd2d7dcdbef7315e4e58ae522c28))
+* update dependency shelljs to ^0.8.5 ([#600](https://github.com/eslint/espree/issues/600)) ([18cfaca](https://github.com/eslint/espree/commit/18cfaca0f7085de9ffdc2c1ef8065571826d503f))
+* update dependency shelljs to v0.8.5 ([18cfaca](https://github.com/eslint/espree/commit/18cfaca0f7085de9ffdc2c1ef8065571826d503f))
+
 ## [10.0.1](https://github.com/eslint/espree/compare/v10.0.0...v10.0.1) (2024-02-09)
 
 
