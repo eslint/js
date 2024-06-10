@@ -7,13 +7,13 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import path from "path";
+import path from "node:path";
 import shelljs from "shelljs";
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
-import assert from "assert";
-import { fileURLToPath } from "url";
-import { readFile } from "fs/promises";
+import assert from "node:assert";
+import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
 
 // eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

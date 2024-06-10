@@ -1,4 +1,5 @@
 import eslintConfigESLint from "eslint-config-eslint";
+import eslintConfigESLintFormatting from "eslint-config-eslint/formatting";
 import globals from "globals";
 
 export default [
@@ -11,6 +12,7 @@ export default [
         ]
     },
     ...eslintConfigESLint,
+    eslintConfigESLintFormatting,
     {
         files: ["tests/lib/**"],
         languageOptions: {

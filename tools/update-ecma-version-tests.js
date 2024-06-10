@@ -13,9 +13,9 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import path from "path";
-import { fileURLToPath } from "url";
-import util from "util";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import util from "node:util";
 import shelljs from "shelljs";
 import tester from "../tests/lib/tester.js";
 

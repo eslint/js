@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert";
 import tester from "./tester.js";
 
 const { getRaw, getAstCode } = tester;

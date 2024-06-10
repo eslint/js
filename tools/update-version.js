@@ -3,7 +3,7 @@
  * @author Nicholas C. Zakas
  */
 
-import fs from "fs";
+import fs from "node:fs";
 
 /*
  * IMPORTANT: This must be run *before* Rollup so the built package will have
