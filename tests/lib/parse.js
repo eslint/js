@@ -7,10 +7,10 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import fs from "fs";
+import fs from "node:fs";
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
-import assert from "assert";
+import assert from "node:assert";
 
 
 const allPiecesJson = JSON.parse(fs.readFileSync("./tests/fixtures/parse/all-pieces.json", "utf8"));

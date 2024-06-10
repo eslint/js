@@ -7,11 +7,11 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import assert from "assert";
-import path from "path";
+import assert from "node:assert";
+import path from "node:path";
 import * as espree from "../../espree.js";
 import shelljs from "shelljs";
-import { fileURLToPath, pathToFileURL } from "url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import tester from "./tester.js";
 
 

@@ -7,7 +7,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import assert from "assert";
+import assert from "node:assert";
 import { normalizeOptions, getLatestEcmaVersion } from "../../lib/options.js";
 
 

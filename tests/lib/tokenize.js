@@ -10,7 +10,7 @@
 
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
-import assert from "assert";
+import assert from "node:assert";
 import letResult from "../fixtures/tokenize/let-result.tokens.js";
 import constResultTokens from "../fixtures/tokenize/const-result.tokens.js";
 import regexpUResultTokens from "../fixtures/tokenize/regexp-u-result.tokens.js";

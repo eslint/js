@@ -7,13 +7,13 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import shelljs from "shelljs";
 import tester from "./tester.js";
 import * as espree from "../../espree.js";
-import assert from "assert";
-import { fileURLToPath, pathToFileURL } from "url";
+import assert from "node:assert";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 
 // eslint-disable-next-line no-underscore-dangle -- Conventional
