@@ -231,11 +231,10 @@ We are building on top of Acorn, however, so that we can contribute back and hel
 
 ### What ECMAScript features do you support?
 
-Espree supports all ECMAScript 2023 features and partially supports ECMAScript 2024 and ECMAScript 2025 features.
+Espree supports all ECMAScript 2024 features and partially supports ECMAScript 2025 features.
 
-Because ECMAScript 2024 and ECMAScript 2025 are still under development, we are implementing features as they are finalized. Currently, Espree supports:
+Because ECMAScript 2025 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
 
-* [RegExp v flag with set notation + properties of strings](https://github.com/tc39/proposal-regexp-v-flag)
 * [RegExp Duplicate named capturing groups](https://github.com/tc39/proposal-duplicate-named-capturing-groups)
 
 See [finished-proposals.md](https://github.com/tc39/proposals/blob/master/finished-proposals.md) to know what features are finalized.
