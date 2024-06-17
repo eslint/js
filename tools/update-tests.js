@@ -16,6 +16,7 @@ import shelljs from "shelljs";
 import tester from "../tests/lib/tester.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -54,7 +55,7 @@ function getLibraryFilenames(directory) {
  * @returns {void}
  */
 function outputResult(result, testResultFilename) {
-    `export default ${tester.getAstCode(result)};`.to(testResultFilename);
+    fs.writeFileSync(testResultFilename, `export default ${tester.getAstCode(result)};`);
 }
 
 //------------------------------------------------------------------------------
@@ -76,7 +77,7 @@ libraryFiles.forEach(filename => {
         tokens: true
     });
 
-    JSON.stringify(result).to(testResultFilename);
+    fs.writeFileSync(testResultFilename, JSON.stringify(result));
 });
 
 // update all tests in ecma-features
