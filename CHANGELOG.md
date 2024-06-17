@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.1.0](https://github.com/eslint/espree/compare/v10.0.1...v10.1.0) (2024-06-17)
+
+
+### Features
+
+* Support ES2025 and RegExp duplicate named capturing groups ([#608](https://github.com/eslint/espree/issues/608)) ([3059713](https://github.com/eslint/espree/commit/3059713cbb8ac3b08d06ef4998835caf03042992))
+
 ## [10.0.1](https://github.com/eslint/espree/compare/v10.0.0...v10.0.1) (2024-02-09)
 
 
