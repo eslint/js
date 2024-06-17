@@ -16,6 +16,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import util from "node:util";
+import fs from "node:fs";
 import shelljs from "shelljs";
 import tester from "../tests/lib/tester.js";
 
@@ -42,7 +43,7 @@ function findTests(directory) {
  * @returns {void}
  */
 function outputResult(result, testResultFilename) {
-    `export default ${tester.getAstCode(result)};`.to(testResultFilename);
+    fs.writeFileSync(testResultFilename, `export default ${tester.getAstCode(result)};`);
 }
 
 /**
