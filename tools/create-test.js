@@ -18,6 +18,7 @@ import shelljs from "shelljs";
 import { parse } from "../espree.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 
 //------------------------------------------------------------------------------
 // Initialization
@@ -119,11 +120,11 @@ code.forEach((source, index) => {
 
     recursivelyRemoveStartAndEnd(result);
 
-    sourceCode.to(testSourceFilename);
+    fs.writeFileSync(testSourceFilename, sourceCode);
 
     let resultCode = `export default ${JSON.stringify(result, (key, value) =>
         ((typeof value === "bigint") ? `bigint<${value}n>` : value), 4)};`;
 
     resultCode = resultCode.replace(/"bigint<(\d+n)>"/gu, "$1");
-    resultCode.to(testResultFilename);
+    fs.writeFileSync(testResultFilename, resultCode);
 });
