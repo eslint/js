@@ -1,5 +1,5 @@
 {
-  "name": "@eslint/espree",
+  "name": "espree",
   "description": "An Esprima-compatible JavaScript parser built on Acorn",
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/espree",
@@ -74,7 +74,6 @@
     "release:publish": "eslint-publish-release",
     "test": "npm-run-all -s test:*",
     "test:cjs": "mocha --color --reporter progress --timeout 30000 tests/lib/commonjs.cjs",
-    "test:esm": "c8 mocha --color --reporter progress --timeout 30000 'tests/lib/**/*.js'",
-    "test:jsr": "npx jsr@latest publish --dry-run"
+    "test:esm": "c8 mocha --color --reporter progress --timeout 30000 'tests/lib/**/*.js'"
   }
 }

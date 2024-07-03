@@ -1,8 +1,0 @@
-{
-  "name": "@eslint/espree",
-  "version": "0.0.1",
-  "exports": "./dist/espree.cjs",
-  "publish": {
-    "include": ["lib", "dist/espree.cjs", "espree.js", "jsr.json", "README.md", "LICENSE"]
-  }
-}

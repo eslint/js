@@ -1,50 +1,74 @@
 on:
   push:
-    branches:
-      - main
+      branches:
+          - main
+
 name: release-please
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   release-please:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
-    steps:
-      - uses: google-github-actions/release-please-action@v3
-        id: release
-        with:
-          release-type: node
-          package-name: 'espree'
-          pull-request-title-pattern: 'chore: release${component} ${version}'
-          changelog-types: >
-            [
-              { "type": "feat", "section": "Features", "hidden": false },
-              { "type": "fix", "section": "Bug Fixes", "hidden": false },
-              { "type": "perf", "section": "Performance Improvements", "hidden": false }
-            ]
-      - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          registry-url: https://registry.npmjs.org
-        if: ${{ steps.release.outputs.release_created }}
-      - run: |
-          npm install
-          npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: ${{ steps.release.outputs.release_created }}
-      - run: 'npx @humanwhocodes/tweet "espree ${{ steps.release.outputs.tag_name }} has been released: ${{ steps.release.outputs.html_url }}"'
-        if: ${{ steps.release.outputs.release_created }}
-        env:
-          TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-          TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-          TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
-          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-      - run: 'npx @humanwhocodes/toot "espree ${{ steps.release.outputs.tag_name }} has been released: ${{ steps.release.outputs.html_url }}"'
-        if: ${{ steps.release.outputs.release_created }}
-        env:
-          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-          MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+      runs-on: ubuntu-latest
+      steps:
+          - uses: GoogleCloudPlatform/release-please-action@v4
+            id: release
+            with:
+                token: ${{secrets.GITHUB_TOKEN}}
+
+          # Output which releases were created
+          - name: Output release info
+            run: |
+                echo "releases_created:" ${{ steps.release.outputs.releases_created }}
+                echo "packages/espree--release_created:" ${{ steps.release.outputs['packages/espree--release_created'] }}
+
+          # Check to see if we need to do any releases and if so check out the repo
+          - uses: actions/checkout@v4
+            if: ${{ steps.release.outputs.releases_created == 'true' }}
+
+          # Node.js release
+          - uses: actions/setup-node@v4
+            if: ${{ steps.release.outputs.releases_created == 'true' }}
+            with:
+                node-version: lts/*
+                registry-url: "https://registry.npmjs.org"
+
+          - run: |
+                npm install
+                npm run build
+            if: ${{ steps.release.outputs.releases_created == 'true' }}
+
+          #-----------------------------------------------------------------------------
+          # NOTE: Packages are released in order of dependency. The packages with the
+          # fewest internal dependencies are released first and the packages with the
+          # most internal dependencies are released last.
+          #-----------------------------------------------------------------------------
+
+          #-----------------------------------------------------------------------------
+          # @eslint/espree
+          #-----------------------------------------------------------------------------
+
+          - name: Publish espree package to npm
+            run: npm publish -w packages/espree
+            if: ${{ steps.release.outputs['packages/espree--release_created'] }}
+            env:
+                NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+          - name: Tweet Release Announcement
+            run: npx @humanwhocodes/tweet "eslint/compat v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
+            if: ${{ steps.release.outputs['packages/espree--release_created'] }}
+            env:
+                TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+          - name: Toot Release Announcement
+            run: npx @humanwhocodes/toot "eslint/compat v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
+            if: ${{ steps.release.outputs['packages/espree--release_created'] }}
+            env:
+                MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
