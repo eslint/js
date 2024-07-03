@@ -1,3 +1,3 @@
-const version = "10.1.0";
+const version = "main";
 
 export default version;
