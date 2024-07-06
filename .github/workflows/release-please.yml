@@ -14,7 +14,7 @@ jobs:
   release-please:
       runs-on: ubuntu-latest
       steps:
-          - uses: GoogleCloudPlatform/release-please-action@v4
+          - uses: googleapis/release-please-action@v4
             id: release
             with:
                 token: ${{secrets.GITHUB_TOKEN}}
