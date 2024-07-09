@@ -1,4 +1,4 @@
-# ESLint Rewrite
+# ESLint JS
 
 Monorepo for the JS language tools.
 

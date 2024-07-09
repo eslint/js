@@ -25,7 +25,6 @@ export default [
         files: ["**/tools/**"],
         rules: {
             "no-console": "off",
-            "no-tabs": "off",
             "n/no-process-exit": "off"
         }
     }

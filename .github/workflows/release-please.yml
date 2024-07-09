@@ -48,17 +48,17 @@ jobs:
           #-----------------------------------------------------------------------------
 
           #-----------------------------------------------------------------------------
-          # @eslint/espree
+          # espree
           #-----------------------------------------------------------------------------
 
           - name: Publish espree package to npm
-            run: npm publish -w packages/espree
+            run: npm publish -w packages/espree --provenance
             if: ${{ steps.release.outputs['packages/espree--release_created'] }}
             env:
                 NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
           - name: Tweet Release Announcement
-            run: npx @humanwhocodes/tweet "eslint/compat v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
+            run: npx @humanwhocodes/tweet "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
             if: ${{ steps.release.outputs['packages/espree--release_created'] }}
             env:
                 TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
@@ -67,7 +67,7 @@ jobs:
                 TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
 
           - name: Toot Release Announcement
-            run: npx @humanwhocodes/toot "eslint/compat v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
+            run: npx @humanwhocodes/toot "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
             if: ${{ steps.release.outputs['packages/espree--release_created'] }}
             env:
                 MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}

@@ -1,5 +1,5 @@
 {
-  "name": "@eslint/js",
+  "name": "eslint-js",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,cjs}": [
       "eslint --fix"
     ]
   },
@@ -28,7 +28,6 @@
     "globals": "^15.1.0",
     "got": "^14.4.1",
     "lint-staged": "^15.2.0",
-    "prettier": "^3.1.1",
     "yorkie": "^2.0.0"
   }
 }

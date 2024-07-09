@@ -18,14 +18,11 @@ import got from "got";
 // Data
 //-----------------------------------------------------------------------------
 
-const SPONSORS_URL =
-	"https://raw.githubusercontent.com/eslint/eslint.org/main/src/_data/sponsors.json";
+const SPONSORS_URL = "https://raw.githubusercontent.com/eslint/eslint.org/main/src/_data/sponsors.json";
 
-const TECH_SPONSORS_URL =
-	"https://raw.githubusercontent.com/eslint/eslint.org/main/src/_data/techsponsors.json";
+const TECH_SPONSORS_URL = "https://raw.githubusercontent.com/eslint/eslint.org/main/src/_data/techsponsors.json";
 
-const TECH_SPONSORS_IMAGE_PATH =
-	"https://raw.githubusercontent.com/eslint/eslint.org/main/src";
+const TECH_SPONSORS_IMAGE_PATH = "https://raw.githubusercontent.com/eslint/eslint.org/main/src";
 
 const README_FILE_PATHS = [
     "./README.md",
@@ -104,8 +101,7 @@ function formatTechSponsors(sponsors) {
             sponsor =>
                 `<a href="${sponsor.url || "#"}"><img src="${TECH_SPONSORS_IMAGE_PATH + sponsor.image}" alt="${sponsor.name}" height="${heights.bronze}"></a>`
         )
-        .join(" ")}
-			</p>
+        .join(" ")}</p>
     <!--techsponsorsend-->`;
 }
 
