@@ -8,6 +8,10 @@ This repository is the home of the following packages:
 
 - [`espree`](packages/espree)
 
+## Security Policy
+
+We work hard to ensure that the packages inside this repository are safe for everyone and that security issues are addressed quickly and responsibly. Read the full [security policy](https://github.com/eslint/.github/blob/master/SECURITY.md).
+
 ## Sponsors
 
 The following companies, organizations, and individuals support ESLint's ongoing maintenance and development. [Become a Sponsor](https://eslint.org/donate) to get your logo on our README and website.
