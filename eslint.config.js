@@ -5,16 +5,16 @@ import globals from "globals";
 export default [
     {
         ignores: [
-            "tests/fixtures/",
-            "dist/",
-            "coverage/",
-            "tools/create-test-example.js"
+            "**/tests/fixtures/",
+            "**/dist/",
+            "**/coverage/",
+            "packages/espree/tools/create-test-example.js"
         ]
     },
     ...eslintConfigESLint,
     eslintConfigESLintFormatting,
     {
-        files: ["tests/lib/**"],
+        files: ["**/tests/lib/**"],
         languageOptions: {
             globals: {
                 ...globals.mocha
@@ -22,7 +22,7 @@ export default [
         }
     },
     {
-        files: ["tools/**"],
+        files: ["**/tools/**"],
         rules: {
             "no-console": "off",
             "n/no-process-exit": "off"
