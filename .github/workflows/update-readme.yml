@@ -4,7 +4,6 @@ on:
     schedule:
         - cron: "0 8 * * *" # Every day at 1am PDT
     workflow_dispatch:
-    pull_request:
 
 jobs:
     update-readme:
@@ -29,7 +28,7 @@ jobs:
                 git config user.name "GitHub Actions Bot"
                 git config user.email "<eslint@googlegroups.com>"
 
-            # - name: Save updated files
-            #   run: |
-            #     chmod +x ./tools/commit-readme.sh
-            #     ./tools/commit-readme.sh
+            - name: Save updated files
+              run: |
+                chmod +x ./tools/commit-readme.sh
+                ./tools/commit-readme.sh
