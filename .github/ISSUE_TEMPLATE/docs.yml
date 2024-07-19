@@ -1,0 +1,36 @@
+name: "\U0001F4DD Documentation Change"
+description: "Request an improvement to documentation"
+title: "Docs: (fill in)"
+labels:
+    - documentation
+body:
+    - type: checkboxes
+      attributes:
+          label: Which packages would you like to change?
+          options:
+              - label: "`espree`"
+                required: false
+    - type: textarea
+      attributes:
+          label: What documentation issue do you want to solve?
+          description: |
+              Please explain your issue in as much detail as possible.
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: What do you think is the correct solution?
+          description: |
+              Please explain how you'd like to change the ESLint docs to address the problem.
+      validations:
+          required: true
+    - type: checkboxes
+      attributes:
+          label: Participation
+          options:
+              - label: I am willing to submit a pull request for this change.
+                required: false
+    - type: textarea
+      attributes:
+          label: Additional comments
+          description: Is there anything else you'd like to mention?
