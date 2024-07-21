@@ -9,8 +9,8 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import "shelljs/make.js";
 import checker from "npm-license";
@@ -34,7 +34,7 @@ const OPEN_SOURCE_LICENSES = [
 //------------------------------------------------------------------------------
 
 const NODE = "node",
-    NODE_MODULES = "./node_modules",
+    NODE_MODULES = "../../node_modules",
 
     // Utilities - intentional extra space at the end of each string
     MOCHA = `${NODE_MODULES}/mocha/bin/_mocha `,

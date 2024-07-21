@@ -72,3 +72,29 @@ jobs:
             env:
                 MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
                 MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+
+          #-----------------------------------------------------------------------------
+          # eslint-scope
+          #-----------------------------------------------------------------------------
+
+          - name: Publish eslint-scope package to npm
+            run: npm publish -w packages/eslint-scope --provenance
+            if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
+            env:
+                NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+          - name: Tweet Release Announcement
+            run: npx @humanwhocodes/tweet "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
+            if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
+            env:
+                TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+          - name: Toot Release Announcement
+            run: npx @humanwhocodes/toot "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
+            if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
+            env:
+                MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                MASTODON_HOST: ${{ secrets.MASTODON_HOST }}

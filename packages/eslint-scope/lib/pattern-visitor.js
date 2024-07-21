@@ -33,7 +33,7 @@ const { Syntax } = estraverse;
  * @returns {any} Last elment
  */
 function getLast(xs) {
-    return xs[xs.length - 1] || null;
+    return xs.at(-1) || null;
 }
 
 /**

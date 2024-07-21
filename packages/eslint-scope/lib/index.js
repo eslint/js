@@ -46,7 +46,7 @@
  * @module escope
  */
 
-import assert from "assert";
+import assert from "node:assert";
 
 import ScopeManager from "./scope-manager.js";
 import Referencer from "./referencer.js";
@@ -89,7 +89,7 @@ function updateDeeply(target, override) {
     }
 
     for (const key in override) {
-        if (Object.prototype.hasOwnProperty.call(override, key)) {
+        if (Object.hasOwn(override, key)) {
             const val = override[key];
 
             if (isHashObject(val)) {

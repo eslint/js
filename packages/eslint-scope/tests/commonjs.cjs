@@ -9,7 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const assert = require("assert");
+const assert = require("node:assert");
 const eslintScope = require("../dist/eslint-scope.cjs");
 
 

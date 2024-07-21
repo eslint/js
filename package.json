@@ -25,6 +25,7 @@
     "common-tags": "^1.8.2",
     "eslint": "^9.4.0",
     "eslint-config-eslint": "^11.0.0",
+    "eslint-plugin-chai-friendly": "^1.0.0",
     "globals": "^15.1.0",
     "got": "^14.4.1",
     "lint-staged": "^15.2.0",

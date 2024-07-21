@@ -36,7 +36,7 @@ import {
     SwitchScope,
     WithScope
 } from "./scope.js";
-import assert from "assert";
+import assert from "node:assert";
 
 /**
  * @constructor ScopeManager

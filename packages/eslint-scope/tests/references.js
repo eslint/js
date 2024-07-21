@@ -538,7 +538,7 @@ describe("References:", () => {
 
                 expect(scopeManager.scopes).to.be.length.of.at.least(1);
 
-                const scope = scopeManager.scopes[scopeManager.scopes.length - 1];
+                const scope = scopeManager.scopes.at(-1);
 
                 expect(scope.variables).to.have.length.of.at.least(1);
                 expect(scope.references).to.have.length.of.at.least(1);
@@ -572,7 +572,7 @@ describe("References:", () => {
 
                 expect(scopeManager.scopes).to.be.length.of.at.least(1);
 
-                const scope = scopeManager.scopes[scopeManager.scopes.length - 1];
+                const scope = scopeManager.scopes.at(-1);
 
                 expect(scope.variables).to.have.length(1);
                 expect(scope.references).to.have.length.of.at.least(1);

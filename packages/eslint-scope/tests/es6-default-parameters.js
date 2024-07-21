@@ -302,7 +302,7 @@ describe("ES6 default parameters:", () => {
 
                 expect(reference.from).to.equal(scope);
                 expect(reference.identifier.name).to.equal("a");
-                expect(reference.resolved).to.equal(scope.variables[scope.variables.length - 1]);
+                expect(reference.resolved).to.equal(scope.variables.at(-1));
                 expect(reference.writeExpr).to.be.undefined;
                 expect(reference.isWrite()).to.be.false;
                 expect(reference.isRead()).to.be.true;
