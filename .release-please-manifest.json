@@ -1,3 +1,4 @@
 {
-    "packages/espree": "10.1.0"
+    "packages/espree": "10.1.0",
+    "packages/eslint-scope": "8.0.2"
 }
