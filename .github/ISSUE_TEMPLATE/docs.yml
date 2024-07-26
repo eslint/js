@@ -10,6 +10,8 @@ body:
           options:
               - label: "`espree`"
                 required: false
+              - label: "`eslint-scope`"
+                required: false
     - type: textarea
       attributes:
           label: What documentation issue do you want to solve?

@@ -11,6 +11,8 @@ body:
           options:
               - label: "`espree`"
                 required: false
+              - label: "`eslint-scope`"
+                required: false
     - type: textarea
       attributes:
           label: Environment
