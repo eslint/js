@@ -41,7 +41,6 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "c8": "^7.11.0",
-    "chai": "^4.3.6",
     "eslint-release": "^3.2.0",
     "esprima-fb": "^8001.2001.0-dev-harmony-fb",
     "mocha": "^9.2.2",

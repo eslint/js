@@ -15,7 +15,15 @@ export default [
     ...eslintConfigESLint,
     eslintConfigESLintFormatting,
     {
-        files: ["packages/espree/tests/lib/**", "packages/eslint-scope/tests/**"],
+        files: ["packages/espree/tests/lib/**"],
+        languageOptions: {
+            globals: {
+                ...globals.mocha
+            }
+        }
+    },
+    {
+        files: ["packages/eslint-scope/tests/**"],
         languageOptions: {
             globals: {
                 ...globals.mocha
