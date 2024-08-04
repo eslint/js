@@ -99,7 +99,8 @@ target.checkLicenses = function() {
     echo("Validating licenses");
 
     checker.init({
-        start: dirname
+        start: dirname,
+        meta: "./licensesMetaData.json"
     }, deps => {
         const impermissible = Object.keys(deps).map(dependency => ({
             name: dependency,
