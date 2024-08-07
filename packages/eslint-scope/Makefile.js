@@ -100,7 +100,7 @@ target.checkLicenses = function() {
 
     checker.init({
         start: dirname,
-        meta: "./licensesMetaData.json"
+        meta: "./licenses-meta-data.json"
     }, deps => {
         const impermissible = Object.keys(deps).map(dependency => ({
             name: dependency,
