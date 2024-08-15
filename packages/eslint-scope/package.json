@@ -24,8 +24,6 @@
   "scripts": {
     "build": "rollup -c",
     "build:update-version": "node tools/update-version.js",
-    "lint": "eslint . --report-unused-disable-directives",
-    "prelint": "npm run build",
     "prepublishOnly": "npm run build:update-version && npm run build",
     "pretest": "npm run build",
     "release:generate:latest": "eslint-generate-release",

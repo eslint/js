@@ -1,7 +1,7 @@
 /**
  * @fileoverview Build file
  * @author nzakas
- * @copyright jQuery Foundation and other contributors, https://jquery.org/
+ * @copyright OpenJS Foundation and other contributors, https://openjsf.org/
  * MIT License
  */
 
