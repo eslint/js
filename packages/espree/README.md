@@ -1,6 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/espree.svg)](https://www.npmjs.com/package/espree)
 [![npm downloads](https://img.shields.io/npm/dm/espree.svg)](https://www.npmjs.com/package/espree)
-[![Build Status](https://github.com/eslint/espree/workflows/CI/badge.svg)](https://github.com/eslint/espree/actions)
+[![Build Status](https://github.com/eslint/js/workflows/CI/badge.svg)](https://github.com/js/espree/actions)
 [![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=9348450)](https://www.bountysource.com/trackers/9348450-eslint?utm_source=9348450&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 
 # Espree
@@ -173,7 +173,7 @@ Espree may also deviate from Esprima in the interface it exposes.
 
 ## Contributing
 
-Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/espree/issues).
+Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
 
 Espree is licensed under a permissive BSD 2-clause license.
 
