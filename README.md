@@ -7,6 +7,7 @@ Monorepo for the JS language tools.
 This repository is the home of the following packages:
 
 - [`espree`](packages/espree)
+- [`eslint-scope`](packages/eslint-scope)
 
 ## Security Policy
 

@@ -5,6 +5,9 @@
   "packages": {
     "packages/espree": {
       "release-type": "node"
+    },
+    "packages/eslint-scope": {
+      "release-type": "node"
     }
   }
 }
