@@ -133,7 +133,7 @@
     <script>
       window.$docsify = {
         name: 'espree',
-        repo: 'eslint/espree',
+        repo: 'eslint/js',
         loadSidebar: true,
         subMaxLevel: 3,
         maxLevel: 3,
@@ -161,10 +161,10 @@
               if (/githubusercontent\.com/.test(vm.route.file)) {
                 url = vm.route.file
                   .replace('raw.githubusercontent.com', 'github.com')
-                  .replace(/\/master/, '/blob/master')
+                  .replace(/\/main/, '/blob/main')
               } else {
                 url =
-                  'https://github.com/eslint/espree/blob/master/' +
+                  'https://github.com/eslint/js/blob/main/' +
                   vm.route.file
               }
               var editHtml = '[:paperclip: Edit Document](' + url + ')\n'

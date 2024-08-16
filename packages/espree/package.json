@@ -2,7 +2,7 @@
   "name": "espree",
   "description": "An Esprima-compatible JavaScript parser built on Acorn",
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
-  "homepage": "https://github.com/eslint/espree",
+  "homepage": "https://github.com/eslint/js/blob/main/packages/espree/README.md",
   "main": "dist/espree.cjs",
   "type": "module",
   "exports": {
@@ -25,9 +25,9 @@
   "engines": {
     "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
   },
-  "repository": "eslint/espree",
+  "repository": "eslint/js",
   "bugs": {
-    "url": "https://github.com/eslint/espree/issues"
+    "url": "https://github.com/eslint/js/issues"
   },
   "funding": "https://opencollective.com/eslint",
   "license": "BSD-2-Clause",

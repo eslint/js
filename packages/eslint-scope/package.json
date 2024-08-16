@@ -1,7 +1,7 @@
 {
   "name": "eslint-scope",
   "description": "ECMAScript scope analyzer for ESLint",
-  "homepage": "http://github.com/eslint/eslint-scope",
+  "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-scope/README.md",
   "main": "./dist/eslint-scope.cjs",
   "type": "module",
   "exports": {
@@ -15,10 +15,10 @@
   "engines": {
     "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
   },
-  "repository": "eslint/eslint-scope",
+  "repository": "eslint/js",
   "funding": "https://opencollective.com/eslint",
   "bugs": {
-    "url": "https://github.com/eslint/eslint-scope/issues"
+    "url": "https://github.com/eslint/js/issues"
   },
   "license": "BSD-2-Clause",
   "scripts": {
