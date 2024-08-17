@@ -13,6 +13,8 @@ body:
                 required: false
               - label: "`eslint-scope`"
                 required: false
+              - label: "`eslint-visitor-keys`"
+                required: false
     - type: textarea
       attributes:
           label: Environment
