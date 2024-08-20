@@ -8,6 +8,9 @@
     },
     "packages/eslint-scope": {
       "release-type": "node"
+    },
+    "packages/eslint-visitor-keys": {
+      "release-type": "node"
     }
   }
 }

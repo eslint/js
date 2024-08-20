@@ -46,6 +46,32 @@ jobs:
           # fewest internal dependencies are released first and the packages with the
           # most internal dependencies are released last.
           #-----------------------------------------------------------------------------
+          
+          #-----------------------------------------------------------------------------
+          # eslint-visitor-keys
+          #-----------------------------------------------------------------------------
+
+          - name: Publish eslint-visitor-keys package to npm
+            run: npm publish -w packages/eslint-visitor-keys --provenance
+            if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
+            env:
+                NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+          - name: Tweet Release Announcement
+            run: npx @humanwhocodes/tweet "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
+            if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
+            env:
+                TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+          - name: Toot Release Announcement
+            run: npx @humanwhocodes/toot "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
+            if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
+            env:
+                MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
 
           #-----------------------------------------------------------------------------
           # espree

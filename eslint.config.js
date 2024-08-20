@@ -15,7 +15,7 @@ export default [
     ...eslintConfigESLint,
     eslintConfigESLintFormatting,
     {
-        files: ["packages/espree/tests/lib/**"],
+        files: ["packages/*/tests/lib/**"],
         languageOptions: {
             globals: {
                 ...globals.mocha
@@ -53,6 +53,20 @@ export default [
         },
         rules: {
             "no-console": "off"
+        }
+    },
+    {
+        files: ["packages/eslint-scope/**"],
+        linterOptions: {
+            reportUnusedDisableDirectives: "error"
+        },
+        settings: {
+            jsdoc: {
+                preferredTypes: {
+                    Object: "object",
+                    "object<>": "Object"
+                }
+            }
         }
     },
     {
