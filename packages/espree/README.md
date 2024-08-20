@@ -114,7 +114,7 @@ Returns the current `espree` version
 
 ### `VisitorKeys`
 
-Returns all visitor keys for traversing the AST from [eslint-visitor-keys](https://github.com/eslint/eslint-visitor-keys)
+Returns all visitor keys for traversing the AST from [eslint-visitor-keys](https://github.com/eslint/js/tree/main/packages/eslint-visitor-keys)
 
 ### `latestEcmaVersion`
 
