@@ -87,7 +87,7 @@ console.log(evk.unionWith({
 
 ## 📰 Change log
 
-See [GitHub releases](https://github.com/eslint/eslint-visitor-keys/releases).
+See [GitHub releases](https://github.com/eslint/js/releases).
 
 ## 🍻 Contributing
 
