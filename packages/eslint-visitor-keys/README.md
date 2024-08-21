@@ -18,7 +18,6 @@ $ npm install eslint-visitor-keys
 
 - [Node.js] `^18.18.0`, `^20.9.0`, or `>=21.1.0`
 
-
 ## 📖 Usage
 
 To use in an ESM file:
@@ -98,7 +97,6 @@ Welcome. See [ESLint contribution guidelines](https://eslint.org/docs/developer-
 - `npm test` runs tests and measures code coverage.
 - `npm run lint` checks source codes with ESLint.
 - `npm run test:open-coverage` opens the code coverage report of the previous test with your default browser.
-
 
 [npm]: https://www.npmjs.com/
 [Node.js]: https://nodejs.org/
