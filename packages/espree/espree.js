@@ -141,6 +141,8 @@ export function parse(code, options) {
 export const version = espreeVersion;
 export const name = "espree";
 
+export const acornPlugin = espree;
+
 /* istanbul ignore next */
 export const VisitorKeys = (function() {
     return visitorKeys.KEYS;
