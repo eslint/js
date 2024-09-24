@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/estree": "^0.0.51",
     "@types/estree-jsx": "^0.0.1",
-    "@typescript-eslint/parser": "^5.14.0",
+    "@typescript-eslint/parser": "^8.7.0",
     "c8": "^7.11.0",
     "chai": "^4.3.6",
     "eslint-release": "^3.2.0",
@@ -38,7 +38,7 @@
     "opener": "^1.5.2",
     "rollup": "^4.22.4",
     "rollup-plugin-dts": "^6.1.1",
-    "tsd": "^0.19.1",
+    "tsd": "^0.31.2",
     "typescript": "^5.6.2"
   },
   "scripts": {
@@ -46,7 +46,7 @@
     "build:cjs": "rollup -c",
     "build:debug": "npm run build:cjs -- -m && npm run build:types",
     "build:keys": "node tools/build-keys-from-ts",
-    "build:types": "tsc",
+    "build:types": "tsc -v && tsc",
     "release:generate:latest": "eslint-generate-release",
     "release:generate:alpha": "eslint-generate-prerelease alpha",
     "release:generate:beta": "eslint-generate-prerelease beta",
