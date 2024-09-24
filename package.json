@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "common-tags": "^1.8.2",
-    "eslint": "https://github.com/eslint/eslint.git#fix/update-peer-deps",
+    "eslint": "^9.11.1",
     "eslint-config-eslint": "^11.0.0",
     "eslint-plugin-chai-friendly": "^1.0.0",
     "globals": "^15.1.0",
