@@ -47,7 +47,6 @@
     "build:debug": "npm run build:cjs -- -m && npm run build:types",
     "build:keys": "node tools/build-keys-from-ts",
     "build:types": "tsc",
-    "prepare": "npm run build",
     "release:generate:latest": "eslint-generate-release",
     "release:generate:alpha": "eslint-generate-prerelease alpha",
     "release:generate:beta": "eslint-generate-prerelease beta",
