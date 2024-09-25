@@ -45,7 +45,6 @@
     "build": "npm run build:cjs && npm run build:types",
     "build:cjs": "rollup -c",
     "build:debug": "npm run build:cjs -- -m && npm run build:types",
-    "build:keys": "node tools/build-keys-from-ts",
     "build:types": "tsc -v && tsc",
     "release:generate:latest": "eslint-generate-release",
     "release:generate:alpha": "eslint-generate-prerelease alpha",
