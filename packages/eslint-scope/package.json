@@ -44,7 +44,7 @@
     "estraverse": "^5.2.0"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/parser": "^8.7.0",
     "c8": "^7.7.3",
     "chai": "^4.3.4",
     "eslint-release": "^3.2.0",

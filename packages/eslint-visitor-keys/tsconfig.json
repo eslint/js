@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2022"],
+    "lib": ["esnext"],
     "moduleResolution": "node",
     "module": "esnext",
     "resolveJsonModule": true,
