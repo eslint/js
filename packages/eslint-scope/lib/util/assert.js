@@ -11,7 +11,7 @@
  * @returns {void}
  * @throws {Error} Throws an error if the condition is not met.
  */
- export function assert(condition, message ="Assertion failed.") {
+export function assert(condition, message = "Assertion failed.") {
     if (!condition) {
         throw new Error(message);
     }
