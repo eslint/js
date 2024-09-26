@@ -28,7 +28,7 @@ import Reference from "./reference.js";
 import Variable from "./variable.js";
 import PatternVisitor from "./pattern-visitor.js";
 import { Definition, ParameterDefinition } from "./definition.js";
-import { assert } from './util/assert.js';
+import { assert } from "./util/assert.js";
 
 const { Syntax } = estraverse;
 

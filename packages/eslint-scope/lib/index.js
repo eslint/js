@@ -51,7 +51,7 @@ import Referencer from "./referencer.js";
 import Reference from "./reference.js";
 import Variable from "./variable.js";
 import eslintScopeVersion from "./version.js";
-import {assert} from './util/assert.js';
+import { assert } from "./util/assert.js";
 
 
 /**
