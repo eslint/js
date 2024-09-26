@@ -27,7 +27,7 @@ import estraverse from "estraverse";
 import Reference from "./reference.js";
 import Variable from "./variable.js";
 import { Definition } from "./definition.js";
-import assert from "node:assert";
+import { assert } from "./assert.js";
 
 const { Syntax } = estraverse;
 

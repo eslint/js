@@ -46,7 +46,7 @@
  * @module escope
  */
 
-import assert from "node:assert";
+import { assert } from "./assert.js";
 
 import ScopeManager from "./scope-manager.js";
 import Referencer from "./referencer.js";
