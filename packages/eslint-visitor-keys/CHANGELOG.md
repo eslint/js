@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.1.0](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.0.0...eslint-visitor-keys-v4.1.0) (2024-09-27)
+
+
+### Features
+
+* add the `eslint-visitor-keys` package ([#620](https://github.com/eslint/js/issues/620)) ([5903929](https://github.com/eslint/js/commit/5903929cb65898ffdb6bea7d3fca99781f32ff09))
+
+
+### Bug Fixes
+
+* Update dependencies to avoid build failure ([#631](https://github.com/eslint/js/issues/631)) ([e8cd107](https://github.com/eslint/js/commit/e8cd107d732fb7ef62cd4f6cd179bd48f5c13b27))
+
 ## [4.0.0](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.3...v4.0.0) (2024-02-08)
 
 
