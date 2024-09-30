@@ -1,6 +1,6 @@
 export default {
     input: "./lib/index.js",
-    external: ["assert", "estraverse", "esrecurse"],
+    external: ["estraverse", "esrecurse"],
     treeshake: false,
     output: {
         format: "cjs",
