@@ -11,98 +11,29 @@
 //-----------------------------------------------------------------------------
 
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { stripIndents } from "common-tags";
 import got from "got";
 
 //-----------------------------------------------------------------------------
 // Data
 //-----------------------------------------------------------------------------
 
-const SPONSORS_URL = "https://raw.githubusercontent.com/eslint/eslint.org/main/src/_data/sponsors.json";
-
-const TECH_SPONSORS_URL = "https://raw.githubusercontent.com/eslint/eslint.org/main/src/_data/techsponsors.json";
-
-const TECH_SPONSORS_IMAGE_PATH = "https://raw.githubusercontent.com/eslint/eslint.org/main/src";
+const SPONSORS_URL = "https://raw.githubusercontent.com/eslint/eslint.org/main/includes/sponsors.md";
 
 const README_FILE_PATHS = [
     "./README.md",
     ...readdirSync("./packages").map(dir => `./packages/${dir}/README.md`)
 ];
 
-const heights = {
-    platinum: 128,
-    gold: 96,
-    silver: 64,
-    bronze: 32
-};
-
 //-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
 
 /**
- * Fetches the latest sponsors data from the website.
- * @returns {Object} The sponsors data object.
+ * Fetches the latest sponsors from the website.
+ * @returns {Promise<string>}} Prerendered sponsors markdown.
  */
-async function fetchSponsorsData() {
-    const data = await got(SPONSORS_URL).json();
-
-    // remove backers from sponsors list - not shown on readme
-    delete data.backers;
-
-    return data;
-}
-
-/**
- * Fetches the latest tech sponsors data from the website.
- * @returns {Array<Object>} The tech sponsors array of data object.
- */
-async function fetchTechSponsors() {
-    const data = await got(TECH_SPONSORS_URL).json();
-
-    return data;
-}
-
-/**
- * Formats an array of sponsors into HTML for the readme.
- * @param {Object} sponsors The object of sponsors.
- * @returns {string} The HTML for the readme.
- */
-function formatSponsors(sponsors) {
-    const nonEmptySponsors = Object.keys(sponsors).filter(
-        tier => sponsors[tier].length > 0
-    );
-
-    return stripIndents`<!--sponsorsstart-->
-        ${nonEmptySponsors
-        .map(
-            tier => `<h3>${tier[0].toUpperCase()}${tier.slice(1)} Sponsors</h3>
-            <p>${sponsors[tier]
-        .map(
-            sponsor =>
-                `<a href="${sponsor.url || "#"}"><img src="${sponsor.image}" alt="${sponsor.name}" height="${heights[tier]}"></a>`
-        )
-        .join(" ")}</p>`
-        )
-        .join("")}
-    <!--sponsorsend-->`;
-}
-
-/**
- * Formats an array of sponsors into HTML for the readme.
- * @param {Array} sponsors The array of sponsors.
- * @returns {string} The HTML for the readme.
- */
-function formatTechSponsors(sponsors) {
-    return stripIndents`<!--techsponsorsstart-->
-        <h2>Technology Sponsors</h2>
-            <p>${sponsors
-        .map(
-            sponsor =>
-                `<a href="${sponsor.url || "#"}"><img src="${TECH_SPONSORS_IMAGE_PATH + sponsor.image}" alt="${sponsor.name}" height="${heights.bronze}"></a>`
-        )
-        .join(" ")}</p>
-    <!--techsponsorsend-->`;
+async function fetchSponsorsMarkdown() {
+    return got(SPONSORS_URL).text();
 }
 
 //-----------------------------------------------------------------------------
@@ -110,10 +41,7 @@ function formatTechSponsors(sponsors) {
 //-----------------------------------------------------------------------------
 
 (async () => {
-    const [techSponsors, allSponsors] = await Promise.all([
-        fetchTechSponsors(),
-        fetchSponsorsData()
-    ]);
+    const allSponsors = await fetchSponsorsMarkdown();
 
     README_FILE_PATHS.forEach(filePath => {
 
@@ -122,12 +50,7 @@ function formatTechSponsors(sponsors) {
 
         let newReadme = readme.replace(
             /<!--sponsorsstart-->[\w\W]*?<!--sponsorsend-->/u,
-            formatSponsors(allSponsors)
-        );
-
-        newReadme = newReadme.replace(
-            /<!--techsponsorsstart-->[\w\W]*?<!--techsponsorsend-->/u,
-            formatTechSponsors(techSponsors)
+            `<!--sponsorsstart-->\n${allSponsors}\n<!--sponsorsend-->`
         );
 
         // replace multiple consecutive blank lines with just one blank line
