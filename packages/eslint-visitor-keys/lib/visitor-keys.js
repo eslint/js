@@ -87,7 +87,8 @@ const KEYS = {
     ],
     ExportAllDeclaration: [
         "exported",
-        "source"
+        "source",
+        "attributes"
     ],
     ExportDefaultDeclaration: [
         "declaration"
@@ -95,7 +96,8 @@ const KEYS = {
     ExportNamedDeclaration: [
         "declaration",
         "specifiers",
-        "source"
+        "source",
+        "attributes"
     ],
     ExportSpecifier: [
         "exported",
@@ -136,15 +138,21 @@ const KEYS = {
         "consequent",
         "alternate"
     ],
+    ImportAttribute: [
+        "key",
+        "value"
+    ],
     ImportDeclaration: [
         "specifiers",
-        "source"
+        "source",
+        "attributes"
     ],
     ImportDefaultSpecifier: [
         "local"
     ],
     ImportExpression: [
-        "source"
+        "source",
+        "options"
     ],
     ImportNamespaceSpecifier: [
         "local"
