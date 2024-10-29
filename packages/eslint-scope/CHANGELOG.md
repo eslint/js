@@ -1,5 +1,20 @@
 # Changelog
 
+## [8.2.0](https://github.com/eslint/js/compare/eslint-scope-v8.1.0...eslint-scope-v8.2.0) (2024-10-29)
+
+
+### Features
+
+* add support for Import Attributes and RegExp Modifiers ([#639](https://github.com/eslint/js/issues/639)) ([2fd4222](https://github.com/eslint/js/commit/2fd422278bfad826d601795670004f9d6da72ef7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * eslint-visitor-keys bumped from ^4.1.0 to ^4.2.0
+    * espree bumped from ^10.2.0 to ^10.3.0
+
 ## [8.1.0](https://github.com/eslint/js/compare/eslint-scope-v8.0.2...eslint-scope-v8.1.0) (2024-09-27)
 
 
