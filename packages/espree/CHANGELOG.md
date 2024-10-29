@@ -1,5 +1,19 @@
 # Changelog
 
+## [10.3.0](https://github.com/eslint/js/compare/espree-v10.2.0...espree-v10.3.0) (2024-10-29)
+
+
+### Features
+
+* add support for Import Attributes and RegExp Modifiers ([#639](https://github.com/eslint/js/issues/639)) ([2fd4222](https://github.com/eslint/js/commit/2fd422278bfad826d601795670004f9d6da72ef7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * eslint-visitor-keys bumped from ^4.1.0 to ^4.2.0
+
 ## [10.2.0](https://github.com/eslint/js/compare/espree-v10.1.0...espree-v10.2.0) (2024-09-27)
 
 

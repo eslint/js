@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.0](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.1.0...eslint-visitor-keys-v4.2.0) (2024-10-29)
+
+
+### Features
+
+* add support for Import Attributes and RegExp Modifiers ([#639](https://github.com/eslint/js/issues/639)) ([2fd4222](https://github.com/eslint/js/commit/2fd422278bfad826d601795670004f9d6da72ef7))
+
 ## [4.1.0](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.0.0...eslint-visitor-keys-v4.1.0) (2024-09-27)
 
 
