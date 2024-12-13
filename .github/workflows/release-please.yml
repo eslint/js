@@ -46,7 +46,7 @@ jobs:
           # fewest internal dependencies are released first and the packages with the
           # most internal dependencies are released last.
           #-----------------------------------------------------------------------------
-          
+
           #-----------------------------------------------------------------------------
           # eslint-visitor-keys
           #-----------------------------------------------------------------------------
@@ -57,21 +57,19 @@ jobs:
             env:
                 NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-          - name: Tweet Release Announcement
-            run: npx @humanwhocodes/tweet "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
+          - name: Post Release Announcement
+            run: npx @humanwhocodes/crosspost -t -b -m "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
             if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
             env:
-                TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-                TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
                 TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
                 TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-
-          - name: Toot Release Announcement
-            run: npx @humanwhocodes/toot "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
-            if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
-            env:
                 MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
                 MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
 
           #-----------------------------------------------------------------------------
           # espree
@@ -84,20 +82,18 @@ jobs:
                 NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
           - name: Tweet Release Announcement
-            run: npx @humanwhocodes/tweet "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
+            run: npx @humanwhocodes/crosspost -t -b -m "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
             if: ${{ steps.release.outputs['packages/espree--release_created'] }}
             env:
-                TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-                TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
                 TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
                 TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-
-          - name: Toot Release Announcement
-            run: npx @humanwhocodes/toot "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
-            if: ${{ steps.release.outputs['packages/espree--release_created'] }}
-            env:
                 MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
                 MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
 
           #-----------------------------------------------------------------------------
           # eslint-scope
@@ -110,17 +106,15 @@ jobs:
                 NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
           - name: Tweet Release Announcement
-            run: npx @humanwhocodes/tweet "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
+            run: npx @humanwhocodes/crosspost -t -b -m "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
             if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
             env:
-                TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-                TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
                 TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
                 TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-
-          - name: Toot Release Announcement
-            run: npx @humanwhocodes/toot "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
-            if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
-            env:
                 MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
                 MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
