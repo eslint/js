@@ -236,6 +236,8 @@ Espree supports all ECMAScript 2024 features and partially supports ECMAScript 2
 Because ECMAScript 2025 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
 
 * [RegExp Duplicate named capturing groups](https://github.com/tc39/proposal-duplicate-named-capturing-groups)
+* [RegExp Pattern modifiers](https://github.com/tc39/proposal-regexp-modifiers)
+* [Import Attributes](https://github.com/tc39/proposal-import-attributes)
 
 See [finished-proposals.md](https://github.com/tc39/proposals/blob/master/finished-proposals.md) to know what features are finalized.
 
