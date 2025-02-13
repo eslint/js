@@ -657,42 +657,36 @@ class Referencer extends esrecurse.Visitor {
     }
 
     JSXMemberExpression(node) {
-        if (this.scopeManager.__isJSXEnabled()) {
-            this.visit(node.object);
-        }
+        this.visit(node.object);
     }
 
     JSXElement(node) {
         if (this.scopeManager.__isJSXEnabled()) {
             this.visit(node.openingElement);
             node.children.forEach(this.visit, this);
+        } else {
+            this.visitChildren(node);
         }
     }
 
     JSXOpeningElement(node) {
-        if (this.scopeManager.__isJSXEnabled()) {
-            const name = node.name.name;
+        const name = node.name.name;
 
-            if (name[0].toUpperCase() === name[0]) {
-                this.currentScope().__referencing(node.name);
-            }
-
-            node.attributes.forEach(this.visit, this);
+        if (this.scopeManager.__isJSXEnabled() && name[0].toUpperCase() === name[0]) {
+            this.currentScope().__referencing(node.name);
         }
+
+        node.attributes.forEach(this.visit, this);
     }
 
     JSXAttribute(node) {
-        if (this.scopeManager.__isJSXEnabled()) {
-            if (node.value) {
-                this.visit(node.value);
-            }
+        if (node.value) {
+            this.visit(node.value);
         }
     }
 
     JSXExpressionContainer(node) {
-        if (this.scopeManager.__isJSXEnabled()) {
-            this.visit(node.expression);
-        }
+        this.visit(node.expression);
     }
 }
 
