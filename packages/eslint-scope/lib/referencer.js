@@ -651,6 +651,7 @@ class Referencer extends esrecurse.Visitor {
     }
 
     JSXIdentifier(node) {
+
         if (this.scopeManager.__isJSXEnabled()) {
             this.currentScope().__referencing(node);
         }
@@ -670,10 +671,14 @@ class Referencer extends esrecurse.Visitor {
     }
 
     JSXOpeningElement(node) {
-        const name = node.name.name;
+        if (this.scopeManager.__isJSXEnabled()) {
 
-        if (this.scopeManager.__isJSXEnabled() && name[0].toUpperCase() === name[0]) {
-            this.currentScope().__referencing(node.name);
+            const nameNode = node.name;
+
+            // we only want to visit JSXIdentifier nodes if they are capitalized
+            if (nameNode.type !== "JSXIdentifier" || nameNode.name[0].toUpperCase() === nameNode.name[0]) {
+                this.visit(nameNode);
+            }
         }
 
         node.attributes.forEach(this.visit, this);
