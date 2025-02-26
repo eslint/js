@@ -674,9 +674,11 @@ class Referencer extends esrecurse.Visitor {
         if (this.scopeManager.__isJSXEnabled()) {
 
             const nameNode = node.name;
+            const isComponentName = nameNode.type === "JSXIdentifier" && nameNode.name[0].toUpperCase() === nameNode.name[0];
+            const isComponent = isComponentName || nameNode.type === "JSXMemberExpression";
 
             // we only want to visit JSXIdentifier nodes if they are capitalized
-            if (nameNode.type !== "JSXIdentifier" || nameNode.name[0].toUpperCase() === nameNode.name[0]) {
+            if (isComponent) {
                 this.visit(nameNode);
             }
         }
@@ -692,6 +694,11 @@ class Referencer extends esrecurse.Visitor {
 
     JSXExpressionContainer(node) {
         this.visit(node.expression);
+    }
+
+    JSXNamespacedName(node) {
+        this.visit(node.namespace);
+        this.visit(node.name);
     }
 }
 

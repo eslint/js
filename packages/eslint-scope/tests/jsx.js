@@ -12,9 +12,9 @@ describe("References:", () => {
     describe("JSX References:", () => {
         it("should treat JSX identifiers as references", () => {
             const ast = espree(`
-            const MyComponent = () => <div/>;
-            const element = <MyComponent />;
-        `, "script", true);
+                const MyComponent = () => <div/>;
+                const element = <MyComponent />;
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
             const scope = scopeManager.scopes[0];
@@ -31,9 +31,9 @@ describe("References:", () => {
 
         it("no JSX equivalent: should treat JSX identifiers as references", () => {
             const ast = espree(`
-            const MyComponent = () => "<div/>";
-            const element = MyComponent;
-        `, "script", true);
+                const MyComponent = () => "<div/>";
+                const element = MyComponent;
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6 });
             const scope = scopeManager.scopes[0];
@@ -50,9 +50,9 @@ describe("References:", () => {
 
         it("should handle JSX attributes as references with JSX enabled", () => {
             const ast = espree(`
-            const value = "test";
-            const MyComponent = () => <div attr={value}/>;
-        `, "script", true);
+                const value = "test";
+                const MyComponent = () => <div attr={value}/>;
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
             const scope = scopeManager.scopes[0];
@@ -71,9 +71,9 @@ describe("References:", () => {
 
         it("should handle JSX attributes as references with JSX disabled", () => {
             const ast = espree(`
-            const value = "test";
-            const MyComponent = () => <div attr={value}/>;
-        `, "script", true);
+                const value = "test";
+                const MyComponent = () => <div attr={value}/>;
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: false });
             const scope = scopeManager.scopes[0];
@@ -92,14 +92,14 @@ describe("References:", () => {
 
         it("should handle nested JSX component references", () => {
             const ast = espree(`
-            const Child = () => <div/>;
-            const Parent = () => (
-                <div>
-                    <Child/>
-                    <Child/>
-                </div>
-            );
-        `, "script", true);
+                const Child = () => <div/>;
+                const Parent = () => (
+                    <div>
+                        <Child/>
+                        <Child/>
+                    </div>
+                );
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
             const scope = scopeManager.scopes[0];
@@ -119,13 +119,13 @@ describe("References:", () => {
 
         it("should handle JSX fragment references", () => {
             const ast = espree(`
-            const MyComponent = () => (
-                <>
-                    <div/>
-                    <div/>
-                </>
-            );
-        `, "script", true);
+                const MyComponent = () => (
+                    <>
+                        <div/>
+                        <div/>
+                    </>
+                );
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
             const scope = scopeManager.scopes[0];
@@ -136,14 +136,14 @@ describe("References:", () => {
 
         it("should handle JSX fragments with component children", () => {
             const ast = espree(`
-            const Child = () => <div/>;
-            const Parent = () => (
-                <>
-                    <Child/>
-                    <Child/>
-                </>
-            );
-        `, "script", true);
+                const Child = () => <div/>;
+                const Parent = () => (
+                    <>
+                        <Child/>
+                        <Child/>
+                    </>
+                );
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
             const scope = scopeManager.scopes[0];
@@ -163,14 +163,14 @@ describe("References:", () => {
 
         it("no JSX equivalent: should handle JSX fragments with component children", () => {
             const ast = espree(`
-            const Child = () => <div/>;
-            const Parent = () => (
-                [
-                    Child,
-                    Child
-                ]
-            );
-        `, "script", true);
+                const Child = () => <div/>;
+                const Parent = () => (
+                    [
+                        Child,
+                        Child
+                    ]
+                );
+            `, "script", true);
 
             const scopeManager = analyze(ast, { ecmaVersion: 6 });
             const scope = scopeManager.scopes[0];
@@ -304,6 +304,45 @@ describe("References:", () => {
             expect(objRef.identifier.name).to.equal("obj");
             expect(objRef.isRead()).to.be.true;
             expect(objRef.resolved).to.equal(scope.variables[0]);
+        });
+
+        it("should handle JSX elements with a namespace", () => {
+            const ast = espree(`
+                const MyNamespace = {};
+                MyNamespace.MyComponent = () => <div/>;
+                const element = <MyNamespace.MyComponent />;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.variables).to.have.length(2); // MyNamespace, element
+            expect(scope.references).to.have.length(4); // MyNamespace def, MyComponent def, element def, MyNamespace.MyComponent use
+
+            const myNamespaceRef = scope.references[3];
+
+            expect(myNamespaceRef.identifier.name).to.equal("MyNamespace");
+            expect(myNamespaceRef.isRead()).to.be.true;
+            expect(myNamespaceRef.resolved).to.equal(scope.variables[0]);
+        });
+
+        it("should ignore JSX namespaced names", () => {
+            const ast = espree(`
+                const MyNamespace = {};
+                const element = <ns:MyNamespace />;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.variables).to.have.length(2); // MyNamespace, element
+            expect(scope.references).to.have.length(2); // MyNamespace def, element def
+
+            const myNamespaceRef = scope.references[0];
+
+            expect(myNamespaceRef.identifier.name).to.equal("MyNamespace");
+            expect(myNamespaceRef.isWrite()).to.be.true;
+            expect(myNamespaceRef.resolved).to.equal(scope.variables[0]);
         });
 
     });
