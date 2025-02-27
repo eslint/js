@@ -110,11 +110,9 @@ describe("References:", () => {
 
             const childRefs = scope.references.filter(ref => ref.identifier.name === "Child");
 
-            expect(childRefs).to.have.length(1); // 1 def + 2 uses
-            childRefs.slice(1).forEach(ref => {
-                expect(ref.isRead()).to.be.true;
-                expect(ref.resolved).to.equal(scope.variables[0]);
-            });
+            expect(childRefs).to.have.length(1); // 1 def
+            expect(childRefs[0].isWrite()).to.be.true;
+            expect(childRefs[0].resolved).to.equal(scope.variables[0]);
         });
 
         it("should handle JSX fragment references", () => {
@@ -154,11 +152,9 @@ describe("References:", () => {
 
             const childRefs = scope.references.filter(ref => ref.identifier.name === "Child");
 
-            expect(childRefs).to.have.length(1); // 1 def + 2 uses
-            childRefs.slice(1).forEach(ref => {
-                expect(ref.isRead()).to.be.true;
-                expect(ref.resolved).to.equal(scope.variables[0]);
-            });
+            expect(childRefs).to.have.length(1); // 1 def
+            expect(childRefs[0].isWrite()).to.be.true;
+            expect(childRefs[0].resolved).to.equal(scope.variables[0]);
         });
 
         it("no JSX equivalent: should handle JSX fragments with component children", () => {
@@ -181,11 +177,9 @@ describe("References:", () => {
 
             const childRefs = scope.references.filter(ref => ref.identifier.name === "Child");
 
-            expect(childRefs).to.have.length(1); // 1 def + 2 uses
-            childRefs.slice(1).forEach(ref => {
-                expect(ref.isRead()).to.be.true;
-                expect(ref.resolved).to.equal(scope.variables[0]);
-            });
+            expect(childRefs).to.have.length(1); // 1 def
+            expect(childRefs[0].isWrite()).to.be.true;
+            expect(childRefs[0].resolved).to.equal(scope.variables[0]);
         });
 
         it("should handle JSX spread attributes", () => {
