@@ -37,6 +37,7 @@ In order to analyze scope, you'll need to have an [ESTree](https://github.com/es
   * `sourceType` (default: `"script"`) - The type of JavaScript file to evaluate. Change to `"module"` for ECMAScript module code.
   * `childVisitorKeys` (default: `null`) - An object with visitor key information (like [`eslint-visitor-keys`](https://github.com/eslint/js/tree/main/packages/eslint-visitor-keys)). Without this, `eslint-scope` finds child nodes to visit algorithmically. Providing this option is a performance enhancement.
   * `fallback` (default: `"iteration"`) - The strategy to use when `childVisitorKeys` is not specified. May be a function.
+  * `jsx` (default: `false`) - Enables the tracking of JSX components as variable references.
 
 Example:
 
