@@ -399,6 +399,23 @@ describe("References:", () => {
             expect(myNamespaceRef.isWrite()).to.be.true;
             expect(myNamespaceRef.resolved).to.equal(scope.variables[0]);
         });
+        
+        it("should not treat any JSX identifiers as references with JSX disabled", () => {
+            const ast = espree(`
+                <MyComponent/>;
+                <MyComponent></MyComponent>;
+                <div/>;
+                <Obj.Prop/>;
+                <Obj:Prop/>;
+                <MyComponent Attr1={"red"} attr2={"green"}/>;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: false });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.variables).to.have.length(0);
+            expect(scope.references).to.have.length(0);
+        });
 
     });
 
