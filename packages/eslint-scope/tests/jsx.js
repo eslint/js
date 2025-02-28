@@ -108,6 +108,48 @@ describe("References:", () => {
             expect(valueRef.isWrite()).to.be.true;
             expect(valueRef.resolved).to.equal(scope.variables[0]);
         });
+        
+        it("should handle identifiers in child JSX expression containers with JSX enabled", () => {
+            const ast = espree(`
+                const value = "test";
+                const MyComponent = () => <div>{value}</div>;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.variables).to.have.length(2); // value, MyComponent
+            expect(scope.references).to.have.length(2); // value def, MyComponent def
+            expect(scope.variables[0].references).to.have.length(2); // value def, value use
+            expect(scope.through).to.have.length(0);
+
+            const valueRef = scope.references[0];
+
+            expect(valueRef.identifier.name).to.equal("value");
+            expect(valueRef.isWrite()).to.be.true;
+            expect(valueRef.resolved).to.equal(scope.variables[0]);
+        });
+
+        it("should handle identifiers in child JSX expression containers with JSX disabled", () => {
+            const ast = espree(`
+                const value = "test";
+                const MyComponent = () => <div>{value}</div>;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: false });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.variables).to.have.length(2); // value, MyComponent
+            expect(scope.references).to.have.length(2); // value def, MyComponent def
+            expect(scope.variables[0].references).to.have.length(2); // value def, value use
+            expect(scope.through).to.have.length(0);
+
+            const valueRef = scope.references[0];
+
+            expect(valueRef.identifier.name).to.equal("value");
+            expect(valueRef.isWrite()).to.be.true;
+            expect(valueRef.resolved).to.equal(scope.variables[0]);
+        });
 
         it("should handle nested JSX component references", () => {
             const ast = espree(`
