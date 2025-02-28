@@ -47,6 +47,25 @@ describe("References:", () => {
             expect(myComponentRef.isRead()).to.be.true;
             expect(myComponentRef.resolved).to.equal(scope.variables[0]);
         });
+        
+        it("should not treat JSX identifiers in closing elements as references", () => {
+            const ast = espree(`
+                const MyComponent = () => <div/>;
+                const element = <MyComponent></MyComponent>;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.variables).to.have.length(2); // MyComponent, element
+            expect(scope.references).to.have.length(3); // MyComponent def, element def, MyComponent use
+
+            const myComponentRef = scope.references[2];
+
+            expect(myComponentRef.identifier.name).to.equal("MyComponent");
+            expect(myComponentRef.isRead()).to.be.true;
+            expect(myComponentRef.resolved).to.equal(scope.variables[0]);
+        });
 
         it("should handle JSX attributes as references with JSX enabled", () => {
             const ast = espree(`
