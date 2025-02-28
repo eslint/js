@@ -47,7 +47,7 @@ describe("References:", () => {
             expect(myComponentRef.isRead()).to.be.true;
             expect(myComponentRef.resolved).to.equal(scope.variables[0]);
         });
-        
+
         it("should not treat JSX identifiers in closing elements as references", () => {
             const ast = espree(`
                 const MyComponent = () => <div/>;
@@ -108,7 +108,7 @@ describe("References:", () => {
             expect(valueRef.isWrite()).to.be.true;
             expect(valueRef.resolved).to.equal(scope.variables[0]);
         });
-        
+
         it("should handle identifiers in child JSX expression containers with JSX enabled", () => {
             const ast = espree(`
                 const value = "test";
@@ -399,7 +399,7 @@ describe("References:", () => {
             expect(myNamespaceRef.isWrite()).to.be.true;
             expect(myNamespaceRef.resolved).to.equal(scope.variables[0]);
         });
-        
+
         it("should not treat any JSX identifiers as references with JSX disabled", () => {
             const ast = espree(`
                 <MyComponent/>;
@@ -415,6 +415,46 @@ describe("References:", () => {
 
             expect(scope.variables).to.have.length(0);
             expect(scope.references).to.have.length(0);
+        });
+
+        it("should not treat 'this' as a reference when used in a JSX tagname", () => {
+
+            const ast = espree(`
+                this.MyComponent = () => <div/>;
+                const element = <this.MyComponent />;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6, jsx: true });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.references.length).to.equal(1);
+            expect(scope.variables.length).to.equal(1);
+
+            const elementRef = scope.references[0];
+
+            expect(elementRef.identifier.name).to.equal("element");
+            expect(elementRef.isWrite()).to.be.true;
+            expect(elementRef.resolved).to.equal(scope.variables[0]);
+        });
+
+        it("no JSX equivalent: should not treat 'this' as a reference when used in a JSX tagname", () => {
+
+            const ast = espree(`
+                this.MyComponent = () => <div/>;
+                const element = this.MyComponent;
+            `, "script", true);
+
+            const scopeManager = analyze(ast, { ecmaVersion: 6 });
+            const scope = scopeManager.scopes[0];
+
+            expect(scope.references.length).to.equal(1);
+            expect(scope.variables.length).to.equal(1);
+
+            const elementRef = scope.references[0];
+
+            expect(elementRef.identifier.name).to.equal("element");
+            expect(elementRef.isWrite()).to.be.true;
+            expect(elementRef.resolved).to.equal(scope.variables[0]);
         });
 
     });

@@ -652,7 +652,8 @@ class Referencer extends esrecurse.Visitor {
 
     JSXIdentifier(node) {
 
-        if (this.scopeManager.__isJSXEnabled()) {
+        // Special case: "this" should not count as a reference
+        if (this.scopeManager.__isJSXEnabled() && node.name !== "this") {
             this.currentScope().__referencing(node);
         }
     }
