@@ -28,13 +28,17 @@ import * as espree from "espree";
  * Parse into Espree AST.
  * @param {string} code The code
  * @param {"module"|"script"} [sourceType="module"] The source type
+ * @param {boolean} [jsx=false] The flag to enable JSX parsing
  * @returns {Object} The parsed Espree AST
  */
-export default function(code, sourceType = "module") {
+export default function(code, sourceType = "module", jsx = false) {
     return espree.parse(code, {
         range: true,
         ecmaVersion: 7,
-        sourceType
+        sourceType,
+        ecmaFeatures: {
+            jsx
+        }
     });
 }
 
