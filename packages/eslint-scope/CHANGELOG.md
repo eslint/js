@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.3.0](https://github.com/eslint/js/compare/eslint-scope-v8.2.0...eslint-scope-v8.3.0) (2025-03-07)
+
+
+### Features
+
+* Option to track JSX components as references ([#646](https://github.com/eslint/js/issues/646)) ([6dd3cbc](https://github.com/eslint/js/commit/6dd3cbc2aaa285736eb668e4763a6c1d58f0fb59))
+
 ## [8.2.0](https://github.com/eslint/js/compare/eslint-scope-v8.1.0...eslint-scope-v8.2.0) (2024-10-29)
 
 
