@@ -76,6 +76,8 @@ estraverse.traverse(ast, {
 
 ## API
 
+The following section describes the API for this package. You can also read [the docs](https://eslint.org/docs/latest/extend/scope-manager-interface).
+
 ### ScopeManager
 
 The `ScopeManager` class is at the core of eslint-scope and is returned when you call `eslintScope.analyze()`. It manages all scopes in a given AST.
@@ -87,41 +89,41 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
 
 #### Methods
 
-- **acquire(node, inner)**
+- **`acquire(node, inner)`**
   Acquires the appropriate scope for a given node.
   - `node` - The AST node to acquire the scope from.
   - `inner` - Optional boolean. When `true`, returns the innermost scope, otherwise returns the outermost scope. Default is `false`.
   - Returns: The acquired scope or `null` if no scope is found.
 
-- **acquireAll(node)**
+- **`acquireAll(node)`**
   Acquires all scopes for a given node.
   - `node` - The AST node to acquire scopes from.
   - Returns: An array of scopes or `undefined` if none are found.
 
-- **release(node, inner)**
+- **`release(node, inner)`**
   Releases the current scope and returns the upper scope.
   - `node` - The AST node to release.
   - `inner` - Optional boolean. When `true`, returns the innermost upper scope, otherwise returns the outermost upper scope. Default is `false`.
   - Returns: The upper scope or `null` if no upper scope exists.
 
-- **getDeclaredVariables(node)**
+- **`getDeclaredVariables(node)`**
   Get variables that are declared by the node.
   - `node` - The AST node to get declarations from.
   - Returns: An array of variable objects declared by the node. If the node doesn't declare any variables, it returns an empty array.
 
-- **isGlobalReturn()**
+- **`isGlobalReturn()`**
   Determines if the global return statement should be allowed.
   - Returns: `true` if the global return is enabled.
 
-- **isModule()**
+- **`isModule()`**
   Checks if the code should be handled as an ECMAScript module.
   - Returns: `true` if the sourceType is "module".
 
-- **isImpliedStrict()**
+- **`isImpliedStrict()`**
   Checks if implied strict mode is enabled.
   - Returns: `true` if implied strict mode is enabled.
 
-- **isStrictModeSupported()**
+- **`isStrictModeSupported()`**
   Checks if strict mode is supported based on ECMAScript version.
   - Returns: `true` if the ECMAScript version supports strict mode.
 
@@ -143,7 +145,7 @@ The `GlobalScope` class is a specialized scope representing the global execution
 
 #### Properties
 
-- **implicit** - Tracks implicitly defined global variables (those used without declaration).
+- **`implicit`** - Tracks implicitly defined global variables (those used without declaration).
   - `set` - A Map of variable names to Variable objects for implicitly defined globals.
   - `variables` - Array of implicit global Variable objects.
   - `left` - Array of References that need to be linked to the variable they refer to.
