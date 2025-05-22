@@ -110,7 +110,7 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
   - Returns: An array of variable objects declared by the node. If the node doesn't declare any variables, it returns an empty array.
 
 - **isGlobalReturn()**
-  Determines if global return statement should be allowed.
+  Determines if the global return statement should be allowed.
   - Returns: `true` if the global return is enabled.
 
 - **isModule()**
