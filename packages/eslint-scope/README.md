@@ -135,6 +135,7 @@ Scopes returned by the ScopeManager methods have the following properties:
 - `variables` - Array of variables declared in this scope.
 - `set` - A Map of variable names to Variable objects for variables declared in this scope.
 - `references` - Array of references in this scope.
+- `through` - Array of references in this scope and its child scopes that aren't resolved in this scope or its child scopes.
 - `variableScope` - Reference to the closest variable scope.
 - `upper` - Reference to the parent scope.
 - `childScopes` - Array of child scopes.
