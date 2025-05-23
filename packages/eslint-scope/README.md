@@ -101,7 +101,7 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
   - Returns: An array of scopes or `undefined` if none are found.
 
 - **`release(node, inner)`**
-  Releases the current scope and returns the upper scope.
+  Returns the upper scope for a given node.
   - `node` - The AST node to release.
   - `inner` - Optional boolean. When `true`, returns the innermost upper scope, otherwise returns the outermost upper scope. Default is `false`.
   - Returns: The upper scope or `null` if no upper scope exists.
