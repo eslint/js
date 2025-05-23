@@ -133,6 +133,7 @@ Scopes returned by the ScopeManager methods have the following properties:
 
 - `type` - The type of scope (e.g., "function", "block", "global").
 - `variables` - Array of variables declared in this scope.
+- `set` - A Map of variable names to Variable objects for variables declared in this scope.
 - `references` - Array of references in this scope.
 - `variableScope` - Reference to the closest variable scope.
 - `upper` - Reference to the parent scope.
