@@ -74,6 +74,95 @@ estraverse.traverse(ast, {
 });
 ```
 
+## API
+
+The following section describes the API for this package. You can also read [the docs](https://eslint.org/docs/latest/extend/scope-manager-interface).
+
+### ScopeManager
+
+The `ScopeManager` class is at the core of eslint-scope and is returned when you call `eslintScope.analyze()`. It manages all scopes in a given AST.
+
+#### Properties
+
+- `scopes` - An array of all scopes.
+- `globalScope` - Reference to the global scope.
+
+#### Methods
+
+- **`acquire(node, inner)`**
+  Acquires the appropriate scope for a given node.
+  - `node` - The AST node to acquire the scope from.
+  - `inner` - Optional boolean. When `true`, returns the innermost scope, otherwise returns the outermost scope. Default is `false`.
+  - Returns: The acquired scope or `null` if no scope is found.
+
+- **`acquireAll(node)`**
+  Acquires all scopes for a given node.
+  - `node` - The AST node to acquire scopes from.
+  - Returns: An array of scopes or `undefined` if none are found.
+
+- **`release(node, inner)`**
+  Returns the upper scope for a given node.
+  - `node` - The AST node to release.
+  - `inner` - Optional boolean. When `true`, returns the innermost upper scope, otherwise returns the outermost upper scope. Default is `false`.
+  - Returns: The upper scope or `null` if no upper scope exists.
+
+- **`getDeclaredVariables(node)`**
+  Get variables that are declared by the node.
+  - `node` - The AST node to get declarations from.
+  - Returns: An array of variable objects declared by the node. If the node doesn't declare any variables, it returns an empty array.
+
+- **`isGlobalReturn()`**
+  Determines if the global return statement should be allowed.
+  - Returns: `true` if the global return is enabled.
+
+- **`isModule()`**
+  Checks if the code should be handled as an ECMAScript module.
+  - Returns: `true` if the sourceType is "module".
+
+- **`isImpliedStrict()`**
+  Checks if implied strict mode is enabled.
+  - Returns: `true` if implied strict mode is enabled.
+
+- **`isStrictModeSupported()`**
+  Checks if strict mode is supported based on ECMAScript version.
+  - Returns: `true` if the ECMAScript version supports strict mode.
+
+### Scope Objects
+
+Scopes returned by the ScopeManager methods have the following properties:
+
+- `type` - The type of scope (e.g., "function", "block", "global").
+- `variables` - Array of variables declared in this scope.
+- `set` - A Map of variable names to Variable objects for variables declared in this scope.
+- `references` - Array of references in this scope.
+- `through` - Array of references in this scope and its child scopes that aren't resolved in this scope or its child scopes.
+- `variableScope` - Reference to the closest variable scope.
+- `upper` - Reference to the parent scope.
+- `childScopes` - Array of child scopes.
+- `block` - The AST node that created this scope.
+
+### GlobalScope
+
+The `GlobalScope` class is a specialized scope representing the global execution context. It extends the base `Scope` class with additional functionality for handling implicitly defined global variables.
+
+#### Properties
+
+- **`implicit`** - Tracks implicitly defined global variables (those used without declaration).
+  - `set` - A Map of variable names to Variable objects for implicitly defined globals.
+  - `variables` - Array of implicit global Variable objects.
+  - `left` - Array of References that need to be linked to the variable they refer to.
+
+### Variable Objects
+
+Each variable object has the following properties:
+
+- `name` - The variable name.
+- `identifiers` - Array of identifier nodes declaring this variable.
+- `references` - Array of references to this variable.
+- `defs` - Array of definition objects for this variable.
+- `scope` - The scope object where this variable is defined.
+
+
 ## Contributing
 
 Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
