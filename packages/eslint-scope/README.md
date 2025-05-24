@@ -162,7 +162,6 @@ Each variable object has the following properties:
 - `defs` - Array of definition objects for this variable.
 - `scope` - The scope object where this variable is defined.
 
-
 ## Contributing
 
 Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
