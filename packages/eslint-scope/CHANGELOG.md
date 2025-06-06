@@ -1,5 +1,15 @@
 # Changelog
 
+## [8.3.1](https://github.com/eslint/js/compare/eslint-scope-v8.3.0...eslint-scope-v8.3.1) (2025-06-06)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * eslint-visitor-keys bumped from ^4.2.0 to ^4.2.1
+    * espree bumped from ^10.3.0 to ^10.3.1
+
 ## [8.3.0](https://github.com/eslint/js/compare/eslint-scope-v8.2.0...eslint-scope-v8.3.0) (2025-03-07)
 
 

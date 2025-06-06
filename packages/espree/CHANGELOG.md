@@ -1,5 +1,14 @@
 # Changelog
 
+## [10.3.1](https://github.com/eslint/js/compare/espree-v10.3.0...espree-v10.3.1) (2025-06-06)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * eslint-visitor-keys bumped from ^4.2.0 to ^4.2.1
+
 ## [10.3.0](https://github.com/eslint/js/compare/espree-v10.2.0...espree-v10.3.0) (2024-10-29)
 
 
