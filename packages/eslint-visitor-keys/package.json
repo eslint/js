@@ -1,6 +1,6 @@
 {
   "name": "eslint-visitor-keys",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Constants and utilities about visitor keys to traverse AST.",
   "type": "module",
   "main": "dist/eslint-visitor-keys.cjs",
@@ -58,7 +58,9 @@
     "directory": "packages/eslint-visitor-keys"
   },
   "funding": "https://opencollective.com/eslint",
-  "keywords": ["eslint"],
+  "keywords": [
+    "eslint"
+  ],
   "author": "Toru Nagashima (https://github.com/mysticatea)",
   "license": "Apache-2.0",
   "bugs": {
