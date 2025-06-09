@@ -49,7 +49,7 @@ export default {
                 ],
                 "value": 0o755n,
                 "raw": "0o755n",
-                "bigint": "0o755"
+                "bigint": "493"
             }
         }
     ],

@@ -49,7 +49,7 @@ export default {
                 ],
                 "value": 0b0101n,
                 "raw": "0b0101n",
-                "bigint": "0b0101"
+                "bigint": "5"
             }
         }
     ],
