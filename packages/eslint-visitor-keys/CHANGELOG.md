@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.1](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.2.0...eslint-visitor-keys-v4.2.1) (2025-06-09)
+
+
+### Bug Fixes
+
+* order visitor keys for `ExportSpecifier` in source code order ([#656](https://github.com/eslint/js/issues/656)) ([dbad7d8](https://github.com/eslint/js/commit/dbad7d8aeab3f24253ab846f1247a33b7ddd0f19))
+
 ## [4.2.0](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.1.0...eslint-visitor-keys-v4.2.0) (2024-10-29)
 
 

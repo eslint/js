@@ -1,5 +1,20 @@
 # Changelog
 
+## [8.4.0](https://github.com/eslint/js/compare/eslint-scope-v8.3.0...eslint-scope-v8.4.0) (2025-06-09)
+
+
+### Features
+
+* Add support for ES2026 `using` and `await using` declarations ([#658](https://github.com/eslint/js/issues/658)) ([39e0865](https://github.com/eslint/js/commit/39e086509a0164dcea960719fb9673c73452f36e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * eslint-visitor-keys bumped from ^4.2.0 to ^4.2.1
+    * espree bumped from ^10.3.0 to ^10.4.0
+
 ## [8.3.0](https://github.com/eslint/js/compare/eslint-scope-v8.2.0...eslint-scope-v8.3.0) (2025-03-07)
 
 

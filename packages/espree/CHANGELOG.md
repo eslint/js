@@ -1,5 +1,19 @@
 # Changelog
 
+## [10.4.0](https://github.com/eslint/js/compare/espree-v10.3.0...espree-v10.4.0) (2025-06-09)
+
+
+### Features
+
+* Add support for ES2026 `using` and `await using` declarations ([#658](https://github.com/eslint/js/issues/658)) ([39e0865](https://github.com/eslint/js/commit/39e086509a0164dcea960719fb9673c73452f36e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * eslint-visitor-keys bumped from ^4.2.0 to ^4.2.1
+
 ## [10.3.0](https://github.com/eslint/js/compare/espree-v10.2.0...espree-v10.3.0) (2024-10-29)
 
 
