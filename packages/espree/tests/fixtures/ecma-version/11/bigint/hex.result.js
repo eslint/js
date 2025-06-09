@@ -49,7 +49,7 @@ export default {
                 ],
                 "value": 0x80n,
                 "raw": "0x80n",
-                "bigint": "0x80"
+                "bigint": "128"
             }
         }
     ],
