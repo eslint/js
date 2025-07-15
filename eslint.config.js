@@ -1,18 +1,17 @@
+import { defineConfig, globalIgnores } from "eslint/config";
 import eslintConfigESLint from "eslint-config-eslint";
 import eslintConfigESLintFormatting from "eslint-config-eslint/formatting";
 import eslintPluginChaiFriendly from "eslint-plugin-chai-friendly";
 import globals from "globals";
 
-export default [
-    {
-        ignores: [
-            "**/tests/fixtures/",
-            "**/dist/",
-            "**/coverage/",
-            "packages/espree/tools/create-test-example.js"
-        ]
-    },
-    ...eslintConfigESLint,
+export default defineConfig([
+    globalIgnores([
+        "**/tests/fixtures/",
+        "**/dist/",
+        "**/coverage/",
+        "packages/espree/tools/create-test-example.js"
+    ]),
+    eslintConfigESLint,
     eslintConfigESLintFormatting,
     {
         files: ["packages/*/tests/lib/**"],
@@ -76,4 +75,4 @@ export default [
             "n/no-process-exit": "off"
         }
     }
-];
+]);
