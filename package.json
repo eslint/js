@@ -24,7 +24,7 @@
   "devDependencies": {
     "c8": "^10.1.3",
     "eslint": "^9.31.0",
-    "eslint-config-eslint": "^11.0.0",
+    "eslint-config-eslint": "^12.0.0",
     "eslint-plugin-chai-friendly": "^1.0.0",
     "globals": "^15.1.0",
     "got": "^14.4.1",
