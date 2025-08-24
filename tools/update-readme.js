@@ -48,7 +48,7 @@ README_FILE_PATHS.forEach(filePath => {
     const readme = readFileSync(filePath, "utf8");
 
     let newReadme = readme.replace(
-        /<!--sponsorsstart-->[\w\W]*?<!--sponsorsend-->/u,
+        /<!--sponsorsstart-->[\s\S]*?<!--sponsorsend-->/u,
         `<!--sponsorsstart-->\n${allSponsors}\n<!--sponsorsend-->`
     );
 
