@@ -33,11 +33,6 @@
     "build:update-version": "node tools/update-version.js",
     "prepublishOnly": "npm run build:update-version && npm run build",
     "pretest": "npm run build",
-    "release:generate:latest": "eslint-generate-release",
-    "release:generate:alpha": "eslint-generate-prerelease alpha",
-    "release:generate:beta": "eslint-generate-prerelease beta",
-    "release:generate:rc": "eslint-generate-prerelease rc",
-    "release:publish": "eslint-publish-release",
     "test": "node Makefile.js test"
   },
   "files": [
@@ -53,7 +48,6 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^8.7.0",
     "chai": "^4.3.4",
-    "eslint-release": "^3.2.0",
     "eslint-visitor-keys": "^4.2.1",
     "espree": "^10.4.0",
     "npm-license": "^0.3.3",
