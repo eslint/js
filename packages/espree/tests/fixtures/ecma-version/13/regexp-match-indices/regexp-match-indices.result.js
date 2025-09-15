@@ -1,5 +1,3 @@
-import conditionalRegex from "../../../../lib/conditional-regex-value.js";
-
 export default {
     "type": "Program",
     "loc": {
@@ -8,13 +6,13 @@ export default {
             "column": 0
         },
         "end": {
-            "line": 1,
-            "column": 25
+            "line": 2,
+            "column": 0
         }
     },
     "range": [
         0,
-        25
+        26
     ],
     "body": [
         {
@@ -68,7 +66,7 @@ export default {
                         ],
                         "name": "re1"
                     },
-                    "init": conditionalRegex({
+                    "init": {
                         "type": "Literal",
                         "loc": {
                             "start": {
@@ -84,15 +82,13 @@ export default {
                             12,
                             24
                         ],
-
-                        // /d flag no supported in Node.js 12 or 14 yet
-                        "value": null,
+                        "value": /a+(<Z>z)?/d,
                         "raw": "/a+(<Z>z)?/d",
                         "regex": {
                             "pattern": "a+(<Z>z)?",
                             "flags": "d"
                         }
-                    })
+                    }
                 }
             ],
             "kind": "const"

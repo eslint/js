@@ -1,5 +1,3 @@
-import conditionalRegex from "../../../../lib/conditional-regex-value.js";
-
 export default {
     "type": "Program",
     "loc": {
@@ -8,13 +6,13 @@ export default {
             "column": 0
         },
         "end": {
-            "line": 1,
-            "column": 26
+            "line": 2,
+            "column": 0
         }
     },
     "range": [
         0,
-        26
+        27
     ],
     "body": [
         {
@@ -33,7 +31,7 @@ export default {
                 0,
                 26
             ],
-            "expression": conditionalRegex({
+            "expression": {
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -49,13 +47,13 @@ export default {
                     0,
                     26
                 ],
-                "value": null,
+                "value": /(?<AB>a)\k<\u0041\u0042>/,
                 "raw": "/(?<AB>a)\\k<\\u0041\\u0042>/",
                 "regex": {
                     "pattern": "(?<AB>a)\\k<\\u0041\\u0042>",
                     "flags": ""
                 }
-            })
+            }
         }
     ],
     "sourceType": "script",

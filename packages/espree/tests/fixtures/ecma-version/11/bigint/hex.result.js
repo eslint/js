@@ -6,13 +6,13 @@ export default {
             "column": 0
         },
         "end": {
-            "line": 1,
-            "column": 5
+            "line": 2,
+            "column": 0
         }
     },
     "range": [
         0,
-        5
+        6
     ],
     "body": [
         {
@@ -47,7 +47,7 @@ export default {
                     0,
                     5
                 ],
-                "value": 0x80n,
+                "value": 128n,
                 "raw": "0x80n",
                 "bigint": "128"
             }

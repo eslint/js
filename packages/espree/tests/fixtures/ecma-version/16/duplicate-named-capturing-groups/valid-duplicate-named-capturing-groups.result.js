@@ -1,5 +1,3 @@
-import conditionalRegex from "../../../../lib/conditional-regex-value.js";
-
 export default {
     "type": "Program",
     "loc": {
@@ -8,13 +6,13 @@ export default {
             "column": 0
         },
         "end": {
-            "line": 5,
-            "column": 2
+            "line": 6,
+            "column": 0
         }
     },
     "range": [
         0,
-        110
+        111
     ],
     "body": [
         {
@@ -85,7 +83,7 @@ export default {
                             109
                         ],
                         "elements": [
-                            conditionalRegex({
+                            {
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -101,14 +99,14 @@ export default {
                                     19,
                                     36
                                 ],
-                                "value": null,
+                                "value": /(?<x>a)|(?<x>b)/,
                                 "raw": "/(?<x>a)|(?<x>b)/",
                                 "regex": {
                                     "pattern": "(?<x>a)|(?<x>b)",
                                     "flags": ""
                                 }
-                            }),
-                            conditionalRegex({
+                            },
+                            {
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -124,14 +122,14 @@ export default {
                                     42,
                                     69
                                 ],
-                                "value": null,
+                                "value": /(?:(?<x>a)|(?<x>b))\\k<x>/,
                                 "raw": "/(?:(?<x>a)|(?<x>b))\\\\k<x>/",
                                 "regex": {
                                     "pattern": "(?:(?<x>a)|(?<x>b))\\\\k<x>",
                                     "flags": ""
                                 }
-                            }),
-                            conditionalRegex({
+                            },
+                            {
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -147,13 +145,13 @@ export default {
                                     75,
                                     106
                                 ],
-                                "value": null,
+                                "value": /(?<y>a)(?<x>a)|(?<x>b)(?<y>b)/,
                                 "raw": "/(?<y>a)(?<x>a)|(?<x>b)(?<y>b)/",
                                 "regex": {
                                     "pattern": "(?<y>a)(?<x>a)|(?<x>b)(?<y>b)",
                                     "flags": ""
                                 }
-                            })
+                            }
                         ]
                     }
                 }
