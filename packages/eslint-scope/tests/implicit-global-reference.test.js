@@ -44,6 +44,8 @@ describe("implicit global reference", () => {
         );
 
         expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
+        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql([]);
+        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql([]);
     });
 
     it("assignments global scope without definition", () => {
@@ -63,6 +65,18 @@ describe("implicit global reference", () => {
 
         expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql(
             [
+                "x"
+            ]
+        );
+        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "x",
+                "x"
+            ]
+        );
+        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "x",
                 "x"
             ]
         );
@@ -120,6 +134,16 @@ describe("implicit global reference", () => {
                 "x"
             ]
         );
+        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "x"
+            ]
+        );
+        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "x"
+            ]
+        );
     });
 
     it("assignment doesn't leak", () => {
@@ -151,6 +175,8 @@ describe("implicit global reference", () => {
         );
 
         expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
+        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql([]);
+        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql([]);
     });
 
     it("for-in-statement leaks", () => {
@@ -175,6 +201,18 @@ describe("implicit global reference", () => {
         expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql(
             [
                 "x"
+            ]
+        );
+        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "x",
+                "y"
+            ]
+        );
+        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "x",
+                "y"
             ]
         );
     });
@@ -208,5 +246,15 @@ describe("implicit global reference", () => {
         );
 
         expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
+        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "y"
+            ]
+        );
+        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
+            [
+                "y"
+            ]
+        );
     });
 });

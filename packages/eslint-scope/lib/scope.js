@@ -123,18 +123,6 @@ function registerScope(scopeManager, scope) {
 }
 
 /**
- * Should be statically
- * @param {Object} def def
- * @returns {boolean} should be statically
- */
-function shouldBeStatically(def) {
-    return (
-        (def.type === Variable.ClassName) ||
-        (def.type === Variable.Variable && def.parent.kind !== "var")
-    );
-}
-
-/**
  * @constructor Scope
  */
 class Scope {
@@ -267,22 +255,7 @@ class Scope {
     }
 
     __shouldStaticallyClose(scopeManager) {
-        return (!this.dynamic || scopeManager.__isOptimistic());
-    }
-
-    __shouldStaticallyCloseForGlobal(ref) {
-
-        // On global scope, let/const/class declarations should be resolved statically.
-        const name = ref.identifier.name;
-
-        if (!this.set.has(name)) {
-            return false;
-        }
-
-        const variable = this.set.get(name);
-        const defs = variable.defs;
-
-        return defs.length > 0 && defs.every(shouldBeStatically);
+        return (!this.dynamic || scopeManager.__isOptimistic() || this.type === "global");
     }
 
     __staticCloseRef(ref) {
@@ -302,26 +275,13 @@ class Scope {
         } while (current);
     }
 
-    __globalCloseRef(ref) {
-
-        // let/const/class declarations should be resolved statically.
-        // others should be resolved dynamically.
-        if (this.__shouldStaticallyCloseForGlobal(ref)) {
-            this.__staticCloseRef(ref);
-        } else {
-            this.__dynamicCloseRef(ref);
-        }
-    }
-
     __close(scopeManager) {
         let closeRef;
 
         if (this.__shouldStaticallyClose(scopeManager)) {
             closeRef = this.__staticCloseRef;
-        } else if (this.type !== "global") {
-            closeRef = this.__dynamicCloseRef;
         } else {
-            closeRef = this.__globalCloseRef;
+            closeRef = this.__dynamicCloseRef;
         }
 
         // Try Resolving all references in this scope.
@@ -560,9 +520,11 @@ class GlobalScope extends Scope {
 
         }
 
-        this.implicit.left = this.__left;
+        super.__close(scopeManager);
 
-        return super.__close(scopeManager);
+        this.implicit.left = [...this.through];
+
+        return null;
     }
 
     __defineImplicit(node, def) {
