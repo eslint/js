@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import tester from "./tester.js";
+import tester from "../util/tester.js";
 
 const { getRaw, getAstCode } = tester;
 
