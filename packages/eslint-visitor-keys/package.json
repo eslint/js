@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@types/estree": "^0.0.52",
-    "@types/estree-jsx": "^0.0.1",
+    "@types/estree-jsx": "^0.0.2",
     "@typescript-eslint/parser": "^8.7.0",
     "esquery": "^1.4.0",
     "json-diff": "^0.7.3",
