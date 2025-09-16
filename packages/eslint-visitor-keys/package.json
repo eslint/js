@@ -30,7 +30,6 @@
     "@types/estree-jsx": "^0.0.2",
     "@typescript-eslint/parser": "^8.7.0",
     "esquery": "^1.4.0",
-    "json-diff": "^0.7.3",
     "opener": "^1.5.2",
     "rollup": "^4.22.4",
     "rollup-plugin-dts": "^6.1.1",
