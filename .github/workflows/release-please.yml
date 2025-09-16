@@ -30,7 +30,7 @@ jobs:
             if: ${{ steps.release.outputs.releases_created == 'true' }}
 
           # Node.js release
-          - uses: actions/setup-node@v4
+          - uses: actions/setup-node@v5
             if: ${{ steps.release.outputs.releases_created == 'true' }}
             with:
                 node-version: lts/*
