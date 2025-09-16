@@ -47,7 +47,7 @@ export default {
                     0,
                     9
                 ],
-                "value": 252854,
+                "value": 0o755666,
                 "raw": "0o755_666"
             }
         }

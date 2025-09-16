@@ -47,7 +47,7 @@ export default {
                     0,
                     10
                 ],
-                "value": Infinity,
+                "value": 1e0123345,
                 "raw": "1e0123_345"
             }
         }

@@ -1,3 +1,5 @@
+import conditionalRegex from "../../../../lib/conditional-regex-value.js";
+
 export default {
     "type": "Program",
     "loc": {
@@ -31,7 +33,7 @@ export default {
                 0,
                 22
             ],
-            "expression": {
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -47,13 +49,13 @@ export default {
                     0,
                     22
                 ],
-                "value": /\P{Script=Hiragana}/u,
+                "value": null,
                 "raw": "/\\P{Script=Hiragana}/u",
                 "regex": {
                     "pattern": "\\P{Script=Hiragana}",
                     "flags": "u"
                 }
-            }
+            })
         }
     ],
     "sourceType": "script",

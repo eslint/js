@@ -47,7 +47,7 @@ export default {
                     0,
                     6
                 ],
-                "value": 493n,
+                "value": 0o755n,
                 "raw": "0o755n",
                 "bigint": "493"
             }

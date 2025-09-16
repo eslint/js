@@ -1,3 +1,5 @@
+import conditionalRegex from "../../../../lib/conditional-regex-value.js";
+
 export default {
     "type": "Program",
     "loc": {
@@ -31,7 +33,7 @@ export default {
                 0,
                 12
             ],
-            "expression": {
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -47,13 +49,13 @@ export default {
                     0,
                     11
                 ],
-                "value": /(?i-m:p)?/,
+                "value": null,
                 "raw": "/(?i-m:p)?/",
                 "regex": {
                     "pattern": "(?i-m:p)?",
                     "flags": ""
                 }
-            }
+            })
         },
         {
             "type": "ExpressionStatement",
@@ -71,7 +73,7 @@ export default {
                 13,
                 26
             ],
-            "expression": {
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -87,13 +89,13 @@ export default {
                     13,
                     25
                 ],
-                "value": /(?i-m:p)?/u,
+                "value": null,
                 "raw": "/(?i-m:p)?/u",
                 "regex": {
                     "pattern": "(?i-m:p)?",
                     "flags": "u"
                 }
-            }
+            })
         },
         {
             "type": "ExpressionStatement",
@@ -111,7 +113,7 @@ export default {
                 27,
                 39
             ],
-            "expression": {
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -127,13 +129,13 @@ export default {
                     27,
                     38
                 ],
-                "value": /(?ims:p)?/,
+                "value": null,
                 "raw": "/(?ims:p)?/",
                 "regex": {
                     "pattern": "(?ims:p)?",
                     "flags": ""
                 }
-            }
+            })
         },
         {
             "type": "ExpressionStatement",
@@ -151,7 +153,7 @@ export default {
                 40,
                 53
             ],
-            "expression": {
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -167,13 +169,13 @@ export default {
                     40,
                     52
                 ],
-                "value": /(?ims-:p)?/,
+                "value": null,
                 "raw": "/(?ims-:p)?/",
                 "regex": {
                     "pattern": "(?ims-:p)?",
                     "flags": ""
                 }
-            }
+            })
         },
         {
             "type": "ExpressionStatement",
@@ -191,7 +193,7 @@ export default {
                 54,
                 67
             ],
-            "expression": {
+            "expression": conditionalRegex({
                 "type": "Literal",
                 "loc": {
                     "start": {
@@ -207,13 +209,13 @@ export default {
                     54,
                     66
                 ],
-                "value": /(?-ims:p)?/,
+                "value": null,
                 "raw": "/(?-ims:p)?/",
                 "regex": {
                     "pattern": "(?-ims:p)?",
                     "flags": ""
                 }
-            }
+            })
         }
     ],
     "sourceType": "script",

@@ -319,8 +319,8 @@ export default {
                                                 257
                                             ],
                                             "id": null,
-                                            "expression": false,
                                             "generator": false,
+                                            "expression": false,
                                             "params": [],
                                             "body": {
                                                 "type": "BlockStatement",

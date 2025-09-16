@@ -47,7 +47,7 @@ export default {
                     0,
                     11
                 ],
-                "value": 90,
+                "value": 0b01011010,
                 "raw": "0b0101_1010"
             }
         }

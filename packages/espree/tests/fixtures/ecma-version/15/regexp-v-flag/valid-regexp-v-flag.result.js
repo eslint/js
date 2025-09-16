@@ -1,3 +1,5 @@
+import conditionalRegex from "../../../../lib/conditional-regex-value.js";
+
 export default {
     "type": "Program",
     "loc": {
@@ -83,7 +85,7 @@ export default {
                             98
                         ],
                         "elements": [
-                            {
+                            conditionalRegex({
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -99,14 +101,14 @@ export default {
                                     19,
                                     28
                                 ],
-                                "value": /[A&&B]/v,
+                                "value": null,
                                 "raw": "/[A&&B]/v",
                                 "regex": {
                                     "pattern": "[A&&B]",
                                     "flags": "v"
                                 }
-                            },
-                            {
+                            }),
+                            conditionalRegex({
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -122,14 +124,14 @@ export default {
                                     34,
                                     43
                                 ],
-                                "value": /[A--B]/v,
+                                "value": null,
                                 "raw": "/[A--B]/v",
                                 "regex": {
                                     "pattern": "[A--B]",
                                     "flags": "v"
                                 }
-                            },
-                            {
+                            }),
+                            conditionalRegex({
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -145,14 +147,14 @@ export default {
                                     49,
                                     71
                                 ],
-                                "value": /[\q{abc|d}&&[A--B]]/v,
+                                "value": null,
                                 "raw": "/[\\q{abc|d}&&[A--B]]/v",
                                 "regex": {
                                     "pattern": "[\\q{abc|d}&&[A--B]]",
                                     "flags": "v"
                                 }
-                            },
-                            {
+                            }),
+                            conditionalRegex({
                                 "type": "Literal",
                                 "loc": {
                                     "start": {
@@ -168,13 +170,13 @@ export default {
                                     77,
                                     95
                                 ],
-                                "value": /\p{Basic_Emoji}/v,
+                                "value": null,
                                 "raw": "/\\p{Basic_Emoji}/v",
                                 "regex": {
                                     "pattern": "\\p{Basic_Emoji}",
                                     "flags": "v"
                                 }
-                            }
+                            })
                         ]
                     }
                 }
