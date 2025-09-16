@@ -538,6 +538,51 @@ class GlobalScope extends Scope {
             );
         }
     }
+
+    __addVariables(names) {
+        for (const name of names) {
+            this.__defineGeneric(
+                name,
+                this.set,
+                this.variables,
+                null,
+                null
+            );
+        }
+
+        const namesSet = new Set(names);
+
+        this.through = this.through.filter(reference => {
+            const name = reference.identifier.name;
+
+            if (namesSet.has(name)) {
+                const variable = this.set.get(name);
+
+                reference.resolved = variable;
+                variable.references.push(reference);
+
+                return false;
+            }
+
+            return true;
+        });
+
+        this.implicit.variables = this.implicit.variables.filter(variable => {
+            const name = variable.name;
+
+            if (namesSet.has(name)) {
+                this.implicit.set.delete(name);
+
+                return false;
+            }
+
+            return true;
+        });
+
+        this.implicit.left = this.implicit.left.filter(
+            reference => !namesSet.has(reference.identifier.name)
+        );
+    }
 }
 
 /**
