@@ -26,7 +26,7 @@ jobs:
                 echo "packages/espree--release_created:" ${{ steps.release.outputs['packages/espree--release_created'] }}
 
           # Check to see if we need to do any releases and if so check out the repo
-          - uses: actions/checkout@v4
+          - uses: actions/checkout@v5
             if: ${{ steps.release.outputs.releases_created == 'true' }}
 
           # Node.js release
