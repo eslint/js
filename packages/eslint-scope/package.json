@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^8.7.0",
-    "chai": "^4.3.4",
+    "chai": "^6.0.0",
     "eslint-visitor-keys": "^4.2.1",
     "espree": "^10.4.0",
     "npm-license": "^0.3.3",
