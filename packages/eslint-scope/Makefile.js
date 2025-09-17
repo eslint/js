@@ -44,8 +44,8 @@ const NODE = "node",
     C8 = `${NODE} ${NODE_MODULES}/c8/bin/c8.js`,
 
     // Files
-    TEST_FILES = "tests/*.js",
-    CJS_TEST_FILES = "tests/*.cjs";
+    TEST_FILES = "tests/**/*.test.js",
+    CJS_TEST_FILES = "tests/**/*.test.cjs";
 
 //------------------------------------------------------------------------------
 // Tasks

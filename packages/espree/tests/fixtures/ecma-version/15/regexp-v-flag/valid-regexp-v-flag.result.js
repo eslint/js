@@ -1,4 +1,4 @@
-import conditionalRegex from "../../../../lib/conditional-regex-value.js";
+import conditionalRegex from "../../../../util/conditional-regex-value.js";
 
 export default {
     "type": "Program",

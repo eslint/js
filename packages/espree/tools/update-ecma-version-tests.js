@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 import util from "node:util";
 import fs from "node:fs";
 import shelljs from "shelljs";
-import tester from "../tests/lib/tester.js";
+import tester from "../tests/util/tester.js";
 
 //------------------------------------------------------------------------------
 // Helpers

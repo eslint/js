@@ -9,7 +9,7 @@
 
 import path from "node:path";
 import shelljs from "shelljs";
-import tester from "./tester.js";
+import tester from "../util/tester.js";
 import * as espree from "../../espree.js";
 import assert from "node:assert";
 import { fileURLToPath } from "node:url";
