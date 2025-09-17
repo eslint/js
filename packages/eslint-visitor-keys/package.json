@@ -26,15 +26,11 @@
     "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
   },
   "devDependencies": {
-    "@types/estree": "^0.0.52",
-    "@types/estree-jsx": "^0.0.2",
-    "@typescript-eslint/parser": "^8.7.0",
-    "esquery": "^1.4.0",
     "opener": "^1.5.2",
-    "rollup": "^4.22.4",
-    "rollup-plugin-dts": "^6.1.1",
+    "rollup": "^4.50.2",
+    "rollup-plugin-dts": "^6.2.3",
     "tsd": "^0.31.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.9.2"
   },
   "scripts": {
     "build": "npm run build:cjs && npm run build:types",

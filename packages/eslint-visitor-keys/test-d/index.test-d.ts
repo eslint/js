@@ -1,4 +1,4 @@
-import { expectType, expectAssignable, expectError } from 'tsd';
+import { expectType, expectAssignable } from 'tsd';
 
 import { KEYS, getKeys, unionWith, VisitorKeys } from "../";
 
