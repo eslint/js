@@ -22,6 +22,7 @@ describe("ScopeManager#addGlobals", () => {
         expect(globalScope.type).to.be.equal("global");
 
         expect(globalScope.variables).to.have.length(0);
+        expect(globalScope.set.size).to.be.equal(0);
         expect(globalScope.references).to.have.length(3);
         expect(globalScope.references[0].identifier.name).to.be.equal("foo");
         expect(globalScope.references[0].resolved).to.be.null;
