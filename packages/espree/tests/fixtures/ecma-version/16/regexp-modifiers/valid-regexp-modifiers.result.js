@@ -8,13 +8,13 @@ export default {
             "column": 0
         },
         "end": {
-            "line": 5,
-            "column": 13
+            "line": 6,
+            "column": 0
         }
     },
     "range": [
         0,
-        67
+        68
     ],
     "body": [
         {
