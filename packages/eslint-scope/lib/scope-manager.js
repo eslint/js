@@ -189,9 +189,7 @@ class ScopeManager {
      * @returns {void}
      */
     addGlobals(names) {
-        const globalScope = this.scopes[0];
-
-        globalScope.__addVariables(names);
+        this.globalScope.__addVariables(names);
     }
 
     attach() { } // eslint-disable-line class-methods-use-this -- Desired as instance method
