@@ -22,7 +22,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const allPiecesJson = JSON.parse(fs.readFileSync(`${__dirname}/../fixtures/parse/all-pieces.json`, "utf8"));
 
-// var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------

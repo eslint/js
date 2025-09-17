@@ -18,8 +18,6 @@ import tester from "./tester.js";
 // eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-
-// var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------
