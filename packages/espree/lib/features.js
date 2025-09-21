@@ -19,9 +19,6 @@ export default {
     // React JSX parsing
     jsx: false,
 
-    // allow return statement in global scope
-    globalReturn: false,
-
     // allow implied strict mode
     impliedStrict: false
 };
