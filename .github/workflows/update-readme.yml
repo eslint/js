@@ -1,34 +1,13 @@
-name: Data Fetch
+name: update-readme
 
 on:
     schedule:
-        - cron: "0 8 * * *" # Every day at 1am PDT
+        - cron: "0 8 * * *" # Runs every day at 08:00 AM UTC
+
     workflow_dispatch:
 
 jobs:
     update-readme:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Check out repo
-              uses: actions/checkout@v5
-              with:
-                token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
-
-            - name: Set up Node.js
-              uses: actions/setup-node@v5
-
-            - name: Install npm packages
-              run: npm install --force
-
-            - name: Update README with latest team and sponsor data
-              run: npm run build:readme
-
-            - name: Setup Git
-              run: |
-                git config user.name "GitHub Actions Bot"
-                git config user.email "<eslint@googlegroups.com>"
-
-            - name: Save updated files
-              run: |
-                chmod +x ./tools/commit-readme.sh
-                ./tools/commit-readme.sh
+        uses: eslint/workflows/.github/workflows/update-readme.yml@main
+        secrets:
+            workflow_push_bot_token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
