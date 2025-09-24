@@ -12,3 +12,6 @@ _test.js
 .eslint-release-info.json
 yarn.lock
 package-lock.json
+
+# Automatically generated files by GitHub Actions workflow
+tools/update-readme.js
