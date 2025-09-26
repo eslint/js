@@ -10,7 +10,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import shelljs from "shelljs";
-import tester from "./tester.js";
+import tester from "../util/tester.js";
 import * as espree from "../../espree.js";
 import assert from "node:assert";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -22,7 +22,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const allPiecesJson = JSON.parse(fs.readFileSync(`${__dirname}/../fixtures/parse/all-pieces.json`, "utf8"));
 
-// var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------

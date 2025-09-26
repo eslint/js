@@ -12,14 +12,12 @@ import path from "node:path";
 import * as espree from "../../espree.js";
 import shelljs from "shelljs";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import tester from "./tester.js";
+import tester from "../util/tester.js";
 
 
 // eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-
-// var espree = require("esprima-fb");
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------

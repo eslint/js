@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 import fs from "node:fs";
-import tester from "./tester.js";
+import tester from "../util/tester.js";
 import * as espree from "../../espree.js";
 import assert from "node:assert";
 

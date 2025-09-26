@@ -6,9 +6,8 @@
   "scripts": {
     "test": "npm test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
-    "build:readme": "node tools/update-readme.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "workspaces": [
     "packages/*"
@@ -26,8 +25,7 @@
     "eslint": "^9.35.0",
     "eslint-config-eslint": "^13.0.0",
     "eslint-plugin-chai-friendly": "^1.0.0",
-    "globals": "^15.1.0",
-    "got": "^14.4.1",
+    "globals": "^16.0.0",
     "lint-staged": "^15.2.0",
     "mocha": "^11.1.0",
     "yorkie": "^2.0.0"
