@@ -13,7 +13,7 @@
 //------------------------------------------------------------------------------
 
 import shelljs from "shelljs";
-import tester from "../tests/lib/tester.js";
+import tester from "../tests/util/tester.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";

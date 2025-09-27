@@ -37,7 +37,7 @@
     "build:cjs": "rollup -c",
     "build:debug": "npm run build:cjs -- -m && npm run build:types",
     "build:types": "tsc -v && tsc",
-    "test": "mocha tests/lib/**/*.cjs && c8 mocha tests/lib/**/*.js && npm run test:types",
+    "test": "mocha \"tests/**/*.test.cjs\" && c8 mocha \"tests/**/*.test.js\" && npm run test:types",
     "test:open-coverage": "c8 report --reporter lcov && opener coverage/lcov-report/index.html",
     "test:types": "tsd"
   },
