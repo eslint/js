@@ -52,7 +52,7 @@
     "espree": "^10.4.0",
     "npm-license": "^0.3.3",
     "rollup": "^2.52.7",
-    "shelljs": "^0.8.5",
+    "shelljs": "^0.10.0",
     "typescript": "^5.4.2"
   }
 }
