@@ -2,17 +2,17 @@ export default {
     "type": "Program",
     "loc": {
         "start": {
-            "line": 2,
+            "line": 1,
             "column": 0
         },
         "end": {
-            "line": 2,
-            "column": 11
+            "line": 3,
+            "column": 0
         }
     },
     "range": [
-        1,
-        12
+        0,
+        13
     ],
     "body": [
         {
