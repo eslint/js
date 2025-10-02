@@ -89,6 +89,11 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
 
 #### Methods
 
+- **`addGlobals(names)`**
+  Adds variables to the global scope and resolves references to them.
+  - `names` - An array of strings, the names of variables to add to the global scope.
+  - Returns: `undefined`.
+
 - **`acquire(node, inner)`**
   Acquires the appropriate scope for a given node.
   - `node` - The AST node to acquire the scope from.
