@@ -16,7 +16,7 @@ $ npm install eslint-visitor-keys
 
 ### Requirements
 
-- [Node.js] `^18.18.0`, `^20.9.0`, or `>=21.1.0`
+- [Node.js] `^20.19.0`, `^22.13.0`, or `>=24`
 
 ## 📖 Usage
 
