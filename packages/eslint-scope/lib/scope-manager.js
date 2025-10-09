@@ -64,7 +64,7 @@ class ScopeManager {
     }
 
     isGlobalReturn() {
-        return this.__options.nodejsScope || this.__options.sourceType === "commonjs";
+        return this.__options.sourceType === "commonjs";
     }
 
     isModule() {
