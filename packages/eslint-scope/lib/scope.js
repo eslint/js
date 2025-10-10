@@ -722,7 +722,7 @@ class FunctionScope extends Scope {
     //     }
     __isValidResolution(ref, variable) {
 
-        // If `options.nodejsScope` is true, `this.block` becomes a Program node.
+        // If `options.sourceType` is "commonjs", `this.block` becomes a Program node.
         if (this.block.type === "Program") {
             return true;
         }
