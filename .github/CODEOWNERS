@@ -1,1 +1,2 @@
 .release-please-manifest.json @eslint/eslint-tsc
+.github/workflows/release-please.yml @eslint/eslint-tsc
