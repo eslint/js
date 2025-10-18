@@ -11,4 +11,4 @@ on:
 
 jobs:
     ci-bun:
-        uses: eslint/workflows/.github/workflows/ci-bun.yml@main
+        uses: eslint/workflows/.github/workflows/ci-bun.yml@lumirlumir-patch-1
