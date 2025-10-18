@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "npm test --workspaces --if-present",
-    "build": "npm run build -w packages",
+    "build": "node build.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
