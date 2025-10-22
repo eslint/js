@@ -156,9 +156,6 @@ const options = {
         // enable JSX parsing
         jsx: false,
 
-        // enable return in global scope (set to true automatically when sourceType is "commonjs")
-        globalReturn: false,
-
         // enable implied strict mode (if ecmaVersion >= 5)
         impliedStrict: false
     }

@@ -107,8 +107,12 @@ export function normalizeOptions(options) {
     }
     const allowReserved = ecmaVersion === 3 ? (options.allowReserved || "never") : false;
     const ecmaFeatures = options.ecmaFeatures || {};
-    const allowReturnOutsideFunction = options.sourceType === "commonjs" ||
-        Boolean(ecmaFeatures.globalReturn);
+
+    if (Object.hasOwn(ecmaFeatures, "globalReturn")) {
+        throw new Error("`ecmaFeatures.globalReturn` has been removed. To allow top-level return statements, set `sourceType` to 'commonjs'.");
+    }
+
+    const allowReturnOutsideFunction = options.sourceType === "commonjs";
 
     if (sourceType === "module" && ecmaVersion < 6) {
         throw new Error("sourceType 'module' is not supported when ecmaVersion < 2015. Consider adding `{ ecmaVersion: 2015 }` to the parser options.");
