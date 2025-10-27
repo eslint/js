@@ -6,20 +6,21 @@
   "main": "dist/espree.cjs",
   "type": "module",
   "exports": {
-    ".": [
-      {
-        "import": "./espree.js",
-        "require": "./dist/espree.cjs",
-        "default": "./dist/espree.cjs"
+    ".": {
+      "types": {
+        "import": "./dist/espree.d.ts",
+        "require": "./dist/espree.d.cts"
       },
-      "./dist/espree.cjs"
-    ],
+      "import": "./espree.js",
+      "require": "./dist/espree.cjs",
+      "default": "./dist/espree.cjs"
+    },
     "./package.json": "./package.json"
   },
   "version": "11.0.0",
   "files": [
     "lib",
-    "dist/espree.cjs",
+    "dist",
     "espree.js"
   ],
   "engines": {
@@ -37,12 +38,14 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "acorn": "^8.15.0",
-    "acorn-jsx": "^5.3.2",
+    "acorn-jsx": "brettz9/acorn-jsx#esm",
     "eslint-visitor-keys": "^5.0.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "rollup": "^2.79.1",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "typescript": "^5.9.3"
   },
   "keywords": [
     "ast",
@@ -53,7 +56,9 @@
     "acorn"
   ],
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "attw": "attw --pack",
+    "tsc": "tsc && tsc -p tsconfig-cjs.json",
+    "build": "rollup -c rollup.config.js && npm run tsc",
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
     "pretest": "npm run build",
