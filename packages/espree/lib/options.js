@@ -3,11 +3,15 @@
  * @author Kai Cataldo
  */
 
+/**
+ * @import { ecmaVersion, ParserOptions } from "../espree.js";
+ */
+
 //------------------------------------------------------------------------------
 // Helpers
 //------------------------------------------------------------------------------
 
-const SUPPORTED_VERSIONS = [
+const SUPPORTED_VERSIONS = /** @type {const} */ ([
     3,
     5,
     6, // 2015
@@ -22,19 +26,23 @@ const SUPPORTED_VERSIONS = [
     15, // 2024
     16, // 2025
     17 // 2026
-];
+]);
+
+/**
+ * @typedef {typeof SUPPORTED_VERSIONS[number]} normalizedEcmaVersion
+ */
 
 /**
  * Get the latest ECMAScript version supported by Espree.
- * @returns {number} The latest ECMAScript version.
+ * @returns {normalizedEcmaVersion} The latest ECMAScript version.
  */
 export function getLatestEcmaVersion() {
-    return SUPPORTED_VERSIONS.at(-1);
+    return /** @type {normalizedEcmaVersion} */ (SUPPORTED_VERSIONS.at(-1));
 }
 
 /**
  * Get the list of ECMAScript versions supported by Espree.
- * @returns {number[]} An array containing the supported ECMAScript versions.
+ * @returns {normalizedEcmaVersion[]} An array containing the supported ECMAScript versions.
  */
 export function getSupportedEcmaVersions() {
     return [...SUPPORTED_VERSIONS];
@@ -44,7 +52,7 @@ export function getSupportedEcmaVersions() {
  * Normalize ECMAScript version from the initial config
  * @param {(number|"latest")} ecmaVersion ECMAScript version from the initial config
  * @throws {Error} throws an error if the ecmaVersion is invalid.
- * @returns {number} normalized ECMAScript version
+ * @returns {normalizedEcmaVersion} normalized ECMAScript version
  */
 function normalizeEcmaVersion(ecmaVersion = 5) {
 
@@ -60,18 +68,22 @@ function normalizeEcmaVersion(ecmaVersion = 5) {
         version -= 2009;
     }
 
-    if (!SUPPORTED_VERSIONS.includes(version)) {
+    if (!SUPPORTED_VERSIONS.includes(
+
+        /** @type {normalizedEcmaVersion} */
+        (version)
+    )) {
         throw new Error("Invalid ecmaVersion.");
     }
 
-    return version;
+    return /** @type {normalizedEcmaVersion} */ (version);
 }
 
 /**
  * Normalize sourceType from the initial config
  * @param {string} sourceType to normalize
  * @throws {Error} throw an error if sourceType is invalid
- * @returns {string} normalized sourceType
+ * @returns {"script"|"module"} normalized sourceType
  */
 function normalizeSourceType(sourceType = "script") {
     if (sourceType === "script" || sourceType === "module") {
@@ -86,10 +98,30 @@ function normalizeSourceType(sourceType = "script") {
 }
 
 /**
+ * @typedef {{
+ *   ecmaVersion: normalizedEcmaVersion,
+ *   sourceType: "script"|"module",
+ *   range?: boolean,
+ *   loc?: boolean,
+ *   allowReserved: boolean | "never",
+ *   ecmaFeatures?: {
+ *     jsx?: boolean,
+ *     globalReturn?: boolean,
+ *     impliedStrict?: boolean
+ *   },
+ *   ranges: boolean,
+ *   locations: boolean,
+ *   allowReturnOutsideFunction: boolean,
+ *   tokens?: boolean,
+ *   comment?: boolean
+ * }} NormalizedParserOptions
+ */
+
+/**
  * Normalize parserOptions
- * @param {Object} options the parser options to normalize
+ * @param {ParserOptions} options the parser options to normalize
  * @throws {Error} throw an error if found invalid option.
- * @returns {Object} normalized options
+ * @returns {NormalizedParserOptions} normalized options
  */
 export function normalizeOptions(options) {
     const ecmaVersion = normalizeEcmaVersion(options.ecmaVersion);
