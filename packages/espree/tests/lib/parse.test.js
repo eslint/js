@@ -214,6 +214,20 @@ describe("parse()", () => {
             assert.deepStrictEqual([ast.loc.end.line, ast.loc.end.column], [1, 5]);
         });
 
+        it("should reset lastToken on each parse (block comment)", () => {
+            espree.parse("var foo = bar;");
+            const ast = espree.parse("/* foo */", {
+                comment: true,
+                tokens: true,
+                range: true,
+                loc: true
+            });
+
+            assert.deepStrictEqual(ast.range, [0, 9]);
+            assert.deepStrictEqual([ast.loc.start.line, ast.loc.start.column], [1, 0]);
+            assert.deepStrictEqual([ast.loc.end.line, ast.loc.end.column], [1, 9]);
+        });
+
         it("should not mutate config", () => {
             espree.parse("foo", Object.freeze({ ecmaFeatures: Object.freeze({}) }));
         });
