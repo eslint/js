@@ -182,35 +182,6 @@ export default () => Parser => {
             }
 
             /*
-             * Adjust opening and closing position of program to match Esprima.
-             * Acorn always starts programs at range 0 whereas Esprima starts at the
-             * first AST node's start (the only real difference is when there's leading
-             * whitespace or leading comments). Acorn also counts trailing whitespace
-             * as part of the program whereas Esprima only counts up to the last token.
-             */
-            if (program.body.length) {
-                const [firstNode] = program.body;
-
-                if (program.range) {
-                    program.range[0] = firstNode.range[0];
-                }
-                if (program.loc) {
-                    program.loc.start = firstNode.loc.start;
-                }
-                program.start = firstNode.start;
-            }
-            if (extra.lastToken) {
-                if (program.range) {
-                    program.range[1] = extra.lastToken.range[1];
-                }
-                if (program.loc) {
-                    program.loc.end = extra.lastToken.loc.end;
-                }
-                program.end = extra.lastToken.end;
-            }
-
-
-            /*
              * https://github.com/eslint/espree/issues/349
              * Ensure that template elements have correct range information.
              * This is one location where Acorn produces a different value

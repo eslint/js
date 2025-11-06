@@ -6,13 +6,13 @@ export default {
             "column": 0
         },
         "end": {
-            "line": 1,
-            "column": 28
+            "line": 2,
+            "column": 0
         }
     },
     "range": [
         0,
-        28
+        29
     ],
     "body": [
         {
