@@ -43,19 +43,20 @@ function shouldThrowInTestsWhenEnabled(feature) {
 
 describe("ecmaFeatures", () => {
 
-    let config;
-
-    beforeEach(() => {
-        config = {
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: 6,
-            ecmaFeatures: {}
-        };
-    });
     testFiles.forEach(filename => {
         describe(filename, () => {
+
+            let config;
+
+            beforeEach(() => {
+                config = {
+                    loc: true,
+                    range: true,
+                    tokens: true,
+                    ecmaVersion: 6,
+                    ecmaFeatures: {}
+                };
+            });
 
             // Uncomment and fill in filename to focus on a single file
             // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
@@ -79,6 +80,14 @@ describe("ecmaFeatures", () => {
                 });
 
             });
+        });
+    });
+
+    describe("globalReturn", () => {
+        it("should throw an error when globalReturn is specified", () => {
+            assert.throws(() => {
+                espree.parse("foo", { ecmaFeatures: { globalReturn: true } });
+            }, /`ecmaFeatures\.globalReturn` has been removed\. To allow top-level return statements, set `sourceType` to 'commonjs'\./u);
         });
     });
 });
