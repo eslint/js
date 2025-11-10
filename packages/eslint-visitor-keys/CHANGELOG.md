@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.2.1...eslint-visitor-keys-v5.0.0) (2025-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* Require Node.js `^20.19.0 || ^22.13.0 || >=24` ([#696](https://github.com/eslint/js/issues/696))
+
+### Features
+
+* Require Node.js `^20.19.0 || ^22.13.0 || >=24` ([#696](https://github.com/eslint/js/issues/696)) ([9c84ecb](https://github.com/eslint/js/commit/9c84ecb6beb539ee08506de537a78a4585bb3afa))
+
 ## [4.2.1](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.2.0...eslint-visitor-keys-v4.2.1) (2025-06-09)
 
 
