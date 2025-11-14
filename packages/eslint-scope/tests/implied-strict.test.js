@@ -80,12 +80,12 @@ describe("impliedStrict option", () => {
         expect(scope.isStrict).to.be.false;
     });
 
-    it("omits a nodejs global scope when ensuring all user scopes are strict", () => {
+    it("omits a commonjs global scope when ensuring all user scopes are strict", () => {
         const ast = espree(`
             function foo() {}
         `);
 
-        const scopeManager = analyze(ast, { ecmaVersion: 5, nodejsScope: true, impliedStrict: true });
+        const scopeManager = analyze(ast, { ecmaVersion: 5, sourceType: "commonjs", impliedStrict: true });
 
         expect(scopeManager.scopes).to.have.length(3);
 

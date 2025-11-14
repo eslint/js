@@ -62,7 +62,6 @@ import eslintScopeVersion from "./version.js";
 function defaultOptions() {
     return {
         optimistic: false,
-        nodejsScope: false,
         impliedStrict: false,
         sourceType: "script", // one of ['script', 'module', 'commonjs']
         ecmaVersion: 5,
@@ -114,9 +113,6 @@ function updateDeeply(target, override) {
  * @param {Object} providedOptions Options that tailor the scope analysis
  * @param {boolean} [providedOptions.optimistic=false] the optimistic flag
  * @param {boolean} [providedOptions.ignoreEval=false] whether to check 'eval()' calls
- * @param {boolean} [providedOptions.nodejsScope=false] whether the whole
- * script is executed under node.js environment. When enabled, escope adds
- * a function scope immediately following the global scope.
  * @param {boolean} [providedOptions.impliedStrict=false] implied strict mode
  * (if ecmaVersion >= 5).
  * @param {string} [providedOptions.sourceType='script'] the source type of the script. one of 'script', 'module', and 'commonjs'
@@ -125,9 +121,15 @@ function updateDeeply(target, override) {
  * @param {Object} [providedOptions.childVisitorKeys=null] Additional known visitor keys. See [esrecurse](https://github.com/estools/esrecurse)'s the `childVisitorKeys` option.
  * @param {string} [providedOptions.fallback='iteration'] A kind of the fallback in order to encounter with unknown node. See [esrecurse](https://github.com/estools/esrecurse)'s the `fallback` option.
  * @returns {ScopeManager} ScopeManager
+ * @throws {Error} When `nodejsScope` option is passed.
  */
 function analyze(tree, providedOptions) {
     const options = updateDeeply(defaultOptions(), providedOptions);
+
+    if (options.nodejsScope) {
+        throw new Error("`nodejsScope` option has been removed. To create a top-level function scope for CommonJS evaluation, set `sourceType` to 'commonjs'.");
+    }
+
     const scopeManager = new ScopeManager(options);
     const referencer = new Referencer(options, scopeManager);
 

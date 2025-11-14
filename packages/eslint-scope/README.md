@@ -31,10 +31,9 @@ In order to analyze scope, you'll need to have an [ESTree](https://github.com/es
 1. `ast` - the ESTree-compliant AST structure to analyze.
 2. `options` (optional) - Options to adjust how the scope is analyzed, including:
   * `ignoreEval` (default: `false`) - Set to `true` to ignore all `eval()` calls (which would normally create scopes).
-  * `nodejsScope` (default: `false`) - Set to `true` to create a top-level function scope needed for CommonJS evaluation.
   * `impliedStrict` (default: `false`) - Set to `true` to evaluate the code in strict mode even outside of modules and without `"use strict"`.
   * `ecmaVersion` (default: `5`) - The version of ECMAScript to use to evaluate the code.
-  * `sourceType` (default: `"script"`) - The type of JavaScript file to evaluate. Change to `"module"` for ECMAScript module code.
+  * `sourceType` (default: `"script"`) - The type of JavaScript file to evaluate. Change to `"module"` for ECMAScript module code, or `"commonjs"` for CommonJS module code.
   * `childVisitorKeys` (default: `null`) - An object with visitor key information (like [`eslint-visitor-keys`](https://github.com/eslint/js/tree/main/packages/eslint-visitor-keys)). Without this, `eslint-scope` finds child nodes to visit algorithmically. Providing this option is a performance enhancement.
   * `fallback` (default: `"iteration"`) - The strategy to use when `childVisitorKeys` is not specified. May be a function.
   * `jsx` (default: `false`) - Enables the tracking of JSX components as variable references.
