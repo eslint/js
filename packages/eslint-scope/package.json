@@ -3,11 +3,18 @@
   "description": "ECMAScript scope analyzer for ESLint",
   "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-scope/README.md",
   "main": "./dist/eslint-scope.cjs",
+  "types": "./lib/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./lib/index.js",
-      "require": "./dist/eslint-scope.cjs"
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      },
+      "require": {
+        "types": "./lib/index.d.cts",
+        "default": "./dist/eslint-scope.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -30,8 +37,10 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "build": "rollup -c",
+    "lint:types": "attw --pack",
     "pretest": "npm run build",
-    "test": "node Makefile.js test"
+    "test": "node Makefile.js test && npm run test:types",
+    "test:types": "tsc -p tests/types/tsconfig.json"
   },
   "files": [
     "LICENSE",
@@ -40,12 +49,16 @@
     "dist/eslint-scope.cjs"
   ],
   "dependencies": {
+    "@types/espree": "*",
+    "@types/esrecurse": "*",
     "esrecurse": "^4.3.0",
     "estraverse": "^5.2.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@typescript-eslint/parser": "^8.7.0",
     "chai": "^6.0.0",
+    "eslint": ">=10.0.0-alpha.0 <10.0.0 || ^10.0.0",
     "eslint-visitor-keys": "^5.0.0",
     "espree": "^11.0.0",
     "npm-license": "^0.3.3",
