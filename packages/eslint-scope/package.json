@@ -3,7 +3,7 @@
   "description": "ECMAScript scope analyzer for ESLint",
   "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-scope/README.md",
   "main": "./dist/eslint-scope.cjs",
-  "types": "./lib/index.d.ts",
+  "types": "./lib/index.d.cts",
   "type": "module",
   "exports": {
     ".": {
