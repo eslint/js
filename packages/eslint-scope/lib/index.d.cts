@@ -137,6 +137,7 @@ export class ScopeManager implements eslint.Scope.ScopeManager {
      * acquire all scopes from node.
      * @param node node for the acquired scope.
      * @returns Scope array
+     * @deprecated
      */
     acquireAll(node: ESTree.Node): Scope[] | null;
 
@@ -158,10 +159,13 @@ export class ScopeManager implements eslint.Scope.ScopeManager {
 
     isGlobalReturn(): boolean;
 
+    /** @deprecated */
     isModule(): boolean;
 
+    /** @deprecated */
     isImpliedStrict(): boolean;
 
+    /** @deprecated */
     isStrictModeSupported(): boolean;
 }
 
@@ -244,6 +248,7 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
 
     /**
      * The tainted variables of this scope.
+     * @deprecated
      */
     taints: Map<string, Variable>;
 
@@ -254,16 +259,19 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
 
     /**
      * Dynamic flag for certain scope types.
+     * @deprecated
      */
     dynamic: boolean;
 
     /**
      * Direct call to eval() flag.
+     * @deprecated
      */
     directCallToEvalScope: boolean;
 
     /**
      * This scope flag.
+     * @deprecated
      */
     thisFound: boolean;
 
@@ -271,24 +279,29 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
      * Resolves a reference in this scope.
      * @param ref The reference to resolve.
      * @param noChain Whether to avoid chaining to parent scopes.
+     * @deprecated
      */
     resolve(ref: Reference, noChain?: boolean): void;
 
     /**
      * Whether the reference is static.
+     * @deprecated
      */
     isStatic(): boolean;
 
     /**
-     * returns this scope has materialized arguments.
+     * Returns whether this scope has materialized arguments.
+     * @deprecated
      */
     isArgumentsMaterialized(): boolean;
 
     /**
-     * returns this scope has materialized `this` reference
+     * Returns whether this scope has materialized `this` reference.
+     * @deprecated
      */
     isThisMaterialized(): boolean;
 
+    /** @deprecated */
     isUsedName(name: string): boolean;
 }
 
@@ -539,11 +552,13 @@ export class Variable<TReference extends Reference = Reference> implements eslin
 
     /**
      * Whether the variable is tainted (e.g., potentially modified externally).
+     * @deprecated
      */
     tainted: boolean;
 
     /**
      * Stack flag for certain variable types.
+     * @deprecated
      */
     stack: boolean;
 }
@@ -554,7 +569,7 @@ export class Variable<TReference extends Reference = Reference> implements eslin
 export class Reference implements eslint.Scope.Reference {
     /**
      * Creates a new Reference instance.
-     * @param identifier The identifier node of the reference.
+     * @param ident The identifier node of the reference.
      * @param scope The scope where the reference occurs.
      * @param flag The reference flag (read, write, or read-write).
      * @param writeExpr The expression being written, if applicable.
@@ -563,7 +578,7 @@ export class Reference implements eslint.Scope.Reference {
      * @param init Whether this is an initialization reference.
      */
     constructor(
-        identifier: ESTree.Identifier,
+        ident: ESTree.Identifier,
         scope: Scope,
         flag: number,
         writeExpr: ESTree.Expression | null,
@@ -584,6 +599,7 @@ export class Reference implements eslint.Scope.Reference {
 
     /**
      * Whether the reference is static.
+     * @deprecated
      */
     isStatic(): boolean;
 
@@ -605,6 +621,7 @@ export class Reference implements eslint.Scope.Reference {
     /**
      * Whether the reference comes from a dynamic scope (such as 'eval',
      * 'with', etc.), and may be trapped by dynamic scopes.
+     * @deprecated
      */
     tainted: boolean;
 
@@ -615,6 +632,7 @@ export class Reference implements eslint.Scope.Reference {
 
     /**
      * Whether this is a partial reference.
+     * @deprecated
      */
     partial: boolean;
 
@@ -640,6 +658,9 @@ export class Reference implements eslint.Scope.Reference {
      * @returns True if the reference is read-write.
      */
     isReadWrite(): boolean;
+
+    /** @deprecated */
+    flag: 1 | 2 | 3;
 }
 
 /**
@@ -687,11 +708,13 @@ export class Definition {
 
     /**
      * The index of the definition in a pattern, if applicable.
+     * @deprecated
      */
     index: number | null;
 
     /**
      * The kind of variable (e.g., 'var', 'let', 'const'), if applicable.
+     * @deprecated
      */
     kind: string | null;
 }
