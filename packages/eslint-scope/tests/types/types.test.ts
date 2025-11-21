@@ -162,10 +162,6 @@ globalScope.type;
 // $ExpectType ScopeManager
 eslintScope.analyze(ast);
 
-const blockScope = new eslintScope.BlockScope(scopeManager, scopeManager.globalScope, ast);
-// $ExpectType "block"
-blockScope.type;
-
 const identifier: estree.Identifier = {
     type: "Identifier",
     name: "foo",
@@ -191,21 +187,89 @@ const definition2 = new eslintScope.Definition(
 // $ExpectType Identifier
 definition2.name;
 
+const blockScope = new eslintScope.BlockScope(scopeManager, scopeManager.globalScope, ast);
+// $ExpectType "block"
+blockScope.type;
+// $ExpectType false
+blockScope.functionExpressionScope;
+
+const catchScope = new eslintScope.CatchScope(scopeManager, scopeManager.globalScope, ast);
+// $ExpectType "catch"
+catchScope.type;
+// $ExpectType false
+catchScope.functionExpressionScope;
+
+const classFieldInitializerScope = new eslintScope.ClassFieldInitializerScope(
+    scopeManager,
+    scopeManager.globalScope,
+    ast,
+);
+// $ExpectType "class-field-initializer"
+classFieldInitializerScope.type;
+// $ExpectType false
+classFieldInitializerScope.functionExpressionScope;
+
+const classScope = new eslintScope.ClassScope(scopeManager, scopeManager.globalScope, ast);
+// $ExpectType "class"
+classScope.type;
+// $ExpectType false
+classScope.functionExpressionScope;
+
+const classStaticBlockScope = new eslintScope.ClassStaticBlockScope(
+    scopeManager,
+    scopeManager.globalScope,
+    ast,
+);
+// $ExpectType "class-static-block"
+classStaticBlockScope.type;
+// $ExpectType false
+classStaticBlockScope.functionExpressionScope;
+
+const forScope = new eslintScope.ForScope(scopeManager, scopeManager.globalScope, ast);
+// $ExpectType "for"
+forScope.type;
+// $ExpectType false
+forScope.functionExpressionScope;
+
+const functionExpressionNameScope = new eslintScope.FunctionExpressionNameScope(
+    scopeManager,
+    scopeManager.globalScope,
+    ast,
+);
+// $ExpectType "function-expression-name"
+functionExpressionNameScope.type;
+// $ExpectType true
+functionExpressionNameScope.functionExpressionScope;
+
 const functionScope = new eslintScope.FunctionScope(scopeManager, scopeManager.globalScope, ast, false);
 // $ExpectType "function"
 functionScope.type;
-// $ExpectType boolean
-functionScope.isArgumentsMaterialized();
-// $ExpectType boolean
-functionScope.isThisMaterialized();
+// $ExpectType false
+functionScope.functionExpressionScope;
 
 const globalScopeInstance = new eslintScope.GlobalScope(scopeManager, ast);
 // $ExpectType "global"
 globalScopeInstance.type;
+// $ExpectType false
+globalScopeInstance.functionExpressionScope;
 
 const moduleScope = new eslintScope.ModuleScope(scopeManager, scopeManager.globalScope, ast);
 // $ExpectType "module"
 moduleScope.type;
+// $ExpectType false
+moduleScope.functionExpressionScope;
+
+const switchScope = new eslintScope.SwitchScope(scopeManager, scopeManager.globalScope, ast);
+// $ExpectType "switch"
+switchScope.type;
+// $ExpectType false
+switchScope.functionExpressionScope;
+
+const withScope = new eslintScope.WithScope(scopeManager, scopeManager.globalScope, ast);
+// $ExpectType "with"
+withScope.type;
+// $ExpectType false
+withScope.functionExpressionScope;
 
 const ref = new eslintScope.Reference(
     identifier,

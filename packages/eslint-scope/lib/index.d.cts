@@ -205,7 +205,7 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
     /**
      * The scope where variables are declared (same as this for most scopes).
      */
-    variableScope: this;
+    variableScope: Scope;
 
     /**
      * Variables defined in this scope.
@@ -304,6 +304,8 @@ export class GlobalScope extends Scope {
     constructor(scopeManager: ScopeManager, block: ESTree.Node);
 
     type: "global";
+
+    functionExpressionScope: false;
 }
 
 /**
@@ -313,37 +315,65 @@ export class ModuleScope extends Scope {
     /**
      * Creates a new ModuleScope instance.
      * @param scopeManager The scope manager this scope belongs to.
-     * @param upper The parent scope.
+     * @param upperScope The parent scope.
      * @param block The AST node that created this scope.
      */
-    constructor(scopeManager: ScopeManager, upper: Scope, block: ESTree.Node);
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
 
     type: "module";
+
+    functionExpressionScope: false;
 }
 
 /**
- * Function scope.
+ * Function expression name scope.
  */
-export class FunctionScope extends Scope {
+export class FunctionExpressionNameScope extends Scope {
     /**
-     * Creates a new FunctionScope instance.
+     * Creates a new FunctionExpressionNameScope instance.
      * @param scopeManager The scope manager this scope belongs to.
-     * @param upper The parent scope.
+     * @param upperScope The parent scope.
      * @param block The AST node that created this scope.
-     * @param isMethodDefinition Whether this scope is for a method definition.
      */
-    constructor(
-        scopeManager: ScopeManager,
-        upper: Scope,
-        block: ESTree.Node,
-        isMethodDefinition: boolean,
-    );
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+    
+    type: "function-expression-name";
 
-    type: "function";
+    functionExpressionScope: true;
+}
 
-    isArgumentsMaterialized(): boolean;
+/**
+ * Catch scope.
+ */
+export class CatchScope extends Scope {
+    /**
+     * Creates a new CatchScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
 
-    isThisMaterialized(): boolean;
+    type: "catch";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * With scope.
+ */
+export class WithScope extends Scope {
+    /**
+     * Creates a new WithScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+
+    type: "with";
+
+    functionExpressionScope: false;
 }
 
 /**
@@ -353,12 +383,122 @@ export class BlockScope extends Scope {
     /**
      * Creates a new BlockScope instance.
      * @param scopeManager The scope manager this scope belongs to.
-     * @param upper The parent scope.
+     * @param upperScope The parent scope.
      * @param block The AST node that created this scope.
      */
-    constructor(scopeManager: ScopeManager, upper: Scope, block: ESTree.Node);
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
 
     type: "block";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * Switch scope.
+ */
+export class SwitchScope extends Scope {
+    /**
+     * Creates a new SwitchScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+
+    type: "switch";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * Function scope.
+ */
+export class FunctionScope extends Scope {
+    /**
+     * Creates a new FunctionScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     * @param isMethodDefinition Whether this scope is for a method definition.
+     */
+    constructor(
+        scopeManager: ScopeManager,
+        upperScope: Scope,
+        block: ESTree.Node,
+        isMethodDefinition: boolean,
+    );
+
+    type: "function";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * Scope of for, for-in, and for-of statements.
+ */
+export class ForScope extends Scope {
+    /**
+     * Creates a new ForScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+
+    type: "for";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * Class scope.
+ */
+export class ClassScope extends Scope {
+    /**
+     * Creates a new ClassScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+
+    type: "class";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * Class field initializer scope.
+ */
+export class ClassFieldInitializerScope extends Scope {
+    /**
+     * Creates a new ClassFieldInitializerScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+
+    type: "class-field-initializer";
+
+    functionExpressionScope: false;
+}
+
+/**
+ * Class static block scope.
+ */
+export class ClassStaticBlockScope extends Scope {
+    /**
+     * Creates a new ClassStaticBlockScope instance.
+     * @param scopeManager The scope manager this scope belongs to.
+     * @param upperScope The parent scope.
+     * @param block The AST node that created this scope.
+     */
+    constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
+
+    type: "class-static-block";
+
+    functionExpressionScope: false;
 }
 
 /**
