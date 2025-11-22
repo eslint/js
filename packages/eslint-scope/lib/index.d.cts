@@ -277,11 +277,10 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
 
     /**
      * Resolves a reference in this scope.
-     * @param ref The reference to resolve.
-     * @param noChain Whether to avoid chaining to parent scopes.
+     * @param ident An AST node to get their reference object.
      * @deprecated
      */
-    resolve(ref: Reference, noChain?: boolean): void;
+    resolve(ident: ESTree.Identifier): Reference | null;
 
     /**
      * Whether the reference is static.
@@ -573,7 +572,7 @@ export class Reference implements eslint.Scope.Reference {
      * @param scope The scope where the reference occurs.
      * @param flag The reference flag (read, write, or read-write).
      * @param writeExpr The expression being written, if applicable.
-     * @param maybeImplicitGlobal Whether this is a potential implicit global.
+     * @param maybeImplicitGlobal Information about a possible global variable, if applicable.
      * @param partial Whether this is a partial reference.
      * @param init Whether this is an initialization reference.
      */
@@ -582,7 +581,7 @@ export class Reference implements eslint.Scope.Reference {
         scope: Scope,
         flag: number,
         writeExpr: ESTree.Expression | null,
-        maybeImplicitGlobal: boolean,
+        maybeImplicitGlobal: { pattern: ESTree.Pattern; node: ESTree.Node } | null,
         partial: boolean,
         init: boolean,
     );
