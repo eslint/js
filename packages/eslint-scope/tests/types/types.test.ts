@@ -276,7 +276,7 @@ const ref = new eslintScope.Reference(
     scopeManager.globalScope,
     0,
     null,
-    false,
+    null,
     false,
     false,
 );
@@ -347,8 +347,8 @@ scopeInstance.dynamic;
 scopeInstance.directCallToEvalScope;
 // $ExpectType boolean
 scopeInstance.thisFound;
-// $ExpectType void
-scopeInstance.resolve(ref);
+// $ExpectType Reference | null
+scopeInstance.resolve(identifier);
 // $ExpectType boolean
 scopeInstance.isStatic();
 // $ExpectType boolean
