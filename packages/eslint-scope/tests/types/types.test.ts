@@ -53,7 +53,7 @@ const scopeManager = eslintScope.analyze(
     } satisfies AnalyzeOptions,
 );
 
-// $ExpectType GlobalScope
+// $ExpectType GlobalScope | null
 scopeManager.globalScope;
 // $ExpectType  Scope<Variable<Reference>, Reference>[]
 scopeManager.scopes;
@@ -96,12 +96,6 @@ if (scope) {
     scope.block;
     // $ExpectType boolean
     scope.functionExpressionScope;
-    // $ExpectType Reference[]
-    scope.implicit.left;
-    // $ExpectType Map<string, Variable<Reference>>
-    scope.implicit.set;
-    // $ExpectType Variable<Reference>[]
-    scope.implicit.variables;
     // $ExpectType  Map<string, Variable>
     scope.set;
     // $ExpectType Reference[]
@@ -155,9 +149,15 @@ if (definition) {
 }
 
 // $ExpectType GlobalScope
-const globalScope = scopeManager.globalScope;
+const globalScope = scopeManager.globalScope!;
 // $ExpectType 'global'
 globalScope.type;
+// $ExpectType Reference[]
+globalScope.implicit.left;
+// $ExpectType Map<string, Variable<Reference>>
+globalScope.implicit.set;
+// $ExpectType Variable<Reference>[]
+globalScope.implicit.variables;
 
 // $ExpectType ScopeManager
 eslintScope.analyze(ast);
@@ -187,13 +187,13 @@ const definition2 = new eslintScope.Definition(
 // $ExpectType Identifier
 definition2.name;
 
-const blockScope = new eslintScope.BlockScope(scopeManager, scopeManager.globalScope, ast);
+const blockScope = new eslintScope.BlockScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "block"
 blockScope.type;
 // $ExpectType false
 blockScope.functionExpressionScope;
 
-const catchScope = new eslintScope.CatchScope(scopeManager, scopeManager.globalScope, ast);
+const catchScope = new eslintScope.CatchScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "catch"
 catchScope.type;
 // $ExpectType false
@@ -201,7 +201,7 @@ catchScope.functionExpressionScope;
 
 const classFieldInitializerScope = new eslintScope.ClassFieldInitializerScope(
     scopeManager,
-    scopeManager.globalScope,
+    scopeManager.globalScope!,
     ast,
 );
 // $ExpectType "class-field-initializer"
@@ -209,7 +209,7 @@ classFieldInitializerScope.type;
 // $ExpectType false
 classFieldInitializerScope.functionExpressionScope;
 
-const classScope = new eslintScope.ClassScope(scopeManager, scopeManager.globalScope, ast);
+const classScope = new eslintScope.ClassScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "class"
 classScope.type;
 // $ExpectType false
@@ -217,7 +217,7 @@ classScope.functionExpressionScope;
 
 const classStaticBlockScope = new eslintScope.ClassStaticBlockScope(
     scopeManager,
-    scopeManager.globalScope,
+    scopeManager.globalScope!,
     ast,
 );
 // $ExpectType "class-static-block"
@@ -225,7 +225,7 @@ classStaticBlockScope.type;
 // $ExpectType false
 classStaticBlockScope.functionExpressionScope;
 
-const forScope = new eslintScope.ForScope(scopeManager, scopeManager.globalScope, ast);
+const forScope = new eslintScope.ForScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "for"
 forScope.type;
 // $ExpectType false
@@ -233,7 +233,7 @@ forScope.functionExpressionScope;
 
 const functionExpressionNameScope = new eslintScope.FunctionExpressionNameScope(
     scopeManager,
-    scopeManager.globalScope,
+    scopeManager.globalScope!,
     ast,
 );
 // $ExpectType "function-expression-name"
@@ -241,7 +241,7 @@ functionExpressionNameScope.type;
 // $ExpectType true
 functionExpressionNameScope.functionExpressionScope;
 
-const functionScope = new eslintScope.FunctionScope(scopeManager, scopeManager.globalScope, ast, false);
+const functionScope = new eslintScope.FunctionScope(scopeManager, scopeManager.globalScope!, ast, false);
 // $ExpectType "function"
 functionScope.type;
 // $ExpectType false
@@ -252,20 +252,22 @@ const globalScopeInstance = new eslintScope.GlobalScope(scopeManager, ast);
 globalScopeInstance.type;
 // $ExpectType false
 globalScopeInstance.functionExpressionScope;
+// $ExpectType { left: Reference[]; set: Map<string, Variable<Reference>>; variables: Variable<Reference>[]; }
+globalScopeInstance.implicit;
 
-const moduleScope = new eslintScope.ModuleScope(scopeManager, scopeManager.globalScope, ast);
+const moduleScope = new eslintScope.ModuleScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "module"
 moduleScope.type;
 // $ExpectType false
 moduleScope.functionExpressionScope;
 
-const switchScope = new eslintScope.SwitchScope(scopeManager, scopeManager.globalScope, ast);
+const switchScope = new eslintScope.SwitchScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "switch"
 switchScope.type;
 // $ExpectType false
 switchScope.functionExpressionScope;
 
-const withScope = new eslintScope.WithScope(scopeManager, scopeManager.globalScope, ast);
+const withScope = new eslintScope.WithScope(scopeManager, scopeManager.globalScope!, ast);
 // $ExpectType "with"
 withScope.type;
 // $ExpectType false
@@ -273,7 +275,7 @@ withScope.functionExpressionScope;
 
 const ref = new eslintScope.Reference(
     identifier,
-    scopeManager.globalScope,
+    scopeManager.globalScope!,
     0,
     null,
     null,
@@ -333,8 +335,6 @@ scopeInstance.childScopes;
 scopeInstance.block;
 // $ExpectType boolean
 scopeInstance.functionExpressionScope;
-// $ExpectType { left: Reference[]; set: Map<string, Variable<Reference>>; variables: Variable<Reference>[]; }
-scopeInstance.implicit;
 // $ExpectType Map<string, Variable>
 scopeInstance.set;
 // $ExpectType Map<string, Variable<Reference>>
@@ -362,7 +362,7 @@ const scopeManagerInstance = new eslintScope.ScopeManager({
     ecmaVersion: 2022,
     sourceType: "module",
 });
-// $ExpectType GlobalScope
+// $ExpectType GlobalScope | null
 scopeManagerInstance.globalScope;
 // $ExpectType Scope<Variable<Reference>, Reference>[]
 scopeManagerInstance.scopes;
@@ -434,10 +434,10 @@ patternVisitor.rootPattern;
 // $ExpectType PatternVisitorCallback
 patternVisitor.callback;
 
-// $ExpectType AssignmentPattern[]
+// $ExpectType (AssignmentExpression | AssignmentPattern)[]
 patternVisitor.assignments;
 
-// $ExpectType Expression[]
+// $ExpectType Node[]
 patternVisitor.rightHandNodes;
 
 // $ExpectType RestElement[]
@@ -464,7 +464,7 @@ patternVisitor.MemberExpression;
 // $ExpectType (pattern: SpreadElement) => void
 patternVisitor.SpreadElement;
 
-// $ExpectType (pattern: SpreadElement) => void
+// $ExpectType (pattern: ArrayExpression) => void
 patternVisitor.ArrayExpression;
 
 // $ExpectType (pattern: AssignmentExpression) => void
