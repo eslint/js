@@ -109,9 +109,9 @@ export class ScopeManager implements eslint.Scope.ScopeManager {
     constructor(options: AnalyzeOptions);
 
     /**
-     * The global scope.
+     * The global scope, initially set to `null`.
      */
-    globalScope: GlobalScope;
+    globalScope: GlobalScope | null;
 
     /**
      * All scopes in the analyzed program.
@@ -237,11 +237,6 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
     functionExpressionScope: boolean;
 
     /**
-     * Implicit references (e.g., 'arguments' in functions).
-     */
-    implicit: { left: TReference[]; set: Map<string, Variable>; variables: Variable[] };
-
-    /**
      * Map of variable names to variables.
      */
     set: eslint.Scope.Scope["set"];
@@ -318,6 +313,11 @@ export class GlobalScope extends Scope {
     type: "global";
 
     functionExpressionScope: false;
+
+    /**
+     * Implicit references (e.g., 'arguments' in functions).
+     */
+    implicit: { left: Reference[]; set: Map<string, Variable>; variables: Variable[] };
 }
 
 /**
@@ -740,9 +740,9 @@ export class PatternVisitor extends Visitor {
 
     callback: PatternVisitorCallback;
 
-    assignments: ESTree.AssignmentPattern[];
+    assignments: Array<ESTree.AssignmentExpression | ESTree.AssignmentPattern>;
 
-    rightHandNodes: ESTree.Expression[];
+    rightHandNodes: ESTree.Node[];
 
     restElements: ESTree.RestElement[];
 
@@ -760,7 +760,7 @@ export class PatternVisitor extends Visitor {
 
     SpreadElement(pattern: ESTree.SpreadElement): void;
 
-    ArrayExpression(pattern: ESTree.SpreadElement): void;
+    ArrayExpression(pattern: ESTree.ArrayExpression): void;
 
     AssignmentExpression(pattern: ESTree.AssignmentExpression): void;
 
