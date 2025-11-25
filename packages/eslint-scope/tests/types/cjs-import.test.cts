@@ -7,6 +7,7 @@
 // Imports
 //-----------------------------------------------------------------------------
 
+// Make sure the named exports exist.
 import {
     Definition,
     Reference,
