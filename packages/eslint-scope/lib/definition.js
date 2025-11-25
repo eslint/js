@@ -24,8 +24,11 @@
 
 import Variable from "./variable.js";
 
+/** @import * as types from "eslint-scope" */
+
 /**
  * @constructor Definition
+ * @implements {types.Definition}
  */
 class Definition {
     constructor(type, name, node, parent, index, kind) {
