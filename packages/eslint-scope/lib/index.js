@@ -53,6 +53,8 @@ import Referencer from "./referencer.js";
 import Reference from "./reference.js";
 import Variable from "./variable.js";
 
+/** @import ESTree from "estree" */
+
 /**
  * Set the default options
  * @returns {Object} options
@@ -71,9 +73,9 @@ function defaultOptions() {
 
 /**
  * Preform deep update on option object
- * @param {Object} target Options
- * @param {Object} override Updates
- * @returns {Object} Updated options
+ * @param {Record<string, any>} target Options
+ * @param {Record<string, any>} override Updates
+ * @returns {Record<string, any>} Updated options
  */
 function updateDeeply(target, override) {
 
@@ -108,7 +110,7 @@ function updateDeeply(target, override) {
  * Main interface function. Takes an Espree syntax tree and returns the
  * analyzed scopes.
  * @function analyze
- * @param {espree.Tree} tree Abstract Syntax Tree
+ * @param {ESTree.Program} tree Abstract Syntax Tree
  * @param {Object} providedOptions Options that tailor the scope analysis
  * @param {boolean} [providedOptions.optimistic=false] the optimistic flag
  * @param {boolean} [providedOptions.ignoreEval=false] whether to check 'eval()' calls
