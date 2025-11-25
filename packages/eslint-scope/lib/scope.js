@@ -29,6 +29,12 @@ import Variable from "./variable.js";
 import { Definition } from "./definition.js";
 import { assert } from "./assert.js";
 
+/** @import * as types from "eslint-scope" */
+/** @import ESTree from "estree" */
+/** @import ScopeManager from "./scope-manager.js" */
+/** @typedef {ESTree.Function | ESTree.Program | ESTree.StaticBlock} Block */
+/** @typedef {{pattern: any, node: any}} MaybeImplicitGlobal */
+
 const { Syntax } = estraverse;
 
 /**
@@ -59,6 +65,8 @@ function isStrictScope(scope, block, isMethodDefinition) {
     }
 
     if (scope.type === "function") {
+
+        // @ts-ignore -- when block is ArrowFunctionExpression
         if (block.type === Syntax.ArrowFunctionExpression && block.body.type !== Syntax.BlockStatement) {
             return false;
         }
@@ -79,7 +87,10 @@ function isStrictScope(scope, block, isMethodDefinition) {
     }
 
     // Search for a 'use strict' directive.
+    // @ts-ignore -- body is a function body
     for (let i = 0, iz = body.body.length; i < iz; ++i) {
+
+        // @ts-ignore -- body is a function body
         const stmt = body.body[i];
 
         /*
@@ -124,6 +135,7 @@ function registerScope(scopeManager, scope) {
 
 /**
  * @constructor Scope
+ * @implements {types.Scope}
  */
 class Scope {
     constructor(scopeManager, type, upperScope, block, isMethodDefinition) {
@@ -211,7 +223,7 @@ class Scope {
          * Whether this scope is created by a FunctionExpression.
          * @member {boolean} Scope#functionExpressionScope
          */
-        this.functionExpressionScope = false;
+        this.functionExpressionScope = /** @type {any} */ (false);
 
         /**
          * Whether this is a scope that contains an 'eval()' invocation.
@@ -224,6 +236,7 @@ class Scope {
          */
         this.thisFound = false;
 
+        /** @type {?Reference[]} */
         this.__left = [];
 
         /**
@@ -285,7 +298,10 @@ class Scope {
         }
 
         // Try Resolving all references in this scope.
+        // @ts-ignore -- __left should be an array here
         for (let i = 0, iz = this.__left.length; i < iz; ++i) {
+
+            // @ts-ignore -- __left should be an array here
             const ref = this.__left[i];
 
             closeRef.call(this, ref);
@@ -393,6 +409,8 @@ class Scope {
         const ref = new Reference(node, this, assign || Reference.READ, writeExpr, maybeImplicitGlobal, !!partial, !!init);
 
         this.references.push(ref);
+
+        // @ts-ignore -- __left should be an array here
         this.__left.push(ref);
     }
 
@@ -417,8 +435,8 @@ class Scope {
     /**
      * returns resolved {Reference}
      * @function Scope#resolve
-     * @param {Espree.Identifier} ident identifier to be resolved.
-     * @returns {Reference} reference
+     * @param {ESTree.Identifier} ident identifier to be resolved.
+     * @returns {?Reference} reference
      */
     resolve(ident) {
         let ref, i, iz;
@@ -476,18 +494,22 @@ class Scope {
 
 /**
  * Global scope.
+ * @implements {types.GlobalScope}
  */
 class GlobalScope extends Scope {
     constructor(scopeManager, block) {
         super(scopeManager, "global", null, block, false);
         this.implicit = {
             set: new Map(),
+
+            /** @type {Variable[]} */
             variables: [],
 
             /**
              * List of {@link Reference}s that are left to be resolved (i.e. which
              * need to be linked to the variable they refer to).
              * @member {Reference[]} Scope#implicit#left
+             * @type {Reference[]}
              */
             left: []
         };
@@ -496,7 +518,10 @@ class GlobalScope extends Scope {
     __close(scopeManager) {
         const implicit = [];
 
+        // @ts-ignore -- __left should be an array here
         for (let i = 0, iz = this.__left.length; i < iz; ++i) {
+
+            // @ts-ignore -- __left should be an array here
             const ref = this.__left[i];
 
             if (ref.__maybeImplicitGlobal && !this.set.has(ref.identifier.name)) {
@@ -587,6 +612,7 @@ class GlobalScope extends Scope {
 
 /**
  * Module scope.
+ * @implements {types.ModuleScope}
  */
 class ModuleScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -596,6 +622,7 @@ class ModuleScope extends Scope {
 
 /**
  * Function expression name scope.
+ * @implements {types.FunctionExpressionNameScope}
  */
 class FunctionExpressionNameScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -609,12 +636,13 @@ class FunctionExpressionNameScope extends Scope {
                 null,
                 null
             ));
-        this.functionExpressionScope = true;
+        this.functionExpressionScope = /** @type {const} */ (true);
     }
 }
 
 /**
  * Catch scope.
+ * @implements {types.CatchScope}
  */
 class CatchScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -624,6 +652,7 @@ class CatchScope extends Scope {
 
 /**
  * With statement scope.
+ * @implements {types.WithScope}
  */
 class WithScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -635,7 +664,10 @@ class WithScope extends Scope {
             return super.__close(scopeManager);
         }
 
+        // @ts-ignore -- __left should be an array here
         for (let i = 0, iz = this.__left.length; i < iz; ++i) {
+
+            // @ts-ignore -- __left should be an array here
             const ref = this.__left[i];
 
             ref.tainted = true;
@@ -649,6 +681,7 @@ class WithScope extends Scope {
 
 /**
  * Block scope.
+ * @implements {types.BlockScope}
  */
 class BlockScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -658,6 +691,7 @@ class BlockScope extends Scope {
 
 /**
  * Switch scope.
+ * @implements {types.SwitchScope}
  */
 class SwitchScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -667,6 +701,7 @@ class SwitchScope extends Scope {
 
 /**
  * Function scope.
+ * @implements {types.FunctionScope}
  */
 class FunctionScope extends Scope {
     constructor(scopeManager, upperScope, block, isMethodDefinition) {
@@ -747,6 +782,7 @@ class FunctionScope extends Scope {
 
 /**
  * Scope of for, for-in, and for-of statements.
+ * @implements {types.ForScope}
  */
 class ForScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -756,6 +792,7 @@ class ForScope extends Scope {
 
 /**
  * Class scope.
+ * @implements {types.ClassScope}
  */
 class ClassScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -765,6 +802,7 @@ class ClassScope extends Scope {
 
 /**
  * Class field initializer scope.
+ * @implements {types.ClassFieldInitializerScope}
  */
 class ClassFieldInitializerScope extends Scope {
     constructor(scopeManager, upperScope, block) {
@@ -774,6 +812,7 @@ class ClassFieldInitializerScope extends Scope {
 
 /**
  * Class static block scope.
+ * @implements {types.ClassStaticBlockScope}
  */
 class ClassStaticBlockScope extends Scope {
     constructor(scopeManager, upperScope, block) {
