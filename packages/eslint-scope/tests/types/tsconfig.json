@@ -1,17 +1,8 @@
 {
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "module": "nodenext",
-        "lib": [
-            "es6"
-        ],
+        "checkJs": false,
         "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "exactOptionalPropertyTypes": true,
-        "types": [],
-        "noEmit": true,
-        "forceConsistentCasingInFileNames": true
     },
     "include": [".", "../../lib"]
 }

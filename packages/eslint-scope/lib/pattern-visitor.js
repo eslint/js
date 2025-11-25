@@ -25,6 +25,8 @@
 import estraverse from "estraverse";
 import esrecurse from "esrecurse";
 
+/** @import * as types from "eslint-scope" */
+
 const { Syntax } = estraverse;
 
 /**
@@ -38,6 +40,7 @@ function getLast(xs) {
 
 /**
  * Visitor for destructuring patterns.
+ * @implements {types.PatternVisitor}
  */
 class PatternVisitor extends esrecurse.Visitor {
     static isPattern(node) {

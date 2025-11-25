@@ -40,7 +40,7 @@
     "lint:types": "attw --pack",
     "pretest": "npm run build",
     "test": "node Makefile.js test && npm run test:types",
-    "test:types": "tsc -p tests/types/tsconfig.json"
+    "test:types": "tsc -p tsconfig.json && tsc -p tests/types/tsconfig.json"
   },
   "files": [
     "LICENSE",
