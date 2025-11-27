@@ -25,8 +25,8 @@
  * SOFTWARE
  */
 
+import * as eslint from "eslint";
 import * as eslintScope from "eslint-scope";
-import type { AnalyzeOptions } from "eslint-scope";
 import * as espree from "espree";
 import * as estree from "estree";
 
@@ -50,7 +50,7 @@ const scopeManager = eslintScope.analyze(
         impliedStrict: false,
         childVisitorKeys: null,
         fallback: "iteration",
-    } satisfies AnalyzeOptions,
+    } satisfies eslintScope.AnalyzeOptions,
 );
 
 // $ExpectType GlobalScope | null
@@ -96,7 +96,7 @@ if (scope) {
     scope.block;
     // $ExpectType boolean
     scope.functionExpressionScope;
-    // $ExpectType  Map<string, Variable>
+    // $ExpectType  Map<string, Variable<Reference>>
     scope.set;
     // $ExpectType Reference[]
     scope.through;
@@ -169,7 +169,7 @@ const identifier: estree.Identifier = {
 const definition2 = new eslintScope.Definition(
     "Variable",
     identifier,
-    ast,
+    { type: "VariableDeclarator", id: identifier },
     null,
     null,
     "let",
@@ -335,7 +335,7 @@ scopeInstance.childScopes;
 scopeInstance.block;
 // $ExpectType boolean
 scopeInstance.functionExpressionScope;
-// $ExpectType Map<string, Variable>
+// $ExpectType Map<string, Variable<Reference>>
 scopeInstance.set;
 // $ExpectType Map<string, Variable<Reference>>
 scopeInstance.taints;
@@ -472,3 +472,13 @@ patternVisitor.AssignmentExpression;
 
 // $ExpectType (pattern: CallExpression) => void
 patternVisitor.CallExpression;
+
+(definition: eslintScope.Definition) => definition satisfies eslint.Scope.Definition;
+
+(reference: eslintScope.Reference) => reference satisfies eslint.Scope.Reference;
+
+(scope: eslintScope.Scope) => scope satisfies eslint.Scope.Scope;
+
+(scopeManager: eslintScope.ScopeManager) => scopeManager satisfies eslint.Scope.ScopeManager;
+
+(variable: eslintScope.Variable) => variable satisfies eslint.Scope.Variable;

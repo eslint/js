@@ -25,7 +25,6 @@
  * SOFTWARE
  */
 
-import * as eslint from "eslint";
 import { VisitorKeys } from "eslint-visitor-keys";
 import { Visitor, VisitorOptions } from "esrecurse";
 import * as ESTree from "estree";
@@ -101,7 +100,7 @@ export type PatternVisitorCallback = (
 /**
  * Manages the scope hierarchy of an AST.
  */
-export class ScopeManager implements eslint.Scope.ScopeManager {
+export class ScopeManager {
     /**
      * Creates a new ScopeManager instance.
      * @param options Options for scope analysis.
@@ -172,9 +171,7 @@ export class ScopeManager implements eslint.Scope.ScopeManager {
 /**
  * Base export class for all scopes.
  */
-export class Scope<TVariable extends Variable = Variable, TReference extends Reference = Reference>
-    implements eslint.Scope.Scope
-{
+export class Scope<TVariable extends Variable = Variable, TReference extends Reference = Reference> {
     /**
      * Creates a new Scope instance.
      * @param scopeManager The scope manager this scope belongs to.
@@ -194,7 +191,19 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
     /**
      * The type of the scope (e.g., 'global', 'function').
      */
-    type: eslint.Scope.Scope["type"];
+    type:
+        | "block"
+        | "catch"
+        | "class"
+        | "class-field-initializer"
+        | "class-static-block"
+        | "for"
+        | "function"
+        | "function-expression-name"
+        | "global"
+        | "module"
+        | "switch"
+        | "with";
 
     /**
      * Whether the scope is in strict mode.
@@ -239,18 +248,18 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
     /**
      * Map of variable names to variables.
      */
-    set: eslint.Scope.Scope["set"];
+    set: Map<string, TVariable>;
 
     /**
      * The tainted variables of this scope.
      * @deprecated
      */
-    taints: Map<string, Variable>;
+    taints: Map<string, TVariable>;
 
     /**
      * References that pass through this scope to outer scopes.
      */
-    through: eslint.Scope.Scope["through"];
+    through: TReference[];
 
     /**
      * Dynamic flag for certain scope types.
@@ -275,7 +284,7 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
      * @param ident An AST node to get their reference object.
      * @deprecated
      */
-    resolve(ident: ESTree.Identifier): Reference | null;
+    resolve(ident: ESTree.Identifier): TReference | null;
 
     /**
      * Whether the reference is static.
@@ -348,7 +357,7 @@ export class FunctionExpressionNameScope extends Scope {
      * @param block The AST node that created this scope.
      */
     constructor(scopeManager: ScopeManager, upperScope: Scope, block: ESTree.Node);
-    
+
     type: "function-expression-name";
 
     functionExpressionScope: true;
@@ -516,7 +525,7 @@ export class ClassStaticBlockScope extends Scope {
 /**
  * Represents a variable in a scope.
  */
-export class Variable<TReference extends Reference = Reference> implements eslint.Scope.Variable {
+export class Variable<TReference extends Reference = Reference> {
     /**
      * Creates a new Variable instance.
      * @param name The name of the variable.
@@ -547,7 +556,7 @@ export class Variable<TReference extends Reference = Reference> implements eslin
     /**
      * Definitions of this variable.
      */
-    defs: eslint.Scope.Definition[];
+    defs: Definition[];
 
     /**
      * Whether the variable is tainted (e.g., potentially modified externally).
@@ -565,7 +574,7 @@ export class Variable<TReference extends Reference = Reference> implements eslin
 /**
  * Represents a reference to a variable.
  */
-export class Reference implements eslint.Scope.Reference {
+export class Reference {
     /**
      * Creates a new Reference instance.
      * @param ident The identifier node of the reference.
@@ -605,12 +614,12 @@ export class Reference implements eslint.Scope.Reference {
     /**
      * Whether this is a write operation.
      */
-    isWrite: eslint.Scope.Reference["isWrite"];
+    isWrite(): boolean;
 
     /**
      * Whether this is a read operation.
      */
-    isRead: eslint.Scope.Reference["isRead"];
+    isRead(): boolean;
 
     /**
      * The scope where the reference occurs.
@@ -664,9 +673,8 @@ export class Reference implements eslint.Scope.Reference {
 
 /**
  * Represents a variable definition.
- * @todo extends eslint.Scope.Definition for this class
  */
-export class Definition {
+export const Definition: {
     /**
      * Creates a new Definition instance.
      * @param type The type of definition (e.g., 'Variable', 'Parameter').
@@ -676,34 +684,57 @@ export class Definition {
      * @param index The index of the definition in a pattern, if applicable.
      * @param kind The kind of variable (e.g., 'var', 'let', 'const'), if applicable.
      */
-    constructor(
-        type: eslint.Scope.Definition["type"],
-        name: eslint.Scope.Definition["name"],
-        node: eslint.Scope.Definition["node"],
-        parent: eslint.Scope.Definition["parent"],
+    new (
+        type: Definition["type"],
+        name: ESTree.Identifier,
+        node: Definition["node"],
+        parent: Definition["parent"],
         index: number | null,
         kind: string | null,
-    );
+    ): Definition;
+};
 
-    /**
-     * The type of definition (e.g., 'Variable', 'Parameter').
-     */
-    type: eslint.Scope.Definition["type"];
+export type Definition = (
+    | { type: "CatchClause"; node: ESTree.CatchClause; parent: null }
+    | {
+        type: "ClassName";
+        node: ESTree.ClassDeclaration | ESTree.ClassExpression;
+        parent: null;
+    } | {
+        type: "FunctionName";
+        node: ESTree.FunctionDeclaration | ESTree.FunctionExpression;
+        parent: null;
+    } | {
+        type: "ImplicitGlobalVariable";
+        node:
+            | ESTree.AssignmentExpression
+            | ESTree.ForInStatement
+            | ESTree.ForOfStatement;
+        parent: null;
+    } | {
+        type: "ImportBinding";
+        node:
+            | ESTree.ImportSpecifier
+            | ESTree.ImportDefaultSpecifier
+            | ESTree.ImportNamespaceSpecifier;
+        parent: ESTree.ImportDeclaration;
+    } | {
+        type: "Parameter";
+        node:
+            | ESTree.FunctionDeclaration
+            | ESTree.FunctionExpression
+            | ESTree.ArrowFunctionExpression;
+        parent: null;
+    } | {
+        type: "Variable";
+        node: ESTree.VariableDeclarator;
+        parent: ESTree.VariableDeclaration;
+    }) & {
 
     /**
      * The identifier node of the definition.
      */
-    name: eslint.Scope.Definition["name"];
-
-    /**
-     * The AST node where the definition occurs.
-     */
-    node: eslint.Scope.Definition["node"];
-
-    /**
-     * The parent node, if applicable.
-     */
-    parent: eslint.Scope.Definition["parent"];
+    name: ESTree.Identifier;
 
     /**
      * The index of the definition in a pattern, if applicable.
@@ -716,7 +747,7 @@ export class Definition {
      * @deprecated
      */
     kind: string | null;
-}
+};
 
 /**
  * Visitor for destructuring patterns.
