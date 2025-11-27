@@ -26,9 +26,10 @@ import Variable from "./variable.js";
 
 /** @import * as types from "eslint-scope" */
 
+// Cannot implement `types.Definition` directly because it contains a union.
 /**
  * @constructor Definition
- * @implements {types.Definition}
+ * @implements {Omit<types.Definition, never>}
  */
 class Definition {
     constructor(type, name, node, parent, index, kind) {
