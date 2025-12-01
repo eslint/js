@@ -56,7 +56,7 @@
     "acorn"
   ],
   "scripts": {
-    "attw": "attw --pack",
+    "lint:types": "attw --pack",
     "tsc": "tsc && tsc -p tsconfig-cjs.json",
     "build": "rollup -c rollup.config.js && npm run tsc",
     "build:debug": "npm run build -- -m",
