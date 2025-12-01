@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "allowJs": true,
-    "esModuleInterop": true,
+    "checkJs": true,
     "noEmit": false,
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "strict": true,
     "target": "es5",
-    "outFile": "dist/cjs/espree.d.ts"
+    "outFile": "dist/espree.d.ts"
   },
-  "include": ["espree.cts"],
+  "include": ["espree.js"],
   "exclude": ["node_modules"]
 }
