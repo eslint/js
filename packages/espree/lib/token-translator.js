@@ -76,7 +76,13 @@ const Token = {
  */
 function convertTemplatePart(tokens, code) {
     const firstToken = tokens[0],
-        lastTemplateToken = /** @type {acorn.Token} */ (tokens.at(-1));
+        lastTemplateToken =
+            /**
+             * @type {acorn.Token & {
+             *   loc: acorn.SourceLocation,
+             *   range: [number, number]
+             * }}
+             */ (tokens.at(-1));
 
     /** @type {EsprimaToken} */
     const token = {
@@ -84,14 +90,14 @@ function convertTemplatePart(tokens, code) {
         value: code.slice(firstToken.start, lastTemplateToken.end)
     };
 
-    if (firstToken.loc && lastTemplateToken.loc) {
+    if (firstToken.loc) {
         token.loc = {
             start: firstToken.loc.start,
             end: lastTemplateToken.loc.end
         };
     }
 
-    if (firstToken.range && lastTemplateToken.range) {
+    if (firstToken.range) {
         token.start = firstToken.range[0];
         token.end = lastTemplateToken.range[1];
         token.range = [token.start, token.end];
