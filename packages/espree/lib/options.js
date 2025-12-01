@@ -4,7 +4,7 @@
  */
 
 /**
- * @import { ecmaVersion, Options } from "../espree.js";
+ * @import { Options } from "../espree.js";
  */
 
 //------------------------------------------------------------------------------
