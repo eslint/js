@@ -1,7 +1,7 @@
 /**
  * @import * as acorn from "acorn";
  * @import { AcornJsxParserCtor, AcornJsxParser, TokTypes } from "acorn-jsx";
- * @import { ParserOptions } from "../espree.js";
+ * @import { Options } from "../espree.js";
  */
 
 /**
@@ -28,12 +28,12 @@
 /* eslint-disable jsdoc/valid-types -- Bug in older versions */
 /**
  * @typedef {{
- *   new (opts: ParserOptions | null, code: string | object): EspreeParser
+ *   new (opts: Options | null, code: string | object): EspreeParser
  * } & Pick<typeof acorn.Parser, keyof typeof acorn.Parser>} EspreeParserCtor
  */
 /**
  * @typedef {{
- *   new (opts: ParserOptions | null, code: string | object): EspreeParser
+ *   new (opts: Options | null, code: string | object): EspreeParser
  * } & Pick<AcornJsxParserCtor, keyof AcornJsxParserCtor>} EspreeParserJsxCtor
  */
 
