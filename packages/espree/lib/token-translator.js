@@ -76,22 +76,22 @@ const Token = {
  */
 function convertTemplatePart(tokens, code) {
     const firstToken = tokens[0],
-        lastTemplateToken = tokens.at(-1);
+        lastTemplateToken = /** @type {acorn.Token} */ (tokens.at(-1));
 
     /** @type {EsprimaToken} */
     const token = {
         type: Token.Template,
-        value: code.slice(firstToken.start, lastTemplateToken?.end)
+        value: code.slice(firstToken.start, lastTemplateToken.end)
     };
 
-    if (firstToken.loc && lastTemplateToken?.loc) {
+    if (firstToken.loc && lastTemplateToken.loc) {
         token.loc = {
             start: firstToken.loc.start,
             end: lastTemplateToken.loc.end
         };
     }
 
-    if (firstToken.range && lastTemplateToken?.range) {
+    if (firstToken.range && lastTemplateToken.range) {
         token.start = firstToken.range[0];
         token.end = lastTemplateToken.range[1];
         token.range = [token.start, token.end];
