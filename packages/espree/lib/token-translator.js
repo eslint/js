@@ -6,7 +6,6 @@
 /**
  * @import * as acorn from "acorn";
  * @import { EnhancedTokTypes } from "./espree.js"
- * @import { ecmaVersion } from "../espree.js";
  * @import { normalizedEcmaVersion } from "./options.js";
  */
 /**
