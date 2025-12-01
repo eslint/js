@@ -7,6 +7,7 @@
  * @import * as acorn from "acorn";
  * @import { EnhancedTokTypes } from "./espree.js"
  * @import { normalizedEcmaVersion } from "./options.js";
+ * @import { EspreeToken as EsprimaToken } from "../espree.js";
  */
 /**
  * Based on the `acorn.Token` class, but without a fixed `type` (since we need
@@ -24,26 +25,12 @@
  */
 /**
  * @typedef {{
- *   value: any;
- *   start?: number;
- *   end?: number;
- *   loc?: acorn.SourceLocation;
- *   range?: [number, number];
- *   regex?: {flags: string, pattern: string};
- * }} BaseEsprimaToken
- * @typedef {{
  *   jsxAttrValueToken: boolean;
  *   ecmaVersion: normalizedEcmaVersion;
  * }} ExtraNoTokens
  * @typedef {{
  *   tokens: EsprimaToken[]
  * } & ExtraNoTokens} Extra
- */
-
-/**
- * @typedef {{
- *   type: string;
- * } & BaseEsprimaToken} EsprimaToken
  */
 
 //------------------------------------------------------------------------------

@@ -56,7 +56,9 @@
  */
 
 /**
- * @import { EspreeParserCtor, EspreeParserJsxCtor } from "./lib/types.js";
+ * @import {
+ *   EspreeParserCtor, EspreeParserJsxCtor, BaseEsprimaToken
+ * } from "./lib/types.js";
  */
 
 // ----------------------------------------------------------------------------
@@ -67,11 +69,23 @@
  */
 
 /**
- * @typedef {import('./lib/token-translator.js').EsprimaToken} EspreeToken
+ * @typedef {{
+ *   type: string;
+ * } & BaseEsprimaToken} EspreeToken
  */
 
 /**
- * @typedef {import('./lib/espree.js').EsprimaComment} EspreeComment
+ * @typedef {{
+ *   type: "Block" | "Hashbang" | "Line",
+ *   value: string,
+ *   range?: [number, number],
+ *   start?: number,
+ *   end?: number,
+ *   loc?: {
+ *     start: acorn.Position | undefined,
+ *     end: acorn.Position | undefined
+ *   }
+ * }} EspreeComment
  */
 
 /**

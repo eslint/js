@@ -4,12 +4,13 @@
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/js/blob/main/packages/espree/README.md",
   "main": "dist/espree.cjs",
+  "types": "./dist/espree.d.ts",
   "type": "module",
   "exports": {
     ".": {
       "types": {
         "import": "./dist/espree.d.ts",
-        "require": "./dist/espree.d.cts"
+        "require": "./dist/cjs/espree.d.ts"
       },
       "import": "./espree.js",
       "require": "./dist/espree.cjs",
@@ -58,8 +59,8 @@
   ],
   "scripts": {
     "lint:types": "attw --pack",
-    "tsc": "tsc && tsc -p tsconfig-cjs.json",
-    "build": "rollup -c rollup.config.js && npm run tsc",
+    "tsc": "tsc -p tsconfig-prod.json && tsc -p tsconfig-cjs.json",
+    "build": "rollup -c rollup.config.js && tsc && npm run tsc",
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
     "pretest": "npm run build",
