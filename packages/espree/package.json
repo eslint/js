@@ -48,6 +48,7 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "rollup": "^2.79.1",
     "shelljs": "^0.8.5",
+    "tsd": "^0.33.0",
     "typescript": "^5.9.3"
   },
   "keywords": [
@@ -67,7 +68,8 @@
     "build:update-version": "node tools/update-version.js",
     "prepublishOnly": "npm run build:update-version && npm run build",
     "pretest": "npm run build",
-    "test": "npm run test:cjs && npm run test:esm",
+    "test": "npm run test:tsd && npm run test:cjs && npm run test:esm",
+    "test:tsd": "tsd --typings dist/espree.d.ts",
     "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
     "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\""
   }

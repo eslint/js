@@ -159,7 +159,7 @@ export default () => {
         return class Espree extends Parser {
 
             /**
-             * @param {Options | null} opts The parser options
+             * @param {Options | null | undefined} opts The parser options
              * @param {string | object} code The code which will be converted to a string.
              */
             constructor(opts, code) {
