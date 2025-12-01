@@ -21,7 +21,7 @@ const name = espree.name;
 expectType<"espree">(name);
 
 const version = espree.version;
-expectType<"main">(version);
+expectType<string>(version);
 
 const visitor_keys = espree.VisitorKeys;
 expectType<VisitorKeys>(visitor_keys);
