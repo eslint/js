@@ -28,12 +28,12 @@
 /* eslint-disable jsdoc/valid-types -- Bug in older versions */
 /**
  * @typedef {{
- *   new (opts: Options | null, code: string | object): EspreeParser
+ *   new (opts: Options | null | undefined, code: string | object): EspreeParser
  * } & Pick<typeof acorn.Parser, keyof typeof acorn.Parser>} EspreeParserCtor
  */
 /**
  * @typedef {{
- *   new (opts: Options | null, code: string | object): EspreeParser
+ *   new (opts: Options | null | undefined, code: string | object): EspreeParser
  * } & Pick<AcornJsxParserCtor, keyof AcornJsxParserCtor>} EspreeParserJsxCtor
  */
 
