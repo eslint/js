@@ -106,7 +106,7 @@
  *   loc?: boolean,
  *   tokens?: boolean,
  *   comment?: boolean,
- * }} ParserOptions
+ * }} Options
  */
 
 import * as acorn from "acorn";
@@ -175,7 +175,7 @@ const parsers = {
 
     /**
      * Gets the parser object based on the supplied options.
-     * @param {ParserOptions} options The parser options.
+     * @param {Options} options The parser options.
      * @returns {EspreeParserJsxCtor|EspreeParserCtor} Regular or JSX Acorn parser
      */
     get(options) {
@@ -196,7 +196,7 @@ const parsers = {
 /**
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
- * @param {ParserOptions} options Options defining how to tokenize.
+ * @param {Options} options Options defining how to tokenize.
  * @returns {EspreeTokens} An array of tokens.
  * @throws {EnhancedSyntaxError} If the input code is invalid.
  * @private
@@ -219,7 +219,7 @@ export function tokenize(code, options) {
 /**
  * Parses the given code.
  * @param {string} code The code to tokenize.
- * @param {ParserOptions} options Options defining how to tokenize.
+ * @param {Options} options Options defining how to tokenize.
  * @returns {acorn.Node} The "Program" AST node.
  * @throws {EnhancedSyntaxError} If the input code is invalid.
  */
