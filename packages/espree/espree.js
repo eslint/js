@@ -56,7 +56,6 @@
  */
 
 /**
- * @import { EnhancedSyntaxError } from "./lib/espree.js";
  * @import { EspreeParserCtor, EspreeParserJsxCtor } from "./lib/types.js";
  */
 
