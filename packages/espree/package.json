@@ -63,8 +63,8 @@
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
     "pretest": "npm run build",
-    "test": "npm run test:tsd && npm run test:cjs && npm run test:esm",
-    "test:tsd": "tsd --typings dist/espree.d.ts",
+    "test": "npm run test:types && npm run test:cjs && npm run test:esm",
+    "test:types": "tsd --typings dist/espree.d.ts",
     "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
     "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\""
   }
