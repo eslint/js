@@ -11,8 +11,8 @@ import { normalizeOptions } from "./options.js";
  *   EsprimaNode,
  *   AcornJsxParserCtorEnhanced
  * } from "./types.js";
- * @import { EsprimaToken } from "./token-translator.js";
- * @import { Options } from "../espree.js";
+ * @import { EspreeToken as EsprimaToken } from "../espree.js";
+ * @import { Options, EspreeComment as EsprimaComment } from "../espree.js";
  * @import { normalizedEcmaVersion } from "./options.js";
  * @import * as acorn from "acorn";
  * @import {
@@ -37,23 +37,9 @@ import { normalizeOptions } from "./options.js";
  * @typedef {{
  *   sourceType?: "script"|"module"|"commonjs";
  *   comments?: EsprimaComment[];
- *   tokens?: import('./token-translator.js').EsprimaToken[];
+ *   tokens?: EsprimaToken[];
  *   body: acorn.Node[];
  * } & acorn.Program} EsprimaProgramNode
- */
-
-/**
- * @typedef {{
- *   type: "Block" | "Hashbang" | "Line",
- *   value: string,
- *   range?: [number, number],
- *   start?: number,
- *   end?: number,
- *   loc?: {
- *     start: acorn.Position | undefined,
- *     end: acorn.Position | undefined
- *   }
- * }} EsprimaComment
  */
 
 // ----------------------------------------------------------------------------
