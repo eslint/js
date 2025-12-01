@@ -4,7 +4,7 @@
  */
 
 /**
- * @import { ecmaVersion, ParserOptions } from "../espree.js";
+ * @import { ecmaVersion, Options } from "../espree.js";
  */
 
 //------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ function normalizeSourceType(sourceType = "script") {
 
 /**
  * Normalize parserOptions
- * @param {ParserOptions} options the parser options to normalize
+ * @param {Options} options the parser options to normalize
  * @throws {Error} throw an error if found invalid option.
  * @returns {NormalizedParserOptions} normalized options
  */

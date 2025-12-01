@@ -12,7 +12,7 @@ import { normalizeOptions } from "./options.js";
  *   AcornJsxParserCtorEnhanced
  * } from "./types.js";
  * @import { EsprimaToken } from "./token-translator.js";
- * @import { ParserOptions } from "../espree.js";
+ * @import { Options } from "../espree.js";
  * @import { normalizedEcmaVersion } from "./options.js";
  * @import * as acorn from "acorn";
  * @import {
@@ -159,7 +159,7 @@ export default () => {
         return class Espree extends Parser {
 
             /**
-             * @param {ParserOptions | null} opts The parser options
+             * @param {Options | null} opts The parser options
              * @param {string | object} code The code which will be converted to a string.
              */
             constructor(opts, code) {
