@@ -1,6 +1,7 @@
-import { expectType } from 'tsd';
+import { expectType, expectAssignable } from 'tsd';
 
 import * as espree from "../espree.js";
+import * as acorn from "acorn";
 import type { Options, EspreeTokens } from "../espree.js";
 import type {VisitorKeys} from "../../eslint-visitor-keys/lib/index.js";
 
@@ -17,19 +18,19 @@ const tokens_option = espree.tokenize("let foo = \"bar\"", { ecmaVersion: 6 });
 expectType<EspreeTokens>(tokens_option);
 
 const name = espree.name;
-expectType<string>(name);
+expectType<"espree">(name);
 
 const version = espree.version;
-expectType<string>(version);
+expectType<"main">(version);
 
 const visitor_keys = espree.VisitorKeys;
 expectType<VisitorKeys>(visitor_keys);
 
 const latest_ecma = espree.latestEcmaVersion;
-expectType<number>(latest_ecma);
+expectAssignable<number>(latest_ecma);
 
 const supported_ecma = espree.supportedEcmaVersions;
-expectType<number[]>(supported_ecma);
+expectAssignable<number[]>(supported_ecma);
 
 const Syntax = espree.Syntax;
 expectType<Record<string, string>>(Syntax);
