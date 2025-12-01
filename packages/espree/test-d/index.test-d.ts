@@ -16,6 +16,9 @@ expectType<EspreeTokens>(tokens);
 const tokens_option = espree.tokenize("let foo = \"bar\"", { ecmaVersion: 6 });
 expectType<EspreeTokens>(tokens_option);
 
+const name = espree.name;
+expectType<string>(name);
+
 const version = espree.version;
 expectType<string>(version);
 
@@ -27,6 +30,9 @@ expectType<number>(latest_ecma);
 
 const supported_ecma = espree.supportedEcmaVersions;
 expectType<number[]>(supported_ecma);
+
+const Syntax = espree.Syntax;
+expectType<Record<string, string>>(Syntax);
 
 const full_options: Options = {
     range: false,
