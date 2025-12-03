@@ -5,7 +5,10 @@
     "module": "nodenext",
     "allowJs": true,
     "checkJs": true,
-    "noEmit": true,
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
     "strict": true,
     "target": "es5",
     "outDir": "dist"
