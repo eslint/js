@@ -10,17 +10,6 @@
 
 /**
  * @typedef {{
- *   value: any;
- *   start?: number;
- *   end?: number;
- *   loc?: acorn.SourceLocation;
- *   range?: [number, number];
- *   regex?: {flags: string, pattern: string};
- * }} BaseEsprimaToken
- */
-
-/**
- * @typedef {{
  *   generator?: boolean
  * } & acorn.Node} EsprimaNode
  */

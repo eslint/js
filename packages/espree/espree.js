@@ -56,9 +56,7 @@
  */
 
 /**
- * @import {
- *   EspreeParserCtor, EspreeParserJsxCtor, BaseEsprimaToken
- * } from "./lib/types.js";
+ * @import { EspreeParserCtor, EspreeParserJsxCtor } from "./lib/types.js";
  */
 
 // ----------------------------------------------------------------------------
@@ -71,7 +69,13 @@
 /**
  * @typedef {{
  *   type: string;
- * } & BaseEsprimaToken} EspreeToken
+ *   value: any;
+ *   start?: number;
+ *   end?: number;
+ *   loc?: acorn.SourceLocation;
+ *   range?: [number, number];
+ *   regex?: {flags: string, pattern: string};
+ * }} EspreeToken
  */
 
 /**
