@@ -1,8 +1,8 @@
 import { expectType, expectAssignable } from 'tsd';
 
-import * as espree from "../espree.js";
+import * as espree from "../dist/espree.cjs";
 import * as acorn from "acorn";
-import type { Options, EspreeTokens } from "../espree.js";
+import type { Options, EspreeTokens } from "../dist/espree.cjs";
 import type {VisitorKeys} from "../../eslint-visitor-keys/lib/index.js";
 
 const ast = espree.parse("let foo = \"bar\"");
