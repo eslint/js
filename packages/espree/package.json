@@ -60,7 +60,7 @@
   "scripts": {
     "lint:types": "attw --pack",
     "tsc": "tsc && tsc -p tsconfig-cjs.json",
-    "build": "rollup -c rollup.config.js && npm run tsc",
+    "build": "rollup -c rollup.config.js && npm run tsc && rm -Rf dist/lib",
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
     "pretest": "npm run build",
