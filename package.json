@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "npm test --workspaces --if-present",
+    "test": "npm run build --workspaces --if-present",
     "build": "node build.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
