@@ -66,9 +66,10 @@ describe("label", () => {
         expect(globalScope.type).to.be.equal("global");
         expect(globalScope.variables).to.have.length(1);
         expect(globalScope.variables[0].name).to.be.equal("foo");
-        expect(globalScope.through.length).to.be.equal(3);
-        expect(globalScope.through[2].identifier.name).to.be.equal("foo");
-        expect(globalScope.through[2].isRead()).to.be.true;
+        expect(globalScope.through.length).to.be.equal(1);
+        expect(globalScope.through[0].identifier.name).to.be.equal("console");
+        expect(globalScope.variables[0].references.length).to.be.equal(2);
+        expect(globalScope.variables[0].references[1].isRead()).to.be.true;
     });
 });
 

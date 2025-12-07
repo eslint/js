@@ -11,9 +11,9 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
       - name: Install dependencies
@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [25.x, 24.x, 22.x, 20.x, 18.x, "18.18.0"]
+        node: [25.x, 24.x, 22.x, 20.x, "20.19.0"]
         include:
             - os: windows-latest
               node: "lts/*"
@@ -35,8 +35,8 @@ jobs:
               node: "lts/*"
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v5
-    - uses: actions/setup-node@v5
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node }}
     - name: Install dependencies

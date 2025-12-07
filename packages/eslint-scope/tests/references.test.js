@@ -155,7 +155,7 @@ describe("References:", () => {
     });
 
     describe("When there is a `var` declaration on global,", () => {
-        it("the reference on global should NOT be resolved.", () => {
+        it("the reference on global should be resolved.", () => {
             const ast = espree("var a = 0;");
 
             const scopeManager = analyze(ast, { ecmaVersion: 6 });
@@ -171,13 +171,13 @@ describe("References:", () => {
 
             expect(reference.from).to.equal(scope);
             expect(reference.identifier.name).to.equal("a");
-            expect(reference.resolved).to.be.null;
+            expect(reference.resolved).to.equal(scope.variables[0]);
             expect(reference.writeExpr).to.not.be.undefined;
             expect(reference.isWrite()).to.be.true;
             expect(reference.isRead()).to.be.false;
         });
 
-        it("the reference in functions should NOT be resolved.", () => {
+        it("the reference in functions should be resolved.", () => {
             const ast = espree(`
                 var a = 0;
                 function foo() {
@@ -198,7 +198,7 @@ describe("References:", () => {
 
             expect(reference.from).to.equal(scope);
             expect(reference.identifier.name).to.equal("a");
-            expect(reference.resolved).to.be.null;
+            expect(reference.resolved).to.equal(scopeManager.scopes[0].variables[0]);
             expect(reference.writeExpr).to.be.undefined;
             expect(reference.isWrite()).to.be.false;
             expect(reference.isRead()).to.be.true;
@@ -206,7 +206,7 @@ describe("References:", () => {
     });
 
     describe("When there is a `function` declaration on global,", () => {
-        it("the reference on global should NOT be resolved.", () => {
+        it("the reference on global should be resolved.", () => {
             const ast = espree(`
                 function a() {}
                 a();
@@ -225,13 +225,13 @@ describe("References:", () => {
 
             expect(reference.from).to.equal(scope);
             expect(reference.identifier.name).to.equal("a");
-            expect(reference.resolved).to.be.null;
+            expect(reference.resolved).to.equal(scope.variables[0]);
             expect(reference.writeExpr).to.be.undefined;
             expect(reference.isWrite()).to.be.false;
             expect(reference.isRead()).to.be.true;
         });
 
-        it("the reference in functions should NOT be resolved.", () => {
+        it("the reference in functions should be resolved.", () => {
             const ast = espree(`
                 function a() {}
                 function foo() {
@@ -252,7 +252,7 @@ describe("References:", () => {
 
             expect(reference.from).to.equal(scope);
             expect(reference.identifier.name).to.equal("a");
-            expect(reference.resolved).to.be.null;
+            expect(reference.resolved).to.equal(scopeManager.scopes[0].variables[0]);
             expect(reference.writeExpr).to.be.undefined;
             expect(reference.isWrite()).to.be.false;
             expect(reference.isRead()).to.be.true;

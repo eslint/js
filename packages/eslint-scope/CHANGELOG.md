@@ -1,5 +1,26 @@
 # Changelog
 
+## [9.0.0](https://github.com/eslint/js/compare/eslint-scope-v8.4.0...eslint-scope-v9.0.0) (2025-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* Resolve references to global `var`/`function`, add `addGlobals()` ([#682](https://github.com/eslint/js/issues/682))
+* Require Node.js `^20.19.0 || ^22.13.0 || >=24` ([#696](https://github.com/eslint/js/issues/696))
+
+### Features
+
+* Require Node.js `^20.19.0 || ^22.13.0 || >=24` ([#696](https://github.com/eslint/js/issues/696)) ([9c84ecb](https://github.com/eslint/js/commit/9c84ecb6beb539ee08506de537a78a4585bb3afa))
+* Resolve references to global `var`/`function`, add `addGlobals()` ([#682](https://github.com/eslint/js/issues/682)) ([f007b46](https://github.com/eslint/js/commit/f007b465e5e55bd88c81fd7b7a54df06180d5d7c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * eslint-visitor-keys bumped from ^4.2.1 to ^5.0.0
+    * espree bumped from ^10.4.0 to ^11.0.0
+
 ## [8.4.0](https://github.com/eslint/js/compare/eslint-scope-v8.3.0...eslint-scope-v8.4.0) (2025-06-09)
 
 

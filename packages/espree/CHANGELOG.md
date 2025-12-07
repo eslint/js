@@ -1,5 +1,25 @@
 # Changelog
 
+## [11.0.0](https://github.com/eslint/js/compare/espree-v10.4.0...espree-v11.0.0) (2025-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* Program range span entire source text ([#677](https://github.com/eslint/js/issues/677))
+* Require Node.js `^20.19.0 || ^22.13.0 || >=24` ([#696](https://github.com/eslint/js/issues/696))
+
+### Features
+
+* Program range span entire source text ([#677](https://github.com/eslint/js/issues/677)) ([68bbb74](https://github.com/eslint/js/commit/68bbb7426d7beec3b9c3e658ac5a17cede83cbe9))
+* Require Node.js `^20.19.0 || ^22.13.0 || >=24` ([#696](https://github.com/eslint/js/issues/696)) ([9c84ecb](https://github.com/eslint/js/commit/9c84ecb6beb539ee08506de537a78a4585bb3afa))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * eslint-visitor-keys bumped from ^4.2.1 to ^5.0.0
+
 ## [10.4.0](https://github.com/eslint/js/compare/espree-v10.3.0...espree-v10.4.0) (2025-06-09)
 
 

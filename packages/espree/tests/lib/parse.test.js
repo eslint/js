@@ -114,8 +114,8 @@ describe("parse()", () => {
         it("should output the same value for program.start, end as when ranges are returned and there is a leading/trailing comments using default options", () => {
             const ast = espree.parse("/* foo */ bar /* baz */");
 
-            assert.strictEqual(ast.start, 10);
-            assert.strictEqual(ast.end, 13);
+            assert.strictEqual(ast.start, 0);
+            assert.strictEqual(ast.end, 23);
         });
 
         it("should output the same value for program.start, end and range and loc when there is a leading comments with range and loc true", () => {

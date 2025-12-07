@@ -1,6 +1,6 @@
 {
   "name": "eslint-visitor-keys",
-  "version": "4.2.1",
+  "version": "5.0.0",
   "description": "Constants and utilities about visitor keys to traverse AST.",
   "type": "module",
   "main": "dist/eslint-visitor-keys.cjs",
@@ -23,7 +23,7 @@
     "lib"
   ],
   "engines": {
-    "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "devDependencies": {
     "opener": "^1.5.2",
