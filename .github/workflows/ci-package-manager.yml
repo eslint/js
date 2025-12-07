@@ -1,0 +1,14 @@
+name: ci-package-manager
+
+on:
+    push:
+        branches:
+            - main
+
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    ci-package-manager:
+        uses: eslint/workflows/.github/workflows/ci-package-manager.yml@ci-create-ci-package-manager
