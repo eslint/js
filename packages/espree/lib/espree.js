@@ -71,7 +71,7 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  * @param {Integer} end The index at which the comment ends.
  * @param {acorn.Position | undefined} startLoc The location at which the comment starts.
  * @param {acorn.Position | undefined} endLoc The location at which the comment ends.
- * @param {string | string} code The source code being parsed.
+ * @param {string} code The source code being parsed.
  * @returns {EsprimaComment} The comment object.
  * @private
  */
