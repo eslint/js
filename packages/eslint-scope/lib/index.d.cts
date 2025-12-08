@@ -105,7 +105,7 @@ export type PatternVisitorCallback = (
  */
 export class ScopeManager {
     /**
-     * Creates a new ScopeManager instance.
+     * Creates a new `ScopeManager` instance.
      * @param options Options for scope analysis.
      */
     constructor(options: AnalyzeOptions);
