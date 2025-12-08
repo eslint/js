@@ -50,6 +50,8 @@ const scopeManager = eslintScope.analyze(
         impliedStrict: false,
         childVisitorKeys: null,
         fallback: "iteration",
+        optimistic: false,
+        jsx: false,
     } satisfies eslintScope.AnalyzeOptions,
 );
 

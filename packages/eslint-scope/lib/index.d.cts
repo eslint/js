@@ -25,16 +25,16 @@
  * SOFTWARE
  */
 
-import { VisitorKeys } from "eslint-visitor-keys";
-import { Visitor, VisitorOptions } from "esrecurse";
-import * as ESTree from "estree";
+import type { VisitorKeys } from "eslint-visitor-keys";
+import type { Visitor, VisitorOptions } from "esrecurse";
+import type * as ESTree from "estree";
 
 /**
  * Options for scope analysis.
  */
 export interface AnalyzeOptions {
     /**
-     * Whether to ignore eval() calls, which normally create scopes.
+     * Whether to ignore `eval()` calls, which normally create scopes.
      * @default false
      */
     ignoreEval?: boolean;
@@ -46,13 +46,13 @@ export interface AnalyzeOptions {
     nodejsScope?: boolean;
 
     /**
-     * Whether to evaluate code in strict mode even outside modules or without "use strict".
+     * Whether to evaluate code in strict mode even outside modules or without `"use strict"`.
      * @default false
      */
     impliedStrict?: boolean;
 
     /**
-     * The ECMAScript version to use for evaluation (e.g., 5, 2015, 2022).
+     * The ECMAScript version to use for evaluation (e.g., `5`, `2015`, `2022`).
      * @default 5
      */
     ecmaVersion?: number;
@@ -70,7 +70,7 @@ export interface AnalyzeOptions {
     childVisitorKeys?: VisitorKeys | null;
 
     /**
-     * Strategy to use when childVisitorKeys is not specified.
+     * Strategy to use when `childVisitorKeys` is not specified.
      * @default "iteration"
      */
     fallback?: "iteration" | ((node: ESTree.Node) => string[]);
@@ -88,6 +88,9 @@ export interface AnalyzeOptions {
     jsx?: boolean;
 }
 
+/**
+ * Callback function for pattern visitors.
+ */
 export type PatternVisitorCallback = (
     pattern: ESTree.Identifier,
     misc: {
@@ -127,7 +130,7 @@ export class ScopeManager {
     /**
      * Acquires the scope for a given node.
      * @param node The AST node to get the scope for.
-     * @param inner Whether to get the innermost scope.
+     * @param inner Whether to get the innermost scope. (default: `false`)
      * @returns The scope or null if not found.
      */
     acquire(node: ESTree.Node, inner?: boolean): Scope | null;
@@ -143,7 +146,7 @@ export class ScopeManager {
     /**
      * Releases a scope, moving to its parent.
      * @param node The AST node to release the scope for.
-     * @param inner Whether to release the innermost scope.
+     * @param inner Whether to release the innermost scope. (default: `false`)
      * @returns The parent scope or null if not found.
      */
     release(node: ESTree.Node, inner?: boolean): Scope | null;
@@ -156,6 +159,10 @@ export class ScopeManager {
      */
     getDeclaredVariables(node: ESTree.Node): Variable[];
 
+    /**
+     * Determines if the global return statement should be allowed.
+     * @returns `true` if the global return is enabled.
+     */
     isGlobalReturn(): boolean;
 
     /** @deprecated */
@@ -173,7 +180,7 @@ export class ScopeManager {
  */
 export class Scope<TVariable extends Variable = Variable, TReference extends Reference = Reference> {
     /**
-     * Creates a new Scope instance.
+     * Creates a new `Scope` instance.
      * @param scopeManager The scope manager this scope belongs to.
      * @param type The type of the scope.
      * @param upperScope The parent scope, or null for the global scope.
