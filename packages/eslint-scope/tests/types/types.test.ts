@@ -321,6 +321,14 @@ const scopeInstance = new eslintScope.Scope(
         | "switch"
         | "with",
 ) => type satisfies typeof scopeInstance.type);
+new eslintScope.Scope(
+    scopeManager,
+    // @ts-expect-error
+    "invalid",
+    null,
+    ast,
+    false,
+);
 // $ExpectType boolean
 scopeInstance.isStrict;
 // $ExpectType Scope<Variable<Reference>, Reference> | null
