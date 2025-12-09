@@ -5,7 +5,6 @@ import { normalizeOptions } from "./options.js";
 
 /**
  * @import {
- *   Integer,
  *   CommentType,
  *   EspreeParserCtor,
  *   EsprimaNode,
@@ -67,8 +66,8 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  * Converts an Acorn comment to a Esprima comment.
  * @param {boolean} block True if it's a block comment, false if not.
  * @param {string} text The text of the comment.
- * @param {Integer} start The index at which the comment starts.
- * @param {Integer} end The index at which the comment ends.
+ * @param {number} start The index at which the comment starts.
+ * @param {number} end The index at which the comment ends.
  * @param {acorn.Position | undefined} startLoc The location at which the comment starts.
  * @param {acorn.Position | undefined} endLoc The location at which the comment ends.
  * @param {string} code The source code being parsed.
@@ -371,7 +370,7 @@ export default () => {
 
             /**
              * Overwrites the default raise method to throw Esprima-style errors.
-             * @param {Integer} pos The position of the error.
+             * @param {number} pos The position of the error.
              * @param {string} message The error message.
              * @throws {EnhancedSyntaxError} A syntax error.
              * @returns {void}
@@ -390,7 +389,7 @@ export default () => {
 
             /**
              * Overwrites the default raise method to throw Esprima-style errors.
-             * @param {Integer} pos The position of the error.
+             * @param {number} pos The position of the error.
              * @param {string} message The error message.
              * @throws {SyntaxError} A syntax error.
              * @returns {void}
@@ -401,7 +400,7 @@ export default () => {
 
             /**
              * Overwrites the default unexpected method to throw Esprima-style errors.
-             * @param {Integer} pos The position of the error.
+             * @param {number} pos The position of the error.
              * @throws {SyntaxError} A syntax error.
              * @returns {void}
              */
