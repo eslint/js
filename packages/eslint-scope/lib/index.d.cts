@@ -675,7 +675,7 @@ export class Reference {
     isReadWrite(): boolean;
 
     /** @deprecated */
-    flag: 1 | 2 | 3;
+    flag: number;
 }
 
 /**
