@@ -30,10 +30,6 @@
  */
 
 /**
- * @typedef {number} Integer
- */
-
-/**
  * @typedef {{
  *   generator?: boolean
  * } & acorn.Node} EsprimaNode
