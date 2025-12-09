@@ -189,7 +189,7 @@ export class Scope<TVariable extends Variable = Variable, TReference extends Ref
      */
     constructor(
         scopeManager: ScopeManager,
-        type: string,
+        type: typeof this.type,
         upperScope: Scope | null,
         block: ESTree.Node,
         isMethodDefinition: boolean,
