@@ -1,3 +1,3 @@
-const version = "main";
+const version = /** @type {string} */ ("main");
 
 export default version;
