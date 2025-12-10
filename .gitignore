@@ -13,5 +13,8 @@ _test.js
 yarn.lock
 package-lock.json
 
+# Output of 'npm pack'
+*.tgz
+
 # Automatically generated files by GitHub Actions workflow
 /.shared-workflows
