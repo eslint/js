@@ -18,7 +18,7 @@ export default defineConfig([
         extends: [eslintConfigESLint, eslintConfigESLintFormatting]
     },
     {
-        files: ["packages/*/tests/lib/**"],
+        files: ["packages/*/tests/**/*.test.{,c}js"],
         languageOptions: {
             globals: {
                 ...globals.mocha
@@ -27,11 +27,6 @@ export default defineConfig([
     },
     {
         files: ["packages/eslint-scope/tests/**/*.{,c}js"],
-        languageOptions: {
-            globals: {
-                ...globals.mocha
-            }
-        },
         plugins: {
             "chai-friendly": eslintPluginChaiFriendly
         },
