@@ -50,6 +50,7 @@
   ],
   "dependencies": {
     "@types/esrecurse": "^4.3.1",
+    "@types/estree": "^1.0.8",
     "esrecurse": "^4.3.0",
     "estraverse": "^5.2.0"
   },
