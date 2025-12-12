@@ -22,10 +22,14 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/** @import * as types from "eslint-scope" */
+/** @import Reference from "./reference.js" */
+
 /**
  * A Variable represents a locally scoped identifier. These include arguments to
  * functions.
  * @constructor Variable
+ * @implements {types.Variable}
  */
 class Variable {
     constructor(name, scope) {

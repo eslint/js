@@ -22,6 +22,8 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/** @import * as types from "eslint-scope" */
+
 const READ = 0x1;
 const WRITE = 0x2;
 const RW = READ | WRITE;
@@ -29,6 +31,7 @@ const RW = READ | WRITE;
 /**
  * A Reference represents a single occurrence of an identifier in code.
  * @constructor Reference
+ * @implements {types.Reference}
  */
 class Reference {
     constructor(ident, scope, flag, writeExpr, maybeImplicitGlobal, partial, init) {
@@ -62,7 +65,6 @@ class Reference {
          * The read-write mode of the reference. (Value is one of {@link
          * Reference.READ}, {@link Reference.RW}, {@link Reference.WRITE}).
          * @member {number} Reference#flag
-         * @private
          */
         this.flag = flag;
         if (this.isWrite()) {
@@ -94,7 +96,7 @@ class Reference {
      * @returns {boolean} static
      */
     isStatic() {
-        return !this.tainted && this.resolved && this.resolved.scope.isStatic();
+        return !this.tainted && !!this.resolved && this.resolved.scope.isStatic();
     }
 
     /**
@@ -145,19 +147,16 @@ class Reference {
 
 /**
  * @constant Reference.READ
- * @private
  */
 Reference.READ = READ;
 
 /**
  * @constant Reference.WRITE
- * @private
  */
 Reference.WRITE = WRITE;
 
 /**
  * @constant Reference.RW
- * @private
  */
 Reference.RW = RW;
 
