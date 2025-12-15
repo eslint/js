@@ -5,6 +5,9 @@ on:
 
 name: release-please
 
+permissions:
+  id-token: write
+
 jobs:
   release-please:
       runs-on: ubuntu-latest
