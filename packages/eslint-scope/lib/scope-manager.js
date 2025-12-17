@@ -82,8 +82,6 @@ class ScopeManager {
     }
 
     isStrictModeSupported() {
-
-        // @ts-ignore -- if ecmaVersion is undefined, the comparison returns false.
         return this.__options.ecmaVersion >= 5;
     }
 
@@ -264,8 +262,6 @@ class ScopeManager {
     }
 
     __isES6() {
-
-        // @ts-ignore -- if ecmaVersion is undefined, the comparison returns false.
         return this.__options.ecmaVersion >= 6;
     }
 }
