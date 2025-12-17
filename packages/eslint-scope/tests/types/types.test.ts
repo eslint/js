@@ -92,13 +92,13 @@ if (scope) {
     scope.variables;
     // $ExpectType Reference[]
     scope.references;
-    // $ExpectType  Scope<Variable<Reference>, Reference>[]
+    // $ExpectType Scope<Variable<Reference>, Reference>[]
     scope.childScopes;
     // $ExpectType Node
     scope.block;
     // $ExpectType boolean
     scope.functionExpressionScope;
-    // $ExpectType  Map<string, Variable<Reference>>
+    // $ExpectType Map<string, Variable<Reference>>
     scope.set;
     // $ExpectType Reference[]
     scope.through;
