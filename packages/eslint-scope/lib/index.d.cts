@@ -25,7 +25,6 @@
  * SOFTWARE
  */
 
-import type { VisitorKeys } from "eslint-visitor-keys";
 import type { Visitor, VisitorOptions } from "esrecurse";
 import type * as ESTree from "estree";
 
@@ -67,7 +66,7 @@ export interface AnalyzeOptions {
      * Visitor key information for performance enhancement.
      * @default null
      */
-    childVisitorKeys?: VisitorKeys | null;
+    childVisitorKeys?: { readonly [type: string]: ReadonlyArray<string>; } | null;
 
     /**
      * Strategy to use when `childVisitorKeys` is not specified.
