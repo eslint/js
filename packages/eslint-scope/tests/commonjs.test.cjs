@@ -11,7 +11,7 @@
 
 const assert = require("node:assert");
 const eslintScope = require("../dist/eslint-scope.cjs");
-
+const { version } = require("../package.json");
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,9 +22,11 @@ describe("commonjs", () => {
         assert.strictEqual(typeof eslintScope, "object");
     });
 
-    it("has exports", () => {
-        assert.strictEqual(typeof eslintScope.version, "string");
+    it("has version equal to the version in package.json", () => {
+        assert.strictEqual(eslintScope.version, version);
+    });
 
+    it("has exports", () => {
         [
             "analyze",
             "Definition",
