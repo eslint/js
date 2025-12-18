@@ -532,6 +532,15 @@ export class ClassStaticBlockScope extends Scope {
  * Represents a variable in a scope.
  */
 export class Variable<TReference extends Reference = Reference> {
+
+    static readonly CatchClause: "CatchClause";
+    static readonly Parameter: "Parameter";
+    static readonly FunctionName: "FunctionName";
+    static readonly ClassName: "ClassName";
+    static readonly Variable: "Variable";
+    static readonly ImportBinding: "ImportBinding";
+    static readonly ImplicitGlobalVariable: "ImplicitGlobalVariable";
+
     /**
      * Creates a new Variable instance.
      * @param name The name of the variable.
