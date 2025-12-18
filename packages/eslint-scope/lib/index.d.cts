@@ -25,8 +25,25 @@
  * SOFTWARE
  */
 
+//------------------------------------------------------------------------------
+// Imports
+//------------------------------------------------------------------------------
+
 import type { Visitor, VisitorOptions } from "esrecurse";
 import type * as ESTree from "estree";
+
+//------------------------------------------------------------------------------
+// Helpers
+//------------------------------------------------------------------------------
+
+interface JSXIdentifier extends ESTree.BaseNode {
+    type: "JSXIdentifier";
+    name: string;
+}
+
+//------------------------------------------------------------------------------
+// Exports
+//------------------------------------------------------------------------------
 
 /**
  * Options for scope analysis.
@@ -606,7 +623,7 @@ export class Reference {
      * @param init Whether this is an initialization reference.
      */
     constructor(
-        ident: ESTree.Identifier,
+        ident: ESTree.Identifier | JSXIdentifier,
         scope: Scope,
         flag: number,
         writeExpr: ESTree.Expression | null,
@@ -618,7 +635,7 @@ export class Reference {
     /**
      * The identifier node of the reference.
      */
-    identifier: ESTree.Identifier;
+    identifier: ESTree.Identifier | JSXIdentifier;
 
     /**
      * The variable being referenced, or null if unresolved.
