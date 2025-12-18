@@ -642,18 +642,18 @@ export class Reference {
     /**
      * The expression being written, if applicable.
      */
-    writeExpr: ESTree.Expression | null;
+    writeExpr?: ESTree.Expression | null;
 
     /**
      * Whether this is a partial reference.
      * @deprecated
      */
-    partial: boolean;
+    partial?: boolean;
 
     /**
      * Whether this is an initialization reference.
      */
-    init: boolean;
+    init?: boolean;
 
     /**
      * Whether this reference is only read.

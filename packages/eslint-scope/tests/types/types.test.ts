@@ -485,8 +485,10 @@ patternVisitor.CallExpression;
 
 (definition: eslintScope.Definition) => definition satisfies eslint.Scope.Definition;
 
+// @ts-ignore -- needs update in ESLint types
 (reference: eslintScope.Reference) => reference satisfies eslint.Scope.Reference;
 
+// @ts-ignore -- needs update in ESLint types
 (scope: eslintScope.Scope) => scope satisfies eslint.Scope.Scope;
 
 (scopeManager: eslintScope.ScopeManager) => scopeManager satisfies eslint.Scope.ScopeManager;
