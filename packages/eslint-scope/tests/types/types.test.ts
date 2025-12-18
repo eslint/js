@@ -120,7 +120,7 @@ if (variable) {
 
 const reference = scope?.references[0];
 if (reference) {
-    // $ExpectType Identifier
+    // $ExpectType Identifier | JSXIdentifier
     reference.identifier;
     // $ExpectType Variable<Reference> | null
     reference.resolved;
@@ -167,6 +167,10 @@ eslintScope.analyze(ast);
 const identifier: estree.Identifier = {
     type: "Identifier",
     name: "foo",
+};
+const jsxIdentifier = {
+    type: "JSXIdentifier" as const,
+    name: "bar",
 };
 const definition2 = new eslintScope.Definition(
     "Variable",
@@ -276,7 +280,7 @@ withScope.type;
 withScope.functionExpressionScope;
 
 const ref = new eslintScope.Reference(
-    identifier,
+    Math.random() < 0.5 ? identifier : jsxIdentifier,
     scopeManager.globalScope!,
     0,
     null,
@@ -284,7 +288,7 @@ const ref = new eslintScope.Reference(
     false,
     false,
 );
-// $ExpectType Identifier
+// $ExpectType Identifier | JSXIdentifier
 ref.identifier;
 // $ExpectType Scope<Variable<Reference>, Reference>
 ref.from;
