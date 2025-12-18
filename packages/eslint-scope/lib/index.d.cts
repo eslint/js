@@ -590,6 +590,11 @@ export class Variable<TReference extends Reference = Reference> {
  * Represents a reference to a variable.
  */
 export class Reference {
+
+    static readonly READ: 1;
+    static readonly WRITE: 2;
+    static readonly RW: 3;
+
     /**
      * Creates a new Reference instance.
      * @param ident The identifier node of the reference.
