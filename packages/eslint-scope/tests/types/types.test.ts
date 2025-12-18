@@ -500,3 +500,7 @@ patternVisitor.CallExpression;
     defType satisfies keyof typeof eslintScope.Variable;
     eslintScope.Variable[defType] satisfies typeof defType;
 };
+
+eslintScope.Reference.READ satisfies number;
+eslintScope.Reference.WRITE satisfies number;
+eslintScope.Reference.RW satisfies number;
