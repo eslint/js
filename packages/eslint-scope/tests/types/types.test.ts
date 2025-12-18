@@ -494,3 +494,9 @@ patternVisitor.CallExpression;
 (scopeManager: eslintScope.ScopeManager) => scopeManager satisfies eslint.Scope.ScopeManager;
 
 (variable: eslintScope.Variable) => variable satisfies eslint.Scope.Variable;
+
+// Make sure `Variable` static properties cover all `Definition["type"]` values.
+(defType: eslintScope.Definition["type"]) => {
+    defType satisfies keyof typeof eslintScope.Variable;
+    eslintScope.Variable[defType] satisfies typeof defType;
+};
