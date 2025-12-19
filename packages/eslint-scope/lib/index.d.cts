@@ -45,6 +45,8 @@ interface JSXIdentifier extends ESTree.BaseNode {
 // Exports
 //------------------------------------------------------------------------------
 
+export const version: string;
+
 /**
  * Options for scope analysis.
  */
