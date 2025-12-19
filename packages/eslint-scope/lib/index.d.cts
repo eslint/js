@@ -189,6 +189,12 @@ export class ScopeManager {
 
     /** @deprecated */
     isStrictModeSupported(): boolean;
+
+    /** @deprecated */
+    attach(): void;
+
+    /** @deprecated */
+    detach(): void;
 }
 
 /**
