@@ -45,8 +45,6 @@ interface JSXIdentifier extends ESTree.BaseNode {
 // Exports
 //------------------------------------------------------------------------------
 
-export const version: string;
-
 /**
  * Options for scope analysis.
  */
@@ -850,3 +848,8 @@ export class PatternVisitor extends Visitor {
  * @returns The scope manager for the analyzed AST.
  */
 export function analyze(ast: ESTree.Program, options?: AnalyzeOptions): ScopeManager;
+
+/**
+ * The version of ESLint Scope.
+ */
+export const version: string;
