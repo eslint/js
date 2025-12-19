@@ -352,6 +352,10 @@ export class GlobalScope extends Scope {
 
     functionExpressionScope: false;
 
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
+
     /**
      * Implicit references (e.g., 'arguments' in functions).
      */
@@ -373,6 +377,10 @@ export class ModuleScope extends Scope {
     type: "module";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -390,6 +398,10 @@ export class FunctionExpressionNameScope extends Scope {
     type: "function-expression-name";
 
     functionExpressionScope: true;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -407,6 +419,10 @@ export class CatchScope extends Scope {
     type: "catch";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -424,6 +440,10 @@ export class WithScope extends Scope {
     type: "with";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -441,6 +461,10 @@ export class BlockScope extends Scope {
     type: "block";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -458,6 +482,10 @@ export class SwitchScope extends Scope {
     type: "switch";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -498,6 +526,10 @@ export class ForScope extends Scope {
     type: "for";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -515,6 +547,10 @@ export class ClassScope extends Scope {
     type: "class";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -532,6 +568,10 @@ export class ClassFieldInitializerScope extends Scope {
     type: "class-field-initializer";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
@@ -549,6 +589,10 @@ export class ClassStaticBlockScope extends Scope {
     type: "class-static-block";
 
     functionExpressionScope: false;
+
+    isArgumentsMaterialized(): true;
+
+    isThisMaterialized(): true;
 }
 
 /**
