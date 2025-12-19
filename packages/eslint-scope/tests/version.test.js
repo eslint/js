@@ -9,14 +9,9 @@
 
 import { expect } from "chai";
 import * as eslintScope from "../lib/index.js";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-import fs from "node:fs";
+import packageJson from "../package.json" with { type: "json" };
 
-// eslint-disable-next-line no-underscore-dangle -- Conventional
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const { version } = JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, "utf8"));
+const { version } = packageJson;
 
 //------------------------------------------------------------------------------
 // Tests
