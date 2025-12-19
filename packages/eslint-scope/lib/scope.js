@@ -464,7 +464,7 @@ class Scope {
     /**
      * returns this scope has materialized arguments
      * @function Scope#isArgumentsMaterialized
-     * @returns {boolean} arguemnts materialized
+     * @returns {any} arguments materialized
      */
     isArgumentsMaterialized() { // eslint-disable-line class-methods-use-this -- Desired as instance method
         return true;
@@ -473,7 +473,7 @@ class Scope {
     /**
      * returns this scope has materialized `this` reference
      * @function Scope#isThisMaterialized
-     * @returns {boolean} this materialized
+     * @returns {any} this materialized
      */
     isThisMaterialized() { // eslint-disable-line class-methods-use-this -- Desired as instance method
         return true;
