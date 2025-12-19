@@ -508,3 +508,6 @@ patternVisitor.CallExpression;
 eslintScope.Reference.READ satisfies number;
 eslintScope.Reference.WRITE satisfies number;
 eslintScope.Reference.RW satisfies number;
+
+// $ExpectType string
+eslintScope.version;
