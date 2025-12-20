@@ -53,8 +53,6 @@ import Referencer from "./referencer.js";
 import Reference from "./reference.js";
 import Variable from "./variable.js";
 
-import eslintScopeVersion from "./version.js";
-
 /**
  * Set the default options
  * @returns {Object} options
@@ -138,10 +136,10 @@ function analyze(tree, providedOptions) {
     return scopeManager;
 }
 
-export {
+/** @name module:escope.version */
+export const version = "9.0.0"; // x-release-please-version
 
-    /** @name module:escope.version */
-    eslintScopeVersion as version,
+export {
 
     /** @name module:escope.Reference */
     Reference,

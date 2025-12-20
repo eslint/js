@@ -59,7 +59,6 @@
 import * as acorn from "acorn";
 import jsx from "acorn-jsx";
 import espree from "./lib/espree.js";
-import espreeVersion from "./lib/version.js";
 import * as visitorKeys from "eslint-visitor-keys";
 import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
 
@@ -138,7 +137,7 @@ export function parse(code, options) {
 // Public
 //------------------------------------------------------------------------------
 
-export const version = espreeVersion;
+export const version = "11.0.0"; // x-release-please-version
 export const name = "espree";
 
 /* istanbul ignore next */

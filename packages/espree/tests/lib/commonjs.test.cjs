@@ -11,6 +11,7 @@
 
 const assert = require("node:assert");
 const espree = require("../../dist/espree.cjs");
+const { version } = require("../../package.json");
 
 
 //------------------------------------------------------------------------------
@@ -56,8 +57,8 @@ describe("commonjs", () => {
         assert.strictEqual(typeof espree.tokenize, "function");
     });
 
-    it("has version", () => {
-        assert.strictEqual(typeof espree.version, "string");
+    it("has version equal to the version in package.json", () => {
+        assert.strictEqual(espree.version, version);
     });
 
     it("has Syntax", () => {

@@ -30,8 +30,6 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "build": "rollup -c",
-    "build:update-version": "node tools/update-version.js",
-    "prepublishOnly": "npm run build:update-version && npm run build",
     "pretest": "npm run build",
     "test": "node Makefile.js test"
   },
