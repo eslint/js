@@ -10,8 +10,12 @@
 // Make sure the named exports exist.
 import {
     Definition,
+    PatternVisitor,
     Reference,
+    Referencer,
     ScopeManager,
     Scope,
-    Variable
+    Variable,
+    analyze,
+    version,
 } from "eslint-scope";
