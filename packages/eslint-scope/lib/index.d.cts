@@ -886,6 +886,176 @@ export class PatternVisitor extends Visitor {
 }
 
 /**
+ * Visitor class for traversing AST nodes and creating variable references and bindings.
+ */
+export class Referencer extends Visitor {
+    /**
+     * Creates a new Referencer instance.
+     * @param options Options for scope analysis.
+     * @param scopeManager The scope manager to use.
+     */
+    constructor(options: VisitorOptions, scopeManager: ScopeManager);
+
+    /**
+     * Options for scope analysis.
+     */
+    options: VisitorOptions;
+
+    /**
+     * The scope manager being used.
+     */
+    scopeManager: ScopeManager;
+
+    /**
+     * The parent node.
+     */
+    parent: ESTree.Node | null;
+
+    /**
+     * Whether currently inside a method definition.
+     */
+    isInnerMethodDefinition: boolean;
+
+    /**
+     * Gets the current scope.
+     * @returns The current scope.
+     */
+    currentScope(): Scope;
+
+    /**
+     * Closes scopes up to the given node.
+     * @param node The AST node.
+     */
+    close(node: ESTree.Node): void;
+
+    /**
+     * Pushes a new inner method definition state.
+     * @param isInnerMethodDefinition Whether inside a method definition.
+     * @returns The previous state.
+     */
+    pushInnerMethodDefinition(isInnerMethodDefinition: boolean): boolean;
+
+    /**
+     * Pops the inner method definition state.
+     * @param isInnerMethodDefinition The state to restore.
+     */
+    popInnerMethodDefinition(isInnerMethodDefinition: boolean): void;
+
+    /**
+     * References default values in patterns.
+     * @param pattern The pattern.
+     * @param assignments The assignments.
+     * @param maybeImplicitGlobal Information about a possible implicit global.
+     * @param init Whether this is an initialization.
+     */
+    referencingDefaultValue(
+        pattern: ESTree.Pattern,
+        assignments: Array<ESTree.AssignmentExpression | ESTree.AssignmentPattern>,
+        maybeImplicitGlobal: { pattern: ESTree.Pattern; node: ESTree.Node } | null,
+        init: boolean,
+    ): void;
+
+    /**
+     * Visits a pattern node.
+     * @param node The pattern node.
+     * @param options Options or callback.
+     * @param callback The callback function.
+     */
+    visitPattern(
+        node: ESTree.Pattern,
+        options: { processRightHandNodes: boolean } | PatternVisitorCallback,
+        callback?: PatternVisitorCallback,
+    ): void;
+
+    /**
+     * Visits a function node.
+     * @param node The function node.
+     */
+    visitFunction(node: ESTree.FunctionDeclaration | ESTree.FunctionExpression | ESTree.ArrowFunctionExpression): void;
+
+    /**
+     * Visits a class node.
+     * @param node The class node.
+     */
+    visitClass(node: ESTree.ClassDeclaration | ESTree.ClassExpression): void;
+
+    /**
+     * Visits a property node.
+     * @param node The property node.
+     */
+    visitProperty(node: ESTree.Property | ESTree.MethodDefinition): void;
+
+    /**
+     * Visits a for-in or for-of statement.
+     * @param node The for-in or for-of node.
+     */
+    visitForIn(node: ESTree.ForInStatement | ESTree.ForOfStatement): void;
+
+    /**
+     * Visits a variable declaration.
+     * @param variableTargetScope The scope where the variable should be defined.
+     * @param type The variable type.
+     * @param node The variable declaration node.
+     * @param index The index of the declarator.
+     */
+    visitVariableDeclaration(
+        variableTargetScope: Scope,
+        type: typeof Variable.Variable,
+        node: ESTree.VariableDeclaration,
+        index: number,
+    ): void;
+
+    /**
+     * Visits an export declaration.
+     * @param node The export declaration node.
+     */
+    visitExportDeclaration(node: ESTree.ExportAllDeclaration | ESTree.ExportDefaultDeclaration | ESTree.ExportNamedDeclaration): void;
+
+    AssignmentExpression(node: ESTree.AssignmentExpression): void;
+    CatchClause(node: ESTree.CatchClause): void;
+    Program(node: ESTree.Program): void;
+    Identifier(node: ESTree.Identifier): void;
+    PrivateIdentifier(node: ESTree.PrivateIdentifier): void;
+    UpdateExpression(node: ESTree.UpdateExpression): void;
+    MemberExpression(node: ESTree.MemberExpression): void;
+    Property(node: ESTree.Property): void;
+    PropertyDefinition(node: ESTree.PropertyDefinition): void;
+    StaticBlock(node: ESTree.StaticBlock): void;
+    MethodDefinition(node: ESTree.MethodDefinition): void;
+    BreakStatement(node: ESTree.BreakStatement): void;
+    ContinueStatement(node: ESTree.ContinueStatement): void;
+    LabeledStatement(node: ESTree.LabeledStatement): void;
+    ForStatement(node: ESTree.ForStatement): void;
+    ClassExpression(node: ESTree.ClassExpression): void;
+    ClassDeclaration(node: ESTree.ClassDeclaration): void;
+    CallExpression(node: ESTree.CallExpression): void;
+    BlockStatement(node: ESTree.BlockStatement): void;
+    ThisExpression(node: ESTree.ThisExpression): void;
+    WithStatement(node: ESTree.WithStatement): void;
+    VariableDeclaration(node: ESTree.VariableDeclaration): void;
+    SwitchStatement(node: ESTree.SwitchStatement): void;
+    FunctionDeclaration(node: ESTree.FunctionDeclaration): void;
+    FunctionExpression(node: ESTree.FunctionExpression): void;
+    ForOfStatement(node: ESTree.ForOfStatement): void;
+    ForInStatement(node: ESTree.ForInStatement): void;
+    ArrowFunctionExpression(node: ESTree.ArrowFunctionExpression): void;
+    ImportDeclaration(node: ESTree.ImportDeclaration): void;
+    ExportDeclaration(node: ESTree.ExportAllDeclaration | ESTree.ExportDefaultDeclaration | ESTree.ExportNamedDeclaration): void;
+    ExportAllDeclaration(node: ESTree.ExportAllDeclaration): void;
+    ExportDefaultDeclaration(node: ESTree.ExportDefaultDeclaration): void;
+    ExportNamedDeclaration(node: ESTree.ExportNamedDeclaration): void;
+    ExportSpecifier(node: ESTree.ExportSpecifier): void;
+    MetaProperty(node: ESTree.MetaProperty): void;
+    JSXIdentifier(node: JSXIdentifier): void;
+    JSXMemberExpression(node: any): void;
+    JSXElement(node: any): void;
+    JSXOpeningElement(node: any): void;
+    JSXAttribute(node: any): void;
+    JSXExpressionContainer(node: any): void;
+    JSXNamespacedName(node: any): void;
+}
+
+/**
  * Analyzes the scope of an AST.
  * @param ast The ESTree-compliant AST to analyze.
  * @param options Options for scope analysis.
