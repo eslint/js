@@ -32,12 +32,19 @@ const SUPPORTED_VERSIONS = /** @type {const} */ ([
  * @typedef {typeof SUPPORTED_VERSIONS[number]} normalizedEcmaVersion
  */
 
+const LATEST_ECMA_VERSION =
+    /* eslint-disable jsdoc/valid-types -- Bug */
+    /** @type {typeof SUPPORTED_VERSIONS extends readonly [...infer _R, infer L] ? L : never} */ (
+        SUPPORTED_VERSIONS.at(-1)
+        /* eslint-enable jsdoc/valid-types -- Bug */
+    );
+
 /**
  * Get the latest ECMAScript version supported by Espree.
- * @returns {normalizedEcmaVersion} The latest ECMAScript version.
+ * @returns {typeof LATEST_ECMA_VERSION} The latest ECMAScript version.
  */
 export function getLatestEcmaVersion() {
-    return /** @type {normalizedEcmaVersion} */ (SUPPORTED_VERSIONS.at(-1));
+    return LATEST_ECMA_VERSION;
 }
 
 /**
