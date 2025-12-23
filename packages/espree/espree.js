@@ -237,7 +237,7 @@ export function tokenize(code, options) {
  * Parses the given code.
  * @param {string} code The code to tokenize.
  * @param {Options} [options] Options defining how to tokenize.
- * @returns {acorn.Node} The "Program" AST node.
+ * @returns {acorn.Program} The "Program" AST node.
  * @throws {EnhancedSyntaxError} If the input code is invalid.
  */
 export function parse(code, options) {
