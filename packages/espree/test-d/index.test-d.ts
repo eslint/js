@@ -2,7 +2,6 @@ import { expectType, expectAssignable } from 'tsd';
 
 import * as espree from "../dist/espree.cjs";
 import * as acorn from "acorn";
-import type { Options, EspreeTokens } from "../dist/espree.cjs";
 import type { VisitorKeys } from "eslint-visitor-keys";
 
 const ast = espree.parse("let foo = \"bar\"");
@@ -12,10 +11,10 @@ const ast_option = espree.parse("let foo = \"bar\"", { ecmaVersion: 6 });
 expectType<acorn.Program>(ast_option);
 
 const tokens = espree.tokenize("let foo = \"bar\"");
-expectType<EspreeTokens>(tokens);
+expectType<espree.EspreeTokens>(tokens);
 
 const tokens_option = espree.tokenize("let foo = \"bar\"", { ecmaVersion: 6 });
-expectType<EspreeTokens>(tokens_option);
+expectType<espree.EspreeTokens>(tokens_option);
 
 const name = espree.name;
 expectType<"espree">(name);
@@ -35,7 +34,7 @@ expectAssignable<number[]>(supported_ecma);
 const Syntax = espree.Syntax;
 expectType<Record<string, string>>(Syntax);
 
-const full_options: Options = {
+const full_options: espree.Options = {
     range: false,
     loc: false,
     comment: false,
@@ -49,12 +48,12 @@ const full_options: Options = {
         impliedStrict: false,
     },
 };
-expectType<Options>(full_options);
+expectType<espree.Options>(full_options);
 
-const empty_options: Options = {};
-expectType<Options>(empty_options);
+const empty_options: espree.Options = {};
+expectType<espree.Options>(empty_options);
 
-const latest_options: Options = {
+const latest_options: espree.Options = {
     ecmaVersion: 16,
 };
-expectType<Options>(latest_options);
+expectType<espree.Options>(latest_options);
