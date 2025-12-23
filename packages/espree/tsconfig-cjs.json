@@ -10,6 +10,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "strict": true,
+    "exactOptionalPropertyTypes": true,
     "target": "es5",
     "outDir": "dist"
   },
