@@ -3,7 +3,7 @@ import { expectType, expectAssignable } from 'tsd';
 import * as espree from "../dist/espree.cjs";
 import * as acorn from "acorn";
 import type { Options, EspreeTokens } from "../dist/espree.cjs";
-import type {VisitorKeys} from "../../eslint-visitor-keys/lib/index.js";
+import type { VisitorKeys } from "eslint-visitor-keys";
 
 const ast = espree.parse("let foo = \"bar\"");
 expectType<acorn.Node>(ast);
