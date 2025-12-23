@@ -42,7 +42,7 @@
 /**
  * @typedef {{
  *   tokenize: () => import('../espree.js').EspreeToken[],
- *   parse: () => acorn.Node
+ *   parse: () => acorn.Program
  * }} EspreeParser
  */
 

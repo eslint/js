@@ -6,10 +6,10 @@ import type { Options, EspreeTokens } from "../dist/espree.cjs";
 import type { VisitorKeys } from "eslint-visitor-keys";
 
 const ast = espree.parse("let foo = \"bar\"");
-expectType<acorn.Node>(ast);
+expectType<acorn.Program>(ast);
 
 const ast_option = espree.parse("let foo = \"bar\"", { ecmaVersion: 6 });
-expectType<acorn.Node>(ast_option);
+expectType<acorn.Program>(ast_option);
 
 const tokens = espree.tokenize("let foo = \"bar\"");
 expectType<EspreeTokens>(tokens);
