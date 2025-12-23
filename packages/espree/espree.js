@@ -250,6 +250,7 @@ export function parse(code, options) {
 // Public
 //------------------------------------------------------------------------------
 
+/** @type {string} */
 export const version = "11.0.0"; // x-release-please-version
 export const name = "espree";
 
