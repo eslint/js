@@ -6,6 +6,7 @@ on:
 name: release-please
 
 permissions:
+  contents: read
   id-token: write
 
 jobs:
