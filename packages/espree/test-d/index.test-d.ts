@@ -1,4 +1,4 @@
-import { expectType, expectAssignable } from 'tsd';
+import { expectType, expectAssignable } from "tsd";
 
 import * as espree from "../dist/espree.cjs";
 import * as acorn from "acorn";
