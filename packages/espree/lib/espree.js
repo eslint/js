@@ -11,8 +11,11 @@ import { normalizeOptions } from "./options.js";
  *   AcornJsxParserCtorEnhanced,
  *   TokTypes
  * } from "./types.js";
- * @import { EspreeToken as EsprimaToken } from "../espree.js";
- * @import { Options, EspreeComment as EsprimaComment } from "../espree.js";
+ * @import {
+ *   Options,
+ *   EspreeToken as EsprimaToken,
+ *   EspreeComment as EsprimaComment
+ * } from "../espree.js";
  * @import { normalizedEcmaVersion } from "./options.js";
  * @import * as acorn from "acorn";
  */
