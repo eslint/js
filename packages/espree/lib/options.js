@@ -49,7 +49,7 @@ export function getLatestEcmaVersion() {
 
 /**
  * Get the list of ECMAScript versions supported by Espree.
- * @returns {normalizedEcmaVersion[]} An array containing the supported ECMAScript versions.
+ * @returns {[...typeof SUPPORTED_VERSIONS]} An array containing the supported ECMAScript versions.
  */
 export function getSupportedEcmaVersions() {
     return [...SUPPORTED_VERSIONS];
