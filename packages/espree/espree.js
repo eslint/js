@@ -256,7 +256,7 @@ export const name = "espree";
 
 /* istanbul ignore next */
 /**
- * @type {import("eslint-visitor-keys").VisitorKeys}
+ * @type {visitorKeys.VisitorKeys}
  */
 export const VisitorKeys = (function() {
     return visitorKeys.KEYS;
