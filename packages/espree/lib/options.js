@@ -34,7 +34,7 @@ const SUPPORTED_VERSIONS = /** @type {const} */ ([
 
 const LATEST_ECMA_VERSION =
     /* eslint-disable jsdoc/valid-types -- Bug */
-    /** @type {typeof SUPPORTED_VERSIONS extends readonly [...infer _R, infer L] ? L : never} */ (
+    /** @type {typeof SUPPORTED_VERSIONS extends readonly [...unknown[], infer L] ? L : never} */ (
         SUPPORTED_VERSIONS.at(-1)
         /* eslint-enable jsdoc/valid-types -- Bug */
     );
