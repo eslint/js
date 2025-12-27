@@ -4,7 +4,7 @@
  */
 
 /**
- * @import { Options } from "../espree.js";
+ * @import { EcmaVersion, Options } from "../espree.js";
  */
 
 //------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ export function getSupportedEcmaVersions() {
 
 /**
  * Normalize ECMAScript version from the initial config
- * @param {(number|"latest")} ecmaVersion ECMAScript version from the initial config
+ * @param {EcmaVersion} ecmaVersion ECMAScript version from the initial config
  * @throws {Error} throws an error if the ecmaVersion is invalid.
  * @returns {NormalizedEcmaVersion} normalized ECMAScript version
  */
