@@ -55,6 +55,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import * as acorn from "acorn";
+import jsx from "acorn-jsx";
+import espree from "./lib/espree.js";
+import * as visitorKeys from "eslint-visitor-keys";
+import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
+
 /**
  * @import { EspreeParserCtor, EspreeParserJsxCtor } from "./lib/types.js";
  */
@@ -125,13 +131,6 @@
  *   comment?: boolean,
  * }} Options
  */
-
-import * as acorn from "acorn";
-import jsx from "acorn-jsx";
-import espree from "./lib/espree.js";
-import * as visitorKeys from "eslint-visitor-keys";
-import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
-
 
 // To initialize lazily.
 const parsers = {
