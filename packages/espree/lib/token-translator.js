@@ -6,7 +6,7 @@
 /**
  * @import * as acorn from "acorn";
  * @import { EnhancedTokTypes } from "./espree.js"
- * @import { normalizedEcmaVersion } from "./options.js";
+ * @import { NormalizedEcmaVersion } from "./options.js";
  * @import { EspreeToken as EsprimaToken } from "../espree.js";
  */
 /**
@@ -26,7 +26,7 @@
 /**
  * @typedef {{
  *   jsxAttrValueToken: boolean;
- *   ecmaVersion: normalizedEcmaVersion;
+ *   ecmaVersion: NormalizedEcmaVersion;
  * }} ExtraNoTokens
  * @typedef {{
  *   tokens: EsprimaToken[]

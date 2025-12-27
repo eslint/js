@@ -16,7 +16,7 @@ import { normalizeOptions } from "./options.js";
  *   EspreeToken as EsprimaToken,
  *   EspreeComment as EsprimaComment
  * } from "../espree.js";
- * @import { normalizedEcmaVersion } from "./options.js";
+ * @import { NormalizedEcmaVersion } from "./options.js";
  * @import * as acorn from "acorn";
  */
 
@@ -26,7 +26,7 @@ import { normalizeOptions } from "./options.js";
  *   tokens: EsprimaToken[] | null,
  *   comments: EsprimaComment[] | null,
  *   impliedStrict: boolean,
- *   ecmaVersion: normalizedEcmaVersion,
+ *   ecmaVersion: NormalizedEcmaVersion,
  *   jsxAttrValueToken: boolean,
  *   lastToken: acorn.Token | null,
  *   templateElements: acorn.TemplateElement[]

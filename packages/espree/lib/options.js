@@ -29,7 +29,7 @@ const SUPPORTED_VERSIONS = /** @type {const} */ ([
 ]);
 
 /**
- * @typedef {typeof SUPPORTED_VERSIONS[number]} normalizedEcmaVersion
+ * @typedef {typeof SUPPORTED_VERSIONS[number]} NormalizedEcmaVersion
  */
 
 const LATEST_ECMA_VERSION =
@@ -59,7 +59,7 @@ export function getSupportedEcmaVersions() {
  * Normalize ECMAScript version from the initial config
  * @param {(number|"latest")} ecmaVersion ECMAScript version from the initial config
  * @throws {Error} throws an error if the ecmaVersion is invalid.
- * @returns {normalizedEcmaVersion} normalized ECMAScript version
+ * @returns {NormalizedEcmaVersion} normalized ECMAScript version
  */
 function normalizeEcmaVersion(ecmaVersion = 5) {
 
@@ -77,13 +77,13 @@ function normalizeEcmaVersion(ecmaVersion = 5) {
 
     if (!SUPPORTED_VERSIONS.includes(
 
-        /** @type {normalizedEcmaVersion} */
+        /** @type {NormalizedEcmaVersion} */
         (version)
     )) {
         throw new Error("Invalid ecmaVersion.");
     }
 
-    return /** @type {normalizedEcmaVersion} */ (version);
+    return /** @type {NormalizedEcmaVersion} */ (version);
 }
 
 /**
@@ -106,7 +106,7 @@ function normalizeSourceType(sourceType = "script") {
 
 /**
  * @typedef {{
- *   ecmaVersion: normalizedEcmaVersion,
+ *   ecmaVersion: NormalizedEcmaVersion,
  *   sourceType: "script"|"module",
  *   range?: boolean,
  *   loc?: boolean,
