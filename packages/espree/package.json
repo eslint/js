@@ -41,9 +41,6 @@
     "eslint-visitor-keys": "^5.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.0",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.3.0",
     "rollup": "^2.79.1",
     "shelljs": "^0.8.5"
   },
