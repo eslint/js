@@ -11,6 +11,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "strict": true,
+    "exactOptionalPropertyTypes": true,
     "target": "es6",
     "outDir": "dist"
   },
