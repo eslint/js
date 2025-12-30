@@ -894,12 +894,12 @@ export class Referencer extends Visitor {
      * @param options Options for scope analysis.
      * @param scopeManager The scope manager to use.
      */
-    constructor(options: VisitorOptions, scopeManager: ScopeManager);
+    constructor(options: VisitorOptions | null | undefined, scopeManager: ScopeManager);
 
     /**
      * Options for scope analysis.
      */
-    options: VisitorOptions;
+    options: VisitorOptions | null | undefined;
 
     /**
      * The scope manager being used.
