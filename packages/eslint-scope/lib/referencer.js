@@ -113,6 +113,7 @@ class Importer extends esrecurse.Visitor {
 
 /**
  * Referencing variables and creating bindings.
+ * @implements {types.Referencer}
  */
 class Referencer extends esrecurse.Visitor {
     constructor(options, scopeManager) {
