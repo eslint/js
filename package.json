@@ -5,6 +5,7 @@
   "scripts": {
     "test": "npm test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
+    "build:types": "npm run build:types --workspaces --if-present",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:types": "npm run lint:types --workspaces --if-present"
