@@ -10,7 +10,7 @@ Our full contribution guidelines can be found at:
 # How to upgrade `acorn` to support new syntax
 
 1. `npm install acorn@latest`
-1. If a new `ecmaVersion` value is added, update `SUPPORTED_VERSIONS` constant in `lib/options.js` and tests in `tests/lib/supported-ecmaversions.js`.
+1. If a new `ecmaVersion` value is added, update the `SUPPORTED_VERSIONS` constant in `lib/options.js`, the tests in `tests/lib/supported-ecmaversions.js`, and the `EcmaVersion` type.
 1. If new token types are added, update `lib/token-translator.js` file to translate the tokens.
 1. Add tests in `tests/fixtures/ecma-version/<ecma-vesion>/`.
     - Add a directory named the new syntax name.
