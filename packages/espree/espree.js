@@ -55,33 +55,145 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import * as acorn from "acorn";
 import jsx from "acorn-jsx";
 import espree from "./lib/espree.js";
 import * as visitorKeys from "eslint-visitor-keys";
 import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
 
+/**
+ * @import { EspreeParserCtor, EspreeParserJsxCtor } from "./lib/types.js";
+ */
+
+// ----------------------------------------------------------------------------
+// Types exported from file
+// ----------------------------------------------------------------------------
+/**
+ * @typedef {3|5|6|7|8|9|10|11|12|13|14|15|16|17|2015|2016|2017|2018|2019|2020|2021|2022|2023|2024|2025|2026|'latest'} EcmaVersion
+ */
+
+/**
+ * @typedef {{
+ *   type: string;
+ *   value: any;
+ *   start?: number;
+ *   end?: number;
+ *   loc?: acorn.SourceLocation;
+ *   range?: [number, number];
+ *   regex?: {flags: string, pattern: string};
+ * }} EspreeToken
+ */
+
+/**
+ * @typedef {{
+ *   type: "Block" | "Hashbang" | "Line",
+ *   value: string,
+ *   range?: [number, number],
+ *   start?: number,
+ *   end?: number,
+ *   loc?: {
+ *     start: acorn.Position | undefined,
+ *     end: acorn.Position | undefined
+ *   }
+ * }} EspreeComment
+ */
+
+/**
+ * @typedef {{
+ *   comments?: EspreeComment[]
+ * } & EspreeToken[]} EspreeTokens
+ */
+
+/**
+ * `allowReserved` is as in `acorn.Options`
+ *
+ * `ecmaVersion` currently as in `acorn.Options` though optional
+ *
+ * `sourceType` as in `acorn.Options` but also allows `commonjs`
+ *
+ * `ecmaFeatures`, `range`, `loc`, `tokens` are not in `acorn.Options`
+ *
+ * `comment` is not in `acorn.Options` and doesn't err without it, but is used
+ */
+/**
+ * @typedef {{
+ *   allowReserved?: boolean,
+ *   ecmaVersion?: EcmaVersion,
+ *   sourceType?: "script"|"module"|"commonjs",
+ *   ecmaFeatures?: {
+ *     jsx?: boolean,
+ *     globalReturn?: boolean,
+ *     impliedStrict?: boolean
+ *   },
+ *   range?: boolean,
+ *   loc?: boolean,
+ *   tokens?: boolean,
+ *   comment?: boolean,
+ * }} Options
+ */
 
 // To initialize lazily.
 const parsers = {
+
+    /** @type {EspreeParserCtor|null} */
     _regular: null,
+
+    /** @type {EspreeParserJsxCtor|null} */
     _jsx: null,
 
+    /**
+     * Returns regular Parser
+     * @returns {EspreeParserCtor} Regular Acorn parser
+     */
     get regular() {
         if (this._regular === null) {
-            this._regular = acorn.Parser.extend(espree());
+            const espreeParserFactory = /** @type {unknown} */ (espree());
+
+            this._regular = /** @type {EspreeParserCtor} */ (
+                // Without conversion, types are incompatible, as
+                // acorn's has a protected constructor
+                /** @type {unknown} */
+                (acorn.Parser.extend(
+                    /**
+                     * @type {(
+                     *   BaseParser: typeof acorn.Parser
+                     * ) => typeof acorn.Parser}
+                     */ (espreeParserFactory)
+                ))
+            );
         }
         return this._regular;
     },
 
+    /**
+     * Returns JSX Parser
+     * @returns {EspreeParserJsxCtor} JSX Acorn parser
+     */
     get jsx() {
         if (this._jsx === null) {
-            this._jsx = acorn.Parser.extend(jsx(), espree());
+            const espreeParserFactory = /** @type {unknown} */ (espree());
+            const jsxFactory = jsx();
+
+            this._jsx = /** @type {EspreeParserJsxCtor} */ (
+                // Without conversion, types are incompatible, as
+                // acorn's has a protected constructor
+                /** @type {unknown} */
+                (acorn.Parser.extend(
+                    jsxFactory,
+
+                    /** @type {(BaseParser: typeof acorn.Parser) => typeof acorn.Parser} */
+                    (espreeParserFactory)
+                ))
+            );
         }
         return this._jsx;
     },
 
+    /**
+     * Gets the parser object based on the supplied options.
+     * @param {Options} [options] The parser options.
+     * @returns {EspreeParserJsxCtor|EspreeParserCtor} Regular or JSX Acorn parser
+     */
     get(options) {
         const useJsx = Boolean(
             options &&
@@ -100,9 +212,9 @@ const parsers = {
 /**
  * Tokenizes the given code.
  * @param {string} code The code to tokenize.
- * @param {Object} options Options defining how to tokenize.
- * @returns {Token[]} An array of tokens.
- * @throws {SyntaxError} If the input code is invalid.
+ * @param {Options} [options] Options defining how to tokenize.
+ * @returns {EspreeTokens} An array of tokens.
+ * @throws {EnhancedSyntaxError} If the input code is invalid.
  * @private
  */
 export function tokenize(code, options) {
@@ -113,7 +225,7 @@ export function tokenize(code, options) {
         options = Object.assign({}, options, { tokens: true }); // eslint-disable-line no-param-reassign -- stylistic choice
     }
 
-    return new Parser(options, code).tokenize();
+    return /** @type {EspreeTokens} */ (new Parser(options, code).tokenize());
 }
 
 //------------------------------------------------------------------------------
@@ -123,9 +235,9 @@ export function tokenize(code, options) {
 /**
  * Parses the given code.
  * @param {string} code The code to tokenize.
- * @param {Object} options Options defining how to tokenize.
- * @returns {ASTNode} The "Program" AST node.
- * @throws {SyntaxError} If the input code is invalid.
+ * @param {Options} [options] Options defining how to tokenize.
+ * @returns {acorn.Program} The "Program" AST node.
+ * @throws {EnhancedSyntaxError} If the input code is invalid.
  */
 export function parse(code, options) {
     const Parser = parsers.get(options);
@@ -137,10 +249,14 @@ export function parse(code, options) {
 // Public
 //------------------------------------------------------------------------------
 
+/** @type {string} */
 export const version = "11.0.0"; // x-release-please-version
 export const name = "espree";
 
 /* istanbul ignore next */
+/**
+ * @type {visitorKeys.VisitorKeys}
+ */
 export const VisitorKeys = (function() {
     return visitorKeys.KEYS;
 }());
@@ -149,6 +265,8 @@ export const VisitorKeys = (function() {
 /* istanbul ignore next */
 export const Syntax = (function() {
     let key,
+
+        /** @type {Record<string,string>} */
         types = {};
 
     if (typeof Object.create === "function") {

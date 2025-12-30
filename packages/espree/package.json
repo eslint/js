@@ -4,22 +4,24 @@
   "author": "Nicholas C. Zakas <nicholas+npm@nczconsulting.com>",
   "homepage": "https://github.com/eslint/js/blob/main/packages/espree/README.md",
   "main": "dist/espree.cjs",
+  "types": "./dist/espree.d.cts",
   "type": "module",
   "exports": {
-    ".": [
-      {
-        "import": "./espree.js",
-        "require": "./dist/espree.cjs",
-        "default": "./dist/espree.cjs"
+    ".": {
+      "types": {
+        "import": "./dist/espree.d.ts",
+        "require": "./dist/espree.d.cts"
       },
-      "./dist/espree.cjs"
-    ],
+      "import": "./espree.js",
+      "require": "./dist/espree.cjs",
+      "default": "./dist/espree.cjs"
+    },
     "./package.json": "./package.json"
   },
   "version": "11.0.0",
   "files": [
     "lib",
-    "dist/espree.cjs",
+    "dist",
     "espree.js"
   ],
   "engines": {
@@ -41,8 +43,11 @@
     "eslint-visitor-keys": "^5.0.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "rollup": "^2.79.1",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "tsd": "^0.33.0",
+    "typescript": "^5.9.3"
   },
   "keywords": [
     "ast",
@@ -53,11 +58,14 @@
     "acorn"
   ],
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "lint:types": "attw --pack",
+    "tsc": "tsc && tsc -p tsconfig-cjs.json",
+    "build": "rollup -c rollup.config.js && npm run tsc && node -e \"fs.rmSync('dist/lib', { recursive: true })\"",
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
     "pretest": "npm run build",
-    "test": "npm run test:cjs && npm run test:esm",
+    "test": "npm run test:types && npm run test:cjs && npm run test:esm",
+    "test:types": "tsd --typings dist/espree.d.ts",
     "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
     "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\""
   }

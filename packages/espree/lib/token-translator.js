@@ -3,6 +3,36 @@
  * @author Nicholas C. Zakas
  */
 
+/**
+ * @import * as acorn from "acorn";
+ * @import { EnhancedTokTypes } from "./espree.js"
+ * @import { NormalizedEcmaVersion } from "./options.js";
+ * @import { EspreeToken as EsprimaToken } from "../espree.js";
+ */
+/**
+ * Based on the `acorn.Token` class, but without a fixed `type` (since we need
+ * it to be a string). Avoiding `type` lets us make one extending interface
+ * more strict and another more lax.
+ *
+ * We could make `value` more strict to `string` even though the original is
+ * `any`.
+ *
+ * `start` and `end` are required in `acorn.Token`
+ *
+ * `loc` and `range` are from `acorn.Token`
+ *
+ * Adds `regex`.
+ */
+/**
+ * @typedef {{
+ *   jsxAttrValueToken: boolean;
+ *   ecmaVersion: NormalizedEcmaVersion;
+ * }} ExtraNoTokens
+ * @typedef {{
+ *   tokens: EsprimaToken[]
+ * } & ExtraNoTokens} Extra
+ */
+
 //------------------------------------------------------------------------------
 // Private
 //------------------------------------------------------------------------------
@@ -26,15 +56,22 @@ const Token = {
 
 /**
  * Converts part of a template into an Esprima token.
- * @param {AcornToken[]} tokens The Acorn tokens representing the template.
+ * @param {acorn.Token[]} tokens The Acorn tokens representing the template.
  * @param {string} code The source code.
  * @returns {EsprimaToken} The Esprima equivalent of the template token.
  * @private
  */
 function convertTemplatePart(tokens, code) {
     const firstToken = tokens[0],
-        lastTemplateToken = tokens.at(-1);
+        lastTemplateToken =
+            /**
+             * @type {acorn.Token & {
+             *   loc: acorn.SourceLocation,
+             *   range: [number, number]
+             * }}
+             */ (tokens.at(-1));
 
+    /** @type {EsprimaToken} */
     const token = {
         type: Token.Template,
         value: code.slice(firstToken.start, lastTemplateToken.end)
@@ -56,59 +93,70 @@ function convertTemplatePart(tokens, code) {
     return token;
 }
 
+/* eslint-disable jsdoc/check-types -- The API allows either */
 /**
  * Contains logic to translate Acorn tokens into Esprima tokens.
- * @param {Object} acornTokTypes The Acorn token types.
- * @param {string} code The source code Acorn is parsing. This is necessary
- *      to correct the "value" property of some tokens.
- * @constructor
  */
-function TokenTranslator(acornTokTypes, code) {
+class TokenTranslator {
 
-    // token types
-    this._acornTokTypes = acornTokTypes;
+    /**
+     * Contains logic to translate Acorn tokens into Esprima tokens.
+     * @param {EnhancedTokTypes} acornTokTypes The Acorn token types.
+     * @param {string|String} code The source code Acorn is parsing. This is necessary
+     *      to correct the "value" property of some tokens.
+     */
+    constructor(acornTokTypes, code) {
+        /* eslint-enable jsdoc/check-types -- The API allows either */
 
-    // token buffer for templates
-    this._tokens = [];
+        // token types
+        this._acornTokTypes = acornTokTypes;
 
-    // track the last curly brace
-    this._curlyBrace = null;
+        // token buffer for templates
+        /** @type {acorn.Token[]} */
+        this._tokens = [];
 
-    // the source code
-    this._code = code;
+        // track the last curly brace
+        this._curlyBrace = null;
 
-}
+        // the source code
+        this._code = code;
 
-TokenTranslator.prototype = {
-    constructor: TokenTranslator,
+    }
 
     /**
      * Translates a single Esprima token to a single Acorn token. This may be
      * inaccurate due to how templates are handled differently in Esprima and
      * Acorn, but should be accurate for all other tokens.
-     * @param {AcornToken} token The Acorn token to translate.
-     * @param {Object} extra Espree extra object.
+     * @param {acorn.Token} token The Acorn token to translate.
+     * @param {ExtraNoTokens} extra Espree extra object.
      * @returns {EsprimaToken} The Esprima version of the token.
      */
     translate(token, extra) {
 
         const type = token.type,
-            tt = this._acornTokTypes;
+            tt = this._acornTokTypes,
+
+            // We use an unknown type because `acorn.Token` is a class whose
+            //   `type` property we cannot override to our desired `string`;
+            //   this also allows us to define a stricter `EsprimaToken` with
+            //   a string-only `type` property
+            unknownTokenType = /** @type {unknown} */ (token),
+            newToken = /** @type {EsprimaToken} */ (unknownTokenType);
 
         if (type === tt.name) {
-            token.type = Token.Identifier;
+            newToken.type = Token.Identifier;
 
             // TODO: See if this is an Acorn bug
-            if (token.value === "static") {
-                token.type = Token.Keyword;
+            if ("value" in token && token.value === "static") {
+                newToken.type = Token.Keyword;
             }
 
-            if (extra.ecmaVersion > 5 && (token.value === "yield" || token.value === "let")) {
-                token.type = Token.Keyword;
+            if (extra.ecmaVersion > 5 && ("value" in token && (token.value === "yield" || token.value === "let"))) {
+                newToken.type = Token.Keyword;
             }
 
         } else if (type === tt.privateId) {
-            token.type = Token.PrivateIdentifier;
+            newToken.type = Token.PrivateIdentifier;
 
         } else if (type === tt.semi || type === tt.comma ||
                  type === tt.parenL || type === tt.parenR ||
@@ -120,54 +168,56 @@ TokenTranslator.prototype = {
                  type === tt.incDec || type === tt.starstar ||
                  type === tt.jsxTagEnd || type === tt.prefix ||
                  type === tt.questionDot ||
-                 (type.binop && !type.keyword) ||
-                 type.isAssign) {
+                 ("binop" in type && type.binop && !type.keyword) ||
+                 ("isAssign" in type && type.isAssign)) {
 
-            token.type = Token.Punctuator;
-            token.value = this._code.slice(token.start, token.end);
+            newToken.type = Token.Punctuator;
+            newToken.value = this._code.slice(token.start, token.end);
         } else if (type === tt.jsxName) {
-            token.type = Token.JSXIdentifier;
+            newToken.type = Token.JSXIdentifier;
         } else if (type.label === "jsxText" || type === tt.jsxAttrValueToken) {
-            token.type = Token.JSXText;
+            newToken.type = Token.JSXText;
         } else if (type.keyword) {
             if (type.keyword === "true" || type.keyword === "false") {
-                token.type = Token.Boolean;
+                newToken.type = Token.Boolean;
             } else if (type.keyword === "null") {
-                token.type = Token.Null;
+                newToken.type = Token.Null;
             } else {
-                token.type = Token.Keyword;
+                newToken.type = Token.Keyword;
             }
         } else if (type === tt.num) {
-            token.type = Token.Numeric;
-            token.value = this._code.slice(token.start, token.end);
+            newToken.type = Token.Numeric;
+            newToken.value = this._code.slice(token.start, token.end);
         } else if (type === tt.string) {
 
             if (extra.jsxAttrValueToken) {
                 extra.jsxAttrValueToken = false;
-                token.type = Token.JSXText;
+                newToken.type = Token.JSXText;
             } else {
-                token.type = Token.String;
+                newToken.type = Token.String;
             }
 
-            token.value = this._code.slice(token.start, token.end);
+            newToken.value = this._code.slice(token.start, token.end);
         } else if (type === tt.regexp) {
-            token.type = Token.RegularExpression;
-            const value = token.value;
+            newToken.type = Token.RegularExpression;
+            const value = /** @type {{flags: string, pattern: string}} */ (
+                "value" in token && token.value
+            );
 
-            token.regex = {
+            newToken.regex = {
                 flags: value.flags,
                 pattern: value.pattern
             };
-            token.value = `/${value.pattern}/${value.flags}`;
+            newToken.value = `/${value.pattern}/${value.flags}`;
         }
 
-        return token;
-    },
+        return newToken;
+    }
 
     /**
      * Function to call during Acorn's onToken handler.
-     * @param {AcornToken} token The Acorn token.
-     * @param {Object} extra The Espree extra object.
+     * @param {acorn.Token} token The Acorn token.
+     * @param {Extra} extra The Espree extra object.
      * @returns {void}
      */
     onToken(token, extra) {
@@ -247,7 +297,7 @@ TokenTranslator.prototype = {
 
         tokens.push(this.translate(token, extra));
     }
-};
+}
 
 //------------------------------------------------------------------------------
 // Public
