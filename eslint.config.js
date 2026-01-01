@@ -2,7 +2,9 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import eslintConfigESLint from "eslint-config-eslint";
 import eslintConfigESLintFormatting from "eslint-config-eslint/formatting";
 import eslintPluginChaiFriendly from "eslint-plugin-chai-friendly";
+import * as expectType from "eslint-plugin-expect-type";
 import globals from "globals";
+import tsParser from "@typescript-eslint/parser";
 
 export default defineConfig([
     globalIgnores([
@@ -11,10 +13,12 @@ export default defineConfig([
         "**/coverage/",
         "packages/espree/tools/create-test-example.js"
     ]),
-    eslintConfigESLint,
-    eslintConfigESLintFormatting,
     {
-        files: ["packages/*/tests/lib/**"],
+        files: ["**/*.{,c}js"],
+        extends: [eslintConfigESLint, eslintConfigESLintFormatting]
+    },
+    {
+        files: ["packages/*/tests/**/*.test.{,c}js"],
         languageOptions: {
             globals: {
                 ...globals.mocha
@@ -22,12 +26,7 @@ export default defineConfig([
         }
     },
     {
-        files: ["packages/eslint-scope/tests/**"],
-        languageOptions: {
-            globals: {
-                ...globals.mocha
-            }
-        },
+        files: ["packages/eslint-scope/tests/**/*.{,c}js"],
         plugins: {
             "chai-friendly": eslintPluginChaiFriendly
         },
@@ -66,6 +65,21 @@ export default defineConfig([
                     "object<>": "Object"
                 }
             }
+        }
+    },
+    {
+        files: ["packages/eslint-scope/tests/types/*.{,c}ts"],
+        languageOptions: {
+            parser: tsParser,
+            parserOptions: {
+                project: ["packages/eslint-scope/tests/types/tsconfig.json"]
+            }
+        },
+        plugins: {
+            "expect-type": expectType
+        },
+        rules: {
+            "expect-type/expect": "error"
         }
     },
     {
