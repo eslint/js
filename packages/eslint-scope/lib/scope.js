@@ -33,7 +33,7 @@ import { assert } from "./assert.js";
 /** @import ESTree from "estree" */
 /** @import ScopeManager from "./scope-manager.js" */
 /** @typedef {ESTree.Function | ESTree.Program | ESTree.StaticBlock} Block */
-/** @typedef {{pattern: any, node: any}} MaybeImplicitGlobal */
+/** @typedef {{pattern: unknown, node: unknown}} MaybeImplicitGlobal */
 
 const { Syntax } = estraverse;
 
