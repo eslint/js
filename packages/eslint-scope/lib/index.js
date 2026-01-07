@@ -73,16 +73,16 @@ function defaultOptions() {
 
 /**
  * Preform deep update on option object
- * @param {Record<string, any>} target Options
- * @param {Record<string, any>} override Updates
- * @returns {Record<string, any>} Updated options
+ * @param {Record<string, unknown>} target Options
+ * @param {Record<string, unknown>} override Updates
+ * @returns {Record<string, unknown>} Updated options
  */
 function updateDeeply(target, override) {
 
     /**
      * Is hash object
      * @param {Object} value Test value
-     * @returns {boolean} Result
+     * @returns {value is Record<string, unknown>} Result
      */
     function isHashObject(value) {
         return typeof value === "object" && value instanceof Object && !(value instanceof Array) && !(value instanceof RegExp);
