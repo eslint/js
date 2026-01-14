@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.1.0](https://github.com/eslint/js/compare/espree-v11.0.0...espree-v11.1.0) (2026-01-14)
+
+
+### Features
+
+* TypeScript support for Espree ([#705](https://github.com/eslint/js/issues/705)) ([5887c4d](https://github.com/eslint/js/commit/5887c4d5919013127242b9c8822625198d8698b8))
+
 ## [11.0.0](https://github.com/eslint/js/compare/espree-v10.4.0...espree-v11.0.0) (2025-11-07)
 
 
