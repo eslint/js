@@ -11,7 +11,7 @@
     },
     "./package.json": "./package.json"
   },
-  "version": "9.0.0",
+  "version": "9.0.1",
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
@@ -47,7 +47,7 @@
     "@typescript-eslint/parser": "^8.7.0",
     "chai": "^6.0.0",
     "eslint-visitor-keys": "^5.0.0",
-    "espree": "^11.0.0",
+    "espree": "^11.1.0",
     "npm-license": "^0.3.3",
     "rollup": "^2.52.7",
     "shelljs": "^0.8.5",
