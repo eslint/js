@@ -56,7 +56,6 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@types/espree": "^10.1.0",
     "@typescript-eslint/parser": "^8.7.0",
     "chai": "^6.0.0",
     "eslint": ">=10.0.0-rc.0 <10.0.0 || ^10.0.0",
