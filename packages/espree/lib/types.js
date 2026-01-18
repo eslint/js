@@ -1,6 +1,6 @@
 /**
  * @import * as acorn from "acorn";
- * @import { Options, EspreeToken } from "../espree.js";
+ * @import { Options, EspreeTokens } from "../espree.js";
  */
 
 /**
@@ -41,7 +41,7 @@
 
 /**
  * @typedef {{
- *   tokenize: () => EspreeToken[],
+ *   tokenize: () => EspreeTokens,
  *   parse: () => acorn.Program
  * }} EspreeParser
  */

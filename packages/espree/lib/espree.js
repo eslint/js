@@ -14,6 +14,7 @@ import { normalizeOptions } from "./options.js";
  * @import {
  *   Options,
  *   EspreeToken as EsprimaToken,
+ *   EspreeTokens as EsprimaTokens,
  *   EspreeComment as EsprimaComment
  * } from "../espree.js";
  * @import { NormalizedEcmaVersion } from "./options.js";
@@ -257,7 +258,7 @@ export default () => {
 
             /**
              * Returns Espree tokens.
-             * @returns {EsprimaToken[]} The Esprima-compatible tokens
+             * @returns {EsprimaTokens} The Esprima-compatible tokens
              */
             tokenize() {
                 do {
@@ -268,13 +269,11 @@ export default () => {
                 this.next();
 
                 const extra = this[STATE];
-                const tokens = /** @type {EsprimaToken[]} */ (extra.tokens);
+                const tokens = /** @type {EsprimaTokens} */ (extra.tokens);
 
-                // Uncovered in tests, and problematic for types to
-                //   add property to an array
-                // if (extra.comments) {
-                //     tokens.comments = extra.comments;
-                // }
+                if (extra.comments) {
+                    tokens.comments = extra.comments;
+                }
 
                 return tokens;
             }
