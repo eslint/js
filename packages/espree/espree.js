@@ -250,7 +250,7 @@ export function parse(code, options) {
 //------------------------------------------------------------------------------
 
 /** @type {string} */
-export const version = "11.0.0"; // x-release-please-version
+export const version = "11.1.0"; // x-release-please-version
 export const name = "espree";
 
 /* istanbul ignore next */
