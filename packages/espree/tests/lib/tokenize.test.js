@@ -182,6 +182,30 @@ describe("tokenize()", () => {
         assert.deepStrictEqual(tester.getRaw(tokens), [{ type: "Identifier", value: "a" }]);
     });
 
+    it("should produce `comments` property", () => {
+        const tokens = espree.tokenize("/*First comment*/a//Second comment", { comment: true, range: true });
+
+        assert.deepStrictEqual(tester.getRaw(tokens), [
+            {
+                range: [17, 18],
+                type: "Identifier",
+                value: "a"
+            }
+        ]);
+        assert.deepStrictEqual(tester.getRaw(tokens.comments), [
+            {
+                range: [0, 17],
+                type: "Block",
+                value: "First comment"
+            },
+            {
+                range: [18, 34],
+                type: "Line",
+                value: "Second comment"
+            }
+        ]);
+    });
+
     it("should not remove } token followed by a template literal.", () => {
         let tokens = espree.tokenize("const obj = {}\n`template${{}}!`", { ecmaVersion: 6 });
 
