@@ -38,8 +38,14 @@ import {
 } from "./scope.js";
 import { assert } from "./assert.js";
 
+/** @import * as types from "eslint-scope" */
+/** @import ESTree from "estree" */
+/** @import { Scope } from "./scope.js" */
+/** @import Variable from "./variable.js" */
+
 /**
  * @constructor ScopeManager
+ * @implements {types.ScopeManager}
  */
 class ScopeManager {
     constructor(options) {
@@ -72,7 +78,7 @@ class ScopeManager {
     }
 
     isImpliedStrict() {
-        return this.__options.impliedStrict;
+        return !!this.__options.impliedStrict;
     }
 
     isStrictModeSupported() {
@@ -90,7 +96,7 @@ class ScopeManager {
      * "are declared by the node" means the node is same as `Variable.defs[].node` or `Variable.defs[].parent`.
      * If the node declares nothing, this method returns an empty array.
      * CAUTION: This API is experimental. See https://github.com/estools/escope/pull/69 for more details.
-     * @param {Espree.Node} node a node to get.
+     * @param {ESTree.Node} node a node to get.
      * @returns {Variable[]} variables that declared by the node.
      */
     getDeclaredVariables(node) {
@@ -100,7 +106,7 @@ class ScopeManager {
     /**
      * acquire scope from node.
      * @function ScopeManager#acquire
-     * @param {Espree.Node} node node for the acquired scope.
+     * @param {ESTree.Node} node node for the acquired scope.
      * @param {?boolean} [inner=false] look up the most inner scope, default value is false.
      * @returns {Scope?} Scope from node
      */
@@ -154,8 +160,8 @@ class ScopeManager {
     /**
      * acquire all scopes from node.
      * @function ScopeManager#acquireAll
-     * @param {Espree.Node} node node for the acquired scope.
-     * @returns {Scopes?} Scope array
+     * @param {ESTree.Node} node node for the acquired scope.
+     * @returns {Scope[]?} Scope array
      */
     acquireAll(node) {
         return this.__get(node);
@@ -164,7 +170,7 @@ class ScopeManager {
     /**
      * release the node.
      * @function ScopeManager#release
-     * @param {Espree.Node} node releasing node.
+     * @param {ESTree.Node} node releasing node.
      * @param {?boolean} [inner=false] look up the most inner scope, default value is false.
      * @returns {Scope?} upper scope for the node.
      */
@@ -189,6 +195,8 @@ class ScopeManager {
      * @returns {void}
      */
     addGlobals(names) {
+
+        // @ts-ignore -- globalScope must be set before this method is called.
         this.globalScope.__addVariables(names);
     }
 

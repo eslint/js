@@ -58,15 +58,15 @@
     "acorn"
   ],
   "scripts": {
-    "lint:types": "attw --pack",
-    "tsc": "tsc && tsc -p tsconfig-cjs.json",
-    "build": "rollup -c rollup.config.js && npm run tsc && node -e \"fs.rmSync('dist/lib', { recursive: true })\"",
+    "build": "rollup -c rollup.config.js && npm run build:types && node -e \"fs.rmSync('dist/lib', { recursive: true })\"",
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
+    "build:types": "tsc && tsc -p tsconfig-cjs.json",
+    "lint:types": "attw --pack",
     "pretest": "npm run build",
     "test": "npm run test:types && npm run test:cjs && npm run test:esm",
-    "test:types": "tsd --typings dist/espree.d.ts",
     "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
-    "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\""
+    "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\"",
+    "test:types": "tsd --typings dist/espree.d.ts"
   }
 }

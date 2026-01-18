@@ -30,14 +30,17 @@ import PatternVisitor from "./pattern-visitor.js";
 import { Definition, ParameterDefinition } from "./definition.js";
 import { assert } from "./assert.js";
 
+/** @import * as types from "eslint-scope" */
+/** @import ESTree from "estree" */
+
 const { Syntax } = estraverse;
 
 /**
  * Traverse identifier in pattern
  * @param {Object} options options
- * @param {pattern} rootPattern root pattern
- * @param {Refencer} referencer referencer
- * @param {callback} callback callback
+ * @param {ESTree.Pattern} rootPattern root pattern
+ * @param {?Referencer} referencer referencer
+ * @param {types.PatternVisitorCallback} callback callback
  * @returns {void}
  */
 function traverseIdentifierInPattern(options, rootPattern, referencer, callback) {
@@ -110,6 +113,7 @@ class Importer extends esrecurse.Visitor {
 
 /**
  * Referencing variables and creating bindings.
+ * @implements {types.Referencer}
  */
 class Referencer extends esrecurse.Visitor {
     constructor(options, scopeManager) {
@@ -209,7 +213,7 @@ class Referencer extends esrecurse.Visitor {
 
         /**
          * Visit pattern callback
-         * @param {pattern} pattern pattern
+         * @param {ESTree.Pattern} pattern pattern
          * @param {Object} info info
          * @returns {void}
          */

@@ -37,6 +37,7 @@ In order to analyze scope, you'll need to have an [ESTree](https://github.com/es
   * `sourceType` (default: `"script"`) - The type of JavaScript file to evaluate. Change to `"module"` for ECMAScript module code.
   * `childVisitorKeys` (default: `null`) - An object with visitor key information (like [`eslint-visitor-keys`](https://github.com/eslint/js/tree/main/packages/eslint-visitor-keys)). Without this, `eslint-scope` finds child nodes to visit algorithmically. Providing this option is a performance enhancement.
   * `fallback` (default: `"iteration"`) - The strategy to use when `childVisitorKeys` is not specified. May be a function.
+  * `optimistic` (default: `false`) - Set to `true` to enable optimistic scope analysis.
   * `jsx` (default: `false`) - Enables the tracking of JSX components as variable references.
 
 Example:
@@ -100,7 +101,7 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
   - `inner` - Optional boolean. When `true`, returns the innermost scope, otherwise returns the outermost scope. Default is `false`.
   - Returns: The acquired scope or `null` if no scope is found.
 
-- **`acquireAll(node)`**
+- **`acquireAll(node)` (Deprecated)**
   Acquires all scopes for a given node.
   - `node` - The AST node to acquire scopes from.
   - Returns: An array of scopes or `undefined` if none are found.
@@ -120,15 +121,15 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
   Determines if the global return statement should be allowed.
   - Returns: `true` if the global return is enabled.
 
-- **`isModule()`**
+- **`isModule()` (Deprecated)**
   Checks if the code should be handled as an ECMAScript module.
   - Returns: `true` if the sourceType is "module".
 
-- **`isImpliedStrict()`**
+- **`isImpliedStrict()` (Deprecated)**
   Checks if implied strict mode is enabled.
   - Returns: `true` if implied strict mode is enabled.
 
-- **`isStrictModeSupported()`**
+- **`isStrictModeSupported()` (Deprecated)**
   Checks if strict mode is supported based on ECMAScript version.
   - Returns: `true` if the ECMAScript version supports strict mode.
 
@@ -136,11 +137,13 @@ The `ScopeManager` class is at the core of eslint-scope and is returned when you
 
 Scopes returned by the ScopeManager methods have the following properties:
 
-- `type` - The type of scope (e.g., "function", "block", "global").
+- `type` - The type of scope (e.g., `"function"`, `"block"`, `"global"`).
+- `isStrict` - `true` if this scope is in strict mode.
 - `variables` - Array of variables declared in this scope.
 - `set` - A Map of variable names to Variable objects for variables declared in this scope.
 - `references` - Array of references in this scope.
 - `through` - Array of references in this scope and its child scopes that aren't resolved in this scope or its child scopes.
+- `functionExpressionScope` - `true` if this is a `"function-expression-name"` scope.
 - `variableScope` - Reference to the closest variable scope.
 - `upper` - Reference to the parent scope.
 - `childScopes` - Array of child scopes.
