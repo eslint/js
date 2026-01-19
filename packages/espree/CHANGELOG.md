@@ -1,5 +1,18 @@
 # Changelog
 
+## [11.1.0](https://github.com/eslint/js/compare/espree-v11.0.0...espree-v11.1.0) (2026-01-18)
+
+
+### Features
+
+* add types to ESLint Scope ([#709](https://github.com/eslint/js/issues/709)) ([98caac0](https://github.com/eslint/js/commit/98caac0d92865a014220cf9e014df08f8913a4a4))
+* TypeScript support for Espree ([#705](https://github.com/eslint/js/issues/705)) ([5887c4d](https://github.com/eslint/js/commit/5887c4d5919013127242b9c8822625198d8698b8))
+
+
+### Bug Fixes
+
+* restore `comments` property on `tokenize()` return value ([#721](https://github.com/eslint/js/issues/721)) ([5603ea9](https://github.com/eslint/js/commit/5603ea940e089e00f92b349f8b2a485310f9333b))
+
 ## [11.0.0](https://github.com/eslint/js/compare/espree-v10.4.0...espree-v11.0.0) (2025-11-07)
 
 

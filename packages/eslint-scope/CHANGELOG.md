@@ -1,5 +1,19 @@
 # Changelog
 
+## [9.1.0](https://github.com/eslint/js/compare/eslint-scope-v9.0.0...eslint-scope-v9.1.0) (2026-01-18)
+
+
+### Features
+
+* add types to ESLint Scope ([#709](https://github.com/eslint/js/issues/709)) ([98caac0](https://github.com/eslint/js/commit/98caac0d92865a014220cf9e014df08f8913a4a4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * espree bumped from ^11.0.0 to ^11.1.0
+
 ## [9.0.0](https://github.com/eslint/js/compare/eslint-scope-v8.4.0...eslint-scope-v9.0.0) (2025-11-07)
 
 
