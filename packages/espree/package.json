@@ -43,11 +43,9 @@
     "eslint-visitor-keys": "^5.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
     "rollup": "^2.79.1",
     "shelljs": "^0.8.5",
-    "tsd": "^0.33.0",
-    "typescript": "^5.9.3"
+    "tsd": "^0.33.0"
   },
   "keywords": [
     "ast",
