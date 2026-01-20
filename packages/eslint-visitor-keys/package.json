@@ -26,7 +26,6 @@
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "devDependencies": {
-    "rollup": "^4.50.2",
     "rollup-plugin-dts": "^6.2.3",
     "tsd": "^0.33.0"
   },
