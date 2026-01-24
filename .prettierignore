@@ -1,2 +1,5 @@
 CHANGELOG.md
-**/fixtures/**
+**/tests/fixtures/
+**/dist/
+**/coverage/
+packages/espree/tools/create-test-example.js
