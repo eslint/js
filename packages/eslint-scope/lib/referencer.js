@@ -753,8 +753,8 @@ class Referencer extends esrecurse.Visitor {
 		this.visit(local);
 	}
 
+	// eslint-disable-next-line class-methods-use-this -- Desired as instance method
 	MetaProperty() {
-		// eslint-disable-line class-methods-use-this -- Desired as instance method
 		// do nothing.
 	}
 
