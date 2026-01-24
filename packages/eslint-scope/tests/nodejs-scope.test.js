@@ -26,90 +26,99 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("nodejsScope option", () => {
-
-    it("creates a function scope following the global scope immediately when nodejscope: true", () => {
-        const ast = espree(`
+	it("creates a function scope following the global scope immediately when nodejscope: true", () => {
+		const ast = espree(`
             "use strict";
             var hello = 20;
         `);
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, nodejsScope: true });
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			nodejsScope: true,
+		});
 
-        expect(scopeManager.scopes).to.have.length(2);
-        expect(scopeManager.isGlobalReturn()).to.be.true;
+		expect(scopeManager.scopes).to.have.length(2);
+		expect(scopeManager.isGlobalReturn()).to.be.true;
 
-        let scope = scopeManager.scopes[0];
+		let scope = scopeManager.scopes[0];
 
-        expect(scope.type).to.be.equal("global");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(0);
+		expect(scope.type).to.be.equal("global");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(0);
 
-        scope = scopeManager.scopes[1];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.true;
-        expect(scope.variables).to.have.length(2);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.variables[1].name).to.be.equal("hello");
-    });
+		scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.true;
+		expect(scope.variables).to.have.length(2);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.variables[1].name).to.be.equal("hello");
+	});
 
-    it("creates a function scope following the global scope immediately when sourceType:commonjs", () => {
-        const ast = espree(`
+	it("creates a function scope following the global scope immediately when sourceType:commonjs", () => {
+		const ast = espree(`
             "use strict";
             var hello = 20;
         `);
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "commonjs" });
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "commonjs",
+		});
 
-        expect(scopeManager.scopes).to.have.length(2);
-        expect(scopeManager.isGlobalReturn()).to.be.true;
+		expect(scopeManager.scopes).to.have.length(2);
+		expect(scopeManager.isGlobalReturn()).to.be.true;
 
-        let scope = scopeManager.scopes[0];
+		let scope = scopeManager.scopes[0];
 
-        expect(scope.type).to.be.equal("global");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(0);
+		expect(scope.type).to.be.equal("global");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(0);
 
-        scope = scopeManager.scopes[1];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.true;
-        expect(scope.variables).to.have.length(2);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.variables[1].name).to.be.equal("hello");
-    });
+		scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.true;
+		expect(scope.variables).to.have.length(2);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.variables[1].name).to.be.equal("hello");
+	});
 
-    it("creates a function scope following the global scope immediately and creates module scope", () => {
-        const ast = espree("import {x as v} from 'mod';");
+	it("creates a function scope following the global scope immediately and creates module scope", () => {
+		const ast = espree("import {x as v} from 'mod';");
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, nodejsScope: true, sourceType: "module" });
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			nodejsScope: true,
+			sourceType: "module",
+		});
 
-        expect(scopeManager.scopes).to.have.length(3);
-        expect(scopeManager.isGlobalReturn()).to.be.true;
+		expect(scopeManager.scopes).to.have.length(3);
+		expect(scopeManager.isGlobalReturn()).to.be.true;
 
-        let scope = scopeManager.scopes[0];
+		let scope = scopeManager.scopes[0];
 
-        expect(scope.type).to.be.equal("global");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(0);
+		expect(scope.type).to.be.equal("global");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(0);
 
-        scope = scopeManager.scopes[1];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
+		scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
 
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("v");
-        expect(scope.variables[0].defs[0].type).to.be.equal("ImportBinding");
-        expect(scope.references).to.have.length(0);
-    });
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("v");
+		expect(scope.variables[0].defs[0].type).to.be.equal("ImportBinding");
+		expect(scope.references).to.have.length(0);
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

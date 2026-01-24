@@ -26,31 +26,31 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("arguments", () => {
-    it("arguments are correctly materialized", () => {
-        const ast = espree(`
+	it("arguments are correctly materialized", () => {
+		const ast = espree(`
             (function () {
                 arguments;
             }());
         `);
 
-        const scopeManager = analyze(ast);
+		const scopeManager = analyze(ast);
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        const scope = scopeManager.scopes[1];
+		const scope = scopeManager.scopes[1];
 
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.isArgumentsMaterialized()).to.be.true;
-        expect(scope.references).to.have.length(1);
-        expect(scope.references[0].resolved).to.be.equal(scope.variables[0]);
-    });
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.isArgumentsMaterialized()).to.be.true;
+		expect(scope.references).to.have.length(1);
+		expect(scope.references[0].resolved).to.be.equal(scope.variables[0]);
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

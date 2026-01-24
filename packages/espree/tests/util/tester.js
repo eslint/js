@@ -10,7 +10,6 @@
 import assert from "node:assert";
 import * as espree from "../../espree.js";
 
-
 //------------------------------------------------------------------------------
 // Private
 //------------------------------------------------------------------------------
@@ -19,13 +18,13 @@ import * as espree from "../../espree.js";
 // For example, a bigint value `1n` will be replaced by a string `"5f9c9d32_1n"`.
 // Those prefixes merely are improbable values in test fixtures.
 const Prefix = {
-    bigint: "5f9c9d32_",
-    number: "53b0a1b2_",
-    RegExp: "ca5db4fe_"
+	bigint: "5f9c9d32_",
+	number: "53b0a1b2_",
+	RegExp: "ca5db4fe_",
 };
 const ReplacedStringLiteralPattern = new RegExp(
-    `"(${Object.values(Prefix).join("|")})([^\\n]*)"`,
-    "gu"
+	`"(${Object.values(Prefix).join("|")})([^\\n]*)"`,
+	"gu",
 );
 
 /**
@@ -40,26 +39,29 @@ const ReplacedStringLiteralPattern = new RegExp(
  * @private
  */
 function replaceToSaveNonJSONValues(key, value) {
+	// Remove `start` and `end` properties because of non-standard.
+	if ((key === "start" || key === "end") && typeof value === "number") {
+		return void 0;
+	}
 
-    // Remove `start` and `end` properties because of non-standard.
-    if ((key === "start" || key === "end") && typeof value === "number") {
-        return void 0;
-    }
-
-    // Save the values JSON cannot handle.
-    // The `value` property of `Literal` node can have those values.
-    switch (typeof value) {
-        case "bigint":
-            return `${Prefix.bigint}${value}n`;
-        case "number":
-            return Number.isFinite(value) ? value : `${Prefix.number}${value}`;
-        case "object":
-            return !(value instanceof RegExp) ? value : `${Prefix.RegExp}${value}`;
-        case "undefined":
-            throw new Error(`AST cannot have undefined as a property value.\nProperty name is '${key}'`);
-        default:
-            return value;
-    }
+	// Save the values JSON cannot handle.
+	// The `value` property of `Literal` node can have those values.
+	switch (typeof value) {
+		case "bigint":
+			return `${Prefix.bigint}${value}n`;
+		case "number":
+			return Number.isFinite(value) ? value : `${Prefix.number}${value}`;
+		case "object":
+			return !(value instanceof RegExp)
+				? value
+				: `${Prefix.RegExp}${value}`;
+		case "undefined":
+			throw new Error(
+				`AST cannot have undefined as a property value.\nProperty name is '${key}'`,
+			);
+		default:
+			return value;
+	}
 }
 
 /**
@@ -71,26 +73,25 @@ function replaceToSaveNonJSONValues(key, value) {
  * @private
  */
 function replaceToRestoreNonJSONValues(_key, value) {
+	// Restore the values JSON cannot handle.
+	if (typeof value === "string") {
+		if (value.startsWith(Prefix.number)) {
+			return Number(value.slice(Prefix.number.length));
+		}
+		if (value.startsWith(Prefix.bigint)) {
+			return BigInt(value.slice(Prefix.bigint.length, -1));
+		}
+		if (value.startsWith(Prefix.RegExp)) {
+			const regexpString = value.slice(Prefix.RegExp.length);
+			const i = regexpString.lastIndexOf("/");
+			const pattern = regexpString.slice(1, i);
+			const flags = regexpString.slice(i + 1);
 
-    // Restore the values JSON cannot handle.
-    if (typeof value === "string") {
-        if (value.startsWith(Prefix.number)) {
-            return Number(value.slice(Prefix.number.length));
-        }
-        if (value.startsWith(Prefix.bigint)) {
-            return BigInt(value.slice(Prefix.bigint.length, -1));
-        }
-        if (value.startsWith(Prefix.RegExp)) {
-            const regexpString = value.slice(Prefix.RegExp.length);
-            const i = regexpString.lastIndexOf("/");
-            const pattern = regexpString.slice(1, i);
-            const flags = regexpString.slice(i + 1);
+			return new RegExp(pattern, flags);
+		}
+	}
 
-            return new RegExp(pattern, flags);
-        }
-    }
-
-    return value;
+	return value;
 }
 
 /**
@@ -101,28 +102,27 @@ function replaceToRestoreNonJSONValues(_key, value) {
  * @private
  */
 function restoreNonJSONValueLiterals(jsCodeText) {
-    return jsCodeText
-        .replace(/\u2028/gu, "\\u2028") // Maybe editors cannot handle U+2028 and U+2029 correctly.
-        .replace(/\u2029/gu, "\\u2029")
-        .replace(ReplacedStringLiteralPattern, (_, prefix, value) => {
-            if (prefix === Prefix.number) {
-                return value; // NaN, Infinity, or -Infinity
-            }
-            if (prefix === Prefix.bigint) {
-                return value; // bigint literals
-            }
-            if (prefix === Prefix.RegExp) {
+	return jsCodeText
+		.replace(/\u2028/gu, "\\u2028") // Maybe editors cannot handle U+2028 and U+2029 correctly.
+		.replace(/\u2029/gu, "\\u2029")
+		.replace(ReplacedStringLiteralPattern, (_, prefix, value) => {
+			if (prefix === Prefix.number) {
+				return value; // NaN, Infinity, or -Infinity
+			}
+			if (prefix === Prefix.bigint) {
+				return value; // bigint literals
+			}
+			if (prefix === Prefix.RegExp) {
+				// TODO: Generate fallback code for the case that runtime didn't support syntax natively.
+				//       Currently, Node.js of the minimum supported version supports all RegExp features.
+				//       But new `d` flag is at Stage 3 and maybe it will need fallback code.
 
-                // TODO: Generate fallback code for the case that runtime didn't support syntax natively.
-                //       Currently, Node.js of the minimum supported version supports all RegExp features.
-                //       But new `d` flag is at Stage 3 and maybe it will need fallback code.
+				// Parse it as a string literal for restoring escape sequences that `JSON.stringify` created.
+				return JSON.parse(`"${value}"`);
+			}
 
-                // Parse it as a string literal for restoring escape sequences that `JSON.stringify` created.
-                return JSON.parse(`"${value}"`);
-            }
-
-            throw new Error(`unreachable; unknown prefix ${prefix}`);
-        });
+			throw new Error(`unreachable; unknown prefix ${prefix}`);
+		});
 }
 
 /**
@@ -133,10 +133,10 @@ function restoreNonJSONValueLiterals(jsCodeText) {
  * @private
  */
 function getRaw(ast) {
-    return JSON.parse(
-        JSON.stringify(ast, replaceToSaveNonJSONValues),
-        replaceToRestoreNonJSONValues
-    );
+	return JSON.parse(
+		JSON.stringify(ast, replaceToSaveNonJSONValues),
+		replaceToRestoreNonJSONValues,
+	);
 }
 
 /**
@@ -145,9 +145,9 @@ function getRaw(ast) {
  * @returns {string} The JavaScript code that generates `ast` object.
  */
 function getAstCode(ast) {
-    return restoreNonJSONValueLiterals(
-        JSON.stringify(ast, replaceToSaveNonJSONValues, 4)
-    );
+	return restoreNonJSONValueLiterals(
+		JSON.stringify(ast, replaceToSaveNonJSONValues, 4),
+	);
 }
 
 /**
@@ -159,15 +159,19 @@ function getAstCode(ast) {
  * @throws {Error} If options.rethrowSyntaxError = true, rethrows syntax errors
  * @returns {Object} The normalized AST.
  */
-function getExpectedResult(jsCodeText, parserOptions, { rethrowSyntaxError = false } = {}) {
-    try {
-        return getRaw(espree.parse(jsCodeText, parserOptions));
-    } catch (ex) {
-        if (rethrowSyntaxError) {
-            throw ex;
-        }
-        return { ...getRaw(ex), message: ex.message };
-    }
+function getExpectedResult(
+	jsCodeText,
+	parserOptions,
+	{ rethrowSyntaxError = false } = {},
+) {
+	try {
+		return getRaw(espree.parse(jsCodeText, parserOptions));
+	} catch (ex) {
+		if (rethrowSyntaxError) {
+			throw ex;
+		}
+		return { ...getRaw(ex), message: ex.message };
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -175,14 +179,16 @@ function getExpectedResult(jsCodeText, parserOptions, { rethrowSyntaxError = fal
 //------------------------------------------------------------------------------
 
 export default {
-    getRaw,
-    getAstCode,
-    getExpectedResult,
+	getRaw,
+	getAstCode,
+	getExpectedResult,
 
-    assertMatches(code, config, expected) {
-        assert.deepStrictEqual(
-            getExpectedResult(code, config, { rethrowSyntaxError: !expected.message }),
-            getRaw(expected)
-        );
-    }
+	assertMatches(code, config, expected) {
+		assert.deepStrictEqual(
+			getExpectedResult(code, config, {
+				rethrowSyntaxError: !expected.message,
+			}),
+			getRaw(expected),
+		);
+	},
 };
