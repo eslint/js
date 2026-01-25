@@ -63,12 +63,10 @@ const Token = {
  */
 function convertTemplatePart(tokens, code) {
 	const firstToken = tokens[0],
-		lastTemplateToken = /**
-		 * @type {acorn.Token & {
-		 *   loc: acorn.SourceLocation,
-		 *   range: [number, number]
-		 * }}
-		 */ (tokens.at(-1));
+		lastTemplateToken =
+			/** @type {acorn.Token & { loc: acorn.SourceLocation, range: [number, number] }} */ (
+				tokens.at(-1)
+			);
 
 	/** @type {EsprimaToken} */
 	const token = {
