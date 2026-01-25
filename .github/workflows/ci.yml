@@ -62,6 +62,7 @@ jobs:
               run: npm run build
             - name: Run tests
               run: npm run test
+
     are-the-types-wrong:
         name: Are the types wrong?
         runs-on: ubuntu-latest
