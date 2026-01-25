@@ -19,11 +19,11 @@ import * as espree from "espree";
  *
  */
 export function getSupportedEcmaVersions({ min = 0 } = {}) {
-    return espree.supportedEcmaVersions
-        .filter(
-            ecmaVersion => ecmaVersion >= min
-        )
-        .flatMap(
-            ecmaVersion => (ecmaVersion >= 6 ? [ecmaVersion, ecmaVersion + 2009] : [ecmaVersion])
-        );
+	return espree.supportedEcmaVersions
+		.filter(ecmaVersion => ecmaVersion >= min)
+		.flatMap(ecmaVersion =>
+			ecmaVersion >= 6
+				? [ecmaVersion, ecmaVersion + 2009]
+				: [ecmaVersion],
+		);
 }
