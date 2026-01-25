@@ -25,8 +25,8 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("optimistic", () => {
-    it("direct call to eval", () => {
-        const ast = espree(`
+	it("direct call to eval", () => {
+		const ast = espree(`
             function outer() {
                 eval(str);
                 var i = 20;
@@ -36,27 +36,16 @@ describe("optimistic", () => {
             }
         `);
 
-        const scopes = analyze(ast, { optimistic: true }).scopes;
+		const scopes = analyze(ast, { optimistic: true }).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.name))).to.be.eql(
-            [
-                [
-                    "outer"
-                ],
-                [
-                    "arguments",
-                    "i",
-                    "inner"
-                ],
-                [
-                    "arguments"
-                ]
-            ]
-        );
-    });
+		expect(
+			scopes.map(scope => scope.variables.map(variable => variable.name)),
+		).to.be.eql([["outer"], ["arguments", "i", "inner"], ["arguments"]]);
+	});
 
-    it("with statement", () => {
-        const ast = espree(`
+	it("with statement", () => {
+		const ast = espree(
+			`
             function outer() {
                 eval(str);
                 var i = 20;
@@ -64,22 +53,14 @@ describe("optimistic", () => {
                     i;
                 }
             }
-        `, "script");
+        `,
+			"script",
+		);
 
-        const scopes = analyze(ast, { optimistic: true }).scopes;
+		const scopes = analyze(ast, { optimistic: true }).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.name))).to.be.eql(
-            [
-                [
-                    "outer"
-                ],
-                [
-                    "arguments",
-                    "i"
-                ],
-                [
-                ]
-            ]
-        );
-    });
+		expect(
+			scopes.map(scope => scope.variables.map(variable => variable.name)),
+		).to.be.eql([["outer"], ["arguments", "i"], []]);
+	});
 });

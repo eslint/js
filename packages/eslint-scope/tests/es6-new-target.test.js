@@ -26,8 +26,8 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("ES6 new.target", () => {
-    it("should not make references of new.target", () => {
-        const ast = espree(`
+	it("should not make references of new.target", () => {
+		const ast = espree(`
             class A {
                 constructor() {
                     new.target;
@@ -35,19 +35,19 @@ describe("ES6 new.target", () => {
             }
         `);
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6 });
+		const scopeManager = analyze(ast, { ecmaVersion: 6 });
 
-        expect(scopeManager.scopes).to.have.length(3);
+		expect(scopeManager.scopes).to.have.length(3);
 
-        const scope = scopeManager.scopes[2];
+		const scope = scopeManager.scopes[2];
 
-        expect(scope.type).to.be.equal("function");
-        expect(scope.block.type).to.be.equal("FunctionExpression");
-        expect(scope.isStrict).to.be.true;
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.references).to.have.length(0);
-    });
+		expect(scope.type).to.be.equal("function");
+		expect(scope.block.type).to.be.equal("FunctionExpression");
+		expect(scope.isStrict).to.be.true;
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.references).to.have.length(0);
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

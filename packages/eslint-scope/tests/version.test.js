@@ -18,7 +18,7 @@ const { version } = packageJson;
 //------------------------------------------------------------------------------
 
 describe("version", () => {
-    it("should be equal to the version in package.json", () => {
-        expect(eslintScope.version).to.be.equal(version);
-    });
+	it("should be equal to the version in package.json", () => {
+		expect(eslintScope.version).to.be.equal(version);
+	});
 });

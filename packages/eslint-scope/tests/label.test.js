@@ -26,30 +26,30 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("label", () => {
-    it("should not create variables", () => {
-        const ast = espree("function bar() { q: for(;;) { break q; } }");
+	it("should not create variables", () => {
+		const ast = espree("function bar() { q: for(;;) { break q; } }");
 
-        const scopeManager = analyze(ast);
+		const scopeManager = analyze(ast);
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(1);
-        expect(globalScope.variables[0].name).to.be.equal("bar");
-        expect(globalScope.references).to.have.length(0);
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(1);
+		expect(globalScope.variables[0].name).to.be.equal("bar");
+		expect(globalScope.references).to.have.length(0);
 
-        const scope = scopeManager.scopes[1];
+		const scope = scopeManager.scopes[1];
 
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.isArgumentsMaterialized()).to.be.false;
-        expect(scope.references).to.have.length(0);
-    });
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.isArgumentsMaterialized()).to.be.false;
+		expect(scope.references).to.have.length(0);
+	});
 
-    it("should count child node references", () => {
-        const ast = espree(`
+	it("should count child node references", () => {
+		const ast = espree(`
             var foo = 5;
 
             label: while (true) {
@@ -58,19 +58,19 @@ describe("label", () => {
             }
         `);
 
-        const scopeManager = analyze(ast);
+		const scopeManager = analyze(ast);
 
-        expect(scopeManager.scopes).to.have.length(1);
-        const globalScope = scopeManager.scopes[0];
+		expect(scopeManager.scopes).to.have.length(1);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(1);
-        expect(globalScope.variables[0].name).to.be.equal("foo");
-        expect(globalScope.through.length).to.be.equal(1);
-        expect(globalScope.through[0].identifier.name).to.be.equal("console");
-        expect(globalScope.variables[0].references.length).to.be.equal(2);
-        expect(globalScope.variables[0].references[1].isRead()).to.be.true;
-    });
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(1);
+		expect(globalScope.variables[0].name).to.be.equal("foo");
+		expect(globalScope.through.length).to.be.equal(1);
+		expect(globalScope.through[0].identifier.name).to.be.equal("console");
+		expect(globalScope.variables[0].references.length).to.be.equal(2);
+		expect(globalScope.variables[0].references[1].isRead()).to.be.true;
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

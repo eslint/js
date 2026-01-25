@@ -18,36 +18,42 @@ import { readFile } from "node:fs/promises";
 // eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-
 //------------------------------------------------------------------------------
 // Setup
 //------------------------------------------------------------------------------
 
-const testFiles = shelljs.find(`${__dirname}/../fixtures/libraries`).filter(filename => path.extname(filename) === ".js");
+const testFiles = shelljs
+	.find(`${__dirname}/../fixtures/libraries`)
+	.filter(filename => path.extname(filename) === ".js");
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 describe("Libraries", () => {
-    testFiles.forEach(filename => {
-        describe(filename, () => {
+	testFiles.forEach(filename => {
+		describe(filename, () => {
+			// var filename = "angular-1.2.5.js";
 
-            // var filename = "angular-1.2.5.js";
+			it("should produce correct AST when parsed", async () => {
+				const output = await readFile(
+					`${filename}.result.json`,
+					"utf-8",
+				);
+				const input = await readFile(filename, "utf-8");
+				const result = JSON.stringify(
+					tester.getRaw(
+						espree.parse(input, {
+							ecmaVersion: 5,
+							loc: true,
+							range: true,
+							tokens: true,
+						}),
+					),
+				);
 
-            it("should produce correct AST when parsed", async () => {
-                const output = await readFile(`${filename}.result.json`, "utf-8");
-                const input = await readFile(filename, "utf-8");
-                const result = JSON.stringify(tester.getRaw(espree.parse(input, {
-                    ecmaVersion: 5,
-                    loc: true,
-                    range: true,
-                    tokens: true
-                })));
-
-                assert.strictEqual(result, output);
-            });
-        });
-
-    });
+				assert.strictEqual(result, output);
+			});
+		});
+	});
 });

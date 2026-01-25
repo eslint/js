@@ -13,67 +13,63 @@ const assert = require("node:assert");
 const espree = require("../../dist/espree.cjs");
 const { version } = require("../../package.json");
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 describe("commonjs", () => {
-    it("has parse", () => {
+	it("has parse", () => {
+		assert.strictEqual(typeof espree.parse, "function");
 
-        assert.strictEqual(typeof espree.parse, "function");
+		const ast = espree.parse("let foo = bar;", {
+			ecmaVersion: 6,
+			comment: true,
+			tokens: true,
+			range: true,
+			loc: true,
+		});
 
-        const ast = espree.parse("let foo = bar;", {
-            ecmaVersion: 6,
-            comment: true,
-            tokens: true,
-            range: true,
-            loc: true
-        });
+		assert.strictEqual(typeof ast, "object");
+	});
 
-        assert.strictEqual(typeof ast, "object");
-    });
+	it("parses jsx", () => {
+		const config = {
+			loc: true,
+			range: true,
+			tokens: true,
+			ecmaVersion: 6,
+			ecmaFeatures: { jsx: true },
+		};
 
-    it("parses jsx", () => {
+		const code = "<foo bar={`${baz}`} />";
 
-        const config = {
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: 6,
-            ecmaFeatures: { jsx: true }
-        };
+		const result = espree.parse(code, config);
 
-        const code = "<foo bar={`${baz}`} />";
+		assert.strictEqual(typeof result, "object");
+		assert.strictEqual(result.tokens.length, 11);
+	});
 
-        const result = espree.parse(code, config);
+	it("has tokenize", () => {
+		assert.strictEqual(typeof espree.tokenize, "function");
+	});
 
-        assert.strictEqual(typeof result, "object");
-        assert.strictEqual(result.tokens.length, 11);
-    });
+	it("has version equal to the version in package.json", () => {
+		assert.strictEqual(espree.version, version);
+	});
 
+	it("has Syntax", () => {
+		assert.strictEqual(typeof espree.Syntax, "object");
+	});
 
-    it("has tokenize", () => {
-        assert.strictEqual(typeof espree.tokenize, "function");
-    });
+	it("has VisitorKeys", () => {
+		assert.strictEqual(typeof espree.VisitorKeys, "object");
+	});
 
-    it("has version equal to the version in package.json", () => {
-        assert.strictEqual(espree.version, version);
-    });
+	it("has latestEcmaVersion", () => {
+		assert.strictEqual(typeof espree.latestEcmaVersion, "number");
+	});
 
-    it("has Syntax", () => {
-        assert.strictEqual(typeof espree.Syntax, "object");
-    });
-
-    it("has VisitorKeys", () => {
-        assert.strictEqual(typeof espree.VisitorKeys, "object");
-    });
-
-    it("has latestEcmaVersion", () => {
-        assert.strictEqual(typeof espree.latestEcmaVersion, "number");
-    });
-
-    it("has supportedEcmaVersions", () => {
-        assert.strictEqual(typeof espree.supportedEcmaVersions, "object");
-    });
+	it("has supportedEcmaVersions", () => {
+		assert.strictEqual(typeof espree.supportedEcmaVersions, "object");
+	});
 });
