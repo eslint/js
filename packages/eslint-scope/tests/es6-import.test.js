@@ -27,107 +27,125 @@ import { getSupportedEcmaVersions } from "./util/ecma-version.js";
 import { analyze } from "../lib/index.js";
 
 describe("import declaration", () => {
+	// http://people.mozilla.org/~jorendorff/es6-draft.html#sec-static-and-runtme-semantics-module-records
+	it("should import names from source", () => {
+		getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
+			const ast = espree('import v from "mod";');
 
-    // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-static-and-runtme-semantics-module-records
-    it("should import names from source", () => {
-        getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
-            const ast = espree("import v from \"mod\";");
+			const scopeManager = analyze(ast, {
+				ecmaVersion,
+				sourceType: "module",
+			});
 
-            const scopeManager = analyze(ast, { ecmaVersion, sourceType: "module" });
+			expect(scopeManager.scopes).to.have.length(2);
+			const globalScope = scopeManager.scopes[0];
 
-            expect(scopeManager.scopes).to.have.length(2);
-            const globalScope = scopeManager.scopes[0];
+			expect(globalScope.type).to.be.equal("global");
+			expect(globalScope.variables).to.have.length(0);
+			expect(globalScope.references).to.have.length(0);
 
-            expect(globalScope.type).to.be.equal("global");
-            expect(globalScope.variables).to.have.length(0);
-            expect(globalScope.references).to.have.length(0);
+			const scope = scopeManager.scopes[1];
 
-            const scope = scopeManager.scopes[1];
+			expect(scope.type).to.be.equal("module");
+			expect(scope.isStrict).to.be.true;
+			expect(scope.variables).to.have.length(1);
+			expect(scope.variables[0].name).to.be.equal("v");
+			expect(scope.variables[0].defs[0].type).to.be.equal(
+				"ImportBinding",
+			);
+			expect(scope.references).to.have.length(0);
+		});
+	});
 
-            expect(scope.type).to.be.equal("module");
-            expect(scope.isStrict).to.be.true;
-            expect(scope.variables).to.have.length(1);
-            expect(scope.variables[0].name).to.be.equal("v");
-            expect(scope.variables[0].defs[0].type).to.be.equal("ImportBinding");
-            expect(scope.references).to.have.length(0);
-        });
+	it("should import namespaces", () => {
+		getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
+			const ast = espree('import * as ns from "mod";');
 
-    });
+			const scopeManager = analyze(ast, {
+				ecmaVersion,
+				sourceType: "module",
+			});
 
-    it("should import namespaces", () => {
-        getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
-            const ast = espree("import * as ns from \"mod\";");
+			expect(scopeManager.scopes).to.have.length(2);
+			const globalScope = scopeManager.scopes[0];
 
-            const scopeManager = analyze(ast, { ecmaVersion, sourceType: "module" });
+			expect(globalScope.type).to.be.equal("global");
+			expect(globalScope.variables).to.have.length(0);
+			expect(globalScope.references).to.have.length(0);
 
-            expect(scopeManager.scopes).to.have.length(2);
-            const globalScope = scopeManager.scopes[0];
+			const scope = scopeManager.scopes[1];
 
-            expect(globalScope.type).to.be.equal("global");
-            expect(globalScope.variables).to.have.length(0);
-            expect(globalScope.references).to.have.length(0);
+			expect(scope.type).to.be.equal("module");
+			expect(scope.isStrict).to.be.true;
+			expect(scope.variables).to.have.length(1);
+			expect(scope.variables[0].name).to.be.equal("ns");
+			expect(scope.variables[0].defs[0].type).to.be.equal(
+				"ImportBinding",
+			);
+			expect(scope.references).to.have.length(0);
+		});
+	});
 
-            const scope = scopeManager.scopes[1];
+	it("should import insided names#1", () => {
+		getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
+			const ast = espree('import {x} from "mod";');
 
-            expect(scope.type).to.be.equal("module");
-            expect(scope.isStrict).to.be.true;
-            expect(scope.variables).to.have.length(1);
-            expect(scope.variables[0].name).to.be.equal("ns");
-            expect(scope.variables[0].defs[0].type).to.be.equal("ImportBinding");
-            expect(scope.references).to.have.length(0);
-        });
-    });
+			const scopeManager = analyze(ast, {
+				ecmaVersion,
+				sourceType: "module",
+			});
 
-    it("should import insided names#1", () => {
-        getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
-            const ast = espree("import {x} from \"mod\";");
+			expect(scopeManager.scopes).to.have.length(2);
+			const globalScope = scopeManager.scopes[0];
 
-            const scopeManager = analyze(ast, { ecmaVersion, sourceType: "module" });
+			expect(globalScope.type).to.be.equal("global");
+			expect(globalScope.variables).to.have.length(0);
+			expect(globalScope.references).to.have.length(0);
 
-            expect(scopeManager.scopes).to.have.length(2);
-            const globalScope = scopeManager.scopes[0];
+			const scope = scopeManager.scopes[1];
 
-            expect(globalScope.type).to.be.equal("global");
-            expect(globalScope.variables).to.have.length(0);
-            expect(globalScope.references).to.have.length(0);
+			expect(scope.type).to.be.equal("module");
+			expect(scope.isStrict).to.be.true;
+			expect(scope.variables).to.have.length(1);
+			expect(scope.variables[0].name).to.be.equal("x");
+			expect(scope.variables[0].defs[0].type).to.be.equal(
+				"ImportBinding",
+			);
+			expect(scope.references).to.have.length(0);
+		});
+	});
 
-            const scope = scopeManager.scopes[1];
+	it("should import insided names#2", () => {
+		getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
+			const ast = espree('import {x as v} from "mod";');
 
-            expect(scope.type).to.be.equal("module");
-            expect(scope.isStrict).to.be.true;
-            expect(scope.variables).to.have.length(1);
-            expect(scope.variables[0].name).to.be.equal("x");
-            expect(scope.variables[0].defs[0].type).to.be.equal("ImportBinding");
-            expect(scope.references).to.have.length(0);
-        });
-    });
+			const scopeManager = analyze(ast, {
+				ecmaVersion,
+				sourceType: "module",
+			});
 
-    it("should import insided names#2", () => {
-        getSupportedEcmaVersions({ min: 6 }).forEach(ecmaVersion => {
-            const ast = espree("import {x as v} from \"mod\";");
+			expect(scopeManager.scopes).to.have.length(2);
+			const globalScope = scopeManager.scopes[0];
 
-            const scopeManager = analyze(ast, { ecmaVersion, sourceType: "module" });
+			expect(globalScope.type).to.be.equal("global");
+			expect(globalScope.variables).to.have.length(0);
+			expect(globalScope.references).to.have.length(0);
 
-            expect(scopeManager.scopes).to.have.length(2);
-            const globalScope = scopeManager.scopes[0];
+			const scope = scopeManager.scopes[1];
 
-            expect(globalScope.type).to.be.equal("global");
-            expect(globalScope.variables).to.have.length(0);
-            expect(globalScope.references).to.have.length(0);
+			expect(scope.type).to.be.equal("module");
+			expect(scope.isStrict).to.be.true;
+			expect(scope.variables).to.have.length(1);
+			expect(scope.variables[0].name).to.be.equal("v");
+			expect(scope.variables[0].defs[0].type).to.be.equal(
+				"ImportBinding",
+			);
+			expect(scope.references).to.have.length(0);
+		});
+	});
 
-            const scope = scopeManager.scopes[1];
-
-            expect(scope.type).to.be.equal("module");
-            expect(scope.isStrict).to.be.true;
-            expect(scope.variables).to.have.length(1);
-            expect(scope.variables[0].name).to.be.equal("v");
-            expect(scope.variables[0].defs[0].type).to.be.equal("ImportBinding");
-            expect(scope.references).to.have.length(0);
-        });
-    });
-
-    // TODO: Should parse it.
-    // import from "mod";
+	// TODO: Should parse it.
+	// import from "mod";
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

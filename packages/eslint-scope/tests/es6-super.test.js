@@ -26,8 +26,8 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("ES6 super", () => {
-    it("is not handled as reference", () => {
-        const ast = espree(`
+	it("is not handled as reference", () => {
+		const ast = espree(`
             class Foo extends Bar {
                 constructor() {
                     super();
@@ -39,36 +39,36 @@ describe("ES6 super", () => {
             }
         `);
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6 });
+		const scopeManager = analyze(ast, { ecmaVersion: 6 });
 
-        expect(scopeManager.scopes).to.have.length(4);
+		expect(scopeManager.scopes).to.have.length(4);
 
-        let scope = scopeManager.scopes[0];
+		let scope = scopeManager.scopes[0];
 
-        expect(scope.type).to.be.equal("global");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("Foo");
-        expect(scope.references).to.have.length(0);
+		expect(scope.type).to.be.equal("global");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("Foo");
+		expect(scope.references).to.have.length(0);
 
-        scope = scopeManager.scopes[1];
-        expect(scope.type).to.be.equal("class");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("Foo");
-        expect(scope.references).to.have.length(1);
-        expect(scope.references[0].identifier.name).to.be.equal("Bar");
+		scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("class");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("Foo");
+		expect(scope.references).to.have.length(1);
+		expect(scope.references[0].identifier.name).to.be.equal("Bar");
 
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.references).to.have.length(0); // super is specially handled like `this`.
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.references).to.have.length(0); // super is specially handled like `this`.
 
-        scope = scopeManager.scopes[3];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.references).to.have.length(0); // super is specially handled like `this`.
-    });
+		scope = scopeManager.scopes[3];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.references).to.have.length(0); // super is specially handled like `this`.
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

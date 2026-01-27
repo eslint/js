@@ -128,41 +128,40 @@ Returns an array of all supported ECMAScript versions
 
 ```js
 const options = {
-    // attach range information to each node
-    range: false,
+	// attach range information to each node
+	range: false,
 
-    // attach line/column location information to each node
-    loc: false,
+	// attach line/column location information to each node
+	loc: false,
 
-    // create a top-level comments array containing all comments
-    comment: false,
+	// create a top-level comments array containing all comments
+	comment: false,
 
-    // create a top-level tokens array containing all tokens
-    tokens: false,
+	// create a top-level tokens array containing all tokens
+	tokens: false,
 
-    // Set to 3, 5 (the default), 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 or 17 to specify the version of ECMAScript syntax you want to use.
-    // You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), 2018 (same as 9), 2019 (same as 10), 2020 (same as 11), 2021 (same as 12), 2022 (same as 13), 2023 (same as 14), 2024 (same as 15), 2025 (same as 16) or 2026 (same as 17) to use the year-based naming.
-    // You can also set "latest" to use the most recently supported version.
-    ecmaVersion: 3,
+	// Set to 3, 5 (the default), 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 or 17 to specify the version of ECMAScript syntax you want to use.
+	// You can also set to 2015 (same as 6), 2016 (same as 7), 2017 (same as 8), 2018 (same as 9), 2019 (same as 10), 2020 (same as 11), 2021 (same as 12), 2022 (same as 13), 2023 (same as 14), 2024 (same as 15), 2025 (same as 16) or 2026 (same as 17) to use the year-based naming.
+	// You can also set "latest" to use the most recently supported version.
+	ecmaVersion: 3,
 
-    allowReserved: true, // only allowed when ecmaVersion is 3
+	allowReserved: true, // only allowed when ecmaVersion is 3
 
-    // specify which type of script you're parsing ("script", "module", or "commonjs")
-    sourceType: "script",
+	// specify which type of script you're parsing ("script", "module", or "commonjs")
+	sourceType: "script",
 
-    // specify additional language features
-    ecmaFeatures: {
+	// specify additional language features
+	ecmaFeatures: {
+		// enable JSX parsing
+		jsx: false,
 
-        // enable JSX parsing
-        jsx: false,
+		// enable return in global scope (set to true automatically when sourceType is "commonjs")
+		globalReturn: false,
 
-        // enable return in global scope (set to true automatically when sourceType is "commonjs")
-        globalReturn: false,
-
-        // enable implied strict mode (if ecmaVersion >= 5)
-        impliedStrict: false
-    }
-}
+		// enable implied strict mode (if ecmaVersion >= 5)
+		impliedStrict: false,
+	},
+};
 ```
 
 ## Esprima Compatibility Going Forward
@@ -183,16 +182,16 @@ We work hard to ensure that Espree is safe for everyone and that security issues
 
 ## Build Commands
 
-* `npm test` - run all tests
-* `npm run lint` - run all linting
+- `npm test` - run all tests
+- `npm run lint` - run all linting
 
 ## Differences from Espree 2.x
 
-* The `tokenize()` method does not use `ecmaFeatures`. Any string will be tokenized completely based on ECMAScript 6 semantics.
-* Trailing whitespace no longer is counted as part of a node.
-* `let` and `const` declarations are no longer parsed by default. You must opt-in by using an `ecmaVersion` newer than `5` or setting `sourceType` to `module`.
-* The `esparse` and `esvalidate` binary scripts have been removed.
-* There is no `tolerant` option. We will investigate adding this back in the future.
+- The `tokenize()` method does not use `ecmaFeatures`. Any string will be tokenized completely based on ECMAScript 6 semantics.
+- Trailing whitespace no longer is counted as part of a node.
+- `let` and `const` declarations are no longer parsed by default. You must opt-in by using an `ecmaVersion` newer than `5` or setting `sourceType` to `module`.
+- The `esparse` and `esvalidate` binary scripts have been removed.
+- There is no `tolerant` option. We will investigate adding this back in the future.
 
 ## Known Incompatibilities
 
@@ -200,14 +199,14 @@ In an effort to help those wanting to transition from other parsers to Espree, t
 
 ### Esprima 1.2.2
 
-* Esprima counts trailing whitespace as part of each AST node while Espree does not. In Espree, the end of a node is where the last token occurs.
-* Espree does not parse `let` and `const` declarations by default.
-* Error messages returned for parsing errors are different.
-* There are two addition properties on every node and token: `start` and `end`. These represent the same data as `range` and are used internally by Acorn.
+- Esprima counts trailing whitespace as part of each AST node while Espree does not. In Espree, the end of a node is where the last token occurs.
+- Espree does not parse `let` and `const` declarations by default.
+- Error messages returned for parsing errors are different.
+- There are two addition properties on every node and token: `start` and `end`. These represent the same data as `range` and are used internally by Acorn.
 
 ### Esprima 2.x
 
-* Esprima 2.x uses a different comment attachment algorithm that results in some comments being added in different places than Espree. The algorithm Espree uses is the same one used in Esprima 1.2.2.
+- Esprima 2.x uses a different comment attachment algorithm that results in some comments being added in different places than Espree. The algorithm Espree uses is the same one used in Esprima 1.2.2.
 
 ## Frequently Asked Questions
 
@@ -235,7 +234,7 @@ Espree supports all ECMAScript 2025 features and partially supports ECMAScript 2
 
 Because ECMAScript 2026 is still under development, we are implementing features as they are finalized. Currently, Espree supports:
 
-* [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management)
+- [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management)
 
 See [finished-proposals.md](https://github.com/tc39/proposals/blob/master/finished-proposals.md) to know what features are finalized.
 

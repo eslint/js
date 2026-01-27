@@ -14,7 +14,6 @@ import shelljs from "shelljs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import tester from "../util/tester.js";
 
-
 // eslint-disable-next-line no-underscore-dangle -- Conventional
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -24,9 +23,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const FIXTURES_DIR = "./tests/fixtures/ecma-features";
 
-const testFiles = shelljs.find(FIXTURES_DIR)
-    .filter(filename => filename.includes(".src.js"))
-    .map(filename => filename.slice(FIXTURES_DIR.length - 1, filename.length - 7));
+const testFiles = shelljs
+	.find(FIXTURES_DIR)
+	.filter(filename => filename.includes(".src.js"))
+	.map(filename =>
+		filename.slice(FIXTURES_DIR.length - 1, filename.length - 7),
+	);
 
 //------------------------------------------------------------------------------
 // Tests
@@ -38,47 +40,48 @@ const testFiles = shelljs.find(FIXTURES_DIR)
  * @returns {boolean} Whether it should throw in its tests when it is enabled.
  */
 function shouldThrowInTestsWhenEnabled(feature) {
-    return (feature === "impliedStrict");
+	return feature === "impliedStrict";
 }
 
 describe("ecmaFeatures", () => {
+	let config;
 
-    let config;
+	beforeEach(() => {
+		config = {
+			loc: true,
+			range: true,
+			tokens: true,
+			ecmaVersion: 6,
+			ecmaFeatures: {},
+		};
+	});
+	testFiles.forEach(filename => {
+		describe(filename, () => {
+			// Uncomment and fill in filename to focus on a single file
+			// var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
+			const feature = path.dirname(filename),
+				isPermissive = !shouldThrowInTestsWhenEnabled(feature),
+				code = shelljs.cat(
+					`${path.resolve(FIXTURES_DIR, filename)}.src.js`,
+				);
 
-    beforeEach(() => {
-        config = {
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: 6,
-            ecmaFeatures: {}
-        };
-    });
-    testFiles.forEach(filename => {
-        describe(filename, () => {
+			it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
+				config.ecmaFeatures[feature] = isPermissive;
 
-            // Uncomment and fill in filename to focus on a single file
-            // var filename = "jsx/invalid-matching-placeholder-in-closing-tag";
-            const feature = path.dirname(filename),
-                isPermissive = !shouldThrowInTestsWhenEnabled(feature),
-                code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`);
+				const expected = await import(
+					`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`
+				);
 
-            it(`should parse correctly when ${feature} is ${isPermissive}`, async () => {
-                config.ecmaFeatures[feature] = isPermissive;
+				tester.assertMatches(code, config, expected.default);
+			});
 
-                const expected = await import(`${pathToFileURL(path.resolve(__dirname, "../../", FIXTURES_DIR, filename)).href}.result.js`);
+			it(`should throw an error when ${feature} is ${!isPermissive}`, () => {
+				config.ecmaFeatures[feature] = !isPermissive;
 
-                tester.assertMatches(code, config, expected.default);
-            });
-
-            it(`should throw an error when ${feature} is ${!isPermissive}`, () => {
-                config.ecmaFeatures[feature] = !isPermissive;
-
-                assert.throws(() => {
-                    espree.parse(code, config);
-                });
-
-            });
-        });
-    });
+				assert.throws(() => {
+					espree.parse(code, config);
+				});
+			});
+		});
+	});
 });

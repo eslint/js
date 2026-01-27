@@ -1,17 +1,15 @@
 {
-    "compilerOptions": {
-        "checkJs": true,
-        "exactOptionalPropertyTypes": true,
-        "forceConsistentCasingInFileNames": true,
-        "lib": [
-            "es2022"
-        ],
-        "module": "nodenext",
-        "noEmit": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "types": [],
-    },
-    "include": ["lib"]
+  "compilerOptions": {
+    "checkJs": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2022"],
+    "module": "nodenext",
+    "noEmit": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "types": []
+  },
+  "include": ["lib"]
 }

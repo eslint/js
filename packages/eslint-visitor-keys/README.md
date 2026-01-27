@@ -23,13 +23,13 @@ $ npm install eslint-visitor-keys
 To use in an ESM file:
 
 ```js
-import * as evk from "eslint-visitor-keys"
+import * as evk from "eslint-visitor-keys";
 ```
 
 To use in a CommonJS file:
 
 ```js
-const evk = require("eslint-visitor-keys")
+const evk = require("eslint-visitor-keys");
 ```
 
 ### evk.KEYS
@@ -60,11 +60,11 @@ For example:
 
 ```js
 const node = {
-    type: "AssignmentExpression",
-    left: { type: "Identifier", name: "foo" },
-    right: { type: "Literal", value: 0 }
-}
-console.log(evk.getKeys(node)) // → ["type", "left", "right"]
+	type: "AssignmentExpression",
+	left: { type: "Identifier", name: "foo" },
+	right: { type: "Literal", value: 0 },
+};
+console.log(evk.getKeys(node)); // → ["type", "left", "right"]
 ```
 
 ### evk.unionWith(additionalKeys)
@@ -79,9 +79,11 @@ Make the union set with `evk.KEYS` and the given keys.
 For example:
 
 ```js
-console.log(evk.unionWith({
-    MethodDefinition: ["decorators"]
-})) // → { ..., MethodDefinition: ["decorators", "key", "value"], ... }
+console.log(
+	evk.unionWith({
+		MethodDefinition: ["decorators"],
+	}),
+); // → { ..., MethodDefinition: ["decorators", "key", "value"], ... }
 ```
 
 ## 📰 Change log

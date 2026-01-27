@@ -26,19 +26,19 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("global increment", () => {
-    it("becomes read/write", () => {
-        const ast = espree("b++;");
+	it("becomes read/write", () => {
+		const ast = espree("b++;");
 
-        const scopeManager = analyze(ast);
+		const scopeManager = analyze(ast);
 
-        expect(scopeManager.scopes).to.have.length(1);
-        const globalScope = scopeManager.scopes[0];
+		expect(scopeManager.scopes).to.have.length(1);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(1);
-        expect(globalScope.references[0].isReadWrite()).to.be.true;
-    });
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(1);
+		expect(globalScope.references[0].isReadWrite()).to.be.true;
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

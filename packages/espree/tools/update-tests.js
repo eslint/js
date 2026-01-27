@@ -31,9 +31,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * @returns {string[]} The file names
  */
 function getTestFilenames(directory) {
-    return shelljs.find(directory).filter(filename =>
-        filename.includes(".src.js")).map(filename =>
-        filename.slice(directory.length - 1, filename.length - 7)); // strip off ".src.js"
+	return shelljs
+		.find(directory)
+		.filter(filename => filename.includes(".src.js"))
+		.map(filename =>
+			filename.slice(directory.length - 1, filename.length - 7),
+		); // strip off ".src.js"
 }
 
 /**
@@ -42,10 +45,13 @@ function getTestFilenames(directory) {
  * @returns {string[]} The file names
  */
 function getLibraryFilenames(directory) {
-    return shelljs.find(directory).filter(filename =>
-        filename.includes(".js") &&
-            !filename.includes(".result.js")).map(filename =>
-        filename.slice(directory.length - 1)); // strip off directory
+	return shelljs
+		.find(directory)
+		.filter(
+			filename =>
+				filename.includes(".js") && !filename.includes(".result.js"),
+		)
+		.map(filename => filename.slice(directory.length - 1)); // strip off directory
 }
 
 /**
@@ -55,7 +61,10 @@ function getLibraryFilenames(directory) {
  * @returns {void}
  */
 function outputResult(result, testResultFilename) {
-    fs.writeFileSync(testResultFilename, `export default ${tester.getAstCode(result)};`);
+	fs.writeFileSync(
+		testResultFilename,
+		`export default ${tester.getAstCode(result)};`,
+	);
 }
 
 //------------------------------------------------------------------------------
@@ -63,39 +72,38 @@ function outputResult(result, testResultFilename) {
 //------------------------------------------------------------------------------
 
 const FIXTURES_DIR = "./tests/fixtures/ecma-features",
-    LIBRARIES_DIR = "./tests/fixtures/libraries";
+	LIBRARIES_DIR = "./tests/fixtures/libraries";
 
 const testFiles = getTestFilenames(FIXTURES_DIR),
-    libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
+	libraryFiles = getLibraryFilenames(LIBRARIES_DIR);
 
 libraryFiles.forEach(filename => {
-    const testResultFilename = `${path.resolve(__dirname, "..", LIBRARIES_DIR, filename)}.result.json`,
-        code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename));
-    const result = tester.getExpectedResult(code, {
-        loc: true,
-        range: true,
-        tokens: true
-    });
+	const testResultFilename = `${path.resolve(__dirname, "..", LIBRARIES_DIR, filename)}.result.json`,
+		code = shelljs.cat(path.resolve(LIBRARIES_DIR, filename));
+	const result = tester.getExpectedResult(code, {
+		loc: true,
+		range: true,
+		tokens: true,
+	});
 
-    fs.writeFileSync(testResultFilename, JSON.stringify(result));
+	fs.writeFileSync(testResultFilename, JSON.stringify(result));
 });
 
 // update all tests in ecma-features
 testFiles.forEach(filename => {
+	const feature = path.dirname(filename),
+		code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`),
+		config = {
+			loc: true,
+			range: true,
+			tokens: true,
+			ecmaVersion: 6,
+			ecmaFeatures: {},
+		};
 
-    const feature = path.dirname(filename),
-        code = shelljs.cat(`${path.resolve(FIXTURES_DIR, filename)}.src.js`),
-        config = {
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: 6,
-            ecmaFeatures: {}
-        };
+	config.ecmaFeatures[feature] = true;
+	const testResultFilename = `${path.resolve(__dirname, "..", FIXTURES_DIR, filename)}.result.js`;
+	const result = tester.getExpectedResult(code, config);
 
-    config.ecmaFeatures[feature] = true;
-    const testResultFilename = `${path.resolve(__dirname, "..", FIXTURES_DIR, filename)}.result.js`;
-    const result = tester.getExpectedResult(code, config);
-
-    outputResult(result, testResultFilename);
+	outputResult(result, testResultFilename);
 });

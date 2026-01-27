@@ -25,129 +25,109 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("implicit global reference", () => {
-    it("assignments global scope", () => {
-        const ast = espree(`
+	it("assignments global scope", () => {
+		const ast = espree(`
             var x = 20;
             x = 300;
         `);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.defs.map(def => def.type)))).to.be.eql(
-            [
-                [
-                    [
-                        "Variable"
-                    ]
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope =>
+				scope.variables.map(variable =>
+					variable.defs.map(def => def.type),
+				),
+			),
+		).to.be.eql([[["Variable"]]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
-        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql([]);
-        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql([]);
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql([]);
+		expect(
+			scopes[0].implicit.left.map(reference => reference.identifier.name),
+		).to.be.eql([]);
+		expect(
+			scopes[0].through.map(reference => reference.identifier.name),
+		).to.be.eql([]);
+	});
 
-    it("assignments global scope without definition", () => {
-        const ast = espree(`
+	it("assignments global scope without definition", () => {
+		const ast = espree(`
             x = 300;
             x = 300;
         `);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.defs.map(def => def.type)))).to.be.eql(
-            [
-                [
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope =>
+				scope.variables.map(variable =>
+					variable.defs.map(def => def.type),
+				),
+			),
+		).to.be.eql([[]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql(
-            [
-                "x"
-            ]
-        );
-        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "x",
-                "x"
-            ]
-        );
-        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "x",
-                "x"
-            ]
-        );
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql(["x"]);
+		expect(
+			scopes[0].implicit.left.map(reference => reference.identifier.name),
+		).to.be.eql(["x", "x"]);
+		expect(
+			scopes[0].through.map(reference => reference.identifier.name),
+		).to.be.eql(["x", "x"]);
+	});
 
-    it("assignments global scope without definition eval", () => {
-        const ast = espree(`
+	it("assignments global scope without definition eval", () => {
+		const ast = espree(`
             function inner() {
                 eval(str);
                 x = 300;
             }
         `);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.defs.map(def => def.type)))).to.be.eql(
-            [
-                [
-                    [
-                        "FunctionName"
-                    ]
-                ],
-                [
-                    [
-                    ]
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope =>
+				scope.variables.map(variable =>
+					variable.defs.map(def => def.type),
+				),
+			),
+		).to.be.eql([[["FunctionName"]], [[]]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql([]);
+	});
 
-    it("assignment leaks", () => {
-        const ast = espree(`
+	it("assignment leaks", () => {
+		const ast = espree(`
             function outer() {
                 x = 20;
             }
         `);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.name))).to.be.eql(
-            [
-                [
-                    "outer"
-                ],
-                [
-                    "arguments"
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope => scope.variables.map(variable => variable.name)),
+		).to.be.eql([["outer"], ["arguments"]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql(
-            [
-                "x"
-            ]
-        );
-        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "x"
-            ]
-        );
-        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "x"
-            ]
-        );
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql(["x"]);
+		expect(
+			scopes[0].implicit.left.map(reference => reference.identifier.name),
+		).to.be.eql(["x"]);
+		expect(
+			scopes[0].through.map(reference => reference.identifier.name),
+		).to.be.eql(["x"]);
+	});
 
-    it("assignment doesn't leak", () => {
-        const ast = espree(`
+	it("assignment doesn't leak", () => {
+		const ast = espree(`
             function outer() {
                 function inner() {
                     x = 20;
@@ -156,69 +136,48 @@ describe("implicit global reference", () => {
             }
         `);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.name))).to.be.eql(
-            [
-                [
-                    "outer"
-                ],
-                [
-                    "arguments",
-                    "inner",
-                    "x"
-                ],
-                [
-                    "arguments"
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope => scope.variables.map(variable => variable.name)),
+		).to.be.eql([["outer"], ["arguments", "inner", "x"], ["arguments"]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
-        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql([]);
-        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql([]);
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql([]);
+		expect(
+			scopes[0].implicit.left.map(reference => reference.identifier.name),
+		).to.be.eql([]);
+		expect(
+			scopes[0].through.map(reference => reference.identifier.name),
+		).to.be.eql([]);
+	});
 
-    it("for-in-statement leaks", () => {
-        const ast = espree(`
+	it("for-in-statement leaks", () => {
+		const ast = espree(`
             function outer() {
                 for (x in y) { }
             }`);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.name))).to.be.eql(
-            [
-                [
-                    "outer"
-                ],
-                [
-                    "arguments"
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope => scope.variables.map(variable => variable.name)),
+		).to.be.eql([["outer"], ["arguments"]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql(
-            [
-                "x"
-            ]
-        );
-        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "x",
-                "y"
-            ]
-        );
-        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "x",
-                "y"
-            ]
-        );
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql(["x"]);
+		expect(
+			scopes[0].implicit.left.map(reference => reference.identifier.name),
+		).to.be.eql(["x", "y"]);
+		expect(
+			scopes[0].through.map(reference => reference.identifier.name),
+		).to.be.eql(["x", "y"]);
+	});
 
-    it("for-in-statement doesn't leaks", () => {
-        const ast = espree(`
+	it("for-in-statement doesn't leaks", () => {
+		const ast = espree(`
             function outer() {
                 function inner() {
                     for (x in y) { }
@@ -227,34 +186,20 @@ describe("implicit global reference", () => {
             }
         `);
 
-        const scopes = analyze(ast).scopes;
+		const scopes = analyze(ast).scopes;
 
-        expect(scopes.map(scope => scope.variables.map(variable => variable.name))).to.be.eql(
-            [
-                [
-                    "outer"
-                ],
-                [
-                    "arguments",
-                    "inner",
-                    "x"
-                ],
-                [
-                    "arguments"
-                ]
-            ]
-        );
+		expect(
+			scopes.map(scope => scope.variables.map(variable => variable.name)),
+		).to.be.eql([["outer"], ["arguments", "inner", "x"], ["arguments"]]);
 
-        expect(scopes[0].implicit.variables.map(variable => variable.name)).to.be.eql([]);
-        expect(scopes[0].implicit.left.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "y"
-            ]
-        );
-        expect(scopes[0].through.map(reference => reference.identifier.name)).to.be.eql(
-            [
-                "y"
-            ]
-        );
-    });
+		expect(
+			scopes[0].implicit.variables.map(variable => variable.name),
+		).to.be.eql([]);
+		expect(
+			scopes[0].implicit.left.map(reference => reference.identifier.name),
+		).to.be.eql(["y"]);
+		expect(
+			scopes[0].through.map(reference => reference.identifier.name),
+		).to.be.eql(["y"]);
+	});
 });

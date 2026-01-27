@@ -61,10 +61,8 @@ import { normalizeOptions } from "./options.js";
  * } & TokTypes} EnhancedTokTypes
  */
 
-
 const STATE = Symbol("espree's internal state");
 const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
-
 
 /**
  * Converts an Acorn comment to a Esprima comment.
@@ -78,405 +76,418 @@ const ESPRIMA_FINISH_NODE = Symbol("espree's esprimaFinishNode");
  * @returns {EsprimaComment} The comment object.
  * @private
  */
-function convertAcornCommentToEsprimaComment(block, text, start, end, startLoc, endLoc, code) {
+function convertAcornCommentToEsprimaComment(
+	block,
+	text,
+	start,
+	end,
+	startLoc,
+	endLoc,
+	code,
+) {
+	/** @type {CommentType} */
+	let type;
 
-    /** @type {CommentType} */
-    let type;
+	if (block) {
+		type = "Block";
+	} else if (code.slice(start, start + 2) === "#!") {
+		type = "Hashbang";
+	} else {
+		type = "Line";
+	}
 
-    if (block) {
-        type = "Block";
-    } else if (code.slice(start, start + 2) === "#!") {
-        type = "Hashbang";
-    } else {
-        type = "Line";
-    }
+	/**
+	 * @type {{
+	 *   type: CommentType,
+	 *   value: string,
+	 *   start?: number,
+	 *   end?: number,
+	 *   range?: [number, number],
+	 *   loc?: {
+	 *     start: acorn.Position | undefined,
+	 *     end: acorn.Position | undefined
+	 *   }
+	 * }}
+	 */
+	const comment = {
+		type,
+		value: text,
+	};
 
-    /**
-     * @type {{
-     *   type: CommentType,
-     *   value: string,
-     *   start?: number,
-     *   end?: number,
-     *   range?: [number, number],
-     *   loc?: {
-     *     start: acorn.Position | undefined,
-     *     end: acorn.Position | undefined
-     *   }
-     * }}
-     */
-    const comment = {
-        type,
-        value: text
-    };
+	if (typeof start === "number") {
+		comment.start = start;
+		comment.end = end;
+		comment.range = [start, end];
+	}
 
-    if (typeof start === "number") {
-        comment.start = start;
-        comment.end = end;
-        comment.range = [start, end];
-    }
+	if (typeof startLoc === "object") {
+		comment.loc = {
+			start: startLoc,
+			end: endLoc,
+		};
+	}
 
-    if (typeof startLoc === "object") {
-        comment.loc = {
-            start: startLoc,
-            end: endLoc
-        };
-    }
-
-    return comment;
+	return comment;
 }
 
 // eslint-disable-next-line arrow-body-style -- For TS
 export default () => {
+	/**
+	 * Returns the Espree parser.
+	 * @param {AcornJsxParserCtorEnhanced} Parser The Acorn parser. The `acorn` property is missing from acorn's
+	 *   TypeScript but is present statically on the class.
+	 * @returns {EspreeParserCtor} The Espree Parser constructor.
+	 */
+	return Parser => {
+		const tokTypes = /** @type {EnhancedTokTypes} */ (
+			Object.assign({}, Parser.acorn.tokTypes)
+		);
 
-    /**
-     * Returns the Espree parser.
-     * @param {AcornJsxParserCtorEnhanced} Parser The Acorn parser. The `acorn` property is missing from acorn's
-     *   TypeScript but is present statically on the class.
-     * @returns {EspreeParserCtor} The Espree Parser constructor.
-     */
-    return Parser => {
-        const tokTypes = /** @type {EnhancedTokTypes} */ (
-            Object.assign({}, Parser.acorn.tokTypes)
-        );
+		if (Parser.acornJsx) {
+			Object.assign(tokTypes, Parser.acornJsx.tokTypes);
+		}
 
-        if (Parser.acornJsx) {
-            Object.assign(tokTypes, Parser.acornJsx.tokTypes);
-        }
+		return class Espree extends Parser {
+			/**
+			 * @param {Options | null | undefined} opts The parser options
+			 * @param {string | object} code The code which will be converted to a string.
+			 */
+			constructor(opts, code) {
+				if (typeof opts !== "object" || opts === null) {
+					opts = {};
+				}
+				if (typeof code !== "string" && !(code instanceof String)) {
+					code = String(code);
+				}
 
-        return class Espree extends Parser {
+				// save original source type in case of commonjs
+				const originalSourceType = opts.sourceType;
+				const options = normalizeOptions(opts);
+				const ecmaFeatures = options.ecmaFeatures || {};
+				const tokenTranslator =
+					options.tokens === true
+						? new TokenTranslator(
+								tokTypes,
 
-            /**
-             * @param {Options | null | undefined} opts The parser options
-             * @param {string | object} code The code which will be converted to a string.
-             */
-            constructor(opts, code) {
-                if (typeof opts !== "object" || opts === null) {
-                    opts = {};
-                }
-                if (typeof code !== "string" && !(code instanceof String)) {
-                    code = String(code);
-                }
+								// @ts-expect-error Appears to be a TS bug since the type is indeed string|String
+								code,
+							)
+						: null;
 
-                // save original source type in case of commonjs
-                const originalSourceType = opts.sourceType;
-                const options = normalizeOptions(opts);
-                const ecmaFeatures = options.ecmaFeatures || {};
-                const tokenTranslator =
-                    options.tokens === true
-                        ? new TokenTranslator(
-                            tokTypes,
+				/**
+				 * Data that is unique to Espree and is not represented internally
+				 * in Acorn.
+				 *
+				 * For ES2023 hashbangs, Espree will call `onComment()` during the
+				 * constructor, so we must define state before having access to
+				 * `this`.
+				 * @type {State}
+				 */
+				const state = {
+					originalSourceType:
+						originalSourceType || options.sourceType,
+					tokens: tokenTranslator ? [] : null,
+					comments: options.comment === true ? [] : null,
+					impliedStrict:
+						ecmaFeatures.impliedStrict === true &&
+						options.ecmaVersion >= 5,
+					ecmaVersion: options.ecmaVersion,
+					jsxAttrValueToken: false,
+					lastToken: null,
+					templateElements: [],
+				};
 
-                            // @ts-expect-error Appears to be a TS bug since the type is indeed string|String
-                            code
-                        )
-                        : null;
+				// Initialize acorn parser.
+				super(
+					{
+						// do not use spread, because we don't want to pass any unknown options to acorn
+						ecmaVersion: options.ecmaVersion,
+						sourceType: options.sourceType,
+						ranges: options.ranges,
+						locations: options.locations,
+						allowReserved: options.allowReserved,
 
-                /**
-                 * Data that is unique to Espree and is not represented internally
-                 * in Acorn.
-                 *
-                 * For ES2023 hashbangs, Espree will call `onComment()` during the
-                 * constructor, so we must define state before having access to
-                 * `this`.
-                 * @type {State}
-                 */
-                const state = {
-                    originalSourceType: originalSourceType || options.sourceType,
-                    tokens: tokenTranslator ? [] : null,
-                    comments: options.comment === true ? [] : null,
-                    impliedStrict: ecmaFeatures.impliedStrict === true && options.ecmaVersion >= 5,
-                    ecmaVersion: options.ecmaVersion,
-                    jsxAttrValueToken: false,
-                    lastToken: null,
-                    templateElements: []
-                };
+						// Truthy value is true for backward compatibility.
+						allowReturnOutsideFunction:
+							options.allowReturnOutsideFunction,
 
-                // Initialize acorn parser.
-                super({
+						// Collect tokens
+						onToken(token) {
+							if (tokenTranslator) {
+								// Use `tokens`, `ecmaVersion`, and `jsxAttrValueToken` in the state.
+								tokenTranslator.onToken(
+									token,
 
-                    // do not use spread, because we don't want to pass any unknown options to acorn
-                    ecmaVersion: options.ecmaVersion,
-                    sourceType: options.sourceType,
-                    ranges: options.ranges,
-                    locations: options.locations,
-                    allowReserved: options.allowReserved,
+									/**
+									 * @type {Omit<State, "tokens"> & {
+									 *   tokens: EsprimaToken[]
+									 * }}
+									 */
+									(state),
+								);
+							}
+							if (token.type !== tokTypes.eof) {
+								state.lastToken = token;
+							}
+						},
 
-                    // Truthy value is true for backward compatibility.
-                    allowReturnOutsideFunction: options.allowReturnOutsideFunction,
+						// Collect comments
+						onComment(block, text, start, end, startLoc, endLoc) {
+							if (state.comments) {
+								const comment =
+									convertAcornCommentToEsprimaComment(
+										block,
+										text,
+										start,
+										end,
+										startLoc,
+										endLoc,
 
-                    // Collect tokens
-                    onToken(token) {
-                        if (tokenTranslator) {
+										// @ts-expect-error Appears to be a TS bug
+										//   since the type is indeed string|String
+										code,
+									);
 
-                            // Use `tokens`, `ecmaVersion`, and `jsxAttrValueToken` in the state.
-                            tokenTranslator.onToken(
-                                token,
+								state.comments.push(comment);
+							}
+						},
+					},
+					// @ts-expect-error Appears to be a TS bug
+					//   since the type is indeed string|String
+					code,
+				);
 
-                                /**
-                                 * @type {Omit<State, "tokens"> & {
-                                 *   tokens: EsprimaToken[]
-                                 * }}
-                                 */
-                                (state)
-                            );
-                        }
-                        if (token.type !== tokTypes.eof) {
-                            state.lastToken = token;
-                        }
-                    },
+				/*
+				 * We put all of this data into a symbol property as a way to avoid
+				 * potential naming conflicts with future versions of Acorn.
+				 */
+				this[STATE] = state;
+			}
 
-                    // Collect comments
-                    onComment(block, text, start, end, startLoc, endLoc) {
-                        if (state.comments) {
-                            const comment = convertAcornCommentToEsprimaComment(
-                                block,
-                                text,
-                                start,
-                                end,
-                                startLoc,
-                                endLoc,
+			/**
+			 * Returns Espree tokens.
+			 * @returns {EsprimaTokens} The Esprima-compatible tokens
+			 */
+			tokenize() {
+				do {
+					this.next();
+				} while (this.type !== tokTypes.eof);
 
-                                // @ts-expect-error Appears to be a TS bug
-                                //   since the type is indeed string|String
-                                code
-                            );
+				// Consume the final eof token
+				this.next();
 
-                            state.comments.push(comment);
-                        }
-                    }
+				const extra = this[STATE];
+				const tokens = /** @type {EsprimaTokens} */ (extra.tokens);
 
-                // @ts-expect-error Appears to be a TS bug
-                //   since the type is indeed string|String
-                }, code);
+				if (extra.comments) {
+					tokens.comments = extra.comments;
+				}
 
-                /*
-                * We put all of this data into a symbol property as a way to avoid
-                * potential naming conflicts with future versions of Acorn.
-                */
-                this[STATE] = state;
-            }
+				return tokens;
+			}
 
-            /**
-             * Returns Espree tokens.
-             * @returns {EsprimaTokens} The Esprima-compatible tokens
-             */
-            tokenize() {
-                do {
-                    this.next();
-                } while (this.type !== tokTypes.eof);
+			/**
+			 * Calls parent.
+			 * @param {acorn.Node} node The node
+			 * @param {string} type The type
+			 * @returns {acorn.Node} The altered Node
+			 */
+			finishNode(node, type) {
+				const result = super.finishNode(node, type);
 
-                // Consume the final eof token
-                this.next();
+				return this[ESPRIMA_FINISH_NODE](result);
+			}
 
-                const extra = this[STATE];
-                const tokens = /** @type {EsprimaTokens} */ (extra.tokens);
+			/**
+			 * Calls parent.
+			 * @param {acorn.Node} node The node
+			 * @param {string} type The type
+			 * @param {number} pos The position
+			 * @param {acorn.Position} loc The location
+			 * @returns {acorn.Node} The altered Node
+			 */
+			finishNodeAt(node, type, pos, loc) {
+				const result = super.finishNodeAt(node, type, pos, loc);
 
-                if (extra.comments) {
-                    tokens.comments = extra.comments;
-                }
+				return this[ESPRIMA_FINISH_NODE](result);
+			}
 
-                return tokens;
-            }
+			/**
+			 * Parses.
+			 * @returns {EsprimaProgramNode} The program Node
+			 */
+			parse() {
+				const extra = this[STATE];
+				const prog = super.parse();
 
-            /**
-             * Calls parent.
-             * @param {acorn.Node} node The node
-             * @param {string} type The type
-             * @returns {acorn.Node} The altered Node
-             */
-            finishNode(node, type) {
-                const result = super.finishNode(node, type);
+				const program = /** @type {EsprimaProgramNode} */ (prog);
 
-                return this[ESPRIMA_FINISH_NODE](result);
-            }
+				// @ts-expect-error TS bug? We've already converted to `EsprimaProgramNode`
+				program.sourceType = extra.originalSourceType;
 
-            /**
-             * Calls parent.
-             * @param {acorn.Node} node The node
-             * @param {string} type The type
-             * @param {number} pos The position
-             * @param {acorn.Position} loc The location
-             * @returns {acorn.Node} The altered Node
-             */
-            finishNodeAt(node, type, pos, loc) {
-                const result = super.finishNodeAt(node, type, pos, loc);
+				if (extra.comments) {
+					program.comments = extra.comments;
+				}
+				if (extra.tokens) {
+					program.tokens = extra.tokens;
+				}
 
-                return this[ESPRIMA_FINISH_NODE](result);
-            }
+				/*
+				 * https://github.com/eslint/espree/issues/349
+				 * Ensure that template elements have correct range information.
+				 * This is one location where Acorn produces a different value
+				 * for its start and end properties vs. the values present in the
+				 * range property. In order to avoid confusion, we set the start
+				 * and end properties to the values that are present in range.
+				 * This is done here, instead of in finishNode(), because Acorn
+				 * uses the values of start and end internally while parsing, making
+				 * it dangerous to change those values while parsing is ongoing.
+				 * By waiting until the end of parsing, we can safely change these
+				 * values without affect any other part of the process.
+				 */
+				this[STATE].templateElements.forEach(templateElement => {
+					const startOffset = -1;
+					const endOffset = templateElement.tail ? 1 : 2;
 
-            /**
-             * Parses.
-             * @returns {EsprimaProgramNode} The program Node
-             */
-            parse() {
-                const extra = this[STATE];
-                const prog = super.parse();
+					templateElement.start += startOffset;
+					templateElement.end += endOffset;
 
-                const program = /** @type {EsprimaProgramNode} */ (prog);
+					if (templateElement.range) {
+						templateElement.range[0] += startOffset;
+						templateElement.range[1] += endOffset;
+					}
 
-                // @ts-expect-error TS bug? We've already converted to `EsprimaProgramNode`
-                program.sourceType = extra.originalSourceType;
+					if (templateElement.loc) {
+						templateElement.loc.start.column += startOffset;
+						templateElement.loc.end.column += endOffset;
+					}
+				});
 
-                if (extra.comments) {
-                    program.comments = extra.comments;
-                }
-                if (extra.tokens) {
-                    program.tokens = extra.tokens;
-                }
+				return program;
+			}
 
-                /*
-                * https://github.com/eslint/espree/issues/349
-                * Ensure that template elements have correct range information.
-                * This is one location where Acorn produces a different value
-                * for its start and end properties vs. the values present in the
-                * range property. In order to avoid confusion, we set the start
-                * and end properties to the values that are present in range.
-                * This is done here, instead of in finishNode(), because Acorn
-                * uses the values of start and end internally while parsing, making
-                * it dangerous to change those values while parsing is ongoing.
-                * By waiting until the end of parsing, we can safely change these
-                * values without affect any other part of the process.
-                */
-                this[STATE].templateElements.forEach(templateElement => {
-                    const startOffset = -1;
-                    const endOffset = templateElement.tail ? 1 : 2;
+			/**
+			 * Parses top level.
+			 * @param {acorn.Node} node AST Node
+			 * @returns {acorn.Node} The changed node
+			 */
+			parseTopLevel(node) {
+				if (this[STATE].impliedStrict) {
+					this.strict = true;
+				}
+				return super.parseTopLevel(node);
+			}
 
-                    templateElement.start += startOffset;
-                    templateElement.end += endOffset;
+			/**
+			 * Overwrites the default raise method to throw Esprima-style errors.
+			 * @param {number} pos The position of the error.
+			 * @param {string} message The error message.
+			 * @throws {EnhancedSyntaxError} A syntax error.
+			 * @returns {void}
+			 */
+			raise(pos, message) {
+				const loc = Parser.acorn.getLineInfo(this.input, pos);
+				const err = /** @type {EnhancedSyntaxError} */ (
+					new SyntaxError(message)
+				);
 
-                    if (templateElement.range) {
-                        templateElement.range[0] += startOffset;
-                        templateElement.range[1] += endOffset;
-                    }
+				err.index = pos;
+				err.lineNumber = loc.line;
+				err.column = loc.column + 1; // acorn uses 0-based columns
+				throw err;
+			}
 
-                    if (templateElement.loc) {
-                        templateElement.loc.start.column += startOffset;
-                        templateElement.loc.end.column += endOffset;
-                    }
-                });
+			/**
+			 * Overwrites the default raise method to throw Esprima-style errors.
+			 * @param {number} pos The position of the error.
+			 * @param {string} message The error message.
+			 * @throws {SyntaxError} A syntax error.
+			 * @returns {void}
+			 */
+			raiseRecoverable(pos, message) {
+				this.raise(pos, message);
+			}
 
-                return program;
-            }
+			/**
+			 * Overwrites the default unexpected method to throw Esprima-style errors.
+			 * @param {number} pos The position of the error.
+			 * @throws {SyntaxError} A syntax error.
+			 * @returns {void}
+			 */
+			unexpected(pos) {
+				let message = "Unexpected token";
 
-            /**
-             * Parses top level.
-             * @param {acorn.Node} node AST Node
-             * @returns {acorn.Node} The changed node
-             */
-            parseTopLevel(node) {
-                if (this[STATE].impliedStrict) {
-                    this.strict = true;
-                }
-                return super.parseTopLevel(node);
-            }
+				if (pos !== null && pos !== void 0) {
+					this.pos = pos;
 
-            /**
-             * Overwrites the default raise method to throw Esprima-style errors.
-             * @param {number} pos The position of the error.
-             * @param {string} message The error message.
-             * @throws {EnhancedSyntaxError} A syntax error.
-             * @returns {void}
-             */
-            raise(pos, message) {
-                const loc = Parser.acorn.getLineInfo(this.input, pos);
-                const err = /** @type {EnhancedSyntaxError} */ (
-                    new SyntaxError(message)
-                );
+					if (this.options.locations) {
+						while (this.pos < this.lineStart) {
+							this.lineStart =
+								this.input.lastIndexOf(
+									"\n",
+									this.lineStart - 2,
+								) + 1;
+							--this.curLine;
+						}
+					}
 
-                err.index = pos;
-                err.lineNumber = loc.line;
-                err.column = loc.column + 1; // acorn uses 0-based columns
-                throw err;
-            }
+					this.nextToken();
+				}
 
-            /**
-             * Overwrites the default raise method to throw Esprima-style errors.
-             * @param {number} pos The position of the error.
-             * @param {string} message The error message.
-             * @throws {SyntaxError} A syntax error.
-             * @returns {void}
-             */
-            raiseRecoverable(pos, message) {
-                this.raise(pos, message);
-            }
+				if (this.end > this.start) {
+					message += ` ${this.input.slice(this.start, this.end)}`;
+				}
 
-            /**
-             * Overwrites the default unexpected method to throw Esprima-style errors.
-             * @param {number} pos The position of the error.
-             * @throws {SyntaxError} A syntax error.
-             * @returns {void}
-             */
-            unexpected(pos) {
-                let message = "Unexpected token";
+				this.raise(this.start, message);
+			}
 
-                if (pos !== null && pos !== void 0) {
-                    this.pos = pos;
+			/**
+			 * Esprima-FB represents JSX strings as tokens called "JSXText", but Acorn-JSX
+			 * uses regular tt.string without any distinction between this and regular JS
+			 * strings. As such, we intercept an attempt to read a JSX string and set a flag
+			 * on extra so that when tokens are converted, the next token will be switched
+			 * to JSXText via onToken.
+			 * @param {number} quote A character code
+			 * @returns {void}
+			 */ // eslint-disable-next-line camelcase -- required by API
+			jsx_readString(quote) {
+				const result = super.jsx_readString(quote);
 
-                    if (this.options.locations) {
-                        while (this.pos < this.lineStart) {
-                            this.lineStart = this.input.lastIndexOf("\n", this.lineStart - 2) + 1;
-                            --this.curLine;
-                        }
-                    }
+				if (this.type === tokTypes.string) {
+					this[STATE].jsxAttrValueToken = true;
+				}
+				return result;
+			}
 
-                    this.nextToken();
-                }
+			/**
+			 * Performs last-minute Esprima-specific compatibility checks and fixes.
+			 * @param {acorn.Node} result The node to check.
+			 * @returns {EsprimaNode} The finished node.
+			 */
+			[ESPRIMA_FINISH_NODE](result) {
+				// Acorn doesn't count the opening and closing backticks as part of templates
+				// so we have to adjust ranges/locations appropriately.
+				if (result.type === "TemplateElement") {
+					// save template element references to fix start/end later
+					this[STATE].templateElements.push(
+						/** @type {acorn.TemplateElement} */
+						(result),
+					);
+				}
 
-                if (this.end > this.start) {
-                    message += ` ${this.input.slice(this.start, this.end)}`;
-                }
+				if (
+					result.type.includes("Function") &&
+					!("generator" in result)
+				) {
+					/**
+					 * @type {acorn.FunctionDeclaration|acorn.FunctionExpression|
+					 *   acorn.ArrowFunctionExpression}
+					 */
+					(result).generator = false;
+				}
 
-                this.raise(this.start, message);
-            }
-
-            /**
-             * Esprima-FB represents JSX strings as tokens called "JSXText", but Acorn-JSX
-             * uses regular tt.string without any distinction between this and regular JS
-             * strings. As such, we intercept an attempt to read a JSX string and set a flag
-             * on extra so that when tokens are converted, the next token will be switched
-             * to JSXText via onToken.
-             * @param {number} quote A character code
-             * @returns {void}
-             */
-            jsx_readString(quote) { // eslint-disable-line camelcase -- required by API
-                const result = super.jsx_readString(quote);
-
-                if (this.type === tokTypes.string) {
-                    this[STATE].jsxAttrValueToken = true;
-                }
-                return result;
-            }
-
-            /**
-             * Performs last-minute Esprima-specific compatibility checks and fixes.
-             * @param {acorn.Node} result The node to check.
-             * @returns {EsprimaNode} The finished node.
-             */
-            [ESPRIMA_FINISH_NODE](result) {
-
-                // Acorn doesn't count the opening and closing backticks as part of templates
-                // so we have to adjust ranges/locations appropriately.
-                if (result.type === "TemplateElement") {
-
-                    // save template element references to fix start/end later
-                    this[STATE].templateElements.push(
-
-                        /** @type {acorn.TemplateElement} */
-                        (result)
-                    );
-                }
-
-                if (result.type.includes("Function") && (!("generator" in result))) {
-
-                    /**
-                     * @type {acorn.FunctionDeclaration|acorn.FunctionExpression|
-                     *   acorn.ArrowFunctionExpression}
-                     */
-                    (result).generator = false;
-                }
-
-                return result;
-            }
-        };
-    };
+				return result;
+			}
+		};
+	};
 };

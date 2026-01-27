@@ -31,9 +31,10 @@ import tester from "../tests/util/tester.js";
  * @returns {string[]} The found test names.
  */
 function findTests(directory) {
-    return shelljs.find(directory)
-        .filter(filename => filename.endsWith(".src.js"))
-        .map(filename => filename.slice(0, -".src.js".length)); // strip off ".src.js"
+	return shelljs
+		.find(directory)
+		.filter(filename => filename.endsWith(".src.js"))
+		.map(filename => filename.slice(0, -".src.js".length)); // strip off ".src.js"
 }
 
 /**
@@ -43,7 +44,10 @@ function findTests(directory) {
  * @returns {void}
  */
 function outputResult(result, testResultFilename) {
-    fs.writeFileSync(testResultFilename, `export default ${tester.getAstCode(result)};`);
+	fs.writeFileSync(
+		testResultFilename,
+		`export default ${tester.getAstCode(result)};`,
+	);
 }
 
 /**
@@ -51,83 +55,123 @@ function outputResult(result, testResultFilename) {
  * @returns {void}
  */
 function main() {
-    const thisFilePath = fileURLToPath(import.meta.url);
-    const ecmaVersion = process.argv[2] ?? "";
-    const rootDir = path.resolve(thisFilePath, "../../tests/fixtures/ecma-version", ecmaVersion);
+	const thisFilePath = fileURLToPath(import.meta.url);
+	const ecmaVersion = process.argv[2] ?? "";
+	const rootDir = path.resolve(
+		thisFilePath,
+		"../../tests/fixtures/ecma-version",
+		ecmaVersion,
+	);
 
-    if (!ecmaVersion) {
-        console.error();
-        console.error("Usage: node tools/update-ecma-version-tests.js <number>");
-        console.error();
-        console.error("  <number> ... The ECMA version to update tests.");
-        console.error();
-        return;
-    }
-    if (!/^\d+$/u.test(ecmaVersion)) {
-        console.error("Error: The version number must be an positive integer.");
-        return;
-    }
-    if (!shelljs.test("-d", rootDir)) {
-        console.error("Error: %o is must be a directory.", rootDir);
-        return;
-    }
+	if (!ecmaVersion) {
+		console.error();
+		console.error(
+			"Usage: node tools/update-ecma-version-tests.js <number>",
+		);
+		console.error();
+		console.error("  <number> ... The ECMA version to update tests.");
+		console.error();
+		return;
+	}
+	if (!/^\d+$/u.test(ecmaVersion)) {
+		console.error("Error: The version number must be an positive integer.");
+		return;
+	}
+	if (!shelljs.test("-d", rootDir)) {
+		console.error("Error: %o is must be a directory.", rootDir);
+		return;
+	}
 
-    for (const name of findTests(rootDir)) {
-        const scriptOnly = name.includes("not-strict") || name.includes("edge-cases");
-        const moduleOnly = !scriptOnly && name.includes("modules");
-        const expectedToBeError = name.includes("/invalid-");
-        const expectedToBeOK = name.includes("/valid-");
-        const comment = name.includes("comment");
-        const sourceFilePath = `${path.resolve(rootDir, name)}.src.js`;
-        const resultFilePath = `${path.resolve(rootDir, name)}.result.js`;
-        const moduleResultFilePath = `${path.resolve(rootDir, name)}.module-result.js`;
-        const relSourceFilePath = path.relative(process.cwd(), sourceFilePath);
-        const code = shelljs.cat(sourceFilePath);
-        const parserOptions = {
-            comment,
-            loc: true,
-            range: true,
-            tokens: true,
-            ecmaVersion: Number(ecmaVersion)
-        };
-        const scriptResult = moduleOnly
-            ? null
-            : tester.getExpectedResult(code, { ...parserOptions, sourceType: "script" });
-        const moduleResult = scriptOnly
-            ? null
-            : tester.getExpectedResult(code, { ...parserOptions, sourceType: "module" });
-        const resultsAreSame = util.isDeepStrictEqual(
-            { ...scriptResult, sourceType: null },
-            { ...moduleResult, sourceType: null }
-        );
+	for (const name of findTests(rootDir)) {
+		const scriptOnly =
+			name.includes("not-strict") || name.includes("edge-cases");
+		const moduleOnly = !scriptOnly && name.includes("modules");
+		const expectedToBeError = name.includes("/invalid-");
+		const expectedToBeOK = name.includes("/valid-");
+		const comment = name.includes("comment");
+		const sourceFilePath = `${path.resolve(rootDir, name)}.src.js`;
+		const resultFilePath = `${path.resolve(rootDir, name)}.result.js`;
+		const moduleResultFilePath = `${path.resolve(rootDir, name)}.module-result.js`;
+		const relSourceFilePath = path.relative(process.cwd(), sourceFilePath);
+		const code = shelljs.cat(sourceFilePath);
+		const parserOptions = {
+			comment,
+			loc: true,
+			range: true,
+			tokens: true,
+			ecmaVersion: Number(ecmaVersion),
+		};
+		const scriptResult = moduleOnly
+			? null
+			: tester.getExpectedResult(code, {
+					...parserOptions,
+					sourceType: "script",
+				});
+		const moduleResult = scriptOnly
+			? null
+			: tester.getExpectedResult(code, {
+					...parserOptions,
+					sourceType: "module",
+				});
+		const resultsAreSame = util.isDeepStrictEqual(
+			{ ...scriptResult, sourceType: null },
+			{ ...moduleResult, sourceType: null },
+		);
 
-        if (scriptOnly || moduleOnly || resultsAreSame) {
-            const result = scriptResult ?? moduleResult;
+		if (scriptOnly || moduleOnly || resultsAreSame) {
+			const result = scriptResult ?? moduleResult;
 
-            if (expectedToBeError && typeof result.type === "string") {
-                console.warn("Warn: expected to be syntax error, but succeeded to parse: %o", relSourceFilePath);
-            } else if (expectedToBeOK && typeof result.type !== "string") {
-                console.warn("Warn: expected to succeed to parse, but thrown syntax error: %o", relSourceFilePath);
-            }
+			if (expectedToBeError && typeof result.type === "string") {
+				console.warn(
+					"Warn: expected to be syntax error, but succeeded to parse: %o",
+					relSourceFilePath,
+				);
+			} else if (expectedToBeOK && typeof result.type !== "string") {
+				console.warn(
+					"Warn: expected to succeed to parse, but thrown syntax error: %o",
+					relSourceFilePath,
+				);
+			}
 
-            outputResult(result, resultFilePath);
-        } else {
-            console.warn("Warn: got different results between script and module: %o", relSourceFilePath);
-            if (expectedToBeError && typeof scriptResult.type === "string") {
-                console.warn("Warn: expected to be syntax error, but succeeded to parse in script: %o", relSourceFilePath);
-            } else if (expectedToBeOK && typeof scriptResult.type !== "string") {
-                console.warn("Warn: expected to succeed to parse, but thrown syntax error in script: %o", relSourceFilePath);
-            }
-            if (expectedToBeError && typeof moduleResult.type === "string") {
-                console.warn("Warn: expected to be syntax error, but succeeded to parse in module: %o", relSourceFilePath);
-            } else if (expectedToBeOK && typeof moduleResult.type !== "string") {
-                console.warn("Warn: expected to succeed to parse, but thrown syntax error in module: %o", relSourceFilePath);
-            }
+			outputResult(result, resultFilePath);
+		} else {
+			console.warn(
+				"Warn: got different results between script and module: %o",
+				relSourceFilePath,
+			);
+			if (expectedToBeError && typeof scriptResult.type === "string") {
+				console.warn(
+					"Warn: expected to be syntax error, but succeeded to parse in script: %o",
+					relSourceFilePath,
+				);
+			} else if (
+				expectedToBeOK &&
+				typeof scriptResult.type !== "string"
+			) {
+				console.warn(
+					"Warn: expected to succeed to parse, but thrown syntax error in script: %o",
+					relSourceFilePath,
+				);
+			}
+			if (expectedToBeError && typeof moduleResult.type === "string") {
+				console.warn(
+					"Warn: expected to be syntax error, but succeeded to parse in module: %o",
+					relSourceFilePath,
+				);
+			} else if (
+				expectedToBeOK &&
+				typeof moduleResult.type !== "string"
+			) {
+				console.warn(
+					"Warn: expected to succeed to parse, but thrown syntax error in module: %o",
+					relSourceFilePath,
+				);
+			}
 
-            outputResult(scriptResult, resultFilePath);
-            outputResult(moduleResult, moduleResultFilePath);
-        }
-    }
+			outputResult(scriptResult, resultFilePath);
+			outputResult(moduleResult, moduleResultFilePath);
+		}
+	}
 }
 
 //------------------------------------------------------------------------------

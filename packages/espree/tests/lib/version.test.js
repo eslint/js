@@ -18,7 +18,7 @@ const { version } = packageJson;
 //------------------------------------------------------------------------------
 
 describe("version", () => {
-    it("should be equal to the version in package.json", () => {
-        assert.strictEqual(espree.version, version);
-    });
+	it("should be equal to the version in package.json", () => {
+		assert.strictEqual(espree.version, version);
+	});
 });

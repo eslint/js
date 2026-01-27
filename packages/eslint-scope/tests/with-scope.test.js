@@ -26,40 +26,43 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("with", () => {
-    it("creates scope", () => {
-        const ast = espree(`
+	it("creates scope", () => {
+		const ast = espree(
+			`
             (function () {
                 with (obj) {
                     testing;
                 }
             }());
-        `, "script");
+        `,
+			"script",
+		);
 
-        const scopeManager = analyze(ast);
+		const scopeManager = analyze(ast);
 
-        expect(scopeManager.scopes).to.have.length(3);
-        const globalScope = scopeManager.scopes[0];
+		expect(scopeManager.scopes).to.have.length(3);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        let scope = scopeManager.scopes[1];
+		let scope = scopeManager.scopes[1];
 
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.isArgumentsMaterialized()).to.be.false;
-        expect(scope.references).to.have.length(1);
-        expect(scope.references[0].resolved).to.be.null;
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.isArgumentsMaterialized()).to.be.false;
+		expect(scope.references).to.have.length(1);
+		expect(scope.references[0].resolved).to.be.null;
 
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("with");
-        expect(scope.variables).to.have.length(0);
-        expect(scope.isArgumentsMaterialized()).to.be.true;
-        expect(scope.references).to.have.length(1);
-        expect(scope.references[0].resolved).to.be.null;
-    });
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("with");
+		expect(scope.variables).to.have.length(0);
+		expect(scope.isArgumentsMaterialized()).to.be.true;
+		expect(scope.references).to.have.length(1);
+		expect(scope.references[0].resolved).to.be.null;
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

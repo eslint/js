@@ -26,8 +26,8 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("ES6 catch", () => {
-    it("takes binding pattern", () => {
-        const ast = espree(`
+	it("takes binding pattern", () => {
+		const ast = espree(`
             try {
             } catch ({ a, b, c, d }) {
                 let e = 20;
@@ -38,53 +38,51 @@ describe("ES6 catch", () => {
             }
         `);
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6 });
+		const scopeManager = analyze(ast, { ecmaVersion: 6 });
 
-        expect(scopeManager.scopes).to.have.length(4);
+		expect(scopeManager.scopes).to.have.length(4);
 
-        let scope = scopeManager.scopes[0];
+		let scope = scopeManager.scopes[0];
 
-        expect(scope.type).to.be.equal("global");
-        expect(scope.block.type).to.be.equal("Program");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
+		expect(scope.type).to.be.equal("global");
+		expect(scope.block.type).to.be.equal("Program");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
 
-        scope = scopeManager.scopes[1];
-        expect(scope.type).to.be.equal("block");
-        expect(scope.block.type).to.be.equal("BlockStatement");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
+		scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("block");
+		expect(scope.block.type).to.be.equal("BlockStatement");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
 
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("catch");
-        expect(scope.block.type).to.be.equal("CatchClause");
-        expect(scope.isStrict).to.be.false;
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("catch");
+		expect(scope.block.type).to.be.equal("CatchClause");
+		expect(scope.isStrict).to.be.false;
 
-        expect(scope.variables).to.have.length(4);
-        expect(scope.variables[0].name).to.be.equal("a");
-        expect(scope.variables[1].name).to.be.equal("b");
-        expect(scope.variables[2].name).to.be.equal("c");
-        expect(scope.variables[3].name).to.be.equal("d");
-        expect(scope.references).to.have.length(0);
+		expect(scope.variables).to.have.length(4);
+		expect(scope.variables[0].name).to.be.equal("a");
+		expect(scope.variables[1].name).to.be.equal("b");
+		expect(scope.variables[2].name).to.be.equal("c");
+		expect(scope.variables[3].name).to.be.equal("d");
+		expect(scope.references).to.have.length(0);
 
-        scope = scopeManager.scopes[3];
-        expect(scope.type).to.be.equal("block");
-        expect(scope.block.type).to.be.equal("BlockStatement");
-        expect(scope.isStrict).to.be.false;
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables.map(variable => variable.name)).to.be.eql([
-            "e"
-        ]);
-        expect(scope.references.map(ref => ref.identifier.name)).to.be.eql([
-            "e",
-            "a",
-            "b",
-            "c",
-            "d"
-        ]);
-    });
+		scope = scopeManager.scopes[3];
+		expect(scope.type).to.be.equal("block");
+		expect(scope.block.type).to.be.equal("BlockStatement");
+		expect(scope.isStrict).to.be.false;
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables.map(variable => variable.name)).to.be.eql(["e"]);
+		expect(scope.references.map(ref => ref.identifier.name)).to.be.eql([
+			"e",
+			"a",
+			"b",
+			"c",
+			"d",
+		]);
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :
