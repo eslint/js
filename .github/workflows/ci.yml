@@ -22,6 +22,8 @@ jobs:
         run: npm run build
       - name: Lint files
         run: npm run lint
+      - name: Lint Files, Dependencies, & Exports
+        run: npm run lint:unused
   test:
     name: Test
     strategy:

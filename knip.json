@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreBinaries": ["report"],
+  "workspaces": {
+    "packages/eslint-scope": {
+      "entry": ["tests/**/*.{cjs,cts,js,ts}"]
+    },
+    "packages/eslint-visitor-keys": {
+      "entry": ["tests/**/*.{cjs,js}", "test-d/**/*.test-d.ts"]
+    },
+    "packages/espree": {
+      "entry": [
+        "espree.cts",
+        "tests/**/*.{cjs,js}",
+        "tools/**/*.js",
+        "test-d/**/*.test-d.ts"
+      ],
+      "ignore": ["tests/fixtures/**"]
+    }
+  }
+}
