@@ -55,5 +55,6 @@
   "bugs": {
     "url": "https://github.com/eslint/js/issues"
   },
-  "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-visitor-keys/README.md"
+  "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-visitor-keys/README.md",
+  "sideEffects": false
 }

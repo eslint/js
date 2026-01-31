@@ -68,5 +68,6 @@
     "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
     "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\"",
     "test:types": "tsd --typings dist/espree.d.ts"
-  }
+  },
+  "sideEffects": false
 }

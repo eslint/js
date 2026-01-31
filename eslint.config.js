@@ -15,7 +15,10 @@ export default defineConfig([
     ]),
     {
         files: ["**/*.{,c}js"],
-        extends: [eslintConfigESLint, eslintConfigESLintFormatting]
+        extends: [eslintConfigESLint, eslintConfigESLintFormatting],
+        rules: {
+            "jsdoc/no-bad-blocks": ["error", { ignore: ["__PURE__"] }]
+        }
     },
     {
         files: ["packages/*/tests/**/*.test.{,c}js"],
@@ -63,6 +66,9 @@ export default defineConfig([
                 preferredTypes: {
                     Object: "object",
                     "object<>": "Object"
+                },
+                tagNamePreference: {
+                    __PURE__: false
                 }
             }
         }
