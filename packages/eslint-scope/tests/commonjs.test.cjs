@@ -18,26 +18,26 @@ const { version } = require("../package.json");
 //------------------------------------------------------------------------------
 
 describe("commonjs", () => {
-    it("is an object", () => {
-        assert.strictEqual(typeof eslintScope, "object");
-    });
+	it("is an object", () => {
+		assert.strictEqual(typeof eslintScope, "object");
+	});
 
-    it("has version equal to the version in package.json", () => {
-        assert.strictEqual(eslintScope.version, version);
-    });
+	it("has version equal to the version in package.json", () => {
+		assert.strictEqual(eslintScope.version, version);
+	});
 
-    it("has exports", () => {
-        [
-            "analyze",
-            "Definition",
-            "PatternVisitor",
-            "Reference",
-            "Referencer",
-            "Scope",
-            "ScopeManager",
-            "Variable"
-        ].forEach(prop => {
-            assert.strictEqual(typeof eslintScope[prop], "function");
-        });
-    });
+	it("has exports", () => {
+		[
+			"analyze",
+			"Definition",
+			"PatternVisitor",
+			"Reference",
+			"Referencer",
+			"Scope",
+			"ScopeManager",
+			"Variable",
+		].forEach(prop => {
+			assert.strictEqual(typeof eslintScope[prop], "function");
+		});
+	});
 });

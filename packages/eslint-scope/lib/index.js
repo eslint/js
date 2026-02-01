@@ -60,15 +60,15 @@ import Variable from "./variable.js";
  * @returns {Object} options
  */
 function defaultOptions() {
-    return {
-        optimistic: false,
-        nodejsScope: false,
-        impliedStrict: false,
-        sourceType: "script", // one of ['script', 'module', 'commonjs']
-        ecmaVersion: 5,
-        childVisitorKeys: null,
-        fallback: "iteration"
-    };
+	return {
+		optimistic: false,
+		nodejsScope: false,
+		impliedStrict: false,
+		sourceType: "script", // one of ['script', 'module', 'commonjs']
+		ecmaVersion: 5,
+		childVisitorKeys: null,
+		fallback: "iteration",
+	};
 }
 
 /**
@@ -78,32 +78,36 @@ function defaultOptions() {
  * @returns {Record<string, unknown>} Updated options
  */
 function updateDeeply(target, override) {
+	/**
+	 * Is hash object
+	 * @param {Object} value Test value
+	 * @returns {value is Record<string, unknown>} Result
+	 */
+	function isHashObject(value) {
+		return (
+			typeof value === "object" &&
+			value instanceof Object &&
+			!(value instanceof Array) &&
+			!(value instanceof RegExp)
+		);
+	}
 
-    /**
-     * Is hash object
-     * @param {Object} value Test value
-     * @returns {value is Record<string, unknown>} Result
-     */
-    function isHashObject(value) {
-        return typeof value === "object" && value instanceof Object && !(value instanceof Array) && !(value instanceof RegExp);
-    }
+	for (const key in override) {
+		if (Object.hasOwn(override, key)) {
+			const val = override[key];
 
-    for (const key in override) {
-        if (Object.hasOwn(override, key)) {
-            const val = override[key];
-
-            if (isHashObject(val)) {
-                if (isHashObject(target[key])) {
-                    updateDeeply(target[key], val);
-                } else {
-                    target[key] = updateDeeply({}, val);
-                }
-            } else {
-                target[key] = val;
-            }
-        }
-    }
-    return target;
+			if (isHashObject(val)) {
+				if (isHashObject(target[key])) {
+					updateDeeply(target[key], val);
+				} else {
+					target[key] = updateDeeply({}, val);
+				}
+			} else {
+				target[key] = val;
+			}
+		}
+	}
+	return target;
 }
 
 /**
@@ -127,35 +131,36 @@ function updateDeeply(target, override) {
  * @returns {ScopeManager} ScopeManager
  */
 function analyze(tree, providedOptions) {
-    const options = updateDeeply(defaultOptions(), providedOptions);
-    const scopeManager = new ScopeManager(options);
-    const referencer = new Referencer(options, scopeManager);
+	const options = updateDeeply(defaultOptions(), providedOptions);
+	const scopeManager = new ScopeManager(options);
+	const referencer = new Referencer(options, scopeManager);
 
-    referencer.visit(tree);
+	referencer.visit(tree);
 
-    assert(scopeManager.__currentScope === null, "currentScope should be null.");
+	assert(
+		scopeManager.__currentScope === null,
+		"currentScope should be null.",
+	);
 
-    return scopeManager;
+	return scopeManager;
 }
 
 /** @name module:escope.version */
 export const version = "9.1.0"; // x-release-please-version
 
 export {
+	/** @name module:escope.Reference */
+	Reference,
 
-    /** @name module:escope.Reference */
-    Reference,
+	/** @name module:escope.Variable */
+	Variable,
 
-    /** @name module:escope.Variable */
-    Variable,
+	/** @name module:escope.ScopeManager */
+	ScopeManager,
 
-    /** @name module:escope.ScopeManager */
-    ScopeManager,
-
-    /** @name module:escope.Referencer */
-    Referencer,
-
-    analyze
+	/** @name module:escope.Referencer */
+	Referencer,
+	analyze,
 };
 
 /** @name module:escope.Definition */
