@@ -12,7 +12,13 @@ describe("eslint-visitor-keys", () => {
 			assert.deepStrictEqual(evk.KEYS, keys);
 		});
 
-		// TODO: Add check for frozen object
+		it("should be frozen", () => {
+			assert.strictEqual(Object.isFrozen(evk.KEYS), true);
+
+			for (const type of Object.keys(evk.KEYS)) {
+				assert.strictEqual(Object.isFrozen(evk.KEYS[type]), true);
+			}
+		});
 	});
 
 	describe("getKeys()", () => {

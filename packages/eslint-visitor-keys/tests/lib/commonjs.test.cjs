@@ -25,6 +25,17 @@ describe("commonjs", () => {
 		assert.strictEqual(typeof eslintVisitorKeys.KEYS, "object");
 	});
 
+	it("has frozen exported keys object", () => {
+		assert.strictEqual(Object.isFrozen(eslintVisitorKeys.KEYS), true);
+
+		for (const type of Object.keys(eslintVisitorKeys.KEYS)) {
+			assert.strictEqual(
+				Object.isFrozen(eslintVisitorKeys.KEYS[type]),
+				true,
+			);
+		}
+	});
+
 	it("has key array with AST type", () => {
 		assert.ok(Array.isArray(eslintVisitorKeys.KEYS.ArrayExpression));
 	});
