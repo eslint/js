@@ -11,6 +11,8 @@ describe("eslint-visitor-keys", () => {
 		it("should be same as lib/visitor-keys.js", () => {
 			assert.deepStrictEqual(evk.KEYS, keys);
 		});
+
+		// TODO: Add check for frozen object
 	});
 
 	describe("getKeys()", () => {
