@@ -8,7 +8,9 @@
     "build:types": "npm run build:types --workspaces --if-present",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "lint:types": "npm run lint:types --workspaces --if-present"
+    "lint:types": "npm run lint:types --workspaces --if-present",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check ."
   },
   "workspaces": [
     "packages/*"
@@ -18,8 +20,10 @@
   },
   "lint-staged": {
     "*.{js,cjs,ts,cts}": [
-      "eslint --fix"
-    ]
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "!(*.{js,cjs,ts,cts})": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
@@ -34,6 +38,7 @@
     "mocha": "^11.1.0",
     "rollup": "^4.55.2",
     "typescript": "^5.9.3",
+    "prettier": "3.8.1",
     "yorkie": "^2.0.0"
   }
 }

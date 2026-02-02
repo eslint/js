@@ -18,19 +18,19 @@ import { getSupportedEcmaVersions } from "./util/ecma-version.js";
  * @returns {void}
  */
 function assertIsStrictRecursively(scope, expected) {
-    assert.strictEqual(scope.isStrict, expected);
+	assert.strictEqual(scope.isStrict, expected);
 
-    scope.childScopes.forEach(childScope => {
-        assertIsStrictRecursively(childScope, expected);
-    });
+	scope.childScopes.forEach(childScope => {
+		assertIsStrictRecursively(childScope, expected);
+	});
 }
 
 describe("'use strict' directives", () => {
+	it("should be ignored when ecmaVersion = 3", () => {
+		const ecmaVersion = 3;
 
-    it("should be ignored when ecmaVersion = 3", () => {
-        const ecmaVersion = 3;
-
-        const ast = espree.parse(`
+		const ast = espree.parse(
+			`
             "use strict";
             function a() {
                 "use strict";
@@ -38,16 +38,22 @@ describe("'use strict' directives", () => {
                     foo();
                 }
             }
-        `, { ecmaVersion, range: true });
+        `,
+			{ ecmaVersion, range: true },
+		);
 
-        const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+		const { globalScope } = analyze(ast, {
+			ecmaVersion,
+			childVisitorKeys: KEYS,
+		});
 
-        assertIsStrictRecursively(globalScope, false);
-    });
+		assertIsStrictRecursively(globalScope, false);
+	});
 
-    it("at the top level should make all scopes strict when ecmaVersion >= 5", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("at the top level should make all scopes strict when ecmaVersion >= 5", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 "use strict";
                 if (a) {
                     foo();
@@ -62,17 +68,23 @@ describe("'use strict' directives", () => {
                         }
                     }
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assertIsStrictRecursively(globalScope, true);
-        });
-    });
+			assertIsStrictRecursively(globalScope, true);
+		});
+	});
 
-    it("at the function level should make the function's scope and all its descendants strict when ecmaVersion >= 5", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("at the function level should make the function's scope and all its descendants strict when ecmaVersion >= 5", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function a() {
                     "use strict";
                     if (b) {
@@ -89,193 +101,270 @@ describe("'use strict' directives", () => {
                         foo();
                     }
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assertIsStrictRecursively(globalScope.childScopes[0], true); // function a() { ... }
-            assertIsStrictRecursively(globalScope.childScopes[1], false); // function e() { ... }
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assertIsStrictRecursively(globalScope.childScopes[0], true); // function a() { ... }
+			assertIsStrictRecursively(globalScope.childScopes[1], false); // function e() { ... }
+		});
+	});
 
-    it("can be with single quotes at the top level", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("can be with single quotes at the top level", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 'use strict';
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, true);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, true);
+		});
+	});
 
-    it("can be without the semicolon at the top level", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("can be without the semicolon at the top level", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 "use strict"
                 foo()
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, true);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, true);
+		});
+	});
 
-    it("can be anywhere in the directive prologue at the top level", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("can be anywhere in the directive prologue at the top level", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 "foo";
                 "use strict";
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, true);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, true);
+		});
+	});
 
-    it("cannot be after the directive prologue at the top level", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("cannot be after the directive prologue at the top level", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 foo();
                 "use strict";
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+		});
+	});
 
-    it("cannot contain escapes at the top level", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("cannot contain escapes at the top level", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 "use \\strict";
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+		});
+	});
 
-    it("cannot be parenthesized at the top level", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("cannot be parenthesized at the top level", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 ("use strict");
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+		});
+	});
 
-    it("can be with single quotes in a function", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("can be with single quotes in a function", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function foo() {
                     'use strict';
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assert.strictEqual(globalScope.childScopes.length, 1);
-            assert.strictEqual(globalScope.childScopes[0].type, "function");
-            assert.strictEqual(globalScope.childScopes[0].isStrict, true);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assert.strictEqual(globalScope.childScopes.length, 1);
+			assert.strictEqual(globalScope.childScopes[0].type, "function");
+			assert.strictEqual(globalScope.childScopes[0].isStrict, true);
+		});
+	});
 
-    it("can be without the semicolon in a function", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("can be without the semicolon in a function", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function foo() {
                     "use strict"
                     bar()
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assert.strictEqual(globalScope.childScopes.length, 1);
-            assert.strictEqual(globalScope.childScopes[0].type, "function");
-            assert.strictEqual(globalScope.childScopes[0].isStrict, true);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assert.strictEqual(globalScope.childScopes.length, 1);
+			assert.strictEqual(globalScope.childScopes[0].type, "function");
+			assert.strictEqual(globalScope.childScopes[0].isStrict, true);
+		});
+	});
 
-    it("can be anywhere in the directive prologue in a function", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("can be anywhere in the directive prologue in a function", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function foo() {
                     "foo";
                     "use strict";
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assert.strictEqual(globalScope.childScopes.length, 1);
-            assert.strictEqual(globalScope.childScopes[0].type, "function");
-            assert.strictEqual(globalScope.childScopes[0].isStrict, true);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assert.strictEqual(globalScope.childScopes.length, 1);
+			assert.strictEqual(globalScope.childScopes[0].type, "function");
+			assert.strictEqual(globalScope.childScopes[0].isStrict, true);
+		});
+	});
 
-    it("cannot be after the directive prologue in a function", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("cannot be after the directive prologue in a function", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function foo() {
                     bar();
                     "use strict";
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assert.strictEqual(globalScope.childScopes.length, 1);
-            assert.strictEqual(globalScope.childScopes[0].type, "function");
-            assert.strictEqual(globalScope.childScopes[0].isStrict, false);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assert.strictEqual(globalScope.childScopes.length, 1);
+			assert.strictEqual(globalScope.childScopes[0].type, "function");
+			assert.strictEqual(globalScope.childScopes[0].isStrict, false);
+		});
+	});
 
-    it("cannot contain escapes in a function", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("cannot contain escapes in a function", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function foo() {
                     "use \\strict";
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assert.strictEqual(globalScope.childScopes.length, 1);
-            assert.strictEqual(globalScope.childScopes[0].type, "function");
-            assert.strictEqual(globalScope.childScopes[0].isStrict, false);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assert.strictEqual(globalScope.childScopes.length, 1);
+			assert.strictEqual(globalScope.childScopes[0].type, "function");
+			assert.strictEqual(globalScope.childScopes[0].isStrict, false);
+		});
+	});
 
-    it("cannot be parenthesized in a function", () => {
-        getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
-            const ast = espree.parse(`
+	it("cannot be parenthesized in a function", () => {
+		getSupportedEcmaVersions({ min: 5 }).forEach(ecmaVersion => {
+			const ast = espree.parse(
+				`
                 function foo() {
                     ("use strict");
                 }
-            `, { ecmaVersion, range: true });
+            `,
+				{ ecmaVersion, range: true },
+			);
 
-            const { globalScope } = analyze(ast, { ecmaVersion, childVisitorKeys: KEYS });
+			const { globalScope } = analyze(ast, {
+				ecmaVersion,
+				childVisitorKeys: KEYS,
+			});
 
-            assert.strictEqual(globalScope.isStrict, false);
-            assert.strictEqual(globalScope.childScopes.length, 1);
-            assert.strictEqual(globalScope.childScopes[0].type, "function");
-            assert.strictEqual(globalScope.childScopes[0].isStrict, false);
-        });
-    });
+			assert.strictEqual(globalScope.isStrict, false);
+			assert.strictEqual(globalScope.childScopes.length, 1);
+			assert.strictEqual(globalScope.childScopes[0].type, "function");
+			assert.strictEqual(globalScope.childScopes[0].isStrict, false);
+		});
+	});
 });

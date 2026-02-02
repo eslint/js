@@ -31,15 +31,15 @@ import * as espree from "espree";
  * @param {boolean} [jsx=false] The flag to enable JSX parsing
  * @returns {Object} The parsed Espree AST
  */
-export default function(code, sourceType = "module", jsx = false) {
-    return espree.parse(code, {
-        range: true,
-        ecmaVersion: 7,
-        sourceType,
-        ecmaFeatures: {
-            jsx
-        }
-    });
+export default function (code, sourceType = "module", jsx = false) {
+	return espree.parse(code, {
+		range: true,
+		ecmaVersion: 7,
+		sourceType,
+		ecmaFeatures: {
+			jsx,
+		},
+	});
 }
 
 /* vim: set sw=4 ts=4 et tw=80 : */

@@ -26,42 +26,41 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("function name", () => {
-    it("should create its special scope", () => {
-        const ast = espree(`
+	it("should create its special scope", () => {
+		const ast = espree(`
             (function name() {
             }());
         `);
 
-        const scopeManager = analyze(ast);
+		const scopeManager = analyze(ast);
 
-        expect(scopeManager.scopes).to.have.length(3);
-        const globalScope = scopeManager.scopes[0];
+		expect(scopeManager.scopes).to.have.length(3);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
-        expect(globalScope.isArgumentsMaterialized()).to.be.true;
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
+		expect(globalScope.isArgumentsMaterialized()).to.be.true;
 
-        // Function expression name scope
-        let scope = scopeManager.scopes[1];
+		// Function expression name scope
+		let scope = scopeManager.scopes[1];
 
-        expect(scope.type).to.be.equal("function-expression-name");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("name");
-        expect(scope.isArgumentsMaterialized()).to.be.true;
-        expect(scope.references).to.have.length(0);
-        expect(scope.upper === globalScope).to.be.true;
+		expect(scope.type).to.be.equal("function-expression-name");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("name");
+		expect(scope.isArgumentsMaterialized()).to.be.true;
+		expect(scope.references).to.have.length(0);
+		expect(scope.upper === globalScope).to.be.true;
 
-        // Function scope
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.isArgumentsMaterialized()).to.be.false;
-        expect(scope.references).to.have.length(0);
-        expect(scope.upper === scopeManager.scopes[1]).to.be.true;
-    });
+		// Function scope
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.isArgumentsMaterialized()).to.be.false;
+		expect(scope.references).to.have.length(0);
+		expect(scope.upper === scopeManager.scopes[1]).to.be.true;
+	});
 });
-
 
 // vim: set sw=4 ts=4 et tw=80 :

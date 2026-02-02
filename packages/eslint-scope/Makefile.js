@@ -26,7 +26,12 @@ set("+e");
 //------------------------------------------------------------------------------
 
 const OPEN_SOURCE_LICENSES = [
-    /MIT/u, /BSD/u, /Apache/u, /ISC/u, /WTF/u, /Public Domain/u
+	/MIT/u,
+	/BSD/u,
+	/Apache/u,
+	/ISC/u,
+	/WTF/u,
+	/Public Domain/u,
 ];
 
 //------------------------------------------------------------------------------
@@ -34,86 +39,93 @@ const OPEN_SOURCE_LICENSES = [
 //------------------------------------------------------------------------------
 
 const NODE = "node",
-    NODE_MODULES = "../../node_modules",
-
-    // Utilities - intentional extra space at the end of each string
-    MOCHA = `${NODE_MODULES}/mocha/bin/_mocha `,
-
-    // If switching back to Istanbul when may be working with ESM
-    // ISTANBUL = `${NODE} ${NODE_MODULES}/istanbul/lib/cli.js `,
-    C8 = `${NODE} ${NODE_MODULES}/c8/bin/c8.js`,
-
-    // Files
-    TEST_FILES = "tests/**/*.test.js",
-    CJS_TEST_FILES = "tests/**/*.test.cjs";
+	NODE_MODULES = "../../node_modules",
+	// Utilities - intentional extra space at the end of each string
+	MOCHA = `${NODE_MODULES}/mocha/bin/_mocha `,
+	// If switching back to Istanbul when may be working with ESM
+	// ISTANBUL = `${NODE} ${NODE_MODULES}/istanbul/lib/cli.js `,
+	C8 = `${NODE} ${NODE_MODULES}/c8/bin/c8.js`,
+	// Files
+	TEST_FILES = "tests/**/*.test.js",
+	CJS_TEST_FILES = "tests/**/*.test.cjs";
 
 //------------------------------------------------------------------------------
 // Tasks
 //------------------------------------------------------------------------------
 
-target.all = function() {
-    target.test();
+target.all = function () {
+	target.test();
 };
 
-target.test = function() {
-    let errors = 0;
-    let lastReturn = exec(`${NODE} ${MOCHA} -- -R progress -c ${CJS_TEST_FILES}`);
+target.test = function () {
+	let errors = 0;
+	let lastReturn = exec(
+		`${NODE} ${MOCHA} -- -R progress -c ${CJS_TEST_FILES}`,
+	);
 
-    if (lastReturn.code !== 0) {
-        errors++;
-    }
+	if (lastReturn.code !== 0) {
+		errors++;
+	}
 
-    lastReturn = exec(`${C8} ${MOCHA} -- -R progress -c ${TEST_FILES}`);
+	lastReturn = exec(`${C8} ${MOCHA} -- -R progress -c ${TEST_FILES}`);
 
-    if (lastReturn.code !== 0) {
-        errors++;
-    }
+	if (lastReturn.code !== 0) {
+		errors++;
+	}
 
-    if (errors) {
-        exit(1);
-    }
+	if (errors) {
+		exit(1);
+	}
 
-    target.checkLicenses();
+	target.checkLicenses();
 };
 
-target.checkLicenses = function() {
+target.checkLicenses = function () {
+	/**
+	 * Returns true if the given dependency's licenses are all permissable for use in OSS
+	 * @param  {Object}  dependency object containing the name and licenses of the given dependency
+	 * @returns {boolean} is permissable dependency
+	 */
+	function isPermissible(dependency) {
+		const licenses = dependency.licenses;
 
-    /**
-     * Returns true if the given dependency's licenses are all permissable for use in OSS
-     * @param  {Object}  dependency object containing the name and licenses of the given dependency
-     * @returns {boolean} is permissable dependency
-     */
-    function isPermissible(dependency) {
-        const licenses = dependency.licenses;
+		if (Array.isArray(licenses)) {
+			return licenses.some(license =>
+				isPermissible({
+					name: dependency.name,
+					licenses: license,
+				}),
+			);
+		}
 
-        if (Array.isArray(licenses)) {
-            return licenses.some(license => isPermissible({
-                name: dependency.name,
-                licenses: license
-            }));
-        }
+		return OPEN_SOURCE_LICENSES.some(license => license.test(licenses));
+	}
 
-        return OPEN_SOURCE_LICENSES.some(license => license.test(licenses));
-    }
+	echo("Validating licenses");
 
-    echo("Validating licenses");
+	checker.init(
+		{
+			start: dirname,
+			meta: "./licenses-meta-data.json",
+		},
+		deps => {
+			const impermissible = Object.keys(deps)
+				.map(dependency => ({
+					name: dependency,
+					licenses: deps[dependency].licenses,
+				}))
+				.filter(dependency => !isPermissible(dependency));
 
-    checker.init({
-        start: dirname,
-        meta: "./licenses-meta-data.json"
-    }, deps => {
-        const impermissible = Object.keys(deps).map(dependency => ({
-            name: dependency,
-            licenses: deps[dependency].licenses
-        })).filter(dependency => !isPermissible(dependency));
-
-        if (impermissible.length) {
-            impermissible.forEach(dependency => {
-                console.error("%s license for %s is impermissible.",
-                    dependency.licenses,
-                    dependency.name);
-            });
-            exit(1);
-        }
-    });
+			if (impermissible.length) {
+				impermissible.forEach(dependency => {
+					console.error(
+						"%s license for %s is impermissible.",
+						dependency.licenses,
+						dependency.name,
+					);
+				});
+				exit(1);
+			}
+		},
+	);
 };

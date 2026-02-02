@@ -26,38 +26,38 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("fallback option", () => {
-    it("should raise an error when it encountered an unknown node if no fallback.", () => {
-        const ast = espree(`
+	it("should raise an error when it encountered an unknown node if no fallback.", () => {
+		const ast = espree(`
             var foo = 0;
         `);
 
-        ast.body[0].declarations[0].init.type = "NumericLiteral";
+		ast.body[0].declarations[0].init.type = "NumericLiteral";
 
-        expect(() => {
-            analyze(ast, { fallback: "none" });
-        }).to.throw("Unknown node type NumericLiteral");
-    });
+		expect(() => {
+			analyze(ast, { fallback: "none" });
+		}).to.throw("Unknown node type NumericLiteral");
+	});
 
-    it("should not raise an error even if it encountered an unknown node when fallback is iteration.", () => {
-        const ast = espree(`
+	it("should not raise an error even if it encountered an unknown node when fallback is iteration.", () => {
+		const ast = espree(`
             var foo = 0;
         `);
 
-        ast.body[0].declarations[0].init.type = "NumericLiteral";
+		ast.body[0].declarations[0].init.type = "NumericLiteral";
 
-        analyze(ast); // default is `fallback: "iteration"`
-        analyze(ast, { fallback: "iteration" });
-    });
+		analyze(ast); // default is `fallback: "iteration"`
+		analyze(ast, { fallback: "iteration" });
+	});
 
-    it("should not raise an error even if it encountered an unknown node when fallback is a function.", () => {
-        const ast = espree(`
+	it("should not raise an error even if it encountered an unknown node when fallback is a function.", () => {
+		const ast = espree(`
             var foo = 0;
         `);
 
-        ast.body[0].declarations[0].init.type = "NumericLiteral";
+		ast.body[0].declarations[0].init.type = "NumericLiteral";
 
-        analyze(ast, { fallback: node => Object.keys(node) });
-    });
+		analyze(ast, { fallback: node => Object.keys(node) });
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

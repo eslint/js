@@ -1,118 +1,118 @@
 on:
-  push:
-      branches:
-          - main
+    push:
+        branches:
+            - main
 
 name: release-please
 
 permissions:
-  contents: read
-  id-token: write
+    contents: read
+    id-token: write
 
 jobs:
-  release-please:
-      runs-on: ubuntu-latest
-      steps:
-          - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4
-            id: release
-            with:
-                token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
+    release-please:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4
+              id: release
+              with:
+                  token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
 
-          # Output which releases were created
-          - name: Output release info
-            run: |
-                echo "releases_created:" ${{ steps.release.outputs.releases_created }}
-                echo "packages/espree--release_created:" ${{ steps.release.outputs['packages/espree--release_created'] }}
+            # Output which releases were created
+            - name: Output release info
+              run: |
+                  echo "releases_created:" ${{ steps.release.outputs.releases_created }}
+                  echo "packages/espree--release_created:" ${{ steps.release.outputs['packages/espree--release_created'] }}
 
-          # Check to see if we need to do any releases and if so check out the repo
-          - uses: actions/checkout@v6
-            if: ${{ steps.release.outputs.releases_created == 'true' }}
+            # Check to see if we need to do any releases and if so check out the repo
+            - uses: actions/checkout@v6
+              if: ${{ steps.release.outputs.releases_created == 'true' }}
 
-          # Node.js release
-          - uses: actions/setup-node@v6
-            if: ${{ steps.release.outputs.releases_created == 'true' }}
-            with:
-                node-version: lts/*
-                registry-url: "https://registry.npmjs.org"
+            # Node.js release
+            - uses: actions/setup-node@v6
+              if: ${{ steps.release.outputs.releases_created == 'true' }}
+              with:
+                  node-version: lts/*
+                  registry-url: "https://registry.npmjs.org"
 
-          # npm 11.5.1 or later is required so update to latest to be sure
-          - name: Update npm
-            run: npm install -g npm@latest
-            if: ${{ steps.release.outputs.releases_created == 'true' }}
+            # npm 11.5.1 or later is required so update to latest to be sure
+            - name: Update npm
+              run: npm install -g npm@latest
+              if: ${{ steps.release.outputs.releases_created == 'true' }}
 
-          - run: |
-                npm install
-                npm run build
-            if: ${{ steps.release.outputs.releases_created == 'true' }}
+            - run: |
+                  npm install
+                  npm run build
+              if: ${{ steps.release.outputs.releases_created == 'true' }}
 
-          #-----------------------------------------------------------------------------
-          # NOTE: Packages are released in order of dependency. The packages with the
-          # fewest internal dependencies are released first and the packages with the
-          # most internal dependencies are released last.
-          #-----------------------------------------------------------------------------
+            #-----------------------------------------------------------------------------
+            # NOTE: Packages are released in order of dependency. The packages with the
+            # fewest internal dependencies are released first and the packages with the
+            # most internal dependencies are released last.
+            #-----------------------------------------------------------------------------
 
-          #-----------------------------------------------------------------------------
-          # eslint-visitor-keys
-          #-----------------------------------------------------------------------------
+            #-----------------------------------------------------------------------------
+            # eslint-visitor-keys
+            #-----------------------------------------------------------------------------
 
-          - name: Publish eslint-visitor-keys package to npm
-            run: npm publish -w packages/eslint-visitor-keys --provenance
-            if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
+            - name: Publish eslint-visitor-keys package to npm
+              run: npm publish -w packages/eslint-visitor-keys --provenance
+              if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
 
-          - name: Post Release Announcement
-            run: npx @humanwhocodes/crosspost -t -b -m "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
-            if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
-            env:
-                TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-                TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-                TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
-                TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-                MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-                MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
-                BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
-                BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
-                BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
+            - name: Post Release Announcement
+              run: npx @humanwhocodes/crosspost -t -b -m "eslint-visitor-keys v${{ steps.release.outputs['packages/eslint-visitor-keys--major'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--minor'] }}.${{ steps.release.outputs['packages/eslint-visitor-keys--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-visitor-keys--tag_name'] }}"
+              if: ${{ steps.release.outputs['packages/eslint-visitor-keys--release_created'] }}
+              env:
+                  TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                  TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                  TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+                  MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                  MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                  BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                  BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                  BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
 
-          #-----------------------------------------------------------------------------
-          # espree
-          #-----------------------------------------------------------------------------
+            #-----------------------------------------------------------------------------
+            # espree
+            #-----------------------------------------------------------------------------
 
-          - name: Publish espree package to npm
-            run: npm publish -w packages/espree --provenance
-            if: ${{ steps.release.outputs['packages/espree--release_created'] }}
+            - name: Publish espree package to npm
+              run: npm publish -w packages/espree --provenance
+              if: ${{ steps.release.outputs['packages/espree--release_created'] }}
 
-          - name: Tweet Release Announcement
-            run: npx @humanwhocodes/crosspost -t -b -m "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
-            if: ${{ steps.release.outputs['packages/espree--release_created'] }}
-            env:
-                TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-                TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-                TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
-                TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-                MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-                MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
-                BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
-                BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
-                BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
+            - name: Tweet Release Announcement
+              run: npx @humanwhocodes/crosspost -t -b -m "espree v${{ steps.release.outputs['packages/espree--major'] }}.${{ steps.release.outputs['packages/espree--minor'] }}.${{ steps.release.outputs['packages/espree--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/espree--tag_name'] }}"
+              if: ${{ steps.release.outputs['packages/espree--release_created'] }}
+              env:
+                  TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                  TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                  TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+                  MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                  MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                  BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                  BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                  BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
 
-          #-----------------------------------------------------------------------------
-          # eslint-scope
-          #-----------------------------------------------------------------------------
+            #-----------------------------------------------------------------------------
+            # eslint-scope
+            #-----------------------------------------------------------------------------
 
-          - name: Publish eslint-scope package to npm
-            run: npm publish -w packages/eslint-scope --provenance
-            if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
+            - name: Publish eslint-scope package to npm
+              run: npm publish -w packages/eslint-scope --provenance
+              if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
 
-          - name: Tweet Release Announcement
-            run: npx @humanwhocodes/crosspost -t -b -m "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
-            if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
-            env:
-                TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-                TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-                TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
-                TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-                MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-                MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
-                BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
-                BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
-                BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
+            - name: Tweet Release Announcement
+              run: npx @humanwhocodes/crosspost -t -b -m "eslint-scope v${{ steps.release.outputs['packages/eslint-scope--major'] }}.${{ steps.release.outputs['packages/eslint-scope--minor'] }}.${{ steps.release.outputs['packages/eslint-scope--patch'] }} has been released!\n\n${{ github.event.repository.html_url }}/releases/tag/${{ steps.release.outputs['packages/eslint-scope--tag_name'] }}"
+              if: ${{ steps.release.outputs['packages/eslint-scope--release_created'] }}
+              env:
+                  TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                  TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                  TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+                  MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                  MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                  BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                  BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                  BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
