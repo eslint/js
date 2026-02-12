@@ -59,7 +59,10 @@ import * as acorn from "acorn";
 import jsx from "acorn-jsx";
 import espree from "./lib/espree.js";
 import { KEYS as VisitorKeys } from "eslint-visitor-keys";
-import { getLatestEcmaVersion, getSupportedEcmaVersions } from "./lib/options.js";
+import {
+	getLatestEcmaVersion,
+	getSupportedEcmaVersions,
+} from "./lib/options.js";
 
 /**
  * @import { EspreeParserCtor, EspreeParserJsxCtor } from "./lib/types.js";
@@ -255,8 +258,8 @@ export const version = "11.1.0"; // x-release-please-version
 export const name = "espree";
 
 // Derive node types from VisitorKeys
-export const Syntax = /* #__PURE__ */ (function() {
-    let key,
+export const Syntax = /* #__PURE__ */ (function () {
+	let key,
 		/** @type {Record<string,string>} */
 		types = {};
 
