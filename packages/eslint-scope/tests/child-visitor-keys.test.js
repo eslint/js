@@ -26,77 +26,68 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("childVisitorKeys option", () => {
-    it("should handle as a known node if the childVisitorKeys option was given.", () => {
-        const ast = espree(`
+	it("should handle as a known node if the childVisitorKeys option was given.", () => {
+		const ast = espree(`
             var foo = 0;
         `);
 
-        ast.body[0].declarations[0].init.type = "NumericLiteral";
+		ast.body[0].declarations[0].init.type = "NumericLiteral";
 
-        // should no error
-        analyze(
-            ast,
-            {
-                fallback: "none",
-                childVisitorKeys: {
-                    NumericLiteral: []
-                }
-            }
-        );
-    });
+		// should no error
+		analyze(ast, {
+			fallback: "none",
+			childVisitorKeys: {
+				NumericLiteral: [],
+			},
+		});
+	});
 
-    it("should not visit to properties which are not given.", () => {
-        const ast = espree(`
+	it("should not visit to properties which are not given.", () => {
+		const ast = espree(`
             let foo = bar;
         `);
 
-        ast.body[0].declarations[0].init = {
-            type: "TestNode",
-            argument: ast.body[0].declarations[0].init
-        };
+		ast.body[0].declarations[0].init = {
+			type: "TestNode",
+			argument: ast.body[0].declarations[0].init,
+		};
 
-        const result = analyze(
-            ast,
-            {
-                childVisitorKeys: {
-                    TestNode: []
-                }
-            }
-        );
+		const result = analyze(ast, {
+			childVisitorKeys: {
+				TestNode: [],
+			},
+		});
 
-        expect(result.scopes).to.have.length(1);
-        const globalScope = result.scopes[0];
+		expect(result.scopes).to.have.length(1);
+		const globalScope = result.scopes[0];
 
-        // `bar` in TestNode has not been visited.
-        expect(globalScope.through).to.have.length(0);
-    });
+		// `bar` in TestNode has not been visited.
+		expect(globalScope.through).to.have.length(0);
+	});
 
-    it("should visit to given properties.", () => {
-        const ast = espree(`
+	it("should visit to given properties.", () => {
+		const ast = espree(`
             let foo = bar;
         `);
 
-        ast.body[0].declarations[0].init = {
-            type: "TestNode",
-            argument: ast.body[0].declarations[0].init
-        };
+		ast.body[0].declarations[0].init = {
+			type: "TestNode",
+			argument: ast.body[0].declarations[0].init,
+		};
 
-        const result = analyze(
-            ast,
-            {
-                childVisitorKeys: {
-                    TestNode: ["argument"]
-                }
-            }
-        );
+		const result = analyze(ast, {
+			childVisitorKeys: {
+				TestNode: ["argument"],
+			},
+		});
 
-        expect(result.scopes).to.have.length(1);
-        const globalScope = result.scopes[0];
+		expect(result.scopes).to.have.length(1);
+		const globalScope = result.scopes[0];
 
-        // `bar` in TestNode has been visited.
-        expect(globalScope.through).to.have.length(1);
-        expect(globalScope.through[0].identifier.name).to.equal("bar");
-    });
+		// `bar` in TestNode has been visited.
+		expect(globalScope.through).to.have.length(1);
+		expect(globalScope.through[0].identifier.name).to.equal("bar");
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

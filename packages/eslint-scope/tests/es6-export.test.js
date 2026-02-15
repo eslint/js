@@ -26,198 +26,224 @@ import espree from "./util/espree.js";
 import { analyze } from "../lib/index.js";
 
 describe("export declaration", () => {
+	// http://people.mozilla.org/~jorendorff/es6-draft.html#sec-static-and-runtme-semantics-module-records
+	it("should create variable bindings", () => {
+		const ast = espree("export var v;");
 
-    // http://people.mozilla.org/~jorendorff/es6-draft.html#sec-static-and-runtme-semantics-module-records
-    it("should create variable bindings", () => {
-        const ast = espree("export var v;");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("v");
+		expect(scope.variables[0].defs[0].type).to.be.equal("Variable");
+		expect(scope.references).to.have.length(0);
+	});
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("v");
-        expect(scope.variables[0].defs[0].type).to.be.equal("Variable");
-        expect(scope.references).to.have.length(0);
-    });
+	it("should create function declaration bindings", () => {
+		const ast = espree("export default function f(){};");
 
-    it("should create function declaration bindings", () => {
-        const ast = espree("export default function f(){};");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(3);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(3);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		let scope = scopeManager.scopes[1];
 
-        let scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("f");
+		expect(scope.variables[0].defs[0].type).to.be.equal("FunctionName");
+		expect(scope.references).to.have.length(0);
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("f");
-        expect(scope.variables[0].defs[0].type).to.be.equal("FunctionName");
-        expect(scope.references).to.have.length(0);
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.references).to.have.length(0);
+	});
 
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.references).to.have.length(0);
-    });
+	it("should export function expression", () => {
+		const ast = espree("export default function(){};");
 
-    it("should export function expression", () => {
-        const ast = espree("export default function(){};");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(3);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(3);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		let scope = scopeManager.scopes[1];
 
-        let scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
+		scope = scopeManager.scopes[2];
+		expect(scope.type).to.be.equal("function");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.variables[0].name).to.be.equal("arguments");
+		expect(scope.references).to.have.length(0);
+	});
 
-        scope = scopeManager.scopes[2];
-        expect(scope.type).to.be.equal("function");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.variables[0].name).to.be.equal("arguments");
-        expect(scope.references).to.have.length(0);
-    });
+	it("should export literal", () => {
+		const ast = espree("export default 42;");
 
-    it("should export literal", () => {
-        const ast = espree("export default 42;");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
+	});
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
-    });
+	it("should refer exported references#1", () => {
+		const ast = espree("const x = 1; export {x};");
 
-    it("should refer exported references#1", () => {
-        const ast = espree("const x = 1; export {x};");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.references).to.have.length(2);
+		expect(scope.references[0].identifier.name).to.be.equal("x");
+		expect(scope.references[1].identifier.name).to.be.equal("x");
+	});
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.references).to.have.length(2);
-        expect(scope.references[0].identifier.name).to.be.equal("x");
-        expect(scope.references[1].identifier.name).to.be.equal("x");
-    });
+	it("should refer exported references#2", () => {
+		const ast = espree("const v = 1; export {v as x};");
 
-    it("should refer exported references#2", () => {
-        const ast = espree("const v = 1; export {v as x};");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(1);
+		expect(scope.references).to.have.length(2);
+		expect(scope.references[0].identifier.name).to.be.equal("v");
+		expect(scope.references[1].identifier.name).to.be.equal("v");
+	});
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(1);
-        expect(scope.references).to.have.length(2);
-        expect(scope.references[0].identifier.name).to.be.equal("v");
-        expect(scope.references[1].identifier.name).to.be.equal("v");
-    });
+	it("should not refer exported references from other source#1", () => {
+		const ast = espree('export {x} from "mod";');
 
-    it("should not refer exported references from other source#1", () => {
-        const ast = espree("export {x} from \"mod\";");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
+	});
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
-    });
+	it("should not refer exported references from other source#2", () => {
+		const ast = espree('export {v as x} from "mod";');
 
-    it("should not refer exported references from other source#2", () => {
-        const ast = espree("export {v as x} from \"mod\";");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
+	});
 
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
-    });
+	it("should not refer exported references from other source#3", () => {
+		const ast = espree('export * from "mod";');
 
-    it("should not refer exported references from other source#3", () => {
-        const ast = espree("export * from \"mod\";");
+		const scopeManager = analyze(ast, {
+			ecmaVersion: 6,
+			sourceType: "module",
+		});
 
-        const scopeManager = analyze(ast, { ecmaVersion: 6, sourceType: "module" });
+		expect(scopeManager.scopes).to.have.length(2);
+		const globalScope = scopeManager.scopes[0];
 
-        expect(scopeManager.scopes).to.have.length(2);
-        const globalScope = scopeManager.scopes[0];
+		expect(globalScope.type).to.be.equal("global");
+		expect(globalScope.variables).to.have.length(0);
+		expect(globalScope.references).to.have.length(0);
 
-        expect(globalScope.type).to.be.equal("global");
-        expect(globalScope.variables).to.have.length(0);
-        expect(globalScope.references).to.have.length(0);
+		const scope = scopeManager.scopes[1];
 
-        const scope = scopeManager.scopes[1];
-
-        expect(scope.type).to.be.equal("module");
-        expect(scope.variables).to.have.length(0);
-        expect(scope.references).to.have.length(0);
-    });
+		expect(scope.type).to.be.equal("module");
+		expect(scope.variables).to.have.length(0);
+		expect(scope.references).to.have.length(0);
+	});
 });
 
 // vim: set sw=4 ts=4 et tw=80 :

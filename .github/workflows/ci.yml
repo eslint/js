@@ -1,64 +1,82 @@
 name: CI
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 'lts/*'
-      - name: Install dependencies
-        run: npm install
-      - name: Build packages
-        run: npm run build
-      - name: Lint files
-        run: npm run lint
-      - name: Lint Files, Dependencies, & Exports
-        run: npm run lint:unused
-  test:
-    name: Test
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [25.x, 24.x, 22.x, 20.x, "20.19.0"]
-        include:
-            - os: windows-latest
-              node: "lts/*"
-            - os: macOS-latest
-              node: "lts/*"
-    runs-on: ${{ matrix.os }}
-    steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
-      with:
-        node-version: ${{ matrix.node }}
-    - name: Install dependencies
-      run: npm install
-    - name: Build packages
-      run: npm run build
-    - name: Run tests
-      run: npm run test
-  are-the-types-wrong:
-    name: Are the types wrong?
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 'lts/*'
-      - name: Install dependencies
-        run: npm install
-      - name: Build types
-        run: npm run build:types
-      - name: Are the types wrong?
-        run: npm run lint:types
+    lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "lts/*"
+            - name: Install dependencies
+              run: npm install
+            - name: Build packages
+              run: npm run build
+            - name: Lint files
+              run: npm run lint
+            - name: Lint Files, Dependencies, & Exports
+              run: npm run lint:unused
+
+    format:
+        name: File Format
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: lts/*
+            - name: Install dependencies
+              run: npm install
+            - name: Build packages
+              run: npm run build
+            - name: Prettier Check
+              run: npm run fmt:check
+
+    test:
+        name: Test
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+                node: [25.x, 24.x, 22.x, 20.x, "20.19.0"]
+                include:
+                    - os: windows-latest
+                      node: "lts/*"
+                    - os: macOS-latest
+                      node: "lts/*"
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: ${{ matrix.node }}
+            - name: Install dependencies
+              run: npm install
+            - name: Build packages
+              run: npm run build
+            - name: Run tests
+              run: npm run test
+
+    are-the-types-wrong:
+        name: Are the types wrong?
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "lts/*"
+            - name: Install dependencies
+              run: npm install
+            - name: Build types
+              run: npm run build:types
+            - name: Are the types wrong?
+              run: npm run lint:types

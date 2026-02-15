@@ -12,15 +12,18 @@
  * @param {ASTNode} literalNode The node to work on.
  * @returns {ASTNode} The node that was passed in.
  */
-export default function(literalNode) {
-    if (literalNode.regex) {
-        try {
-            literalNode.value = new RegExp(literalNode.regex.pattern, literalNode.regex.flags);
-        } catch {
-            literalNode.value = null;
-        }
-    }
-    return literalNode;
+export default function (literalNode) {
+	if (literalNode.regex) {
+		try {
+			literalNode.value = new RegExp(
+				literalNode.regex.pattern,
+				literalNode.regex.flags,
+			);
+		} catch {
+			literalNode.value = null;
+		}
+	}
+	return literalNode;
 }
 
 /*
