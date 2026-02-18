@@ -1,6 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreBinaries": ["report"],
   "workspaces": {
     "packages/eslint-scope": {
       "entry": ["tests/**/*.{cjs,cts,js,ts}"]
