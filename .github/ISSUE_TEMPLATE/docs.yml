@@ -4,6 +4,9 @@ title: "Docs: (fill in)"
 labels:
     - documentation
 body:
+    - type: markdown
+      attributes:
+          value: By opening an issue, you agree to abide by the [OpenJS Foundation Code of Conduct](https://eslint.org/conduct).
     - type: checkboxes
       attributes:
           label: Which packages would you like to change?
