@@ -4,6 +4,9 @@ title: "Change Request: (fill in)"
 labels:
     - enhancement
 body:
+    - type: markdown
+      attributes:
+          value: By opening an issue, you agree to abide by the [OpenJS Foundation Code of Conduct](https://eslint.org/conduct).
     - type: checkboxes
       attributes:
           label: Which packages would you like to change?
