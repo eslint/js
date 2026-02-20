@@ -1,5 +1,20 @@
 # Changelog
 
+## [11.1.1](https://github.com/eslint/js/compare/espree-v11.1.0...espree-v11.1.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* improve tree-shaking ([#725](https://github.com/eslint/js/issues/725)) ([b699f32](https://github.com/eslint/js/commit/b699f3200cad596c731d077b22c239ce55fc7a06))
+* update acorn, fix tests ([#731](https://github.com/eslint/js/issues/731)) ([883d4cc](https://github.com/eslint/js/commit/883d4cccfcb321f83820e6d4ece4aaba7b85cb3f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * eslint-visitor-keys bumped from ^5.0.0 to ^5.0.1
+
 ## [11.1.0](https://github.com/eslint/js/compare/espree-v11.0.0...espree-v11.1.0) (2026-01-18)
 
 
