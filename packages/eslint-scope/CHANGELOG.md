@@ -1,5 +1,15 @@
 # Changelog
 
+## [9.1.1](https://github.com/eslint/js/compare/eslint-scope-v9.1.0...eslint-scope-v9.1.1) (2026-02-20)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * eslint-visitor-keys bumped from ^5.0.0 to ^5.0.1
+    * espree bumped from ^11.1.0 to ^11.1.1
+
 ## [9.1.0](https://github.com/eslint/js/compare/eslint-scope-v9.0.0...eslint-scope-v9.1.0) (2026-01-18)
 
 

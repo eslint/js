@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/eslint/js/compare/eslint-visitor-keys-v5.0.0...eslint-visitor-keys-v5.0.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* improve tree-shaking ([#725](https://github.com/eslint/js/issues/725)) ([b699f32](https://github.com/eslint/js/commit/b699f3200cad596c731d077b22c239ce55fc7a06))
+
 ## [5.0.0](https://github.com/eslint/js/compare/eslint-visitor-keys-v4.2.1...eslint-visitor-keys-v5.0.0) (2025-11-07)
 
 

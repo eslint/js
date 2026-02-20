@@ -18,7 +18,7 @@
     },
     "./package.json": "./package.json"
   },
-  "version": "11.1.0",
+  "version": "11.1.1",
   "files": [
     "lib",
     "dist",
@@ -40,7 +40,7 @@
   "dependencies": {
     "acorn": "^8.16.0",
     "acorn-jsx": "^5.3.2",
-    "eslint-visitor-keys": "^5.0.0"
+    "eslint-visitor-keys": "^5.0.1"
   },
   "devDependencies": {
     "shelljs": "^0.8.5",
