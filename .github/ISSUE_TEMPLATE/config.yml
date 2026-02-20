@@ -3,3 +3,6 @@ contact_links:
     - name: 🗣 Ask a Question, Discuss
       url: https://github.com/eslint/js/discussions
       about: Get help using ESLint
+    - name: Discord Server
+      url: https://eslint.org/chat
+      about: Talk with the team

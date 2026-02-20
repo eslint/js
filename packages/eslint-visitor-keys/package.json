@@ -1,6 +1,6 @@
 {
   "name": "eslint-visitor-keys",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Constants and utilities about visitor keys to traverse AST.",
   "type": "module",
   "main": "dist/eslint-visitor-keys.cjs",
@@ -52,5 +52,6 @@
   "bugs": {
     "url": "https://github.com/eslint/js/issues"
   },
-  "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-visitor-keys/README.md"
+  "homepage": "https://github.com/eslint/js/blob/main/packages/eslint-visitor-keys/README.md",
+  "sideEffects": false
 }

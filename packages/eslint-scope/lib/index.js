@@ -146,7 +146,7 @@ function analyze(tree, providedOptions) {
 }
 
 /** @name module:escope.version */
-export const version = "9.1.0"; // x-release-please-version
+export const version = "9.1.1"; // x-release-please-version
 
 export {
 	/** @name module:escope.Reference */

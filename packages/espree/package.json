@@ -18,7 +18,7 @@
     },
     "./package.json": "./package.json"
   },
-  "version": "11.1.0",
+  "version": "11.1.1",
   "files": [
     "lib",
     "dist",
@@ -38,9 +38,9 @@
   "funding": "https://opencollective.com/eslint",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "acorn": "^8.15.0",
+    "acorn": "^8.16.0",
     "acorn-jsx": "^5.3.2",
-    "eslint-visitor-keys": "^5.0.0"
+    "eslint-visitor-keys": "^5.0.1"
   },
   "devDependencies": {
     "shelljs": "^0.8.5",
@@ -65,5 +65,6 @@
     "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
     "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\"",
     "test:types": "tsd --typings dist/espree.d.ts"
-  }
+  },
+  "sideEffects": false
 }

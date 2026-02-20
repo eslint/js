@@ -4,6 +4,9 @@ title: "Docs: (fill in)"
 labels:
     - documentation
 body:
+    - type: markdown
+      attributes:
+          value: By opening an issue, you agree to abide by the [OpenJS Foundation Code of Conduct](https://eslint.org/conduct).
     - type: checkboxes
       attributes:
           label: Which packages would you like to change?
@@ -33,6 +36,17 @@ body:
           label: Participation
           options:
               - label: I am willing to submit a pull request for this change.
+                required: false
+    - type: markdown
+      attributes:
+          value: Please **do not** open a pull request until this issue has been accepted by the team.
+    - type: checkboxes
+      attributes:
+          label: AI acknowledgment
+          options:
+              - label: I did not use AI to generate this issue report.
+                required: false
+              - label: (If the above is not checked) I have reviewed the AI-generated content before submitting.
                 required: false
     - type: textarea
       attributes:
