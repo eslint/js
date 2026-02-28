@@ -54,6 +54,20 @@ describe("parse()", () => {
 				espree.parse("return;", { sourceType: "commonjs" });
 			});
 
+			it("should parse top-level using", () => {
+				espree.parse("using x = resource;", {
+					sourceType: "commonjs",
+					ecmaVersion: "latest",
+				});
+			});
+
+			it("should parse top-level new.target", () => {
+				espree.parse("new.target;", {
+					sourceType: "commonjs",
+					ecmaVersion: "latest",
+				});
+			});
+
 			it("should have sourceType:commonjs on Program node", () => {
 				const result = espree.parse("return;", {
 					sourceType: "commonjs",
