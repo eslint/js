@@ -93,15 +93,15 @@ function normalizeEcmaVersion(ecmaVersion = 5) {
  * Normalize sourceType from the initial config
  * @param {string} sourceType to normalize
  * @throws {Error} throw an error if sourceType is invalid
- * @returns {"script"|"module"} normalized sourceType
+ * @returns {"script"|"module"|"commonjs"} normalized sourceType
  */
 function normalizeSourceType(sourceType = "script") {
-	if (sourceType === "script" || sourceType === "module") {
+	if (
+		sourceType === "script" ||
+		sourceType === "module" ||
+		sourceType === "commonjs"
+	) {
 		return sourceType;
-	}
-
-	if (sourceType === "commonjs") {
-		return "script";
 	}
 
 	throw new Error("Invalid sourceType.");
@@ -110,7 +110,7 @@ function normalizeSourceType(sourceType = "script") {
 /**
  * @typedef {{
  *   ecmaVersion: NormalizedEcmaVersion,
- *   sourceType: "script"|"module",
+ *   sourceType: "script"|"module"|"commonjs",
  *   range?: boolean,
  *   loc?: boolean,
  *   allowReserved: boolean | "never",
