@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.1.2](https://github.com/eslint/js/compare/eslint-scope-v9.1.1...eslint-scope-v9.1.2) (2026-03-04)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * espree bumped from ^11.1.1 to ^11.2.0
+
 ## [9.1.1](https://github.com/eslint/js/compare/eslint-scope-v9.1.0...eslint-scope-v9.1.1) (2026-02-20)
 
 

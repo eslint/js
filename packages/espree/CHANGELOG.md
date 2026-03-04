@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.2.0](https://github.com/eslint/js/compare/espree-v11.1.1...espree-v11.2.0) (2026-03-04)
+
+
+### Features
+
+* allow top level `using` declaration in `"commonjs"` ([#734](https://github.com/eslint/js/issues/734)) ([3f7fb58](https://github.com/eslint/js/commit/3f7fb58998ab668a2ac47d21b9a94475a201bea0))
+
 ## [11.1.1](https://github.com/eslint/js/compare/espree-v11.1.0...espree-v11.1.1) (2026-02-20)
 
 
