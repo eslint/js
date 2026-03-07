@@ -29,10 +29,10 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
     "@types/node": "^20.19.0",
-    "@typescript-eslint/parser": "^8.49.0",
+    "@typescript-eslint/parser": "^8.56.1",
     "c8": "^11.0.0",
-    "eslint": "^9.35.0",
-    "eslint-config-eslint": "^13.0.0",
+    "eslint": "^10.0.3",
+    "eslint-config-eslint": "^14.0.0",
     "eslint-plugin-chai-friendly": "^1.0.0",
     "eslint-plugin-expect-type": "^0.6.2",
     "globals": "^17.0.0",

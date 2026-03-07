@@ -46,7 +46,6 @@
  * }} EspreeParser
  */
 
-/* eslint-disable jsdoc/valid-types -- Waiting on jsdoc plugin update */
 /**
  * @typedef {acorn.Parser & {
  *   jsx_readToken(): string;
@@ -114,5 +113,3 @@
  *   }
  * }} AcornJsxParserCtorEnhanced
  */
-
-/* eslint-enable jsdoc/valid-types -- Bug in older versions */
