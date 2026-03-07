@@ -24,9 +24,6 @@ function filterKey(key) {
 	return !KEY_BLACKLIST.has(key) && key[0] !== "_";
 }
 
-/* eslint-disable jsdoc/valid-types -- doesn't allow `readonly`.
-   TODO: remove eslint-disable when https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser/issues/164 is fixed
-*/
 /**
  * Get visitor keys of a given node.
  * @param {Object} node The AST node to get keys.
@@ -35,7 +32,6 @@ function filterKey(key) {
 export function getKeys(node) {
 	return Object.keys(node).filter(filterKey);
 }
-/* eslint-enable jsdoc/valid-types -- doesn't allow `readonly` */
 
 /**
  * Make the union set with `KEYS` and given keys.
