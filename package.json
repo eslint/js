@@ -36,7 +36,7 @@
     "eslint-plugin-chai-friendly": "^1.0.0",
     "eslint-plugin-expect-type": "^0.6.2",
     "globals": "^17.0.0",
-    "knip": "^5.82.1",
+    "knip": "^6.0.0",
     "lint-staged": "^16.0.0",
     "mocha": "^11.1.0",
     "prettier": "3.8.1",
