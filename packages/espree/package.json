@@ -43,7 +43,7 @@
     "eslint-visitor-keys": "^5.0.1"
   },
   "devDependencies": {
-    "shelljs": "^0.8.5",
+    "shelljs": "^0.10.0",
     "tsd": "^0.33.0"
   },
   "keywords": [

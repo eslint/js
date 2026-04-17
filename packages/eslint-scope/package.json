@@ -61,6 +61,6 @@
     "eslint-visitor-keys": "^5.0.1",
     "espree": "^11.2.0",
     "npm-license": "^0.3.3",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.10.0"
   }
 }
