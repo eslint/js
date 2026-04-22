@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "lib": ["esnext"],
-    "moduleResolution": "node",
-    "module": "esnext",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
@@ -10,6 +10,7 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
+    "rootDir": "lib",
     "strict": true,
     "exactOptionalPropertyTypes": true,
     "target": "es6",
