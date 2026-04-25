@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "allowJs": true,
     "esModuleInterop": true,
     "noEmit": false,
