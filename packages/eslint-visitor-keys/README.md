@@ -1,7 +1,7 @@
 # eslint-visitor-keys
 
 [![npm version](https://img.shields.io/npm/v/eslint-visitor-keys.svg)](https://www.npmjs.com/package/eslint-visitor-keys)
-[![npm downloads per month](https://img.shields.io/npm/dm/eslint-visitor-keys.svg)](https://www.npmtrends.com/eslint-visitor-keys)
+[![npm downloads per month](https://img.shields.io/npm/dm/eslint-visitor-keys.svg)](https://www.npmjs.com/package/eslint-visitor-keys)
 [![CI Status](https://github.com/eslint/js/actions/workflows/ci.yml/badge.svg)](https://github.com/eslint/js/actions/workflows/ci.yml)
 
 Constants and utilities about visitor keys to traverse AST.

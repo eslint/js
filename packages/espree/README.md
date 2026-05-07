@@ -171,7 +171,7 @@ Espree may also deviate from Esprima in the interface it exposes.
 
 ## Contributing
 
-Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](https://eslint.org/docs/latest/contribute/), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
+Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](https://eslint.org/docs/latest/contribute), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
 
 Espree is licensed under a permissive BSD 2-clause license.
 
