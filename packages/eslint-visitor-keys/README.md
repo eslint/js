@@ -1,8 +1,8 @@
 # eslint-visitor-keys
 
 [![npm version](https://img.shields.io/npm/v/eslint-visitor-keys.svg)](https://www.npmjs.com/package/eslint-visitor-keys)
-[![Downloads/month](https://img.shields.io/npm/dm/eslint-visitor-keys.svg)](http://www.npmtrends.com/eslint-visitor-keys)
-[![Build Status](https://github.com/eslint/js/workflows/CI/badge.svg)](https://github.com/eslint/js/actions)
+[![npm downloads per month](https://img.shields.io/npm/dm/eslint-visitor-keys.svg)](https://www.npmtrends.com/eslint-visitor-keys)
+[![CI Status](https://github.com/eslint/js/actions/workflows/ci.yml/badge.svg)](https://github.com/eslint/js/actions/workflows/ci.yml)
 
 Constants and utilities about visitor keys to traverse AST.
 
@@ -92,13 +92,13 @@ See [GitHub releases](https://github.com/eslint/js/releases).
 
 ## 🍻 Contributing
 
-Welcome. See [ESLint contribution guidelines](https://eslint.org/docs/developer-guide/contributing/).
+Welcome. See [ESLint contribution guidelines](https://eslint.org/docs/latest/contribute).
 
 ### Development commands
 
 - `npm test` runs tests and measures code coverage.
 - `npm run lint` checks source codes with ESLint.
-- `npm run test:open-coverage` opens the code coverage report of the previous test with your default browser.
+- `npm run test:coverage` runs tests and generates code coverage report.
 
 [npm]: https://www.npmjs.com/
 [Node.js]: https://nodejs.org/

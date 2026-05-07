@@ -1,11 +1,11 @@
 # Contributing Code
 
-Please sign the [jQuery Foundation Contributor License Agreement](https://contribute.jquery.org/CLA/)
+Please sign the [OpenJS Foundation Contributor License Agreement](https://openjsf.org/cla)
 
 # Full Documentation
 
 Our full contribution guidelines can be found at:
-<http://eslint.org/docs/developer-guide/contributing/>
+<https://eslint.org/docs/latest/contribute/>
 
 # How to upgrade `acorn` to support new syntax
 
