@@ -25,9 +25,9 @@
  * SOFTWARE
  */
 
-import * as eslint from "eslint";
 import * as eslintScope from "eslint-scope";
 import * as espree from "espree";
+import type * as eslint from "eslint";
 import type * as estree from "estree";
 
 const code = `
