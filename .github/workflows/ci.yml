@@ -109,7 +109,5 @@ jobs:
                   node-version: "lts/*"
             - name: Install dependencies
               run: npm install
-            - name: Build types
-              run: npm run build:types
             - name: Are the types wrong?
               run: npm run lint:types

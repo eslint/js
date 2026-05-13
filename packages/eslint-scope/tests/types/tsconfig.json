@@ -5,6 +5,7 @@
     "checkJs": false,
     "noEmit": true,
     "rootDir": "../..",
+    "noImplicitAny": true,
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true

@@ -28,7 +28,7 @@
 import * as eslint from "eslint";
 import * as eslintScope from "eslint-scope";
 import * as espree from "espree";
-import * as estree from "estree";
+import type * as estree from "estree";
 
 const code = `
 function example() {
