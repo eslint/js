@@ -49,5 +49,10 @@
     "rollup": "^4.55.2",
     "typescript": "^6.0.3",
     "yorkie": "^2.0.0"
+  },
+  "overrides": {
+    "@arethetypeswrong/core": {
+      "fflate": "0.8.2"
+    }
   }
 }
