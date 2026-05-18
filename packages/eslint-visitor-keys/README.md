@@ -92,7 +92,7 @@ See [GitHub releases](https://github.com/eslint/js/releases).
 
 ## 🍻 Contributing
 
-Welcome. See [ESLint contribution guidelines](https://eslint.org/docs/latest/contribute).
+Welcome. See [ESLint contribution guidelines](https://eslint.org/docs/latest/contribute/).
 
 ### Development commands
 
