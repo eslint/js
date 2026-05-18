@@ -5,7 +5,7 @@ Please sign the [OpenJS Foundation Contributor License Agreement](https://openjs
 # Full Documentation
 
 Our full contribution guidelines can be found at:
-<https://eslint.org/docs/latest/contribute>
+<https://eslint.org/docs/latest/contribute/>
 
 # How to upgrade `acorn` to support new syntax
 
