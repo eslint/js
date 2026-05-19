@@ -9,6 +9,9 @@ on:
         branches:
             - main
 
+permissions:
+    contents: read
+
 jobs:
     ci-package-manager:
         uses: eslint/workflows/.github/workflows/ci-package-manager.yml@main
