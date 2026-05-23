@@ -1,11 +1,10 @@
 [![npm version](https://img.shields.io/npm/v/espree.svg)](https://www.npmjs.com/package/espree)
-[![npm downloads](https://img.shields.io/npm/dm/espree.svg)](https://www.npmjs.com/package/espree)
-[![Build Status](https://github.com/eslint/js/workflows/CI/badge.svg)](https://github.com/js/espree/actions)
-[![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=9348450)](https://www.bountysource.com/trackers/9348450-eslint?utm_source=9348450&utm_medium=shield&utm_campaign=TRACKER_BADGE)
+[![npm downloads per month](https://img.shields.io/npm/dm/espree.svg)](https://www.npmjs.com/package/espree)
+[![CI Status](https://github.com/eslint/js/actions/workflows/ci.yml/badge.svg)](https://github.com/eslint/js/actions/workflows/ci.yml)
 
 # Espree
 
-Espree started out as a fork of [Esprima](http://esprima.org) v1.2.2, the last stable published released of Esprima before work on ECMAScript 6 began. Espree is now built on top of [Acorn](https://github.com/ternjs/acorn), which has a modular architecture that allows extension of core functionality. The goal of Espree is to produce output that is similar to Esprima with a similar API so that it can be used in place of Esprima.
+Espree started out as a fork of [Esprima](https://esprima.org) v1.2.2, the last stable published released of Esprima before work on ECMAScript 6 began. Espree is now built on top of [Acorn](https://github.com/acornjs/acorn), which has a modular architecture that allows extension of core functionality. The goal of Espree is to produce output that is similar to Esprima with a similar API so that it can be used in place of Esprima.
 
 ## Usage
 
@@ -172,7 +171,7 @@ Espree may also deviate from Esprima in the interface it exposes.
 
 ## Contributing
 
-Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](http://eslint.org/docs/developer-guide/contributing), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
+Issues and pull requests will be triaged and responded to as quickly as possible. We operate under the [ESLint Contributor Guidelines](https://eslint.org/docs/latest/contribute/), so please be sure to read them before contributing. If you're not sure where to dig in, check out the [issues](https://github.com/eslint/js/issues).
 
 Espree is licensed under a permissive BSD 2-clause license.
 
@@ -212,7 +211,7 @@ In an effort to help those wanting to transition from other parsers to Espree, t
 
 ### Why another parser
 
-[ESLint](http://eslint.org) had been relying on Esprima as its parser from the beginning. While that was fine when the JavaScript language was evolving slowly, the pace of development increased dramatically and Esprima had fallen behind. ESLint, like many other tools reliant on Esprima, has been stuck in using new JavaScript language features until Esprima updates, and that caused our users frustration.
+[ESLint](https://eslint.org) had been relying on Esprima as its parser from the beginning. While that was fine when the JavaScript language was evolving slowly, the pace of development increased dramatically and Esprima had fallen behind. ESLint, like many other tools reliant on Esprima, has been stuck in using new JavaScript language features until Esprima updates, and that caused our users frustration.
 
 We decided the only way for us to move forward was to create our own parser, bringing us inline with JSHint and JSLint, and allowing us to keep implementing new features as we need them. We chose to fork Esprima instead of starting from scratch in order to move as quickly as possible with a compatible API.
 
