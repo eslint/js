@@ -6,6 +6,9 @@ on:
 
     workflow_dispatch:
 
+permissions:
+    contents: read
+
 jobs:
     update-readme:
         uses: eslint/workflows/.github/workflows/update-readme.yml@main
