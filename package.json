@@ -27,7 +27,7 @@
     "!(*.{js,cjs,ts,cts})": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
+    "@arethetypeswrong/cli": "^0.18.3",
     "@types/node": "^20.19.0",
     "@typescript-eslint/parser": "^8.56.1",
     "c8": "^11.0.0",
@@ -43,10 +43,5 @@
     "rollup": "^4.55.2",
     "typescript": "^5.9.3",
     "yorkie": "^2.0.0"
-  },
-  "overrides": {
-    "@arethetypeswrong/core": {
-      "fflate": "0.8.2"
-    }
   }
 }
