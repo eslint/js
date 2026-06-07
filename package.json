@@ -35,7 +35,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
     "@types/node": "^20.19.0",
-    "@typescript-eslint/parser": "^8.59.0",
+    "@typescript-eslint/parser": "^8.60.1",
     "c8": "^11.0.0",
     "eslint": "^10.4.0",
     "eslint-config-eslint": "^14.0.0",

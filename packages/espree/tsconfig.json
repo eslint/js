@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "files": ["espree.js"],
   "compilerOptions": {
+    "declarationMap": true,
     "outDir": "dist"
   }
 }

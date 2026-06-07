@@ -17,6 +17,7 @@ export default [
 		output: {
 			file: "dist/espree.d.cts",
 			format: "cjs",
+			sourcemap: true,
 		},
 	},
 ];

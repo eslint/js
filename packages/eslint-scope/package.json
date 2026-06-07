@@ -46,7 +46,7 @@
     "LICENSE",
     "README.md",
     "lib",
-    "dist/eslint-scope.cjs"
+    "dist"
   ],
   "dependencies": {
     "@types/esrecurse": "^4.3.1",
@@ -55,7 +55,7 @@
     "estraverse": "^5.2.0"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.59.0",
+    "@typescript-eslint/parser": "^8.60.1",
     "chai": "^6.0.0",
     "eslint": "^10.4.0",
     "eslint-visitor-keys": "^5.0.1",
