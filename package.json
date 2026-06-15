@@ -17,7 +17,8 @@
     "test:types:5.3": "npx -p typescript@5.3 -y -- tsc -p tsconfig.dist-legacy.json",
     "test:types:5.x": "npx -p typescript@5.x -y -- tsc -p tsconfig.dist.json",
     "test:types:7.x": "npx -p @typescript/native-preview@latest -y -- tsgo -p tsconfig.dist.json",
-    "test:types:all": "npm run test:types && npm run test:types:5.3 && npm run test:types:5.x && npm run test:types:7.x"
+    "test:types:all": "npm run test:types && npm run test:types:5.3 && npm run test:types:5.x && npm run test:types:7.x",
+    "test:unit": "npm run test:unit --workspaces --if-present"
   },
   "workspaces": [
     "packages/*"

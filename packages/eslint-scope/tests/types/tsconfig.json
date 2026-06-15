@@ -3,7 +3,6 @@
   "compilerOptions": {
     "allowJs": false,
     "checkJs": false,
-    "noEmit": true,
     "rootDir": "../..",
     "noImplicitAny": true,
     "exactOptionalPropertyTypes": true,

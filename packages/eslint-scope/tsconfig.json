@@ -4,6 +4,7 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "rootDir": "lib",
-    "outDir": "dist"
+    "outDir": "dist",
+    "noEmit": true
   }
 }

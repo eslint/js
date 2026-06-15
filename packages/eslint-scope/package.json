@@ -39,8 +39,9 @@
     "build": "rollup -c",
     "lint:types": "attw --pack",
     "pretest": "npm run build",
-    "test": "node Makefile.js test && npm run test:types",
-    "test:types": "tsc -p tsconfig.json && tsc -p tests/types/tsconfig.json"
+    "test": "npm run test:types && npm run test:unit",
+    "test:types": "tsc -p tsconfig.json && tsc -p tests/types/tsconfig.json",
+    "test:unit": "node Makefile.js test"
   },
   "files": [
     "LICENSE",

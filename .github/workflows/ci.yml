@@ -61,7 +61,7 @@ jobs:
             - name: Install dependencies
               run: npm install
             - name: Run tests
-              run: npm run test
+              run: npm run test:unit
 
     test_types:
         name: Test Types
