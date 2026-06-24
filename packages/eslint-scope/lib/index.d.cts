@@ -216,7 +216,7 @@ export class Scope<
 	 */
 	constructor(
 		scopeManager: ScopeManager,
-		type: typeof this.type,
+		type: Scope["type"],
 		upperScope: Scope | null,
 		block: ESTree.Node,
 		isMethodDefinition: boolean,

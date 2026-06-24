@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 
 // Make sure the named exports exist.
-import {
+import type {
 	Definition,
 	PatternVisitor,
 	Reference,

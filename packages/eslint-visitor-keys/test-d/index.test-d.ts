@@ -1,6 +1,6 @@
 import { expectType, expectAssignable } from "tsd";
 
-import { KEYS, getKeys, unionWith, VisitorKeys } from "../";
+import { KEYS, getKeys, unionWith, VisitorKeys } from "eslint-visitor-keys";
 
 const assignmentExpression = {
 	type: "AssignmentExpression",

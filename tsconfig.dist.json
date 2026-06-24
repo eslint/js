@@ -1,14 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "allowJs": false,
     "checkJs": false,
-    "rootDir": "../..",
-    "noImplicitAny": true,
+    "emitDeclarationOnly": false,
+    "noEmit": true,
+    "strict": true,
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true
   },
-  "files": [],
-  "include": [".", "../../dist"]
+  "include": ["packages/*/dist", "packages/*/tests/types"]
 }

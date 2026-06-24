@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
+    "emitDeclarationOnly": false,
+    "noEmit": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": true
+    // "erasableSyntaxOnly" is not supported in TypeScript < 5.8.
+  },
+  "include": ["packages/*/dist", "packages/*/tests/types"]
+}
