@@ -1,13 +1,11 @@
 # Contributing Code
 
-Please sign the [jQuery Foundation Contributor License Agreement](https://contribute.jquery.org/CLA/)
-
-# Full Documentation
+## Full Documentation
 
 Our full contribution guidelines can be found at:
-<http://eslint.org/docs/developer-guide/contributing/>
+<https://eslint.org/docs/latest/contribute/>
 
-# How to upgrade `acorn` to support new syntax
+## How to upgrade `acorn` to support new syntax
 
 1. `npm install acorn@latest`
 1. If a new `ecmaVersion` value is added, update the `SUPPORTED_VERSIONS` constant in `lib/options.js`, the tests in `tests/lib/supported-ecmaversions.js`, and the `EcmaVersion` type.

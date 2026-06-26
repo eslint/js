@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "$schema": "https://unpkg.com/knip@6/schema.json",
   "mocha": {
     "entry": ["tests/**/*.{cjs,cts,js,ts}"]
   },
@@ -8,7 +8,7 @@
       "entry": ["test-d/**/*.test-d.ts"]
     },
     "packages/espree": {
-      "entry": ["espree.cts", "test-d/**/*.test-d.ts", "tools/**/*.js"],
+      "entry": ["test-d/**/*.test-d.ts", "tools/**/*.js"],
       "ignore": ["tests/fixtures/**"]
     }
   }
