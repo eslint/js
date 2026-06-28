@@ -34,9 +34,10 @@
     "build:cjs": "rollup -c",
     "build:debug": "npm run build:cjs -- -m && npm run build:types",
     "build:types": "tsc -v && tsc",
-    "test": "mocha \"tests/**/*.test.cjs\" && mocha \"tests/**/*.test.js\" && npm run test:types",
-    "test:coverage": "c8 npm test",
-    "test:types": "tsd"
+    "test": "npm run test:types && npm run test:unit",
+    "test:coverage": "c8 npm run test:unit",
+    "test:types": "tsd",
+    "test:unit": "mocha \"tests/**/*.test.cjs\" && mocha \"tests/**/*.test.js\""
   },
   "repository": {
     "type": "git",
