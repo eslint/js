@@ -11,8 +11,7 @@
     "lint:unused": "knip",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "test": "npm test --workspaces --if-present",
-    "test:coverage": "c8 npm test"
+    "test": "npm test --workspaces --if-present"
   },
   "workspaces": [
     "packages/*"
