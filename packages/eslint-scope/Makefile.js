@@ -67,7 +67,7 @@ target.test = function () {
 		errors++;
 	}
 
-	lastReturn = exec(`${C8} ${MOCHA} -- -R progress -c ${TEST_FILES}`);
+	lastReturn = exec(`${NODE} ${MOCHA} -- -R progress -c ${TEST_FILES}`);
 
 	if (lastReturn.code !== 0) {
 		errors++;
@@ -78,6 +78,16 @@ target.test = function () {
 	}
 
 	target.checkLicenses();
+};
+
+target.coverage = function () {
+	const lastReturn = exec(`${C8} ${MOCHA} -- -R progress -c ${TEST_FILES}`);
+
+	// TODO: check CJS files
+
+	if (lastReturn.code !== 0) {
+		exit(1);
+	}
 };
 
 target.checkLicenses = function () {
