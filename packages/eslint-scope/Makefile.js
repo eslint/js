@@ -42,9 +42,6 @@ const NODE = "node",
 	NODE_MODULES = "../../node_modules",
 	// Utilities - intentional extra space at the end of each string
 	MOCHA = `${NODE_MODULES}/mocha/bin/_mocha `,
-	// If switching back to Istanbul when may be working with ESM
-	// ISTANBUL = `${NODE} ${NODE_MODULES}/istanbul/lib/cli.js `,
-	C8 = `${NODE} ${NODE_MODULES}/c8/bin/c8.js`,
 	// Files
 	TEST_FILES = "tests/**/*.test.js",
 	CJS_TEST_FILES = "tests/**/*.test.cjs";
@@ -55,6 +52,7 @@ const NODE = "node",
 
 target.all = function () {
 	target.test();
+	target.checkLicenses();
 };
 
 target.test = function () {
@@ -74,18 +72,6 @@ target.test = function () {
 	}
 
 	if (errors) {
-		exit(1);
-	}
-
-	target.checkLicenses();
-};
-
-target.coverage = function () {
-	const lastReturn = exec(`${C8} ${MOCHA} -- -R progress -c ${TEST_FILES}`);
-
-	// TODO: check CJS files
-
-	if (lastReturn.code !== 0) {
 		exit(1);
 	}
 };
