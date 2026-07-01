@@ -40,9 +40,7 @@ jobs:
               run: npm install -g npm@latest
               if: ${{ steps.release.outputs.releases_created == 'true' }}
 
-            - run: |
-                  npm install
-                  npm run build
+            - run: npm install
               if: ${{ steps.release.outputs.releases_created == 'true' }}
 
             #-----------------------------------------------------------------------------
