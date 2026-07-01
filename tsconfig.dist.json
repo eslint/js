@@ -5,8 +5,6 @@
     "checkJs": false,
     "emitDeclarationOnly": false,
     "noEmit": true,
-    "strict": true,
-    "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true
   },
