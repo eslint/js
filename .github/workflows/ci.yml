@@ -22,8 +22,6 @@ jobs:
                   node-version: "lts/*"
             - name: Install dependencies
               run: npm install
-            - name: Build packages
-              run: npm run build
             - name: Lint files
               run: npm run lint
             - name: Lint Files, Dependencies, & Exports
@@ -40,8 +38,6 @@ jobs:
                   node-version: lts/*
             - name: Install dependencies
               run: npm install
-            - name: Build packages
-              run: npm run build
             - name: Prettier Check
               run: npm run fmt:check
 
@@ -64,10 +60,41 @@ jobs:
                   node-version: ${{ matrix.node }}
             - name: Install dependencies
               run: npm install
-            - name: Build packages
-              run: npm run build
             - name: Run tests
-              run: npm run test
+              run: npm run test:unit
+
+    test_types:
+        name: Test Types
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "lts/*"
+
+            - name: Install Packages
+              run: npm install
+
+            - name: Test types (eslint-scope)
+              run: npm run test:types -w packages/eslint-scope
+
+            - name: Test types (eslint-visitor-keys)
+              run: npm run test:types -w packages/eslint-visitor-keys
+
+            - name: Test types (espree)
+              run: npm run test:types -w packages/espree
+
+            - name: Check dist types compile (TypeScript 5.3)
+              run: npm run test:types:5.3
+
+            - name: Check dist types compile (TypeScript 5.x)
+              run: npm run test:types:5.x
+
+            - name: Check dist types compile (TypeScript 7 preview)
+              run: npm run test:types:7.x
 
     are-the-types-wrong:
         name: Are the types wrong?
@@ -80,7 +107,5 @@ jobs:
                   node-version: "lts/*"
             - name: Install dependencies
               run: npm install
-            - name: Build types
-              run: npm run build:types
             - name: Are the types wrong?
               run: npm run lint:types

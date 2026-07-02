@@ -1,15 +1,10 @@
 {
+  "extends": "../../tsconfig.base.json",
+  "files": ["lib/index.js"],
   "compilerOptions": {
-    "checkJs": true,
-    "exactOptionalPropertyTypes": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["es2022"],
-    "module": "nodenext",
-    "noEmit": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "types": []
-  },
-  "include": ["lib"]
+    "noImplicitAny": false,
+    "rootDir": "lib",
+    "outDir": "dist",
+    "noEmit": true
+  }
 }
