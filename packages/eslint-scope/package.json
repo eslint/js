@@ -41,9 +41,9 @@
     "pretest": "npm run build",
     "test": "npm run test:types && npm run test:unit && npm run test:licenses",
     "test:coverage": "c8 npm run test:unit",
-    "test:licenses": "node Makefile.js checkLicenses",
+    "test:licenses": "node tools/check-licenses.js",
     "test:types": "tsc -p tsconfig.json && tsc -p tests/types/tsconfig.json",
-    "test:unit": "node Makefile.js test"
+    "test:unit": "mocha \"tests/**/*.test.{js,cjs}\""
   },
   "files": [
     "LICENSE",
@@ -63,7 +63,6 @@
     "eslint": "^10.4.0",
     "eslint-visitor-keys": "^5.0.1",
     "espree": "^11.2.0",
-    "npm-license": "^0.3.3",
-    "shelljs": "^0.10.0"
+    "npm-license": "^0.3.3"
   }
 }
