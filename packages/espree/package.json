@@ -43,6 +43,7 @@
     "eslint-visitor-keys": "^5.0.1"
   },
   "devDependencies": {
+    "rollup-plugin-dts": "^6.4.1",
     "shelljs": "^0.10.0",
     "tsd": "^0.33.0"
   },
@@ -58,7 +59,7 @@
     "build": "rollup -c rollup.config.js && npm run build:types && node -e \"fs.rmSync('dist/lib', { recursive: true })\"",
     "build:debug": "npm run build -- -m",
     "build:docs": "node tools/sync-docs.js",
-    "build:types": "tsc && tsc -p tsconfig-cjs.json",
+    "build:types": "tsc",
     "lint:types": "attw --pack",
     "pretest": "npm run build",
     "test": "npm run test:types && npm run test:unit",

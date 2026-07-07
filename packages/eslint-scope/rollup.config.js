@@ -5,6 +5,5 @@ export default {
 	output: {
 		format: "cjs",
 		file: "dist/eslint-scope.cjs",
-		sourcemap: true,
 	},
 };

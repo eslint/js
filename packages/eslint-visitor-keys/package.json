@@ -16,17 +16,14 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist/index.d.ts",
-    "dist/visitor-keys.d.ts",
-    "dist/eslint-visitor-keys.cjs",
-    "dist/eslint-visitor-keys.d.cts",
-    "lib"
+    "lib",
+    "dist"
   ],
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "devDependencies": {
-    "rollup-plugin-dts": "^6.2.3",
+    "rollup-plugin-dts": "^6.4.1",
     "tsd": "^0.33.0"
   },
   "scripts": {
@@ -34,6 +31,7 @@
     "build:cjs": "rollup -c",
     "build:debug": "npm run build:cjs -- -m && npm run build:types",
     "build:types": "tsc -v && tsc",
+    "pretest": "npm run build",
     "test": "npm run test:types && npm run test:unit",
     "test:coverage": "c8 npm run test:unit",
     "test:types": "tsd",
