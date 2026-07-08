@@ -53,8 +53,6 @@ function isPermissible(dependency) {
 // License Checking
 //------------------------------------------------------------------------------
 
-console.log("Validating licenses");
-
 checker.init(
 	{
 		start: fileURLToPath(new URL("..", import.meta.url)),
