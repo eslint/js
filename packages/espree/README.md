@@ -36,8 +36,8 @@ const ast = espree.parse(code);
 
 `parse` parses the given code and returns a abstract syntax tree (AST). It takes two parameters.
 
-- `code` [string]() - the code which needs to be parsed.
-- `options (Optional)` [Object]() - read more about this [here](#options).
+- `code` (`string`) - the code which needs to be parsed.
+- `options` (`Object`) - optional, read more about this [here](#options).
 
 ```js
 import * as espree from "espree";
@@ -80,8 +80,8 @@ Node {
 
 `tokenize` returns the tokens of a given code. It takes two parameters.
 
-- `code` [string]() - the code which needs to be parsed.
-- `options (Optional)` [Object]() - read more about this [here](#options).
+- `code` (`string`) - the code which needs to be parsed.
+- `options` (`Object`) - optional, read more about this [here](#options).
 
 Even if `options` is empty or undefined or `options.tokens` is `false`, it assigns it to `true` in order to get the `tokens` array
 
