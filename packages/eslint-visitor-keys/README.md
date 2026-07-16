@@ -96,7 +96,7 @@ Welcome. See [ESLint contribution guidelines](https://eslint.org/docs/latest/con
 
 ### Development commands
 
-- `npm test` runs tests and measures code coverage.
+- `npm test` runs tests.
 - `npm run lint` checks source codes with ESLint.
 - `npm run test:coverage` runs tests and generates code coverage report.
 

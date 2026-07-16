@@ -35,7 +35,7 @@
     "test": "npm run test:types && npm run test:unit",
     "test:coverage": "c8 npm run test:unit",
     "test:types": "tsd",
-    "test:unit": "mocha \"tests/**/*.test.cjs\" && mocha \"tests/**/*.test.js\""
+    "test:unit": "mocha \"tests/**/*.test.{js,cjs}\""
   },
   "repository": {
     "type": "git",

@@ -63,10 +63,9 @@
     "lint:types": "attw --pack",
     "pretest": "npm run build",
     "test": "npm run test:types && npm run test:unit",
-    "test:cjs": "mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.cjs\"",
-    "test:esm": "c8 mocha --color --reporter progress --timeout 30000 \"tests/**/*.test.js\"",
+    "test:coverage": "c8 npm run test:unit",
     "test:types": "tsd --typings dist/espree.d.ts",
-    "test:unit": "npm run test:cjs && npm run test:esm"
+    "test:unit": "mocha \"tests/**/*.test.{js,cjs}\""
   },
   "sideEffects": false
 }

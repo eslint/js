@@ -41,18 +41,6 @@ export default defineConfig([
 		},
 	},
 	{
-		files: ["packages/eslint-scope/Makefile.js"],
-		languageOptions: {
-			globals: {
-				...globals.shelljs,
-				target: false,
-			},
-		},
-		rules: {
-			"no-console": "off",
-		},
-	},
-	{
 		files: ["packages/eslint-scope/**"],
 		linterOptions: {
 			reportUnusedDisableDirectives: "error",
