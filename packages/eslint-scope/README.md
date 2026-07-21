@@ -56,7 +56,7 @@ const options = {
 const ast = espree.parse(code, { range: true, ...options });
 const scopeManager = eslintScope.analyze(ast, options);
 
-const currentScope = scopeManager.acquire(ast); // global scope
+let currentScope = scopeManager.acquire(ast); // global scope
 
 estraverse.traverse(ast, {
 	enter(node, parent) {
