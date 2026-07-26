@@ -72,7 +72,7 @@ function defaultOptions() {
 }
 
 /**
- * Preform deep update on option object
+ * Perform deep update on option object
  * @param {Record<string, unknown>} target Options
  * @param {Record<string, unknown>} override Updates
  * @returns {Record<string, unknown>} Updated options

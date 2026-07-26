@@ -30,9 +30,9 @@ const OPEN_SOURCE_LICENSES = [
 //------------------------------------------------------------------------------
 
 /**
- * Returns true if the given dependency's licenses are all permissable for use in OSS
+ * Returns true if the given dependency's licenses are all permissible for use in OSS
  * @param {Object} dependency object containing the name and licenses of the given dependency
- * @returns {boolean} is permissable dependency
+ * @returns {boolean} is permissible dependency
  */
 function isPermissible(dependency) {
 	const licenses = dependency.licenses;

@@ -32,7 +32,7 @@ const { Syntax } = estraverse;
 /**
  * Get last array element
  * @param {Array} xs array
- * @returns {any} Last elment
+ * @returns {any} Last element
  */
 function getLast(xs) {
 	return xs.at(-1) || null;
