@@ -26,6 +26,9 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "allowScripts": {
+    "yorkie": true
+  },
   "lint-staged": {
     "*.{js,cjs,ts,cts}": [
       "eslint --fix",
