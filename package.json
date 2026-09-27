@@ -44,7 +44,7 @@
     "eslint": "^10.4.0",
     "eslint-config-eslint": "^14.0.0",
     "eslint-plugin-chai-friendly": "^1.0.0",
-    "eslint-plugin-expect-type": "^0.6.2",
+    "eslint-plugin-expect-type": "^0.7.0",
     "globals": "^17.0.0",
     "knip": "^6.11.0",
     "lint-staged": "^16.0.0",
