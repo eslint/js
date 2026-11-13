@@ -41,6 +41,7 @@ const { Syntax } = estraverse;
  * @param {ESTree.Pattern} rootPattern root pattern
  * @param {?Referencer} referencer referencer
  * @param {types.PatternVisitorCallback} callback callback
+ * @param {?Referencer} keysSource the visitor whose visitor keys the pattern visitor reuses
  * @returns {void}
  */
 function traverseIdentifierInPattern(
@@ -48,9 +49,15 @@ function traverseIdentifierInPattern(
 	rootPattern,
 	referencer,
 	callback,
+	keysSource,
 ) {
 	// Call the callback at left hand identifier nodes, and Collect right hand nodes.
-	const visitor = new PatternVisitor(options, rootPattern, callback);
+	const visitor = new PatternVisitor(
+		options,
+		rootPattern,
+		callback,
+		keysSource,
+	);
 
 	visitor.visit(rootPattern);
 
@@ -184,6 +191,7 @@ class Referencer extends esrecurse.Visitor {
 			node,
 			visitPatternOptions.processRightHandNodes ? this : null,
 			visitPatternCallback,
+			this,
 		);
 	}
 

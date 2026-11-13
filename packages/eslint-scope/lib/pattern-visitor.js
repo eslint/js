@@ -56,8 +56,18 @@ class PatternVisitor extends esrecurse.Visitor {
 		);
 	}
 
-	constructor(options, rootPattern, callback) {
-		super(null, options);
+	constructor(options, rootPattern, callback, keysSource) {
+		/*
+		 * esrecurse merges `options.childVisitorKeys` into a fresh copy of the
+		 * default visitor keys in every constructor call. A pattern visitor is
+		 * created for every declaration, parameter and assignment target, so
+		 * reuse the table the referencer already built when one is given.
+		 */
+		super(null, keysSource ? void 0 : options);
+		if (keysSource) {
+			this.__childVisitorKeys = keysSource.__childVisitorKeys;
+			this.__fallback = keysSource.__fallback;
+		}
 		this.rootPattern = rootPattern;
 		this.callback = callback;
 		this.assignments = [];
